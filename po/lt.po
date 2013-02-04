@@ -1,0 +1,485 @@
+# Lithuanian translation of NetworkManager-ssh.
+# Copyright © 2008, 2010 Free Software Foundation, Inc.
+# This file is distributed under the same license as the NetworkManager package.
+# Žygimantas Beručka <zygis@gnome.org>, 2008, 2010.
+# Aurimas Černius <aurisc4@gmail.com>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: NetworkManager-ssh HEAD\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=NetworkManager&keywords=I18N+L10N&component=VPN: ssh\n"
+"POT-Creation-Date: 2011-07-14 03:13+0000\n"
+"PO-Revision-Date: 2011-07-16 16:15+0300\n"
+"Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
+"Language-Team: Lithuanian <gnome-lt@lists.akl.lt>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: lt\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Virtaal 0.6.1\n"
+
+#: ../auth-dialog/vpn-password-dialog.c:95
+msgid "_Password:"
+msgstr "_Slaptažodis:"
+
+#: ../auth-dialog/vpn-password-dialog.c:97
+msgid "_Secondary Password:"
+msgstr "_Antrinis slaptažodis:"
+
+#: ../auth-dialog/vpn-password-dialog.c:239
+#| msgid "Show passwords"
+msgid "Sh_ow passwords"
+msgstr "_Rodyti slaptažodžius"
+
+#: ../auth-dialog/main.c:133
+#, c-format
+msgid "You need to authenticate to access the Virtual Private Network '%s'."
+msgstr "Norint gauti prieigą prie Virtualiojo Privačiojo Tinklo „%s“, reikia nustatyti jūsų tapatybę."
+
+#: ../auth-dialog/main.c:134
+msgid "Authenticate VPN"
+msgstr "Nustatyti tapatybę VPN"
+
+#: ../auth-dialog/main.c:140
+msgid "Certificate pass_word:"
+msgstr "Liudijimo slaptažo_dis:"
+
+#: ../auth-dialog/main.c:154
+msgid "Certificate password:"
+msgstr "Liudijimo slaptažodis:"
+
+#: ../properties/auth-helpers.c:148
+msgid "Choose your personal certificate..."
+msgstr "Pasirinkite savo asmeninį liudijimą..."
+
+#: ../properties/auth-helpers.c:166
+msgid "Choose your private key..."
+msgstr "Pasirinkite savo asmeninį raktą..."
+
+#: ../properties/auth-helpers.c:238
+msgid "Saved"
+msgstr "Išsaugota"
+
+#: ../properties/auth-helpers.c:246
+msgid "Always Ask"
+msgstr "Visada klausti"
+
+#: ../properties/auth-helpers.c:251
+#| msgid "Not required"
+msgid "Not Required"
+msgstr "Nebūtina"
+
+#: ../properties/auth-helpers.c:341
+msgid "Choose a Certificate Authority certificate..."
+msgstr "Pasirinkite liudijimų įstaigos liudijimą..."
+
+#: ../properties/auth-helpers.c:385
+msgid "Choose an SSH static key..."
+msgstr "Pasirinkite SSH statinį raktą..."
+
+#: ../properties/auth-helpers.c:409
+#: ../properties/auth-helpers.c:1169
+#: ../properties/auth-helpers.c:1571
+msgid "None"
+msgstr "Nėra"
+
+#: ../properties/auth-helpers.c:865
+msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
+msgstr "PEM arba PKCS#12 liudijimai (*.pem, *.crt, *.key, *.cer, *.p12)"
+
+#: ../properties/auth-helpers.c:866
+msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
+msgstr "PEM liudijimai (*.pem, *.crt, *.key, *.cer)"
+
+#: ../properties/auth-helpers.c:926
+msgid "SSH Static Keys (*.key)"
+msgstr "SSH statiniai raktai (*.key)"
+
+#: ../properties/auth-helpers.c:1085
+#: ../properties/auth-helpers.c:1161
+msgid "Default"
+msgstr "Numatytasis"
+
+#: ../properties/auth-helpers.c:1171
+msgid "RSA MD-4"
+msgstr "RSA MD-4"
+
+#: ../properties/auth-helpers.c:1173
+msgid "MD-5"
+msgstr "MD-5"
+
+#: ../properties/auth-helpers.c:1175
+msgid "SHA-1"
+msgstr "SHA-1"
+
+#: ../properties/auth-helpers.c:1177
+msgid "SHA-224"
+msgstr "SHA-224"
+
+#: ../properties/auth-helpers.c:1179
+msgid "SHA-256"
+msgstr "SHA-256"
+
+#: ../properties/auth-helpers.c:1181
+msgid "SHA-384"
+msgstr "SHA-384"
+
+#: ../properties/auth-helpers.c:1183
+msgid "SHA-512"
+msgstr "SHA-512"
+
+#: ../properties/auth-helpers.c:1185
+msgid "RIPEMD-160"
+msgstr "RIPEMD-160"
+
+#: ../properties/auth-helpers.c:1360
+#: ../properties/nm-ssh-dialog.ui.h:16
+msgid "Not required"
+msgstr "Nebūtina"
+
+#: ../properties/auth-helpers.c:1362
+msgid "HTTP"
+msgstr "HTTP"
+
+#: ../properties/auth-helpers.c:1364
+msgid "SOCKS"
+msgstr "SOCKS"
+
+#: ../properties/nm-ssh.c:52
+msgid "SSH"
+msgstr "SSH"
+
+#: ../properties/nm-ssh.c:53
+msgid "Compatible with the SSH server."
+msgstr "Suderinamas su SSH serveriu."
+
+#: ../properties/nm-ssh.c:317
+msgid "Certificates (TLS)"
+msgstr "Liudijimai (TLS)"
+
+#: ../properties/nm-ssh.c:328
+msgid "Password"
+msgstr "Slaptažodis"
+
+#: ../properties/nm-ssh.c:341
+msgid "Password with Certificates (TLS)"
+msgstr "Slaptažodis su liudijimais (TLS)"
+
+#: ../properties/nm-ssh.c:353
+msgid "Static Key"
+msgstr "Statinis raktas"
+
+#: ../properties/nm-ssh-dialog.ui.h:1
+msgid " "
+msgstr " "
+
+#: ../properties/nm-ssh-dialog.ui.h:2
+msgid "<b>Authentication</b>"
+msgstr "<b>Tapatybės nustatymas</b>"
+
+#: ../properties/nm-ssh-dialog.ui.h:3
+msgid "<b>General</b>"
+msgstr "<b>Bendra</b>"
+
+#: ../properties/nm-ssh-dialog.ui.h:4
+msgid ""
+"<i>Connect only to servers whose certificate matches the given subject.\n"
+"Example: /CN=myvpn.company.com</i>"
+msgstr ""
+"<i>Jungtis tik prie serverių, kurių liudijimai atitinka nurodytąjį subjektą.\n"
+"Pavyzdys: /CN=myvpn.company.com</i>"
+
+#: ../properties/nm-ssh-dialog.ui.h:6
+msgid "<i>If key direction is used, it must be the opposite of that used on the VPN peer.  For example, if the peer uses '1', this connection must use '0'.  If you are unsure what value to use, contact your system administrator.</i>"
+msgstr "<i>Jeigu naudojama rakto kryptis, ji turi būti priešinga naudojamai VPN lygiarangyje. Pavyzdžiui, jeigu lygiarangyje naudojama „1“, šiam prisijungimui turi būti naudojama „0“. Jeigu nežinote, kokią reikšmę naudoti, susisiekite su savo sistemos administratoriumi.</i>"
+
+#: ../properties/nm-ssh-dialog.ui.h:7
+msgid "<i>Select this option if your organization requires the use of a proxy server to access the Internet.</i>"
+msgstr "<i>Pasirinkite šią parinktį, jei jūsų organizacija turi prieigą prie interneto per tarpinį serverį.</i>"
+
+#: ../properties/nm-ssh-dialog.ui.h:8
+msgid "Ad_vanced..."
+msgstr "Išsa_miau..."
+
+#: ../properties/nm-ssh-dialog.ui.h:9
+msgid "CA Certificate:"
+msgstr "LĮ liudijimas:"
+
+#: ../properties/nm-ssh-dialog.ui.h:10
+msgid "Cipher:"
+msgstr "Šifras:"
+
+#: ../properties/nm-ssh-dialog.ui.h:11
+msgid "General"
+msgstr "Bendra"
+
+#: ../properties/nm-ssh-dialog.ui.h:12
+msgid "HMAC Authentication:"
+msgstr "HMAC tapatybės nustatymas:"
+
+#: ../properties/nm-ssh-dialog.ui.h:13
+msgid "Key Direction:"
+msgstr "Rakto kryptis:"
+
+#: ../properties/nm-ssh-dialog.ui.h:14
+msgid "Key File:"
+msgstr "Rakto failas:"
+
+#: ../properties/nm-ssh-dialog.ui.h:15
+msgid "Local IP Address:"
+msgstr "Vietinis IP adresas:"
+
+#: ../properties/nm-ssh-dialog.ui.h:17
+msgid "SSH Advanced Options"
+msgstr "Išsamesnės SSH parinktys"
+
+#: ../properties/nm-ssh-dialog.ui.h:18
+msgid "Password:"
+msgstr "Slaptažodis:"
+
+#: ../properties/nm-ssh-dialog.ui.h:19
+msgid "Port:"
+msgstr "Prievadas:"
+
+#: ../properties/nm-ssh-dialog.ui.h:20
+msgid "Private Key Password:"
+msgstr "Asmeninio rakto slaptažodis:"
+
+#: ../properties/nm-ssh-dialog.ui.h:21
+msgid "Private Key:"
+msgstr "Asmeninis raktas:"
+
+#: ../properties/nm-ssh-dialog.ui.h:22
+msgid "Proxies"
+msgstr "Tarpiniai serveriai"
+
+#: ../properties/nm-ssh-dialog.ui.h:23
+msgid "Proxy Password:"
+msgstr "Tarpinio serverio slaptažodis:"
+
+#: ../properties/nm-ssh-dialog.ui.h:24
+msgid "Proxy Type:"
+msgstr "Tarpinio serverio tipas:"
+
+#: ../properties/nm-ssh-dialog.ui.h:25
+msgid "Proxy Username:"
+msgstr "Tarpinio serverio naudotojo vardas:"
+
+#: ../properties/nm-ssh-dialog.ui.h:26
+msgid "Remote IP Address:"
+msgstr "Nutolęs IP adresas:"
+
+#: ../properties/nm-ssh-dialog.ui.h:27
+msgid "Restrict tunnel TCP Maximum Segment Size (MSS)"
+msgstr "Riboti tunelio TCP didžiausią segmento dydį (MSS)"
+
+#: ../properties/nm-ssh-dialog.ui.h:28
+msgid "Retry indefinitely when errors occur"
+msgstr "Mėginti dar kartą neribotą laiką, kai įvyksta klaidų"
+
+#: ../properties/nm-ssh-dialog.ui.h:29
+msgid "Security"
+msgstr "Saugumas"
+
+#: ../properties/nm-ssh-dialog.ui.h:30
+msgid "Server Address:"
+msgstr "Serverio adresas:"
+
+#: ../properties/nm-ssh-dialog.ui.h:31
+#| msgid "Show passwords"
+msgid "Show password"
+msgstr "Rodyti slaptažodį"
+
+#: ../properties/nm-ssh-dialog.ui.h:32
+msgid "Show passwords"
+msgstr "Rodyti slaptažodžius"
+
+#: ../properties/nm-ssh-dialog.ui.h:33
+msgid "Static Key:"
+msgstr "Statinis raktas:"
+
+#: ../properties/nm-ssh-dialog.ui.h:34
+msgid "Subject Match:"
+msgstr "Subjekto atitikimas:"
+
+#: ../properties/nm-ssh-dialog.ui.h:35
+msgid "TLS Authentication"
+msgstr "TLS tapatybės nustatymas"
+
+#: ../properties/nm-ssh-dialog.ui.h:36
+msgid "Type:"
+msgstr "Tipas:"
+
+#: ../properties/nm-ssh-dialog.ui.h:37
+msgid "Use L_ZO data compression"
+msgstr "Naudoti L_ZO duomenų glaudinimą"
+
+#: ../properties/nm-ssh-dialog.ui.h:38
+msgid "Use a TA_P device"
+msgstr "Naudoti TA_P įrenginį"
+
+#: ../properties/nm-ssh-dialog.ui.h:39
+msgid "Use a _TCP connection"
+msgstr "Naudoti _TCP prisijungimą"
+
+#: ../properties/nm-ssh-dialog.ui.h:40
+msgid "Use additional TLS authentication"
+msgstr "Naudoti papildomą TLS tapatybės nustatymą"
+
+#: ../properties/nm-ssh-dialog.ui.h:41
+msgid "Use custom UDP _fragment size:"
+msgstr "Naudoti pasirinktinį UDP _fragmento dydį:"
+
+#: ../properties/nm-ssh-dialog.ui.h:42
+msgid "Use custom _renegotiation interval:"
+msgstr "Naudoti pasirinktinį pakartotinio jungimosi intervalą:"
+
+#: ../properties/nm-ssh-dialog.ui.h:43
+msgid "Use custom _tunnel Maximum Transmission Unit (MTU):"
+msgstr "Naudoti pasirinktinį _tunelio didžiausią perdavimo bloką (MTU):"
+
+#: ../properties/nm-ssh-dialog.ui.h:44
+msgid "Use custom gateway p_ort:"
+msgstr "Naudoti pasirinktinį šliuzo _prievadą:"
+
+#: ../properties/nm-ssh-dialog.ui.h:45
+msgid "User Certificate:"
+msgstr "Naudotojo liudijimas:"
+
+#: ../properties/nm-ssh-dialog.ui.h:46
+msgid "User name:"
+msgstr "Naudotojo vardas:"
+
+#: ../properties/nm-ssh-dialog.ui.h:47
+msgid "_Gateway:"
+msgstr "Š_liuzas:"
+
+#: ../src/nm-ssh-service.c:192
+#, c-format
+msgid "invalid address '%s'"
+msgstr "netinkamas adresas „%s“"
+
+#: ../src/nm-ssh-service.c:204
+#, c-format
+msgid "invalid integer property '%s' or out of range [%d -> %d]"
+msgstr "netinkama skaitinė savybė „%s“ arba už ribų [%d -> %d]"
+
+#: ../src/nm-ssh-service.c:214
+#, c-format
+msgid "invalid boolean property '%s' (not yes or no)"
+msgstr "netinkama loginė savybė „%s“ (ne taip arba ne)"
+
+#: ../src/nm-ssh-service.c:221
+#, c-format
+msgid "unhandled property '%s' type %s"
+msgstr "neapdorotas savybės „%s“ tipas %s"
+
+#: ../src/nm-ssh-service.c:232
+#, c-format
+msgid "property '%s' invalid or not supported"
+msgstr "savybė „%s“ netinkama arba nepalaikoma"
+
+#: ../src/nm-ssh-service.c:249
+msgid "No VPN configuration options."
+msgstr "Nėra VPN konfigūracijos parinkčių."
+
+#: ../src/nm-ssh-service.c:272
+msgid "No VPN secrets!"
+msgstr "Nėra VPN paslapčių!"
+
+#: ../src/nm-ssh-service.c:745
+msgid "Could not find the ssh binary."
+msgstr "Nepavyko rasti ssh programos."
+
+#: ../src/nm-ssh-service.c:756
+msgid "Invalid HMAC auth."
+msgstr "Netinkama HMAC tapatybė."
+
+#: ../src/nm-ssh-service.c:768
+#: ../src/nm-ssh-service.c:1164
+#: ../src/nm-ssh-service.c:1234
+msgid "Invalid connection type."
+msgstr "Netinkamas prisijungimo tipas."
+
+#: ../src/nm-ssh-service.c:803
+#, c-format
+msgid "Invalid proxy type '%s'."
+msgstr "Netinkamas tarpininko tipas „%s“."
+
+#: ../src/nm-ssh-service.c:839
+#, c-format
+msgid "Invalid port number '%s'."
+msgstr "Netinkamas prievado numeris „%s“."
+
+#: ../src/nm-ssh-service.c:889
+#, c-format
+msgid "Invalid reneg seconds '%s'."
+msgstr "Netinkamos persijungimo sekundės „%s“."
+
+#: ../src/nm-ssh-service.c:913
+#, c-format
+msgid "Invalid TUN MTU size '%s'."
+msgstr "Netinkamas TUN MTU dydis „%s“."
+
+#: ../src/nm-ssh-service.c:928
+#, c-format
+msgid "Invalid fragment size '%s'."
+msgstr "Netinkamas fragmento dydis „%s“."
+
+#: ../src/nm-ssh-service.c:996
+msgid "Missing required local IP address for static key mode."
+msgstr "Trūkstamas būtinas vietinis IP adresas statinio rakto veiksenai."
+
+#: ../src/nm-ssh-service.c:1009
+msgid "Missing required remote IP address for static key mode."
+msgstr "Trūkstamas būtinas išorinis IP adresas statinio rakto veiksenai."
+
+#: ../src/nm-ssh-service.c:1034
+#, c-format
+msgid "Unknown connection type '%s'."
+msgstr "Nežinomas ryšio tipas „%s“."
+
+#: ../src/nm-ssh-service.c:1153
+#: ../src/nm-ssh-service.c:1224
+msgid "Could not process the request because the VPN connection settings were invalid."
+msgstr "Nepavyko apdoroti užklausos, nes VPN prisijungimo nustatymai buvo netinkami."
+
+#: ../src/nm-ssh-service.c:1178
+msgid "Could not process the request because no username was provided."
+msgstr "Nepavyko apdoroti užklausos, nes nepateiktas naudotojo vardas."
+
+#: ../src/nm-ssh-service.c:1368
+msgid "Don't quit when VPN connection terminates"
+msgstr "Neišjungti, kai VPN ryšys baigiasi"
+
+#: ../src/nm-ssh-service.c:1369
+msgid "Enable verbose debug logging (may expose passwords)"
+msgstr "Įjungti išsamų derinimo žurnalą (gali parodyti slaptažodžius)"
+
+#: ../src/nm-ssh-service.c:1383
+msgid "nm-vpnc-service provides integrated SSH capability to NetworkManager."
+msgstr "nm-vpnc-service suteikia NetworkManager integruotą SSH galimybę."
+
+#~ msgid "_Username:"
+#~ msgstr "_Naudotojo vardas:"
+
+#~ msgid "_Domain:"
+#~ msgstr "S_ritis:"
+
+#~ msgid "Connect _anonymously"
+#~ msgstr "Jungtis an_onimiškai"
+
+#~ msgid "Connect as _user:"
+#~ msgstr "Prisijungti kaip na_udotojas:"
+
+#~ msgid "_Remember password for this session"
+#~ msgstr "_Atsiminti slaptažodį šiam seansui"
+
+#~ msgid "_Save password in keyring"
+#~ msgstr "Iš_saugoti slaptažodį raktinėje"
+
+#~ msgid "Certificate Password:"
+#~ msgstr "Liudijimo slaptažodis:"
+
+#~ msgid "Select A File"
+#~ msgstr "Pasirinkite failą"

@@ -1,0 +1,550 @@
+# translation of NetworkManager-ssh.HEAD.po to Punjabi
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# A S Alam <aalam@users.sf.net>, 2007, 2009, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: NetworkManager-ssh.HEAD\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug."
+"cgi?product=NetworkManager&component=VPN: ssh\n"
+"POT-Creation-Date: 2010-09-02 19:28+0000\n"
+"PO-Revision-Date: 2010-09-08 18:41+0530\n"
+"Last-Translator: A S Alam <aalam@users.sf.net>\n"
+"Language-Team: Punjabi/Panjabi <punjabi-users@lists.sf.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:130
+msgid "_Password:"
+msgstr "ਪਾਸਵਰਡ(_P):"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:131
+msgid "_Secondary Password:"
+msgstr "ਸੈਕੰਡਰੀ ਪਾਸਵਰਡ(_S):"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:248
+msgid "_Username:"
+msgstr "ਯੂਜ਼ਰ ਨਾਂ(_U):"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:250
+msgid "_Domain:"
+msgstr "ਡੋਮੇਨ(_D):"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:346
+msgid "Connect _anonymously"
+msgstr "ਅਗਿਆਤ ਵਾਂਗ ਕੁਨੈਕਟ(_a)"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:351
+msgid "Connect as _user:"
+msgstr "ਯੂਜ਼ੜ ਵਾਂਗ ਕੁਨੈਕਟ(_u):"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:456
+msgid "_Remember password for this session"
+msgstr "ਇਹ ਸ਼ੈਸ਼ਨ ਲਈ ਪਾਸਵਰਡ ਯਾਦ ਰੱਖੋ(_R)"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:458
+msgid "_Save password in keyring"
+msgstr "ਕੀਰਿੰਗ ਵਿੱਚ ਪਾਸਵਰਡ ਸੰਭਾਲੋ(_S)"
+
+#: ../auth-dialog/main.c:94
+#, c-format
+msgid "You need to authenticate to access the Virtual Private Network '%s'."
+msgstr "ਤੁਹਾਨੂੰ ਵੁਰਚੁਅਲ ਪ੍ਰਾਈਵੇਟ ਨੈੱਟਵਰਕ (VPN) '%s' ਦੀ ਵਰਤੋਂ ਵਾਸਤੇ ਪਰਮਾਣਿਤ ਹੋਣ ਦੀ ਲੋੜ ਹੈ।"
+
+#: ../auth-dialog/main.c:95
+msgid "Authenticate VPN"
+msgstr "ਪਰਮਾਣਿਤ VPN"
+
+#: ../auth-dialog/main.c:116
+msgid "Certificate pass_word:"
+msgstr "ਸਰਟੀਫਿਕੇਟ ਪਾਸਵਰਡ(_w):"
+
+#: ../auth-dialog/main.c:130
+msgid "Certificate password:"
+msgstr "ਸਰਟੀਫਿਕੇਟ ਪਾਸਵਰਡ:"
+
+#: ../properties/auth-helpers.c:207
+msgid "Choose a Certificate Authority certificate..."
+msgstr "ਸਰਟੀਫਿਕੇਟ ਅਥਾਰਟੀ ਸਰਫੀਟਿਕੇਟ ਚੁਣੋ।"
+
+#: ../properties/auth-helpers.c:226
+msgid "Choose your personal certificate..."
+msgstr "ਆਪਣਾ ਨਿੱਜੀ ਸਰਟੀਫਿਕੇਟ ਚੁਣੋ।"
+
+#: ../properties/auth-helpers.c:244
+msgid "Choose your private key..."
+msgstr "ਆਪਣੀ ਪ੍ਰਾਈਵੇਟ ਕੁੰਜੀ ਚੁਣੋ..."
+
+#: ../properties/auth-helpers.c:302
+msgid "Choose an SSH static key..."
+msgstr "SSH ਸਟੇਟਿਕ ਕੁੰਜੀ ਚੁਣੋ..."
+
+#: ../properties/auth-helpers.c:326 ../properties/auth-helpers.c:1078
+#: ../properties/auth-helpers.c:1443
+msgid "None"
+msgstr "ਕੋਈ ਨਹੀਂ"
+
+#: ../properties/auth-helpers.c:775
+msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
+msgstr "PEM ਜਾਂ PKCS#12 ਸਰਟੀਫਿਕੇਟ (*.pem, *.crt, *.key, *.cer, *.p12)"
+
+#: ../properties/auth-helpers.c:776
+msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
+msgstr "PEM ਸਰਟੀਫਿਕੇਟ (*.pem, *.crt, *.key, *.cer)"
+
+#: ../properties/auth-helpers.c:836
+msgid "SSH Static Keys (*.key)"
+msgstr "SSH ਸਟੇਟਿਕ ਕੁੰਜੀਆਂ (*.key)"
+
+#: ../properties/auth-helpers.c:995 ../properties/auth-helpers.c:1070
+msgid "Default"
+msgstr "ਡਿਫਾਲਟ"
+
+#: ../properties/auth-helpers.c:1080
+msgid "MD-5"
+msgstr "MD-5"
+
+#: ../properties/auth-helpers.c:1082
+msgid "SHA-1"
+msgstr "SHA-1"
+
+#: ../properties/auth-helpers.c:1084
+msgid "SHA-224"
+msgstr "SHA-੨੨੪"
+
+#: ../properties/auth-helpers.c:1086
+msgid "SHA-256"
+msgstr "SHA-੨੫੬"
+
+#: ../properties/auth-helpers.c:1088
+msgid "SHA-384"
+msgstr "SHA-੩੮੪"
+
+#: ../properties/auth-helpers.c:1090
+msgid "SHA-512"
+msgstr "SHA-੫੧੨"
+
+#: ../properties/auth-helpers.c:1092
+msgid "RIPEMD-160"
+msgstr "RIPEMD-੧੬੦"
+
+#: ../properties/auth-helpers.c:1245
+#: ../properties/nm-ssh-dialog.glade.h:16
+msgid "Not required"
+msgstr "ਲੋੜੀਦਾ ਨਹੀਂ"
+
+#: ../properties/auth-helpers.c:1247
+msgid "HTTP"
+msgstr "HTTP"
+
+#: ../properties/auth-helpers.c:1249
+msgid "SOCKS"
+msgstr "SOCKS"
+
+#: ../properties/nm-ssh.c:53
+msgid "SSH"
+msgstr "SSH"
+
+#: ../properties/nm-ssh.c:54
+msgid "Compatible with the SSH server."
+msgstr "SSH ਸਰਵਰ ਨਾਲ ਅਨੁਕੂਲ"
+
+#: ../properties/nm-ssh.c:322
+msgid "Certificates (TLS)"
+msgstr "ਸਰਟੀਫਿਕੇਟ (TLS)"
+
+#: ../properties/nm-ssh.c:336
+msgid "Password"
+msgstr "ਪਾਸਵਰਡ"
+
+#: ../properties/nm-ssh.c:353
+msgid "Password with Certificates (TLS)"
+msgstr "ਸਰਟੀਫਿਕੇਟ (TLS) ਨਾਲ ਪਾਸਵਰਡ"
+
+#: ../properties/nm-ssh.c:365
+msgid "Static Key"
+msgstr "ਸਟੇਟਿਕ ਕੁੰਜੀ"
+
+#: ../properties/nm-ssh-dialog.glade.h:1
+msgid " "
+msgstr " "
+
+#: ../properties/nm-ssh-dialog.glade.h:2
+msgid "<b>Authentication</b>"
+msgstr "<b>ਪਰਮਾਣਕਿਤਾ</b>"
+
+#: ../properties/nm-ssh-dialog.glade.h:3
+msgid "<b>General</b>"
+msgstr "<b>ਆਮ</b>"
+
+#: ../properties/nm-ssh-dialog.glade.h:4
+msgid ""
+"<i>Connect only to servers whose certificate matches the given subject.\n"
+"Example: /CN=myvpn.company.com</i>"
+msgstr ""
+"<i>ਕੇਵਲ ਸਰਵਰਾਂ ਨਾਲ ਕੁਨੈਕਟ ਕਰੋ, ਜਿਸ ਦੇ ਸਰਟੀਫਿਕੇਟ ਨਾਲ ਦਿੱਤਾ ਵਿਸ਼ਾ ਮਿਲਦਾ ਹੋਵੇ।\n"
+"ਜਿਵੇਂ: /CN=myvpn.company.com</i>"
+
+#: ../properties/nm-ssh-dialog.glade.h:6
+msgid ""
+"<i>If key direction is used, it must be the opposite of that used on the VPN "
+"peer.  For example, if the peer uses '1', this connection must use '0'.  If "
+"you are unsure what value to use, contact your system administrator.</i>"
+msgstr ""
+"<i>ਜੇ ਕੁੰਜੀ ਦਿਸ਼ਾ ਵਰਤੀ ਗਈ ਤਾਂ ਇਹ VPN ਪੀਅਰ ਲਈ ਵਰਤੋਂ ਦੇ ਉਲਟ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ। ਜਿਵੇਂ ਕਿ, ਜੇ "
+"ਪੀਅਰ '1' ਵਰਤਦਾ ਹੈ ਤਾਂ ਇਹ ਕੁਨੈਕਸ਼ਨ '0' ਵਰਤਦਾ ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ। ਜੇ ਤੁਸੀਂ ਇਸ ਦੇ ਮੁੱਲ ਵਰਤਣ ਬਾਰੇ "
+"ਯਕੀਨੀ ਨਹੀਂ ਹੋ ਤਾਂ ਆਪਣੇ ਪਰਸ਼ਾਸ਼ਕ ਨਾਲ ਸੰਪਰਕ ਕਰੋ।</i>"
+
+#: ../properties/nm-ssh-dialog.glade.h:7
+msgid ""
+"<i>Select this option if your organization requires the use of a proxy "
+"server to access the Internet.</i>"
+msgstr ""
+"<i>ਇਹ ਚੋਣ ਕਰੋ, ਜੇ ਤੁਹਾਡੇ ਸੰਗਠਨ ਵਿੱਚ ਇੰਟਰਨੈੱਟ ਵਰਤਣ ਲਈ ਪਰਾਕਸੀ ਸਰਵਰ ਵਰਤਣ ਦੀ "
+"ਲੋੜ ਹੈ।</i>"
+
+#: ../properties/nm-ssh-dialog.glade.h:8
+msgid "Ad_vanced..."
+msgstr "ਮਾਹਰ(_v)..."
+
+#: ../properties/nm-ssh-dialog.glade.h:9
+msgid "CA Certificate:"
+msgstr "CA ਸਰਟੀਫਕੇਟ:"
+
+#: ../properties/nm-ssh-dialog.glade.h:10
+msgid "Cipher:"
+msgstr "ਸੀਫ਼ਰ:"
+
+#: ../properties/nm-ssh-dialog.glade.h:11
+msgid "General"
+msgstr "ਆਮ"
+
+#: ../properties/nm-ssh-dialog.glade.h:12
+msgid "HMAC Authentication:"
+msgstr "HMAC ਪਰਮਾਣਕਿਤਾ:"
+
+#: ../properties/nm-ssh-dialog.glade.h:13
+msgid "Key Direction:"
+msgstr "ਕੁੰਜੀ ਦਿਸ਼ਾ:"
+
+#: ../properties/nm-ssh-dialog.glade.h:14
+msgid "Key File:"
+msgstr "ਕੁੰਜੀ ਫਾਇਲ:"
+
+#: ../properties/nm-ssh-dialog.glade.h:15
+msgid "Local IP Address:"
+msgstr "ਲੋਕਲ IP ਐਡਰੈੱਸ:"
+
+#: ../properties/nm-ssh-dialog.glade.h:17
+msgid "SSH Advanced Options"
+msgstr "SSH ਮਾਹਰ ਚੋਣਾਂ"
+
+#: ../properties/nm-ssh-dialog.glade.h:18
+msgid "Password:"
+msgstr "ਪਾਸਵਰਡ:"
+
+#: ../properties/nm-ssh-dialog.glade.h:19
+msgid "Port:"
+msgstr "ਪੋਰਟ:"
+
+#: ../properties/nm-ssh-dialog.glade.h:20
+msgid "Private Key Password:"
+msgstr "ਪ੍ਰਾਈਵੇਟ ਕੁੰਜੀ ਪਾਸਵਰਡ:"
+
+#: ../properties/nm-ssh-dialog.glade.h:21
+msgid "Private Key:"
+msgstr "ਪ੍ਰਾਈਵੇਟ ਕੁੰਜੀ:"
+
+#: ../properties/nm-ssh-dialog.glade.h:22
+msgid "Proxies"
+msgstr "ਪਰਾਕਸੀ"
+
+#: ../properties/nm-ssh-dialog.glade.h:23
+#| msgid "Password:"
+msgid "Proxy Password:"
+msgstr "ਪਾਰਕਸੀ ਪਾਸਵਰਡ:"
+
+#: ../properties/nm-ssh-dialog.glade.h:24
+#| msgid "Type:"
+msgid "Proxy Type:"
+msgstr "ਪਰਾਕਸੀ ਕਿਸਮ:"
+
+#: ../properties/nm-ssh-dialog.glade.h:25
+#| msgid "_Username:"
+msgid "Proxy Username:"
+msgstr "ਪਰਾਕਸੀ ਯੂਜ਼ਰ ਨਾਂ:"
+
+#: ../properties/nm-ssh-dialog.glade.h:26
+msgid "Remote IP Address:"
+msgstr "ਰਿਮੋਟ IP ਐਡਰੈੱਸ:"
+
+#: ../properties/nm-ssh-dialog.glade.h:27
+msgid "Restrict tunnel TCP Maximum Segment Size (MSS)"
+msgstr "ਪਾਬੰਦੀਸ਼ੁਦਾ ਟਨਲ TCP ਵੱਧੋ-ਵੱਧ ਸਿਗਮੈਂਟ ਆਕਾਰ (MSS)"
+
+#: ../properties/nm-ssh-dialog.glade.h:28
+msgid "Retry indefinitely when errors occur"
+msgstr "ਲਗਾਤਾਰ ਕੋਸ਼ਿਸ਼ ਜਾਰੀ ਰੱਖੋ, ਜੇ ਗਲਤੀ ਆਵੇ"
+
+#: ../properties/nm-ssh-dialog.glade.h:29
+msgid "Security"
+msgstr "ਸੁਰੱਖਿਆ"
+
+#: ../properties/nm-ssh-dialog.glade.h:30
+#| msgid "Remote IP Address:"
+msgid "Server Address:"
+msgstr "ਸਰਵਰ ਐਡਰੈੱਸ:"
+
+#: ../properties/nm-ssh-dialog.glade.h:31
+msgid "Show passwords"
+msgstr "ਪਾਸਵਰਡ ਵੇਖੋ"
+
+#: ../properties/nm-ssh-dialog.glade.h:32
+msgid "Static Key:"
+msgstr "ਸਟੇਟਿਕ ਕੁੰਜੀ:"
+
+#: ../properties/nm-ssh-dialog.glade.h:33
+msgid "Subject Match:"
+msgstr "ਵਿਸ਼ਾ ਮਿਲਦਾ:"
+
+#: ../properties/nm-ssh-dialog.glade.h:34
+msgid "TLS Authentication"
+msgstr "TLS ਪਰਮਾਣਕਿਤਾ"
+
+#: ../properties/nm-ssh-dialog.glade.h:35
+msgid "Type:"
+msgstr "ਟਾਈਪ:"
+
+#: ../properties/nm-ssh-dialog.glade.h:36
+msgid "Use L_ZO data compression"
+msgstr "L_ZO ਡਾਟਾ ਕੰਪਰੈਸ਼ਨ ਵਰਤੋਂ"
+
+#: ../properties/nm-ssh-dialog.glade.h:37
+msgid "Use a TA_P device"
+msgstr "TA_P ਜੰਤਰ ਵਰਤੋਂ"
+
+#: ../properties/nm-ssh-dialog.glade.h:38
+msgid "Use a _TCP connection"
+msgstr "_TCP ਕੁਨੈਕਸ਼ਨ ਵਰਤੋਂ"
+
+#: ../properties/nm-ssh-dialog.glade.h:39
+msgid "Use additional TLS authentication"
+msgstr "ਹੋਰ TLS ਪਰਮਾਣਕਿਤਾ ਵਰਤੋਂ"
+
+#: ../properties/nm-ssh-dialog.glade.h:40
+msgid "Use custom UDP _fragment size:"
+msgstr "ਪਸੰਦੀਦਾ ਕਸਟਮ UDP ਫਰੇਗਮੈਂਟ ਸਾਈਜ਼(_f):"
+
+#: ../properties/nm-ssh-dialog.glade.h:41
+msgid "Use custom _renegotiation interval:"
+msgstr "ਪਸੰਦੀਦਾ ਰੀਨੈਗੋਸ਼ੀਏਸ਼ਨ ਅੰਤਰਾਲ ਵਰਤੋਂ(_r):"
+
+#: ../properties/nm-ssh-dialog.glade.h:42
+msgid "Use custom _tunnel Maximum Transmission Unit (MTU):"
+msgstr "ਪਸੰਦੀਦਾ ਟਨਲ ਵੱਧੋ-ਵੱਧ ਟਰਾਂਸਮਿਸ਼ਨ ਯੂਨਿਟ ਵਰਤੋਂ(M_TU):"
+
+#: ../properties/nm-ssh-dialog.glade.h:43
+msgid "Use custom gateway p_ort:"
+msgstr "ਕਸਟਮ ਗੇਟਵੇ ਪੋਰਟ ਵਰਤੋਂ(_o):"
+
+#: ../properties/nm-ssh-dialog.glade.h:44
+msgid "User Certificate:"
+msgstr "ਯੂਜ਼ਰ ਸਰਟੀਫਕੇਟ:"
+
+#: ../properties/nm-ssh-dialog.glade.h:45
+msgid "User name:"
+msgstr "ਯੂਜ਼ਰ ਨਾਂ:"
+
+#: ../properties/nm-ssh-dialog.glade.h:46
+msgid "_Gateway:"
+msgstr "ਗੇਟਵੇ(_G):"
+
+#~ msgid "Add, Remove, and Edit VPN Connections"
+#~ msgstr "VPN ਕੁਨੈਕਸ਼ਨ ਸ਼ਾਮਿਲ, ਹਟਾਓ ਜਾਂ ਸੋਧ"
+
+#~ msgid "VPN Connection Manager (SSH)"
+#~ msgstr "VPN ਕੁਨੈਕਸ਼ਨ ਮੈਨੇਜਰ(SSH)"
+
+#~ msgid "The following SSH connection will be created:"
+#~ msgstr "ਹੇਠ ਦਿੱਤਾ SSH ਕੁਨੈਕਸ਼ਨ ਬਣਾਇਆ ਜਾਵੇਗਾ:"
+
+#~ msgid "Name:  %s"
+#~ msgstr "ਨਾਂ:  %s"
+
+#~ msgid "Connection Type: X.509 Certificates"
+#~ msgstr "ਕੁਨੈਕਸ਼ਨ ਕਿਸਮ: X.509 ਸਰਟੀਫਿਕੇਟ"
+
+#~ msgid "CA:  %s"
+#~ msgstr "CA:  %s"
+
+#~ msgid "Cert:  %s"
+#~ msgstr "ਸਰਟੀ:  %s"
+
+#~ msgid "Key:  %s"
+#~ msgstr "ਕੁੰਜੀ: %s"
+
+#~ msgid "Connection Type: Shared Key"
+#~ msgstr "ਕੁਨੈਕਸ਼ਨ ਕਿਸਮ: ਸਾਂਝੀ ਕੁੰਜੀ"
+
+#~ msgid "Shared Key:  %s"
+#~ msgstr "ਸਾਂਝੀ ਕੁੰਜੀ:  %s"
+
+#~ msgid "Local IP:  %s"
+#~ msgstr "ਲੋਕਲ IP:  %s"
+
+#~ msgid "Remote IP:  %s"
+#~ msgstr "ਰਿਮੋਟ IP:  %s"
+
+#~ msgid "Connection Type: Password"
+#~ msgstr "ਕੁਨੈਕਸ਼ਨ ਕਿਸਮ: ਗੁਪਤ-ਕੋਡ"
+
+#~ msgid "Username:  %s"
+#~ msgstr "ਉਪਭੋਗੀ ਨਾਂ:  %s"
+
+#~ msgid "Connection Type: X.509 with Password Authentication"
+#~ msgstr "ਕੁਨੈਕਸ਼ਨ ਕਿਸਮ: ਗੁਪਤ-ਕੋਡ ਪਰਮਾਣਕਿਤਾ ਨਾਲ X.509"
+
+#~ msgid "Remote:  %s"
+#~ msgstr "ਰਿਮੋਟ: %s"
+
+#~ msgid "Device: %s"
+#~ msgstr "ਜੰਤਰ: %s"
+
+#~ msgid "TAP"
+#~ msgstr "TAP"
+
+#~ msgid "TUN"
+#~ msgstr "TUN"
+
+#~ msgid "Protocol: %s"
+#~ msgstr "ਪ੍ਰੋਟੋਕਾਲ: %s"
+
+#~ msgid "TCP"
+#~ msgstr "TCP"
+
+#~ msgid "UDP"
+#~ msgstr "UDP"
+
+#~ msgid "Routes:  %s"
+#~ msgstr "ਰੂਟ:  %s"
+
+#~ msgid "Use LZO Compression: %s"
+#~ msgstr "LZO ਨਪੀੜਨ ਵਰਤੋਂ: %s"
+
+#~ msgid "Yes"
+#~ msgstr "ਹਾਂ"
+
+#~ msgid "No"
+#~ msgstr "ਨਹੀਂ"
+
+#~ msgid "TLS auth:  %s %s"
+#~ msgstr "TLS ਪਰਮਾਣ:  %s %s"
+
+#~ msgid "The connection details can be changed using the \"Edit\" button."
+#~ msgstr "ਕੁਨੈਕਸ਼ਨ ਵੇਰਵੇ ਨੂੰ \"ਸੋਧ\" ਬਟਨ ਦੀ ਵਰਤੋਂ ਕਰਕੇ ਬਦਲਿਆ ਜਾ ਸਕਦਾ ਹੈ।"
+
+#~ msgid "Cannot import settings"
+#~ msgstr "ਸੈਟਿੰਗ ਆਯਾਤ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕਦੀ"
+
+#~ msgid "The VPN settings file '%s' does not contain valid data."
+#~ msgstr "VPN ਸੈਟਿੰਗ ਫਾਇਲ '%s' ਗਲਤ ਡਾਟਾ ਮਿਲਿਆ ਸੀ।"
+
+#~ msgid "Select file to import"
+#~ msgstr "ਆਯਾਤ ਕਰਨ ਲਈ ਫਾਇਲ ਚੁਣੋ"
+
+#~ msgid "Select CA to use"
+#~ msgstr "ਵਰਤਣ ਵਾਸਤੇ CA ਚੁਣੋ"
+
+#~ msgid "Select certificate to use"
+#~ msgstr "ਵਰਤਣ ਵਾਸਤੇ ਸਰਟੀਫਿਕੇਟ ਚੁਣੋ"
+
+#~ msgid "Select key to use"
+#~ msgstr "ਵਰਤਣ ਵਾਸਤੇ ਕੁੰਜੀ"
+
+#~ msgid "Select shared key to use"
+#~ msgstr "ਵਰਤਣ ਵਾਸਤੇ ਸਾਂਝੀ ਕੁੰਜੀ ਵਰਤੋਂ"
+
+#~ msgid "Select TA to use"
+#~ msgstr "ਵਰਤਣ ਵਾਸਤੇ TA ਵਰਤੋਂ"
+
+#~ msgid "Save as..."
+#~ msgstr "ਇੰਝ ਸੰਭਾਲੋ..."
+
+#~ msgid "A file named \"%s\" already exists."
+#~ msgstr "\"%s\" ਨਾਂ ਨਾਲ ਫਾਇਲ ਪਹਿਲਾਂ ਹੀ ਮੌਜੂਦ ਹੈ।"
+
+#~ msgid "Do you want to replace it with the one you are saving?"
+#~ msgstr "ਕੀ ਤੁਸੀਂ ਇਸ ਨੂੰ ਆਪਣੇ ਵਲੋਂ ਸੰਭਾਲੀ ਜਾਣ ਵਾਲੀ ਨਾਲ ਬਦਲਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
+
+#~ msgid "Failed to export configuration"
+#~ msgstr "ਸੰਰਚਨਾ ਨਿਰਯਾਤ ਕਰਨ ਲਈ ਫੇਲ੍ਹ"
+
+#~ msgid "Failed to save file %s"
+#~ msgstr "ਫਾਇਲ %s ਸੰਭਾਲਣ ਲਈ ਫੇਲ੍ਹ"
+
+#~ msgid "0"
+#~ msgstr "0"
+
+#~ msgid "1"
+#~ msgstr "1"
+
+#~ msgid "<b>Connection Name</b>"
+#~ msgstr "<b>ਕੁਨੈਕਸ਼ਨ ਨਾਂ</b>"
+
+#~ msgid "<b>Optional Information</b>"
+#~ msgstr "<b>ਚੋਣਵੀਂ ਜਾਣਕਾਰੀ</b>"
+
+#~ msgid "<i>example: 172.16.0.0/16 10.11.12.0/24</i>"
+#~ msgstr "<i>ਜਿਵੇਂ: 172.16.0.0/16 10.11.12.0/24</i>"
+
+#~ msgid "CA  file:"
+#~ msgstr "CA  ਫਾਇਲ:"
+
+#~ msgid "CA file:"
+#~ msgstr "CA ਫਾਇਲ:"
+
+#~ msgid "Connection Type:"
+#~ msgstr "ਕੁਨੈਕਸ਼ਨ ਕਿਸਮ:"
+
+#~ msgid "Shared key"
+#~ msgstr "ਸਾਂਝੀ ਕੁੰਜੀ"
+
+#~ msgid "Use TLS auth:"
+#~ msgstr "TLS ਪਰਾਮਣਿਤ ਵਰਤੋਂ:"
+
+#~ msgid "Use cipher:"
+#~ msgstr "ਕੀਪਰ ਵਰਤੋਂ:"
+
+#~ msgid "X.509"
+#~ msgstr "X.509"
+
+#~ msgid "_Import Saved Configuration..."
+#~ msgstr "ਸੰਭਾਲੀ ਸੰਰਚਨਾ ਆਯਾਤ(_I)..."
+
+#~ msgid "_Only use VPN connection for these addresses"
+#~ msgstr "ਇਹ ਸਿਰਨਾਵਿਆਂ ਲਈ ਸਿਰਫ਼ VPN ਕੁਨੈਕਸ਼ਨ ਵਰਤੋਂ(_O)"
+
+#~ msgid "The VPN login failed because the VPN program could not be started."
+#~ msgstr "VPN ਲਾਗਇਨ ਫੇਲ੍ਹ ਹੋ ਗਿਆ ਹੈ, ਕਿਉਂਕਿ VPN ਪ੍ਰੋਗਰਾਮ ਸ਼ੁਰੂ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ।"
+
+#~ msgid ""
+#~ "The VPN login failed because the VPN program could not connect to the VPN "
+#~ "server."
+#~ msgstr "VPN ਲਾਗਇਨ ਫੇਲ੍ਹ ਹੋ ਗਿਆ ਹੈ, ਕਿਉਂਕਿ VPN ਪ੍ਰੋਗਰਾਮ VPN ਸਰਵਰ ਨਾਲ ਜੁੜ ਨਹੀਂ ਸਕਿਆ।"
+
+#~ msgid ""
+#~ "The VPN login failed because the VPN configuration options were invalid."
+#~ msgstr "VPN ਲਾਗਇਨ ਫੇਲ੍ਹ ਹੋ ਗਿਆ ਹੈ, ਕਿਉਂਕਿ VPN ਸੰਰਚਨਾ ਚੋਣਾਂ ਗਲਤ ਹਨ।"
+
+#~ msgid ""
+#~ "The VPN login failed because the VPN program received an invalid "
+#~ "configuration from the VPN server."
+#~ msgstr ""
+#~ "VPN ਲਾਗਇਨ ਫੇਲ੍ਹ ਹੋ ਗਿਆ ਹੈ, ਕਿਉਂਕਿ VPN ਪ੍ਰੋਗਰਾਮ ਨੇ VPN ਸਰਵਰ ਤੋਂ ਗਲਤ ਸੰਰਚਨਾ ਮਿਲੀ ਹੈ।"
+
+#~ msgid "VPN connection failed"
+#~ msgstr "VPN ਕੁਨੈਕਸ਼ਨ ਫੇਲ੍ਹ"

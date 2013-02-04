@@ -1,0 +1,467 @@
+# English (British) translation for NetworkManager-ssh
+# Copyright (C) 2006 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the NetworkManager-ssh package.
+# David Lodge <dave@cirt.net>, 2006
+# Bruce Cowan <bruce@bcowan.me.uk>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-torrent\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-03-09 17:10+0000\n"
+"PO-Revision-Date: 2011-03-09 17:11+0100\n"
+"Last-Translator: Bruce Cowan <bruce@bcowan.me.uk>\n"
+"Language-Team: British English <en@li.org>\n"
+"Language: en_GB\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Virtaal 0.6.1\n"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:130
+msgid "_Password:"
+msgstr "_Password:"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:131
+msgid "_Secondary Password:"
+msgstr "_Secondary Password:"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:248
+msgid "_Username:"
+msgstr "_Username:"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:250
+msgid "_Domain:"
+msgstr "_Domain:"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:348
+msgid "Connect _anonymously"
+msgstr "Connect _anonymously"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:353
+msgid "Connect as _user:"
+msgstr "Connect as _user:"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:458
+msgid "_Remember password for this session"
+msgstr "_Remember password for this session"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:460
+msgid "_Save password in keyring"
+msgstr "_Save password in keyring"
+
+#: ../auth-dialog/main.c:89
+#, c-format
+msgid "You need to authenticate to access the Virtual Private Network '%s'."
+msgstr "You need to authenticate to access the Virtual Private Network '%s'."
+
+#: ../auth-dialog/main.c:90
+msgid "Authenticate VPN"
+msgstr "Authenticate VPN"
+
+#: ../auth-dialog/main.c:111
+msgid "Certificate pass_word:"
+msgstr "Certificate pass_word:"
+
+#: ../auth-dialog/main.c:125
+msgid "Certificate password:"
+msgstr "Certificate password:"
+
+#: ../properties/auth-helpers.c:202
+msgid "Choose a Certificate Authority certificate..."
+msgstr "Choose a Certificate Authority certificate…"
+
+#: ../properties/auth-helpers.c:221
+msgid "Choose your personal certificate..."
+msgstr "Choose your personal certificate…"
+
+#: ../properties/auth-helpers.c:239
+msgid "Choose your private key..."
+msgstr "Choose your private key…"
+
+#: ../properties/auth-helpers.c:297
+msgid "Choose an SSH static key..."
+msgstr "Choose an SSH static key…"
+
+#: ../properties/auth-helpers.c:321 ../properties/auth-helpers.c:1104
+#: ../properties/auth-helpers.c:1494
+msgid "None"
+msgstr "None"
+
+#: ../properties/auth-helpers.c:801
+msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
+msgstr "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
+
+#: ../properties/auth-helpers.c:802
+msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
+msgstr "PEM certificates (*.pem, *.crt, *.key, *.cer)"
+
+#: ../properties/auth-helpers.c:862
+msgid "SSH Static Keys (*.key)"
+msgstr "SSH Static Keys (*.key)"
+
+#: ../properties/auth-helpers.c:1021 ../properties/auth-helpers.c:1096
+msgid "Default"
+msgstr "Default"
+
+#: ../properties/auth-helpers.c:1106
+msgid "MD-5"
+msgstr "MD-5"
+
+#: ../properties/auth-helpers.c:1108
+msgid "SHA-1"
+msgstr "SHA-1"
+
+#: ../properties/auth-helpers.c:1110
+msgid "SHA-224"
+msgstr "SHA-224"
+
+#: ../properties/auth-helpers.c:1112
+msgid "SHA-256"
+msgstr "SHA-256"
+
+#: ../properties/auth-helpers.c:1114
+msgid "SHA-384"
+msgstr "SHA-384"
+
+#: ../properties/auth-helpers.c:1116
+msgid "SHA-512"
+msgstr "SHA-512"
+
+#: ../properties/auth-helpers.c:1118
+msgid "RIPEMD-160"
+msgstr "RIPEMD-160"
+
+#: ../properties/auth-helpers.c:1293
+msgid "Not required"
+msgstr "Not required"
+
+#: ../properties/auth-helpers.c:1295
+msgid "HTTP"
+msgstr "HTTP"
+
+#: ../properties/auth-helpers.c:1297
+msgid "SOCKS"
+msgstr "SOCKS"
+
+#: ../properties/nm-ssh.c:53
+msgid "SSH"
+msgstr "SSH"
+
+#: ../properties/nm-ssh.c:54
+msgid "Compatible with the SSH server."
+msgstr "Compatible with the SSH server."
+
+#: ../properties/nm-ssh.c:322
+msgid "Certificates (TLS)"
+msgstr "Certificates (TLS)"
+
+#: ../properties/nm-ssh.c:336
+msgid "Password"
+msgstr "Password"
+
+#: ../properties/nm-ssh.c:353
+msgid "Password with Certificates (TLS)"
+msgstr "Password with Certificates (TLS)"
+
+#: ../properties/nm-ssh.c:365
+msgid "Static Key"
+msgstr "Static Key"
+
+#~ msgid "The following SSH connection will be created:"
+#~ msgstr "The following SSH connection will be created:"
+
+#~ msgid "Name:  %s"
+#~ msgstr "Name:  %s"
+
+#~ msgid "Connection Type: X.509 Certificates"
+#~ msgstr "Connection Type: X.509 Certificates"
+
+#~ msgid "CA:  %s"
+#~ msgstr "CA:  %s"
+
+#~ msgid "Cert:  %s"
+#~ msgstr "Cert:  %s"
+
+#~ msgid "Key:  %s"
+#~ msgstr "Key:  %s"
+
+#~ msgid "Connection Type: Shared Key"
+#~ msgstr "Connection Type: Shared Key"
+
+#~ msgid "Shared Key:  %s"
+#~ msgstr "Shared Key:  %s"
+
+#~ msgid "Local IP:  %s"
+#~ msgstr "Local IP:  %s"
+
+#~ msgid "Remote IP:  %s"
+#~ msgstr "Remote IP:  %s"
+
+#~ msgid "Connection Type: Password"
+#~ msgstr "Connection Type: Password"
+
+#~ msgid "Username:  %s"
+#~ msgstr "Username:  %s"
+
+#~ msgid "Connection Type: X.509 with Password Authentication"
+#~ msgstr "Connection Type: X.509 with Password Authentication"
+
+#~ msgid "Remote:  %s"
+#~ msgstr "Remote:  %s"
+
+#~ msgid "Port:  %s"
+#~ msgstr "Port:  %s"
+
+#~ msgid "Device: %s"
+#~ msgstr "Device: %s"
+
+#~ msgid "TAP"
+#~ msgstr "TAP"
+
+#~ msgid "TUN"
+#~ msgstr "TUN"
+
+#~ msgid "Protocol: %s"
+#~ msgstr "Protocol: %s"
+
+#~ msgid "TCP"
+#~ msgstr "TCP"
+
+#~ msgid "UDP"
+#~ msgstr "UDP"
+
+#~ msgid "Routes:  %s"
+#~ msgstr "Routes:  %s"
+
+#~ msgid "Use LZO Compression: %s"
+#~ msgstr "Use LZO Compression: %s"
+
+#~ msgid "Yes"
+#~ msgstr "Yes"
+
+#~ msgid "No"
+#~ msgstr "No"
+
+#~ msgid "Cipher:  %s"
+#~ msgstr "Cipher:  %s"
+
+#~ msgid "TLS auth:  %s %s"
+#~ msgstr "TLS auth:  %s %s"
+
+#~ msgid "The connection details can be changed using the \"Edit\" button."
+#~ msgstr "The connection details can be changed using the \"Edit\" button."
+
+#~ msgid "Cannot import settings"
+#~ msgstr "Cannot import settings"
+
+#~ msgid "The VPN settings file '%s' does not contain valid data."
+#~ msgstr "The VPN settings file '%s' does not contain valid data."
+
+#~ msgid "Select file to import"
+#~ msgstr "Select file to import"
+
+#~ msgid "Select CA to use"
+#~ msgstr "Select CA to use"
+
+#~ msgid "Select certificate to use"
+#~ msgstr "Select certificate to use"
+
+#~ msgid "Select key to use"
+#~ msgstr "Select key to use"
+
+#~ msgid "Select shared key to use"
+#~ msgstr "Select shared key to use"
+
+#~ msgid "Select TA to use"
+#~ msgstr "Select TA to use"
+
+#~ msgid "Save as..."
+#~ msgstr "Save as..."
+
+#~ msgid "A file named \"%s\" already exists."
+#~ msgstr "A file named \"%s\" already exists."
+
+#~ msgid "Do you want to replace it with the one you are saving?"
+#~ msgstr "Do you want to replace it with the one you are saving?"
+
+#~ msgid "Failed to export configuration"
+#~ msgstr "Failed to export configuration"
+
+#~ msgid "Failed to save file %s"
+#~ msgstr "Failed to save file %s"
+
+#~ msgid "65536"
+#~ msgstr "65536"
+
+#~ msgid "<i>example: 172.16.0.0/16 10.11.12.0/24</i>"
+#~ msgstr "<i>example: 172.16.0.0/16 10.11.12.0/24</i>"
+
+#~ msgid "Ad_vanced"
+#~ msgstr "Ad_vanced"
+
+#~ msgid "C_A file:"
+#~ msgstr "C_A file:"
+
+#~ msgid "Co_nnection type:"
+#~ msgstr "Co_nnection type:"
+
+#~ msgid "Connection na_me:"
+#~ msgstr "Connection na_me:"
+
+#~ msgid "Direction:"
+#~ msgstr "Direction:"
+
+#~ msgid "Import _Saved Configuration..."
+#~ msgstr "Import _Saved Configuration..."
+
+#~ msgid ""
+#~ "Name used to identify the connection to the private network, e.g. "
+#~ "\"Campus VPN\" or \"Corporate Network\""
+#~ msgstr ""
+#~ "Name used to identify the connection to the private network, e.g. "
+#~ "\"Campus VPN\" or \"Corporate Network\""
+
+#~ msgid "Network"
+#~ msgstr "Network"
+
+#~ msgid "Only use _VPN connection for these addresses:"
+#~ msgstr "Only use _VPN connection for these addresses:"
+
+#~ msgid "SSH Advanced Options"
+#~ msgstr "SSH Advanced Options"
+
+#~ msgid "SSH Configuration"
+#~ msgstr "SSH Configuration"
+
+#~ msgid ""
+#~ "Please enter the information provided by your system administrator below. "
+#~ "Do not enter your password here as you will be prompted when connecting."
+#~ msgstr ""
+#~ "Please enter the information provided by your system administrator below. "
+#~ "Do not enter your password here as you will be prompted when connecting."
+
+#~ msgid ""
+#~ "Please note that the file you import is not an SSH configuration "
+#~ "file. Ask your administrator for the file."
+#~ msgstr ""
+#~ "Please note that the file you import is not an SSH configuration "
+#~ "file. Ask your administrator for the file."
+
+#~ msgid "Shared _key:"
+#~ msgstr "Shared _key:"
+
+#~ msgid "TLS-Auth"
+#~ msgstr "TLS-Auth"
+
+#~ msgid "Use L_ZO compression"
+#~ msgstr "Use L_ZO compression"
+
+#~ msgid "Use TA_P device"
+#~ msgstr "Use TA_P device"
+
+#~ msgid "Use _TCP connection"
+#~ msgstr "Use _TCP connection"
+
+#~ msgid "Use _TLS auth:"
+#~ msgstr "Use _TLS auth:"
+
+#~ msgid "Use cip_her:"
+#~ msgstr "Use cip_her:"
+
+#~ msgid ""
+#~ "X.509 Certificates\n"
+#~ "Pre-shared key\n"
+#~ "Password Authentication\n"
+#~ "X.509 with Password Authentication"
+#~ msgstr ""
+#~ "X.509 Certificates\n"
+#~ "Pre-shared key\n"
+#~ "Password Authentication\n"
+#~ "X.509 with Password Authentication"
+
+#~ msgid "_0"
+#~ msgstr "_0"
+
+#~ msgid "_1"
+#~ msgstr "_1"
+
+#~ msgid "_Gateway address:"
+#~ msgstr "_Gateway address:"
+
+#~ msgid "_Gateway port:"
+#~ msgstr "_Gateway port:"
+
+#~ msgid "_Key:"
+#~ msgstr "_Key:"
+
+#~ msgid "_Local IP:"
+#~ msgstr "_Local IP:"
+
+#~ msgid "_Remote IP:"
+#~ msgstr "_Remote IP:"
+
+#~ msgid "_User name:"
+#~ msgstr "_User name:"
+
+#~ msgid "_none"
+#~ msgstr "_none"
+
+#~ msgid "Add, Remove, and Edit VPN Connections"
+#~ msgstr "Add, Remove, and Edit VPN Connections"
+
+#~ msgid "VPN Connection Manager (SSH)"
+#~ msgstr "VPN Connection Manager (SSH)"
+
+#~ msgid ""
+#~ "The VPN login failed because the user name and password were not accepted "
+#~ "or the certificate password was wrong."
+#~ msgstr ""
+#~ "The VPN login failed because the user name and password were not accepted "
+#~ "or the certificate password was wrong."
+
+#~ msgid "The VPN login failed because the VPN program could not be started."
+#~ msgstr "The VPN login failed because the VPN program could not be started."
+
+#~ msgid ""
+#~ "The VPN login failed because the VPN program could not connect to the VPN "
+#~ "server."
+#~ msgstr ""
+#~ "The VPN login failed because the VPN program could not connect to the VPN "
+#~ "server."
+
+#~ msgid ""
+#~ "The VPN login failed because the VPN configuration options were invalid."
+#~ msgstr ""
+#~ "The VPN login failed because the VPN configuration options were invalid."
+
+#~ msgid ""
+#~ "The VPN login failed because the VPN program received an invalid "
+#~ "configuration from the VPN server."
+#~ msgstr ""
+#~ "The VPN login failed because the VPN program received an invalid "
+#~ "configuration from the VPN server."
+
+#~ msgid "VPN connection failed"
+#~ msgstr "VPN connection failed"
+
+#~ msgid "<b>Connection Name</b>"
+#~ msgstr "<b>Connection Name</b>"
+
+#~ msgid "<b>Optional Information</b>"
+#~ msgstr "<b>Optional Information</b>"
+
+#~ msgid "<b>Required Information</b>"
+#~ msgstr "<b>Required Information</b>"
+
+#~ msgid "CA  file:"
+#~ msgstr "CA  file:"
+
+#~ msgid "Shared Key:"
+#~ msgstr "Shared Key:"
+
+#~ msgid "Username:"
+#~ msgstr "Username:"
+
+#~ msgid "X.509"
+#~ msgstr "X.509"

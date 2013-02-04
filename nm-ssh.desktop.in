@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=VPN Connection Manager (SSH)
+GenericName=VPN Connection Manager (SSH)
+Comment=Add, Remove, and Edit VPN Connections
+Exec=nm-vpn-properties --import-service org.freedesktop.NetworkManager.ssh --import-file %f
+Icon=gnome-mime-application-x-ssh-settings
+Terminal=false
+Type=Application
+Categories=GNOME;Network;
+MimeType=application/x-ssh-settings;
+NoDisplay=true

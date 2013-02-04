@@ -1,0 +1,583 @@
+# Catalan translations for NetworkManager package
+# Traduccions al català del paquet «NetworkManager».
+# Copyright © 2006 The Free Software Foundaton, Inc.
+# This file is distributed under the same license as the
+# NetworkManager package.
+# Josep Puigdemont Casamajó <josep.puigdemont@gmail.com>, 2006.
+# Gil Forcada <gilforcada@guifi.net>, 2006, 2007, 2008.
+# David Planella <david.planella@gmail.com>, 2009.
+# Jordi Estrada <jordi.estrada@gmail.com>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: NetworkManager VERSION\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=NetworkManager&component=VPN: ssh\n"
+"POT-Creation-Date: 2010-12-20 13:33+0000\n"
+"PO-Revision-Date: 2010-12-04 23:37+0100\n"
+"Last-Translator: Jordi Estrada <jordi.estrada@gmail.com>\n"
+"Language-Team: Catalan <tradgnome@softcatala.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:130
+msgid "_Password:"
+msgstr "_Contrasenya:"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:131
+msgid "_Secondary Password:"
+msgstr "Contrasenya _secundària:"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:248
+msgid "_Username:"
+msgstr "Nom d'_usuari:"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:250
+msgid "_Domain:"
+msgstr "_Domini:"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:346
+msgid "Connect _anonymously"
+msgstr "Connecta _anònimament"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:351
+msgid "Connect as _user:"
+msgstr "Connecta com a _usuari:"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:456
+msgid "_Remember password for this session"
+msgstr "_Recorda la contrasenya per aquesta sessió"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:458
+msgid "_Save password in keyring"
+msgstr "_Desa la contrasenya a l'anell de claus"
+
+#: ../auth-dialog/main.c:94
+#, c-format
+msgid "You need to authenticate to access the Virtual Private Network '%s'."
+msgstr "Us heu d'autenticar per poder accedir a la xarxa privada virtual «%s»."
+
+#: ../auth-dialog/main.c:95
+msgid "Authenticate VPN"
+msgstr "Autentica la VPN"
+
+#: ../auth-dialog/main.c:116
+msgid "Certificate pass_word:"
+msgstr "Contrasenya del _certificat:"
+
+#: ../auth-dialog/main.c:130
+msgid "Certificate password:"
+msgstr "Contrasenya del certificat:"
+
+#: ../properties/auth-helpers.c:207
+msgid "Choose a Certificate Authority certificate..."
+msgstr "Trieu un certificat d'autoritat de certificació..."
+
+#: ../properties/auth-helpers.c:226
+msgid "Choose your personal certificate..."
+msgstr "Trieu el vostre certificat personal..."
+
+#: ../properties/auth-helpers.c:244
+msgid "Choose your private key..."
+msgstr "Trieu la vostra clau privada..."
+
+#: ../properties/auth-helpers.c:302
+msgid "Choose an SSH static key..."
+msgstr "Trieu una clau estàtica SSH..."
+
+#: ../properties/auth-helpers.c:326 ../properties/auth-helpers.c:1078
+#: ../properties/auth-helpers.c:1451
+msgid "None"
+msgstr "Cap"
+
+#: ../properties/auth-helpers.c:775
+msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
+msgstr "Certificats PEM o PKCS#12 (*.pem, *.crt, *.key, *.cer, *.p12)"
+
+#: ../properties/auth-helpers.c:776
+msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
+msgstr "Certificats PEM (*.pem, *.crt, *.key, *.cer)"
+
+#: ../properties/auth-helpers.c:836
+msgid "SSH Static Keys (*.key)"
+msgstr "Claus estàtiques SSH (*.key)"
+
+#: ../properties/auth-helpers.c:995 ../properties/auth-helpers.c:1070
+msgid "Default"
+msgstr "Predeterminat"
+
+#: ../properties/auth-helpers.c:1080
+msgid "MD-5"
+msgstr "MD-5"
+
+#: ../properties/auth-helpers.c:1082
+msgid "SHA-1"
+msgstr "SHA-1"
+
+#: ../properties/auth-helpers.c:1084
+msgid "SHA-224"
+msgstr "SHA-224"
+
+#: ../properties/auth-helpers.c:1086
+msgid "SHA-256"
+msgstr "SHA-256"
+
+#: ../properties/auth-helpers.c:1088
+msgid "SHA-384"
+msgstr "SHA-384"
+
+#: ../properties/auth-helpers.c:1090
+msgid "SHA-512"
+msgstr "SHA-512"
+
+#: ../properties/auth-helpers.c:1092
+msgid "RIPEMD-160"
+msgstr "RIPEMD-160"
+
+#: ../properties/auth-helpers.c:1253
+msgid "Not required"
+msgstr "No necessari"
+
+#: ../properties/auth-helpers.c:1255
+msgid "HTTP"
+msgstr "HTTP"
+
+#: ../properties/auth-helpers.c:1257
+msgid "SOCKS"
+msgstr "SOCKS"
+
+#: ../properties/nm-ssh.c:52
+msgid "SSH"
+msgstr "SSH"
+
+#: ../properties/nm-ssh.c:53
+msgid "Compatible with the SSH server."
+msgstr "Compatible amb el servidor SSH."
+
+#: ../properties/nm-ssh.c:321
+msgid "Certificates (TLS)"
+msgstr "Certificats (TLS)"
+
+#: ../properties/nm-ssh.c:335
+msgid "Password"
+msgstr "Contrasenya"
+
+#: ../properties/nm-ssh.c:352
+msgid "Password with Certificates (TLS)"
+msgstr "Contrasenya amb certificats (TLS)"
+
+#: ../properties/nm-ssh.c:364
+msgid "Static Key"
+msgstr "Clau estàtica"
+
+#~ msgid " "
+#~ msgstr " "
+
+#~ msgid "<b>Authentication</b>"
+#~ msgstr "<b>Autenticació</b>"
+
+#~ msgid "<b>General</b>"
+#~ msgstr "<b>General</b>"
+
+#~ msgid ""
+#~ "<i>Connect only to servers whose certificate matches the given subject.\n"
+#~ "Example: /CN=myvpn.company.com</i>"
+#~ msgstr ""
+#~ "<i>Connecta només als servidors on el certificat d'aquests coincideixi "
+#~ "amb l'assumpte proporcionat.\n"
+#~ "Per exemple: /CN=elmeuvpn.companyia.com</i>"
+
+#~ msgid ""
+#~ "<i>If key direction is used, it must be the opposite of that used on the "
+#~ "VPN peer.  For example, if the peer uses '1', this connection must use "
+#~ "'0'.  If you are unsure what value to use, contact your system "
+#~ "administrator.</i>"
+#~ msgstr ""
+#~ "<i>Si s'utilitza una direcció de clau, ha de ser l'oposada que la de "
+#~ "l'homòleg de la VPN. Per exemple, si l'homòleg utilitza «1», aquesta "
+#~ "connexió ha d'utilitzar «0». Si no esteu segurs de quin valor heu "
+#~ "d'utilitzar, contacteu amb l'administrador del sistema.</i>"
+
+#~ msgid ""
+#~ "<i>Select this option if your organization requires the use of a proxy "
+#~ "server to access the Internet.</i>"
+#~ msgstr ""
+#~ "<i>Seleccioneu aquesta opció si la vostra organització requereix l'ús "
+#~ "d'un servidor intermediari per accedir a Internet.</i>"
+
+#~ msgid "Ad_vanced..."
+#~ msgstr "A_vançat..."
+
+#~ msgid "CA Certificate:"
+#~ msgstr "Certificat de CA:"
+
+#~ msgid "Cipher:"
+#~ msgstr "Criptògraf:"
+
+#~ msgid "General"
+#~ msgstr "General"
+
+#~ msgid "HMAC Authentication:"
+#~ msgstr "Autenticació HMAC:"
+
+#~ msgid "Key Direction:"
+#~ msgstr "Direcció de la clau:"
+
+#~ msgid "Key File:"
+#~ msgstr "Fitxer de clau:"
+
+#~ msgid "Local IP Address:"
+#~ msgstr "Adreça IP local:"
+
+#~ msgid "SSH Advanced Options"
+#~ msgstr "Opcions avançades de l'SSH"
+
+#~ msgid "Password:"
+#~ msgstr "Contrasenya:"
+
+#~ msgid "Port:"
+#~ msgstr "Port:"
+
+#~ msgid "Private Key Password:"
+#~ msgstr "Contrasenya de la clau privada:"
+
+#~ msgid "Private Key:"
+#~ msgstr "Clau privada:"
+
+#~ msgid "Proxies"
+#~ msgstr "Servidors intermediaris"
+
+#~ msgid "Proxy Password:"
+#~ msgstr "Contrasenya del servidor intermediari:"
+
+#~| msgid "Type:"
+#~ msgid "Proxy Type:"
+#~ msgstr "Tipus de servidor intermediari:"
+
+#~ msgid "Proxy Username:"
+#~ msgstr "Nom d'usuari del servidor intermediari:"
+
+#~ msgid "Remote IP Address:"
+#~ msgstr "Adreça IP remota:"
+
+#~ msgid "Restrict tunnel TCP Maximum Segment Size (MSS)"
+#~ msgstr "Restringeix la mida de segment màxima del túnel TCP (MSS)"
+
+#~ msgid "Retry indefinitely when errors occur"
+#~ msgstr "Reintenta-ho indefinidament quan es produeixin errors"
+
+#~ msgid "Security"
+#~ msgstr "Seguretat"
+
+#~ msgid "Server Address:"
+#~ msgstr "Adreça del servidor:"
+
+#~ msgid "Show passwords"
+#~ msgstr "Mostra les contrasenyes"
+
+#~ msgid "Static Key:"
+#~ msgstr "Clau estàtica:"
+
+#~ msgid "Subject Match:"
+#~ msgstr "Assumpte a coinxidir:"
+
+#~ msgid "TLS Authentication"
+#~ msgstr "Autenticació TLS"
+
+#~ msgid "Type:"
+#~ msgstr "Tipus:"
+
+#~ msgid "Use L_ZO data compression"
+#~ msgstr "Utilitza la compressió de dades L_ZO"
+
+#~ msgid "Use a TA_P device"
+#~ msgstr "Utilitza un dispositiu TA_P"
+
+#~ msgid "Use a _TCP connection"
+#~ msgstr "Utilitza una connexió _TCP"
+
+#~ msgid "Use additional TLS authentication"
+#~ msgstr "Utilitza autenticació TLS addicional"
+
+#~ msgid "Use custom UDP _fragment size:"
+#~ msgstr "Utilitza una mida de _fragment UDP personalitzada:"
+
+#~ msgid "Use custom _renegotiation interval:"
+#~ msgstr "Utilitza un interval de _renegociació personalitzat:"
+
+#~ msgid "Use custom _tunnel Maximum Transmission Unit (MTU):"
+#~ msgstr ""
+#~ "Utilitza una unitat de transmissió màxima del túnel (MTU) personalitzada:"
+
+#~ msgid "Use custom gateway p_ort:"
+#~ msgstr "Utilitza un _port de passarel·la personalitzat:"
+
+#~ msgid "User Certificate:"
+#~ msgstr "Certificat d'usuari:"
+
+#~ msgid "User name:"
+#~ msgstr "Nom d'usuari:"
+
+#~ msgid "_Gateway:"
+#~ msgstr "Pas_sarel·la:"
+
+#~ msgid "The following SSH connection will be created:"
+#~ msgstr "Es crearà la següent connexió SSH:"
+
+#~ msgid "Name:  %s"
+#~ msgstr "Nom:  %s"
+
+#~ msgid "Connection Type: X.509 Certificates"
+#~ msgstr "Tipus de connexió: Certifcats X.509"
+
+#~ msgid "CA:  %s"
+#~ msgstr "CA:  %s"
+
+#~ msgid "Cert:  %s"
+#~ msgstr "Certificat:  %s"
+
+#~ msgid "Key:  %s"
+#~ msgstr "Clau:  %s"
+
+#~ msgid "Connection Type: Shared Key"
+#~ msgstr "Tipus de connexió: Clau compartida"
+
+#~ msgid "Shared Key:  %s"
+#~ msgstr "Clau compartida:  %s"
+
+#~ msgid "Remote IP:  %s"
+#~ msgstr "IP remota:  %s"
+
+#~ msgid "Connection Type: Password"
+#~ msgstr "Tipus de connexió: Contrasenya"
+
+#~ msgid "Username:  %s"
+#~ msgstr "Nom d'usuari:  %s"
+
+#~ msgid "Connection Type: X.509 with Password Authentication"
+#~ msgstr "Tipus de connexió: X.509 amb autenticació de contrasenya"
+
+#~ msgid "Remote:  %s"
+#~ msgstr "Remot:  %s"
+
+#~ msgid "Device: %s"
+#~ msgstr "Dispositiu: %s"
+
+#~ msgid "TAP"
+#~ msgstr "TAP"
+
+#~ msgid "TUN"
+#~ msgstr "TUN"
+
+#~ msgid "Protocol: %s"
+#~ msgstr "Protocol: %s"
+
+#~ msgid "TCP"
+#~ msgstr "TCP"
+
+#~ msgid "UDP"
+#~ msgstr "UDP"
+
+#~ msgid "Routes:  %s"
+#~ msgstr "Rutes:  %s"
+
+#~ msgid "Use LZO Compression: %s"
+#~ msgstr "Utilitza compressió LZO: %s"
+
+#~ msgid "Yes"
+#~ msgstr "Sí"
+
+#~ msgid "TLS auth:  %s %s"
+#~ msgstr "Autenticació TLS:  %s %s"
+
+#~ msgid "The connection details can be changed using the \"Edit\" button."
+#~ msgstr "Els detalls de la connexió es poden canviar amb el botó «Edita»."
+
+#~ msgid "Cannot import settings"
+#~ msgstr "No s'han pogut importar els paràmetres"
+
+#~ msgid "The VPN settings file '%s' does not contain valid data."
+#~ msgstr "El fitxer de paràmetres VPN «%s», no conté dades vàlides."
+
+#~ msgid "Select file to import"
+#~ msgstr "Seleccioneu el fitxer a importar"
+
+#~ msgid "Select CA to use"
+#~ msgstr "Seleccioneu la CA a utilitzar"
+
+#~ msgid "Select certificate to use"
+#~ msgstr "Seleccioneu el certificat a utilitzar"
+
+#~ msgid "Select key to use"
+#~ msgstr "Seleccioneu la clau a utilitzar"
+
+#~ msgid "Select shared key to use"
+#~ msgstr "Seleccioneu la clau compartida a utilitzar"
+
+#~ msgid "Select TA to use"
+#~ msgstr "Seleccioneu la TA a utilitzar"
+
+#~ msgid "Save as..."
+#~ msgstr "Anomena i desa..."
+
+#~ msgid "A file named \"%s\" already exists."
+#~ msgstr "Ja existeix un fitxer anomenat «%s»."
+
+#~ msgid "Do you want to replace it with the one you are saving?"
+#~ msgstr "Voleu reemplaçar-lo pel que voleu desar?"
+
+#~ msgid "Failed to export configuration"
+#~ msgstr "No s'ha pogut exportar la configuració"
+
+#~ msgid "Failed to save file %s"
+#~ msgstr "No s'ha pogut desar el fitxer %s"
+
+#~ msgid "65536"
+#~ msgstr "65536"
+
+#~ msgid "<i>example: 172.16.0.0/16 10.11.12.0/24</i>"
+#~ msgstr "<i>exemple: 172.16.0.0/16 10.11.12.0/24</i>"
+
+#~ msgid "C_A file:"
+#~ msgstr "Fitxer C_A:"
+
+#~ msgid "Co_nnection type:"
+#~ msgstr "Tipus de co_nnexió:"
+
+#~ msgid "Connection na_me:"
+#~ msgstr "No_m de la connexió:"
+
+#~ msgid "Import _Saved Configuration..."
+#~ msgstr "Importa una configuració de_sada..."
+
+#~ msgid ""
+#~ "Name used to identify the connection to the private network, e.g. "
+#~ "\"Campus VPN\" or \"Corporate Network\""
+#~ msgstr ""
+#~ "_Nom utilitzat per identificar la connexió a la xarxa privada, per "
+#~ "exemple «VPN del Campus» o «Xarxa Corporativa»"
+
+#~ msgid "Network"
+#~ msgstr "Xarxa"
+
+#~ msgid "Only use _VPN connection for these addresses:"
+#~ msgstr "_Fes servir només la connexió VPN per a aquestes adreces:"
+
+#~ msgid "SSH Configuration"
+#~ msgstr "Configuració de l'SSH"
+
+#~ msgid ""
+#~ "Please enter the information provided by your system administrator below. "
+#~ "Do not enter your password here as you will be prompted when connecting."
+#~ msgstr ""
+#~ "Entreu la informació proporcionada pel vostre administrador de sistema. "
+#~ "No hi entreu la vostra contrasenya, ja es demanarà en connectar."
+
+#~ msgid ""
+#~ "Please note that the file you import is not an SSH configuration "
+#~ "file. Ask your administrator for the file."
+#~ msgstr ""
+#~ "El fitxer que heu importat no és un fitxer de configuració SSH. "
+#~ "Demaneu-li el fitxer a l'administrador."
+
+#~ msgid "Shared _key:"
+#~ msgstr "_Clau compartida:"
+
+#~ msgid "TLS-Auth"
+#~ msgstr "Autenticació TLS"
+
+#~ msgid "Use _TLS auth:"
+#~ msgstr "Utilitza autenticació _TLS:"
+
+#~ msgid "Use cip_her:"
+#~ msgstr "Utilitza _xifratge:"
+
+#~ msgid ""
+#~ "X.509 Certificates\n"
+#~ "Pre-shared key\n"
+#~ "Password Authentication\n"
+#~ "X.509 with Password Authentication"
+#~ msgstr ""
+#~ "Certificats X.509\n"
+#~ "Clau pre-compartida\n"
+#~ "Autenticació de contrasenya\n"
+#~ "X.509 amb autenticació de contrasenya"
+
+#~ msgid "_0"
+#~ msgstr "_0"
+
+#~ msgid "_1"
+#~ msgstr "_1"
+
+#~ msgid "_Gateway address:"
+#~ msgstr "A_dreça de la passarel·la:"
+
+#~ msgid "_Key:"
+#~ msgstr "_Clau:"
+
+#~ msgid "_Local IP:"
+#~ msgstr "IP _local:"
+
+#~ msgid "_Remote IP:"
+#~ msgstr "IP _remota:"
+
+#~ msgid "_none"
+#~ msgstr "_cap"
+
+#~ msgid "Add, Remove, and Edit VPN Connections"
+#~ msgstr "Afegiu, suprimiu, i editeu connexions VPN"
+
+#~ msgid "VPN Connection Manager (SSH)"
+#~ msgstr "Gestor de connexions VPN (SSH)"
+
+#~ msgid ""
+#~ "The VPN login failed because the user name and password were not accepted "
+#~ "or the certificate password was wrong."
+#~ msgstr ""
+#~ "No s'ha pogut connectar a la VPN perquè no s'han acceptat el nom "
+#~ "d'usuari, o la contrasenya o la contrasenya certificada és errònia.\""
+
+#~ msgid "The VPN login failed because the VPN program could not be started."
+#~ msgstr ""
+#~ "No s'ha pogut connectar a la VPN perquè no s'ha pogut iniciar l'aplicació "
+#~ "VPN."
+
+#~ msgid ""
+#~ "The VPN login failed because the VPN program could not connect to the VPN "
+#~ "server."
+#~ msgstr ""
+#~ "No s'ha pogut connectar a la VPN perquè l'aplicació VPN no s'ha pogut "
+#~ "connectar al servidor VPN."
+
+#~ msgid ""
+#~ "The VPN login failed because the VPN configuration options were invalid."
+#~ msgstr ""
+#~ "No s'ha pogut connectar a la VPN perquè les opcions de configuració de la "
+#~ "VPN eren erronis."
+
+#~ msgid ""
+#~ "The VPN login failed because the VPN program received an invalid "
+#~ "configuration from the VPN server."
+#~ msgstr ""
+#~ "No s'ha pogut connectar a la VPN perquè l'aplicació VPN ha rebut una "
+#~ "configuració errònia del servidor VPN."
+
+#~ msgid "VPN connection failed"
+#~ msgstr "Ha fallat la connexió VPN"
+
+#~ msgid "<b>Connection Information</b>"
+#~ msgstr "<b>Informació de la connexió</b>"
+
+#~ msgid "X.509"
+#~ msgstr "X.509"
+
+#~ msgid "X.509/Pass"
+#~ msgstr "X.509/Contrasenya"
+
+#~ msgid "CA  file:"
+#~ msgstr "Fitxer CA:"
+
+#~ msgid "Optional"
+#~ msgstr "Opcional"

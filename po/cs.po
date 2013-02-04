@@ -1,0 +1,469 @@
+# Czech translation of network-manager-ssh.
+# Copyright (C) 2008, 2009, 2010 the author(s) of network-manager-ssh.
+# This file is distributed under the same license as the network-manager-ssh package.
+#
+# Jakub Friedl <jfriedl@suse.cz>, 2006.
+# Jiří Eischmann <jiri@eischmann.cz>, 2008.
+# Zdeněk Hataš <zdenek.hatas@gmail.com>, 2009, 2010, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: network-manager-ssh\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=NetworkManager&keywords=I18N+L10N&component=VPN: ssh\n"
+"POT-Creation-Date: 2011-03-29 21:58+0000\n"
+"PO-Revision-Date: 2011-04-02 17:05+0100\n"
+"Last-Translator: Zdeněk Hataš <zdenek.hatas@gmail.com>\n"
+"Language-Team: Czech <gnome-cs-list@gnome.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cs\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Poedit-Language: Czech\n"
+"X-Poedit-Country: CZECH REPUBLIC\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:130
+msgid "_Password:"
+msgstr "_Heslo:"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:131
+msgid "_Secondary Password:"
+msgstr "_Sekundární heslo:"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:248
+msgid "_Username:"
+msgstr "_Uživ. jméno:"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:250
+msgid "_Domain:"
+msgstr "_Doména:"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:348
+msgid "Connect _anonymously"
+msgstr "Připojit _anonymně"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:353
+msgid "Connect as _user:"
+msgstr "Připojit jako _uživatel:"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:458
+msgid "_Remember password for this session"
+msgstr "_Zapamatovat heslo pro toto sezení"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:460
+msgid "_Save password in keyring"
+msgstr "_Uložit heslo do klíčenky"
+
+#: ../auth-dialog/main.c:89
+#, c-format
+msgid "You need to authenticate to access the Virtual Private Network '%s'."
+msgstr "Pro přístup do VPN „%s“ se musíte autentizovat."
+
+#: ../auth-dialog/main.c:90
+msgid "Authenticate VPN"
+msgstr "Ověřování VPN"
+
+#: ../auth-dialog/main.c:111
+msgid "Certificate pass_word:"
+msgstr "Heslo _certifikátu:"
+
+#: ../auth-dialog/main.c:125
+msgid "Certificate password:"
+msgstr "Heslo certifikátu:"
+
+#: ../properties/auth-helpers.c:202
+msgid "Choose a Certificate Authority certificate..."
+msgstr "Zvolit certifikát certifikační autority…"
+
+#: ../properties/auth-helpers.c:221
+msgid "Choose your personal certificate..."
+msgstr "Zvolit svůj osobní certifikát…"
+
+#: ../properties/auth-helpers.c:239
+msgid "Choose your private key..."
+msgstr "Zvolit svůj osobní klíč…"
+
+#: ../properties/auth-helpers.c:297
+msgid "Choose an SSH static key..."
+msgstr "Zvolit statický klíč SSH…"
+
+#: ../properties/auth-helpers.c:321
+#: ../properties/auth-helpers.c:1104
+#: ../properties/auth-helpers.c:1494
+msgid "None"
+msgstr "Žádný"
+
+#: ../properties/auth-helpers.c:801
+msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
+msgstr "Certifikáty PEM nebo PKCS#12 (*.pem, *.crt, *.key, *.cer, *.p12)"
+
+#: ../properties/auth-helpers.c:802
+msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
+msgstr "Certifikáty PEM (*.pem, *.crt, *.key, *.cer)"
+
+#: ../properties/auth-helpers.c:862
+msgid "SSH Static Keys (*.key)"
+msgstr "Statické klíče SSH (*.key)"
+
+#: ../properties/auth-helpers.c:1021
+#: ../properties/auth-helpers.c:1096
+msgid "Default"
+msgstr "Výchozí"
+
+#: ../properties/auth-helpers.c:1106
+msgid "MD-5"
+msgstr "MD-5"
+
+#: ../properties/auth-helpers.c:1108
+msgid "SHA-1"
+msgstr "SHA-1"
+
+#: ../properties/auth-helpers.c:1110
+msgid "SHA-224"
+msgstr "SHA-224"
+
+#: ../properties/auth-helpers.c:1112
+msgid "SHA-256"
+msgstr "SHA-256"
+
+#: ../properties/auth-helpers.c:1114
+msgid "SHA-384"
+msgstr "SHA-384"
+
+#: ../properties/auth-helpers.c:1116
+msgid "SHA-512"
+msgstr "SHA-512"
+
+#: ../properties/auth-helpers.c:1118
+msgid "RIPEMD-160"
+msgstr "RIPEMD-160"
+
+#: ../properties/auth-helpers.c:1293
+#: ../properties/nm-ssh-dialog.ui.h:16
+msgid "Not required"
+msgstr "Není vyžadováno"
+
+#: ../properties/auth-helpers.c:1295
+msgid "HTTP"
+msgstr "HTTP"
+
+#: ../properties/auth-helpers.c:1297
+msgid "SOCKS"
+msgstr "SOCKS"
+
+#: ../properties/nm-ssh.c:53
+msgid "SSH"
+msgstr "SSH"
+
+#: ../properties/nm-ssh.c:54
+msgid "Compatible with the SSH server."
+msgstr "Kompatibilní s SSH serverem."
+
+#: ../properties/nm-ssh.c:322
+msgid "Certificates (TLS)"
+msgstr "Certifikáty (TLS)"
+
+#: ../properties/nm-ssh.c:336
+msgid "Password"
+msgstr "Heslo"
+
+#: ../properties/nm-ssh.c:353
+msgid "Password with Certificates (TLS)"
+msgstr "Heslo s certifikáty (TLS)"
+
+#: ../properties/nm-ssh.c:365
+msgid "Static Key"
+msgstr "Statický klíč"
+
+#: ../properties/nm-ssh-dialog.ui.h:1
+msgid " "
+msgstr " "
+
+#: ../properties/nm-ssh-dialog.ui.h:2
+msgid "<b>Authentication</b>"
+msgstr "<b>Autentizace</b>"
+
+#: ../properties/nm-ssh-dialog.ui.h:3
+msgid "<b>General</b>"
+msgstr "<b>Obecné</b>"
+
+#: ../properties/nm-ssh-dialog.ui.h:4
+msgid ""
+"<i>Connect only to servers whose certificate matches the given subject.\n"
+"Example: /CN=myvpn.company.com</i>"
+msgstr ""
+"<i>Připojit pouze k serverům, jejichž certifikát odpovídá danému subjektu.\n"
+"Příklad: /CN=mojevpn.firma.cz</i>"
+
+#: ../properties/nm-ssh-dialog.ui.h:6
+msgid "<i>If key direction is used, it must be the opposite of that used on the VPN peer.  For example, if the peer uses '1', this connection must use '0'.  If you are unsure what value to use, contact your system administrator.</i>"
+msgstr "<i>Pokud se používá směr klíče, musí být opačný k protějšku VPN. Například, když protějšek používá „1“, toto připojení musí použít „0“. Pokud si nejste jisti, jakou hodnotu použít, kontaktujte správce svého systému.</i>"
+
+#: ../properties/nm-ssh-dialog.ui.h:7
+msgid "<i>Select this option if your organization requires the use of a proxy server to access the Internet.</i>"
+msgstr "<i>Zvolte tuto možnost, pokud vaše organizace používá pro přístup do Internetu server proxy.</i>"
+
+#: ../properties/nm-ssh-dialog.ui.h:8
+msgid "Ad_vanced..."
+msgstr "P_okročilé…"
+
+#: ../properties/nm-ssh-dialog.ui.h:9
+msgid "CA Certificate:"
+msgstr "Certifikát CA:"
+
+#: ../properties/nm-ssh-dialog.ui.h:10
+msgid "Cipher:"
+msgstr "Šifra:"
+
+#: ../properties/nm-ssh-dialog.ui.h:11
+msgid "General"
+msgstr "Obecné"
+
+#: ../properties/nm-ssh-dialog.ui.h:12
+msgid "HMAC Authentication:"
+msgstr "Autentizace HMAC:"
+
+#: ../properties/nm-ssh-dialog.ui.h:13
+msgid "Key Direction:"
+msgstr "Směr klíče:"
+
+#: ../properties/nm-ssh-dialog.ui.h:14
+msgid "Key File:"
+msgstr "Soubor klíče:"
+
+#: ../properties/nm-ssh-dialog.ui.h:15
+msgid "Local IP Address:"
+msgstr "Místní adresa IP:"
+
+#: ../properties/nm-ssh-dialog.ui.h:17
+msgid "SSH Advanced Options"
+msgstr "Pokročilé volby SSH"
+
+#: ../properties/nm-ssh-dialog.ui.h:18
+msgid "Password:"
+msgstr "Heslo:"
+
+#: ../properties/nm-ssh-dialog.ui.h:19
+msgid "Port:"
+msgstr "Port:"
+
+#: ../properties/nm-ssh-dialog.ui.h:20
+msgid "Private Key Password:"
+msgstr "Heslo soukromého klíče:"
+
+#: ../properties/nm-ssh-dialog.ui.h:21
+msgid "Private Key:"
+msgstr "Soukromý klíč:"
+
+#: ../properties/nm-ssh-dialog.ui.h:22
+msgid "Proxies"
+msgstr "Servery proxy"
+
+#: ../properties/nm-ssh-dialog.ui.h:23
+msgid "Proxy Password:"
+msgstr "Heslo proxy:"
+
+#: ../properties/nm-ssh-dialog.ui.h:24
+msgid "Proxy Type:"
+msgstr "Typ proxy:"
+
+#: ../properties/nm-ssh-dialog.ui.h:25
+msgid "Proxy Username:"
+msgstr "Uživatelské jméno proxy:"
+
+#: ../properties/nm-ssh-dialog.ui.h:26
+msgid "Remote IP Address:"
+msgstr "Vzdálená adresa IP:"
+
+#: ../properties/nm-ssh-dialog.ui.h:27
+msgid "Restrict tunnel TCP Maximum Segment Size (MSS)"
+msgstr "Omezit maximální velikost segmentu TCP u tunelu (MSS)"
+
+#: ../properties/nm-ssh-dialog.ui.h:28
+msgid "Retry indefinitely when errors occur"
+msgstr "Pokud nastane chyba, opakovat"
+
+#: ../properties/nm-ssh-dialog.ui.h:29
+msgid "Security"
+msgstr "Zabezpečení"
+
+#: ../properties/nm-ssh-dialog.ui.h:30
+msgid "Server Address:"
+msgstr "Adresa serveru:"
+
+#: ../properties/nm-ssh-dialog.ui.h:31
+#| msgid "Show passwords"
+msgid "Show password"
+msgstr "Zobrazit heslo"
+
+#: ../properties/nm-ssh-dialog.ui.h:32
+msgid "Show passwords"
+msgstr "Zobrazit hesla"
+
+#: ../properties/nm-ssh-dialog.ui.h:33
+msgid "Static Key:"
+msgstr "Statický klíč:"
+
+#: ../properties/nm-ssh-dialog.ui.h:34
+msgid "Subject Match:"
+msgstr "Subjekt odpovídá:"
+
+#: ../properties/nm-ssh-dialog.ui.h:35
+msgid "TLS Authentication"
+msgstr "Autentizace TLS"
+
+#: ../properties/nm-ssh-dialog.ui.h:36
+msgid "Type:"
+msgstr "Typ:"
+
+#: ../properties/nm-ssh-dialog.ui.h:37
+msgid "Use L_ZO data compression"
+msgstr "Použít komprimaci L_ZO"
+
+#: ../properties/nm-ssh-dialog.ui.h:38
+msgid "Use a TA_P device"
+msgstr "Použít TA_P zařízení"
+
+#: ../properties/nm-ssh-dialog.ui.h:39
+msgid "Use a _TCP connection"
+msgstr "Použít spojení _TCP"
+
+#: ../properties/nm-ssh-dialog.ui.h:40
+msgid "Use additional TLS authentication"
+msgstr "Použít dodatečnou autentizaci TLS"
+
+#: ../properties/nm-ssh-dialog.ui.h:41
+msgid "Use custom UDP _fragment size:"
+msgstr "Použít vlastní velikost UDP _fragmentu:"
+
+#: ../properties/nm-ssh-dialog.ui.h:42
+msgid "Use custom _renegotiation interval:"
+msgstr "Použít vlastní interval opětovného _připojení:"
+
+#: ../properties/nm-ssh-dialog.ui.h:43
+msgid "Use custom _tunnel Maximum Transmission Unit (MTU):"
+msgstr "Použí_t vlastní maximální velikost přenosové jednotky (MTU):"
+
+#: ../properties/nm-ssh-dialog.ui.h:44
+msgid "Use custom gateway p_ort:"
+msgstr "P_oužít vlastní port brány:"
+
+#: ../properties/nm-ssh-dialog.ui.h:45
+msgid "User Certificate:"
+msgstr "Uživatelský certifikát:"
+
+#: ../properties/nm-ssh-dialog.ui.h:46
+msgid "User name:"
+msgstr "Uživatelské jméno:"
+
+#: ../properties/nm-ssh-dialog.ui.h:47
+msgid "_Gateway:"
+msgstr "_Brána:"
+
+#: ../src/nm-ssh-service.c:192
+#, c-format
+msgid "invalid address '%s'"
+msgstr "neplatná adresa „%s“"
+
+#: ../src/nm-ssh-service.c:204
+#, c-format
+msgid "invalid integer property '%s' or out of range [%d -> %d]"
+msgstr "celočíselná volba „%s“ není platná nebo je mimo rozsah [%d -> %d]"
+
+#: ../src/nm-ssh-service.c:214
+#, c-format
+msgid "invalid boolean property '%s' (not yes or no)"
+msgstr "pravdivostní volba „%s“ není platná (není ano či ne)"
+
+#: ../src/nm-ssh-service.c:221
+#, c-format
+msgid "unhandled property '%s' type %s"
+msgstr "neošetřená volba „%s“ typu %s"
+
+#: ../src/nm-ssh-service.c:232
+#, c-format
+msgid "property '%s' invalid or not supported"
+msgstr "volba „%s“ není platná nebo podporovaná"
+
+#: ../src/nm-ssh-service.c:249
+msgid "No VPN configuration options."
+msgstr "Žádné volby nastavení VPN."
+
+#: ../src/nm-ssh-service.c:272
+msgid "No VPN secrets!"
+msgstr "Žádná hesla VPN!"
+
+#: ../src/nm-ssh-service.c:741
+msgid "Could not find the ssh binary."
+msgstr "Nelze nalézt program ssh."
+
+#: ../src/nm-ssh-service.c:752
+msgid "Invalid HMAC auth."
+msgstr "Neplatná autentizace HMAC."
+
+#: ../src/nm-ssh-service.c:764
+#: ../src/nm-ssh-service.c:1160
+#: ../src/nm-ssh-service.c:1230
+msgid "Invalid connection type."
+msgstr "Neplatný typ připojení."
+
+#: ../src/nm-ssh-service.c:799
+#, c-format
+msgid "Invalid proxy type '%s'."
+msgstr "Neplatný typ proxy „%s“."
+
+#: ../src/nm-ssh-service.c:835
+#, c-format
+msgid "Invalid port number '%s'."
+msgstr "Neplatné číslo portu „%s“."
+
+#: ../src/nm-ssh-service.c:885
+#, c-format
+msgid "Invalid reneg seconds '%s'."
+msgstr "Neplatná doba opětovného vyjednávání „%s“."
+
+#: ../src/nm-ssh-service.c:909
+#, c-format
+msgid "Invalid TUN MTU size '%s'."
+msgstr "Neplatná velikost TUN MTU „%s“."
+
+#: ../src/nm-ssh-service.c:924
+#, c-format
+msgid "Invalid fragment size '%s'."
+msgstr "Neplatná velikost fragmentu „%s“."
+
+#: ../src/nm-ssh-service.c:992
+msgid "Missing required local IP address for static key mode."
+msgstr "Chybí požadovaná místní adresa IP pro mód se statickým klíčem."
+
+#: ../src/nm-ssh-service.c:1005
+msgid "Missing required remote IP address for static key mode."
+msgstr "Chybí požadovaná vzdálená adresa IP pro mód se statickým klíčem."
+
+#: ../src/nm-ssh-service.c:1030
+#, c-format
+msgid "Unknown connection type '%s'."
+msgstr "Neznámý typ připojení „%s“."
+
+#: ../src/nm-ssh-service.c:1149
+#: ../src/nm-ssh-service.c:1220
+msgid "Could not process the request because the VPN connection settings were invalid."
+msgstr "Nelze zpracovat požadavek, protože nastavení VPN nejsou platná."
+
+#: ../src/nm-ssh-service.c:1174
+msgid "Could not process the request because no username was provided."
+msgstr "Nelze zpracovat požadavek, protože nebylo poskytnuto uživatelské jméno."
+
+#: ../src/nm-ssh-service.c:1364
+msgid "Don't quit when VPN connection terminates"
+msgstr "Nevypínat, když se spojení VPN ukončuje"
+
+#: ../src/nm-ssh-service.c:1365
+msgid "Enable verbose debug logging (may expose passwords)"
+msgstr "Povolit podrobný ladicí výpis (může prozradit hesla)"
+
+#: ../src/nm-ssh-service.c:1379
+msgid "nm-vpnc-service provides integrated SSH capability to NetworkManager."
+msgstr "nm-vpnc-service poskytuje podporu SSH integrovanou do aplikace NetworkManager."
+

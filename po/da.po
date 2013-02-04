@@ -1,0 +1,262 @@
+# Danish translation of NetworkManager-ssh
+# Copyright (C) 2005-2009
+# This file is distributed under the same license as the NetworkManager-ssh package.
+# David Zeuthen <davidz@redhat.com>, 2005.
+# Lasse Bang Mikkelsen <lbm@fatalerror.dk>, 2006, 07.
+# Mads Bille Lundby <lundbymads@gmail.com>, 2009.
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: NetworkManager-ssh\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-02-24 23:48+0100\n"
+"PO-Revision-Date: 2009-02-24 19:08+0100\n"
+"Last-Translator: Mads Lundby <lundbymads@gmail.com>\n"
+"Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-Language: Danish\n"
+"X-Poedit-Country: DENMARK\n"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:130
+msgid "_Password:"
+msgstr "_Adgangskode:"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:131
+msgid "_Secondary Password:"
+msgstr "_Sekundær adgangskode:"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:248
+msgid "_Username:"
+msgstr "_Brugernavn:"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:250
+msgid "_Domain:"
+msgstr "_Domæne:"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:342
+msgid "Connect _anonymously"
+msgstr "Forbind _anonymt"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:347
+msgid "Connect as _user:"
+msgstr "Forbind som _bruger:"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:456
+msgid "_Remember password for this session"
+msgstr "_Husk adgangskode for denne session"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:458
+msgid "_Save password in keyring"
+msgstr "_Gem adgangskode i nøglering"
+
+#: ../auth-dialog/main.c:127
+#, c-format
+msgid "You need to authenticate to access the Virtual Private Network '%s'."
+msgstr ""
+"Du skal opnå godkendelse for at tilgå det virtuelle private netværk \"%s\"."
+
+#: ../auth-dialog/main.c:128
+msgid "Authenticate VPN"
+msgstr "VPN-godkendelse"
+
+#: ../auth-dialog/main.c:149
+msgid "Certificate pass_word:"
+msgstr "Ad_gangskode til certifikat:"
+
+#: ../auth-dialog/main.c:163
+msgid "Certificate password:"
+msgstr "Adgangskode til certifikat:"
+
+#: ../properties/auth-helpers.c:160
+msgid "Choose a Certificate Authority certificate..."
+msgstr "Vælg et certifikat fra certifikatautoritet..."
+
+#: ../properties/auth-helpers.c:179
+msgid "Choose your personal certificate..."
+msgstr "Vælg dit personlige certifikat..."
+
+#: ../properties/auth-helpers.c:197
+msgid "Choose your private key..."
+msgstr "Vælg din private nøgle..."
+
+#: ../properties/auth-helpers.c:250
+msgid "Choose an SSH static key..."
+msgstr "Vælg en statisk SSH-nøgle..."
+
+#: ../properties/auth-helpers.c:274 ../properties/auth-helpers.c:901
+#: ../properties/auth-helpers.c:1054
+msgid "None"
+msgstr "Ingen"
+
+#: ../properties/auth-helpers.c:654
+msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
+msgstr "PEM-certifikater (*.pem, *.crt, *.key, *.cer)"
+
+#: ../properties/auth-helpers.c:714
+msgid "SSH Static Keys (*.key)"
+msgstr "Statiske SSH-nøgler (*.key)"
+
+#: ../properties/auth-helpers.c:823 ../properties/auth-helpers.c:893
+msgid "Default"
+msgstr "Standard"
+
+#: ../properties/auth-helpers.c:903
+msgid "MD-5"
+msgstr "MD-5"
+
+#: ../properties/auth-helpers.c:905
+msgid "SHA-1"
+msgstr "SHA-1"
+
+#: ../properties/nm-ssh.c:53
+msgid "SSH"
+msgstr "SSH"
+
+#: ../properties/nm-ssh.c:54
+msgid "Compatible with the SSH server."
+msgstr "Kompatibel med SSH-serveren."
+
+#: ../properties/nm-ssh.c:322
+msgid "Certificates (TLS)"
+msgstr "Certifikater (TLS)"
+
+#: ../properties/nm-ssh.c:336
+msgid "Password"
+msgstr "Adgangskode"
+
+#: ../properties/nm-ssh.c:353
+msgid "Password with Certificates (TLS)"
+msgstr "Adgangskode med certifikater (TLS)"
+
+#: ../properties/nm-ssh.c:365
+msgid "Static Key"
+msgstr "Statisk nøgle"
+
+#: ../properties/nm-ssh-dialog.glade.h:1
+msgid " "
+msgstr " "
+
+#: ../properties/nm-ssh-dialog.glade.h:2
+msgid "<b>Authentication</b>"
+msgstr "<b>Godkendelse</b>"
+
+#: ../properties/nm-ssh-dialog.glade.h:3
+msgid "<b>General</b>"
+msgstr "<b>Generelt</b>"
+
+#: ../properties/nm-ssh-dialog.glade.h:4
+msgid ""
+"<i>If key direction is used, it must be the opposite of that used on the VPN "
+"peer.  For example, if the peer uses '1', this connection must use '0'.  If "
+"you are unsure what value to use, contact your system administrator.</i>"
+msgstr ""
+"<i>Hvis nøgleretning anvendes, skal den være den modsatte af den "
+"nøgleretning, som VPN-ligemanden bruger. Hvis ligemanden f.eks. bruger \"1"
+"\", skal denne forbindelse bruge \"0\". Hvis du ikke er sikker på, hvilken "
+"værdi du skal bruge, bør du kontakte din systemadministrator.</i>"
+
+#: ../properties/nm-ssh-dialog.glade.h:5
+msgid "Ad_vanced..."
+msgstr "A_vanceret..."
+
+#: ../properties/nm-ssh-dialog.glade.h:6
+msgid "CA Certificate:"
+msgstr "CA-certifikat:"
+
+#: ../properties/nm-ssh-dialog.glade.h:7
+msgid "Cipher:"
+msgstr "Chiffer:"
+
+#: ../properties/nm-ssh-dialog.glade.h:8
+msgid "General"
+msgstr "Generelt"
+
+#: ../properties/nm-ssh-dialog.glade.h:9
+msgid "HMAC Authentication:"
+msgstr "HMAC-godkendelse:"
+
+#: ../properties/nm-ssh-dialog.glade.h:10
+msgid "Key Direction:"
+msgstr "Nøgleretning:"
+
+#: ../properties/nm-ssh-dialog.glade.h:11
+msgid "Key File:"
+msgstr "Nøglefil:"
+
+#: ../properties/nm-ssh-dialog.glade.h:12
+msgid "Local IP Address:"
+msgstr "Lokal IP-adresse:"
+
+#: ../properties/nm-ssh-dialog.glade.h:13
+msgid "SSH Advanced Options"
+msgstr "Avancerede indstillinger til SSH"
+
+#: ../properties/nm-ssh-dialog.glade.h:14
+msgid "Password:"
+msgstr "Adgangskode:"
+
+#: ../properties/nm-ssh-dialog.glade.h:15
+msgid "Private Key Password:"
+msgstr "Adgangskode til privat nøgle:"
+
+#: ../properties/nm-ssh-dialog.glade.h:16
+msgid "Private Key:"
+msgstr "Privat nøgle:"
+
+#: ../properties/nm-ssh-dialog.glade.h:17
+msgid "Security"
+msgstr "Sikkerhed"
+
+#: ../properties/nm-ssh-dialog.glade.h:18
+msgid "Show passwords"
+msgstr "Vis adgangskoder"
+
+#: ../properties/nm-ssh-dialog.glade.h:19
+msgid "Static Key:"
+msgstr "Statisk nøgle:"
+
+#: ../properties/nm-ssh-dialog.glade.h:20
+msgid "TLS Authentication"
+msgstr "TLS-godkendelse"
+
+#: ../properties/nm-ssh-dialog.glade.h:21
+msgid "Type:"
+msgstr "Type:"
+
+#: ../properties/nm-ssh-dialog.glade.h:22
+msgid "Use L_ZO data compression"
+msgstr "Anvend L_ZO-datakomprimering"
+
+#: ../properties/nm-ssh-dialog.glade.h:23
+msgid "Use a TA_P device"
+msgstr "Anvend en TA_P-enhed"
+
+#: ../properties/nm-ssh-dialog.glade.h:24
+msgid "Use a _TCP connection"
+msgstr "Anvend en _TCP-forbindelse"
+
+#: ../properties/nm-ssh-dialog.glade.h:25
+msgid "Use additional TLS authentication"
+msgstr "Anvend yderligere TLS-godkendelse"
+
+#: ../properties/nm-ssh-dialog.glade.h:26
+msgid "Use custom gateway p_ort:"
+msgstr "Anvend tilpasset p_ort til adgangspunkt:"
+
+#: ../properties/nm-ssh-dialog.glade.h:27
+msgid "User Certificate:"
+msgstr "Brugercertifikat:"
+
+#: ../properties/nm-ssh-dialog.glade.h:28
+msgid "User name:"
+msgstr "Brugernavn:"
+
+#: ../properties/nm-ssh-dialog.glade.h:29
+msgid "_Gateway:"
+msgstr "Ad_gangspunkt:"
+
+#~ msgid "Add, Remove, and Edit VPN Connections"
+#~ msgstr "Tilføj, fjern og redigér VPN-forbindelser"

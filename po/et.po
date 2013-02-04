@@ -1,0 +1,284 @@
+# GNOME NetworkManager - SSH klient
+#
+# Copyright (C) 2007 The GNOME Project.
+# This file is distributed under the same license as the NetworkManager-ssh package.
+#
+# Priit Laes <amd store20 com>, 2007.
+# Ivar Smolin <okul linux ee>, 2007.
+# Mattias Põldaru <mahfiaz gmail com>, 2007-2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: NetworkManager-ssh\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=NetworkManager&keywords=I18N+L10N&component=VPN: ssh\n"
+"POT-Creation-Date: 2011-03-15 04:22+0000\n"
+"PO-Revision-Date: 2011-03-15 08:45+0300\n"
+"Last-Translator: Mattias Põldaru <mahfiaz@gmail.com>\n"
+"Language-Team: Estonian <gnome-et@linux.ee>\n"
+"Language: et\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "_Password:"
+msgstr "_Parool:"
+
+msgid "_Secondary Password:"
+msgstr "Parool _uuesti:"
+
+msgid "_Username:"
+msgstr "_Kasutajanimi:"
+
+msgid "_Domain:"
+msgstr "_Domeen:"
+
+msgid "Connect _anonymously"
+msgstr "Ühendu _anonüümselt"
+
+msgid "Connect as _user:"
+msgstr "Ühendu ka_sutajana:"
+
+msgid "_Remember password for this session"
+msgstr "_Jäta parool selle sessiooni ajaks meelde"
+
+msgid "_Save password in keyring"
+msgstr "Parooli salvestamine _võtmerõngasse"
+
+#, c-format
+msgid "You need to authenticate to access the Virtual Private Network '%s'."
+msgstr "VPN-võrgule '%s' ligipääsuks pead end autentima."
+
+msgid "Authenticate VPN"
+msgstr "VPN-i autentimine"
+
+msgid "Certificate pass_word:"
+msgstr "Sertifikaadi _parool:"
+
+msgid "Certificate password:"
+msgstr "Sertifikaadi parool:"
+
+msgid "Choose a Certificate Authority certificate..."
+msgstr "Vali sertifikaadikeskuse serdifail..."
+
+msgid "Choose your personal certificate..."
+msgstr "Vali isiklik sertifikaat..."
+
+msgid "Choose your private key..."
+msgstr "Vali privaatvõti..."
+
+msgid "Choose an SSH static key..."
+msgstr "Vali SSH püsivõti..."
+
+msgid "None"
+msgstr "Pole"
+
+msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
+msgstr "PEM või PKCS#12 sertifikaadid (*.pem, *.crt, *.key, *.cer, *.p12)"
+
+msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
+msgstr "PEM sertifikaadid (*.pem, *.crt, *.key, *.cer)"
+
+msgid "SSH Static Keys (*.key)"
+msgstr "SSH püsivõtmed (*.key)"
+
+msgid "Default"
+msgstr "Vaikimisi"
+
+msgid "MD-5"
+msgstr "MD-5"
+
+msgid "SHA-1"
+msgstr "SHA-1"
+
+msgid "SHA-224"
+msgstr "SHA-224"
+
+msgid "SHA-256"
+msgstr "SHA-256"
+
+msgid "SHA-384"
+msgstr "SHA-384"
+
+msgid "SHA-512"
+msgstr "SHA-512"
+
+msgid "RIPEMD-160"
+msgstr "RIPEMD-160"
+
+msgid "Not required"
+msgstr "Pole vajalik"
+
+msgid "HTTP"
+msgstr "HTTP"
+
+msgid "SOCKS"
+msgstr "SOCKS"
+
+msgid "SSH"
+msgstr "SSH"
+
+msgid "Compatible with the SSH server."
+msgstr "Ühildub SSH serveriga."
+
+msgid "Certificates (TLS)"
+msgstr "Sertifikaadid (TLS)"
+
+msgid "Password"
+msgstr "Parool"
+
+msgid "Password with Certificates (TLS)"
+msgstr "Parool koos sertifikaatidega (TLS)"
+
+msgid "Static Key"
+msgstr "Püsivõti"
+
+msgid " "
+msgstr " "
+
+msgid "<b>Authentication</b>"
+msgstr "<b>Autentimine</b>"
+
+msgid "<b>General</b>"
+msgstr "<b>Üldine</b>"
+
+msgid ""
+"<i>Connect only to servers whose certificate matches the given subject.\n"
+"Example: /CN=myvpn.company.com</i>"
+msgstr ""
+"<i>Ühendus luuakse ainult serveriga, mille sertifikaat kattub määratud "
+"nimega.\n"
+"Näiteks: /CN=myvpn.kompanii.com</i>"
+
+msgid ""
+"<i>If key direction is used, it must be the opposite of that used on the VPN "
+"peer.  For example, if the peer uses '1', this connection must use '0'.  If "
+"you are unsure what value to use, contact your system administrator.</i>"
+msgstr ""
+"<i>Kui kasutatakse võtme suunda, peab see olema vastupidine teise VPN'i "
+"võtme suunale. Näitaks, kui teine masin kasutab '1', peab siin olema '0'. "
+"Kui sa ei tea, millist väärtust kasutada, küsi süsteemiadministraatorilt.</i>"
+
+msgid ""
+"<i>Select this option if your organization requires the use of a proxy "
+"server to access the Internet.</i>"
+msgstr ""
+"<i>Vali see, kui sinu organisatsioon nõuab interneti kasutamist "
+"proksiserveri kaudu.</i>"
+
+msgid "Ad_vanced..."
+msgstr "_Laiendatud..."
+
+msgid "CA Certificate:"
+msgstr "Sertifikaadikeskuse serdifail:"
+
+msgid "Cipher:"
+msgstr "Šiffer:"
+
+msgid "General"
+msgstr "Üldine"
+
+msgid "HMAC Authentication:"
+msgstr "HMAC'iga autentimine"
+
+msgid "Key Direction:"
+msgstr "Võtme suund:"
+
+msgid "Key File:"
+msgstr "Võtmefail:"
+
+msgid "Local IP Address:"
+msgstr "Kohalik IP-aadress:"
+
+msgid "SSH Advanced Options"
+msgstr "SSH laiendatud sätted"
+
+msgid "Password:"
+msgstr "Parool:"
+
+msgid "Port:"
+msgstr "Port:"
+
+msgid "Private Key Password:"
+msgstr "Privaatvõtme parool:"
+
+msgid "Private Key:"
+msgstr "Privaatvõti:"
+
+msgid "Proxies"
+msgstr "Proksid"
+
+msgid "Proxy Password:"
+msgstr "Proksi parool:"
+
+msgid "Proxy Type:"
+msgstr "Proksi liik:"
+
+msgid "Proxy Username:"
+msgstr "_Proksi kasutajanimi:"
+
+msgid "Remote IP Address:"
+msgstr "Kaugmasina IP-aadress:"
+
+msgid "Restrict tunnel TCP Maximum Segment Size (MSS)"
+msgstr "Tunneli TCP maksimaalse segmendi suurus piiratud (MSS)"
+
+msgid "Retry indefinitely when errors occur"
+msgstr "Vigade korral proovitakse lõpmatuseni uuesti"
+
+msgid "Security"
+msgstr "Turvalisus"
+
+msgid "Server Address:"
+msgstr "Serveri aadress:"
+
+msgid "Show password"
+msgstr "Näita parooli"
+
+msgid "Show passwords"
+msgstr "Näita paroole"
+
+msgid "Static Key:"
+msgstr "Püsivõti:"
+
+msgid "Subject Match:"
+msgstr "Kattuv nimi:"
+
+msgid "TLS Authentication"
+msgstr "TLS'iga autentimine"
+
+msgid "Type:"
+msgstr "Tüüp:"
+
+msgid "Use L_ZO data compression"
+msgstr "L_ZO-pakkimise kasutamine"
+
+msgid "Use a TA_P device"
+msgstr "TA_P-seadme kasutamine"
+
+msgid "Use a _TCP connection"
+msgstr "_TCP-ühenduse kasutamine"
+
+msgid "Use additional TLS authentication"
+msgstr "Lisaks TLS-autentimise kasutamine"
+
+msgid "Use custom UDP _fragment size:"
+msgstr "Kohandatud UDP-_fragmendi suurus:"
+
+msgid "Use custom _renegotiation interval:"
+msgstr "Kohandatud _kordusläbirääkimiste intervall:"
+
+msgid "Use custom _tunnel Maximum Transmission Unit (MTU):"
+msgstr "Kohandatud _tunneli suurima edastusühiku suurus (MTU):"
+
+msgid "Use custom gateway p_ort:"
+msgstr "Kasuta muud gateway _porti:"
+
+msgid "User Certificate:"
+msgstr "Kasutaja sertifikaat:"
+
+msgid "User name:"
+msgstr "Kasutajanimi:"
+
+msgid "_Gateway:"
+msgstr "_Gateway:"

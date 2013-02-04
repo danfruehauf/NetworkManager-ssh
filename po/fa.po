@@ -1,0 +1,470 @@
+# Persian translation for network-manager-ssh.
+# Copyright (C) 2010 IFSUG Translation Group.
+# This file is distributed under the same license as the network-manager-ssh package.
+# Arash Mousavi <mousavi.arash@gmail.com>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: network-manager-ssh master\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=NetworkManager&keywords=I18N+L10N&component=VPN: ssh\n"
+"POT-Creation-Date: 2011-03-29 21:58+0000\n"
+"PO-Revision-Date: 2010-10-20 23:48+0330\n"
+"Last-Translator: Arash Mousavi <mousavi.arash@gmail.com>\n"
+"Language-Team: Persian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:130
+msgid "_Password:"
+msgstr "_گذرواژه:"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:131
+msgid "_Secondary Password:"
+msgstr "_دومین گذرواژه:"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:248
+msgid "_Username:"
+msgstr "_نام کاربری:"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:250
+msgid "_Domain:"
+msgstr "_دامنه:"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:348
+msgid "Connect _anonymously"
+msgstr "اتصال _ناشناس"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:353
+msgid "Connect as _user:"
+msgstr "اتصال با عنوان _کاربر:"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:458
+msgid "_Remember password for this session"
+msgstr "گذرواژهٔ در طول این نشست به _خاطر سپرده شود"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:460
+msgid "_Save password in keyring"
+msgstr "_ذخیره‌ی گذرواژه در دسته‌کلید"
+
+#: ../auth-dialog/main.c:89
+#, c-format
+msgid "You need to authenticate to access the Virtual Private Network '%s'."
+msgstr "برای دسترسی به شبکه خصوصی مجازی «%s» احتیاج به تایید هویت دارید."
+
+#: ../auth-dialog/main.c:90
+msgid "Authenticate VPN"
+msgstr "تایید هویت وی‌پی‌ان"
+
+#: ../auth-dialog/main.c:111
+msgid "Certificate pass_word:"
+msgstr "_گذرواژه‌ی تاییدیه:"
+
+#: ../auth-dialog/main.c:125
+msgid "Certificate password:"
+msgstr "گذرواژه‌ی تاییدیه:"
+
+#: ../properties/auth-helpers.c:202
+msgid "Choose a Certificate Authority certificate..."
+msgstr "انتخاب یک تاییدیه صلاحیت تاییدیه..."
+
+#: ../properties/auth-helpers.c:221
+msgid "Choose your personal certificate..."
+msgstr "تاییدیه شخصی خود را انتخاب کنید..."
+
+#: ../properties/auth-helpers.c:239
+msgid "Choose your private key..."
+msgstr "کلید اختصاصی خود را انتخاب کنید..."
+
+#: ../properties/auth-helpers.c:297
+msgid "Choose an SSH static key..."
+msgstr "یک کلید ایستا SSH انتخاب کنید..."
+
+#: ../properties/auth-helpers.c:321 ../properties/auth-helpers.c:1104
+#: ../properties/auth-helpers.c:1494
+msgid "None"
+msgstr "هیچ‌کدام"
+
+#: ../properties/auth-helpers.c:801
+msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
+msgstr "تادییه‌های PEM و یا PKCS#12 شامل (*.pem, *.crt, *.key, *.cer, *.p12)"
+
+#: ../properties/auth-helpers.c:802
+msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
+msgstr "تادییه‌های PEM شامل  (*.pem, *.crt, *.key, *.cer)"
+
+#: ../properties/auth-helpers.c:862
+msgid "SSH Static Keys (*.key)"
+msgstr "کلیدهای ایستا SSH  شامل (*.key)"
+
+#: ../properties/auth-helpers.c:1021 ../properties/auth-helpers.c:1096
+msgid "Default"
+msgstr "پیش‌فرض"
+
+#: ../properties/auth-helpers.c:1106
+msgid "MD-5"
+msgstr "MD-5"
+
+#: ../properties/auth-helpers.c:1108
+msgid "SHA-1"
+msgstr "SHA-1"
+
+#: ../properties/auth-helpers.c:1110
+msgid "SHA-224"
+msgstr "SHA-224"
+
+#: ../properties/auth-helpers.c:1112
+msgid "SHA-256"
+msgstr "SHA-256"
+
+#: ../properties/auth-helpers.c:1114
+msgid "SHA-384"
+msgstr "SHA-384"
+
+#: ../properties/auth-helpers.c:1116
+msgid "SHA-512"
+msgstr "SHA-512"
+
+#: ../properties/auth-helpers.c:1118
+msgid "RIPEMD-160"
+msgstr "RIPEMD-160"
+
+#: ../properties/auth-helpers.c:1293 ../properties/nm-ssh-dialog.ui.h:16
+msgid "Not required"
+msgstr "لازم نیست"
+
+#: ../properties/auth-helpers.c:1295
+msgid "HTTP"
+msgstr "HTTP"
+
+#: ../properties/auth-helpers.c:1297
+msgid "SOCKS"
+msgstr "SOCKS"
+
+#: ../properties/nm-ssh.c:53
+msgid "SSH"
+msgstr "SSH"
+
+#: ../properties/nm-ssh.c:54
+msgid "Compatible with the SSH server."
+msgstr "سازگار با کارگزار SSH"
+
+#: ../properties/nm-ssh.c:322
+msgid "Certificates (TLS)"
+msgstr "تاییدیه (TLS)"
+
+#: ../properties/nm-ssh.c:336
+msgid "Password"
+msgstr "گذرواژه"
+
+#: ../properties/nm-ssh.c:353
+msgid "Password with Certificates (TLS)"
+msgstr "گذرواژه همراه با تاییدیه (TLS)"
+
+#: ../properties/nm-ssh.c:365
+msgid "Static Key"
+msgstr "کلید ایستا"
+
+#: ../properties/nm-ssh-dialog.ui.h:1
+msgid " "
+msgstr " "
+
+#: ../properties/nm-ssh-dialog.ui.h:2
+msgid "<b>Authentication</b>"
+msgstr "<b>تایید هویت</b>"
+
+#: ../properties/nm-ssh-dialog.ui.h:3
+msgid "<b>General</b>"
+msgstr "<b>عمومی</b>"
+
+#: ../properties/nm-ssh-dialog.ui.h:4
+msgid ""
+"<i>Connect only to servers whose certificate matches the given subject.\n"
+"Example: /CN=myvpn.company.com</i>"
+msgstr ""
+"<i>اتصال تنها به کارگزارهایی تادییه آنها با مورد داده شده همخوان باشد.\n"
+"مثال: /CN=myvpn.company.com</i>"
+
+#: ../properties/nm-ssh-dialog.ui.h:6
+msgid ""
+"<i>If key direction is used, it must be the opposite of that used on the VPN "
+"peer.  For example, if the peer uses '1', this connection must use '0'.  If "
+"you are unsure what value to use, contact your system administrator.</i>"
+msgstr ""
+"<i>اگر از جهت کلید استفاده شود، باید با همتا VPN خود مخالف باشد. برای مثال، "
+"اگر همتا از «۱» استفاده کند، این اتصال باید از «۰» استفاده کند. اگر شما از "
+"مقداری که باید استفاده نامطمئن هستید، با مدیریت سیستم خود تماس بگیرید.</i>"
+
+#: ../properties/nm-ssh-dialog.ui.h:7
+msgid ""
+"<i>Select this option if your organization requires the use of a proxy "
+"server to access the Internet.</i>"
+msgstr ""
+"<i>چناچه موسسه شما برای اتصال به اینترنت به پیشکار احتیاج دارد، از این گزینه "
+"استفاده کنید.</i>"
+
+#: ../properties/nm-ssh-dialog.ui.h:8
+msgid "Ad_vanced..."
+msgstr "_پیشرفته..."
+
+#: ../properties/nm-ssh-dialog.ui.h:9
+msgid "CA Certificate:"
+msgstr "تاییدیه CA:"
+
+#: ../properties/nm-ssh-dialog.ui.h:10
+msgid "Cipher:"
+msgstr "رمز (Cipher):"
+
+#: ../properties/nm-ssh-dialog.ui.h:11
+msgid "General"
+msgstr "عمومی"
+
+#: ../properties/nm-ssh-dialog.ui.h:12
+msgid "HMAC Authentication:"
+msgstr "تایید هویت HMAC:"
+
+#: ../properties/nm-ssh-dialog.ui.h:13
+msgid "Key Direction:"
+msgstr "جهت کلید:"
+
+#: ../properties/nm-ssh-dialog.ui.h:14
+msgid "Key File:"
+msgstr "پرونده‌ی کلید:"
+
+#: ../properties/nm-ssh-dialog.ui.h:15
+msgid "Local IP Address:"
+msgstr "آدرس IP محلی:"
+
+#: ../properties/nm-ssh-dialog.ui.h:17
+msgid "SSH Advanced Options"
+msgstr "گزینه‌های پیشرفته‌ی SSH"
+
+#: ../properties/nm-ssh-dialog.ui.h:18
+msgid "Password:"
+msgstr "گذرواژه:"
+
+#: ../properties/nm-ssh-dialog.ui.h:19
+msgid "Port:"
+msgstr "درگاه:"
+
+#: ../properties/nm-ssh-dialog.ui.h:20
+msgid "Private Key Password:"
+msgstr "گذرواژه کلید اختصاصی:"
+
+#: ../properties/nm-ssh-dialog.ui.h:21
+msgid "Private Key:"
+msgstr "کلید اختصاصی:"
+
+#: ../properties/nm-ssh-dialog.ui.h:22
+msgid "Proxies"
+msgstr "پیشکارها:"
+
+#: ../properties/nm-ssh-dialog.ui.h:23
+msgid "Proxy Password:"
+msgstr "گذرواژه پیشکار:"
+
+#: ../properties/nm-ssh-dialog.ui.h:24
+msgid "Proxy Type:"
+msgstr "نوع پیشکار:"
+
+#: ../properties/nm-ssh-dialog.ui.h:25
+msgid "Proxy Username:"
+msgstr "نام‌کاربری پیشکار:"
+
+#: ../properties/nm-ssh-dialog.ui.h:26
+msgid "Remote IP Address:"
+msgstr "آدرس IP دوردست:"
+
+#: ../properties/nm-ssh-dialog.ui.h:27
+msgid "Restrict tunnel TCP Maximum Segment Size (MSS)"
+msgstr "منحصر کردن تونل TCP به بیشینه اندازه قطعه (MMS)"
+
+#: ../properties/nm-ssh-dialog.ui.h:28
+msgid "Retry indefinitely when errors occur"
+msgstr "تلاش مجدد نامحدود در صورت بروز خطا"
+
+#: ../properties/nm-ssh-dialog.ui.h:29
+msgid "Security"
+msgstr "امنیت"
+
+#: ../properties/nm-ssh-dialog.ui.h:30
+msgid "Server Address:"
+msgstr "آدرس کارگزار:"
+
+#: ../properties/nm-ssh-dialog.ui.h:31
+#, fuzzy
+#| msgid "Show passwords"
+msgid "Show password"
+msgstr "نمایش گذرواژه‌ها"
+
+#: ../properties/nm-ssh-dialog.ui.h:32
+msgid "Show passwords"
+msgstr "نمایش گذرواژه‌ها"
+
+#: ../properties/nm-ssh-dialog.ui.h:33
+msgid "Static Key:"
+msgstr "کلید ایستا:"
+
+#: ../properties/nm-ssh-dialog.ui.h:34
+msgid "Subject Match:"
+msgstr "مطابقت با مورد:"
+
+#: ../properties/nm-ssh-dialog.ui.h:35
+msgid "TLS Authentication"
+msgstr "تاییدیه TLS"
+
+#: ../properties/nm-ssh-dialog.ui.h:36
+msgid "Type:"
+msgstr "نوع:"
+
+#: ../properties/nm-ssh-dialog.ui.h:37
+msgid "Use L_ZO data compression"
+msgstr "استفاده از فشرده‌سازی اطلاعات _LZO"
+
+#: ../properties/nm-ssh-dialog.ui.h:38
+msgid "Use a TA_P device"
+msgstr "استفاده از یک _دستگاه TAP"
+
+#: ../properties/nm-ssh-dialog.ui.h:39
+msgid "Use a _TCP connection"
+msgstr "استفاده از یک اتصال _TCP"
+
+#: ../properties/nm-ssh-dialog.ui.h:40
+msgid "Use additional TLS authentication"
+msgstr "استفاده از تاییدیه TLS اضافی"
+
+#: ../properties/nm-ssh-dialog.ui.h:41
+msgid "Use custom UDP _fragment size:"
+msgstr "استفاده از اندازه _قطعه USP دلخواه:"
+
+#: ../properties/nm-ssh-dialog.ui.h:42
+msgid "Use custom _renegotiation interval:"
+msgstr "استفاده از وقفه دلخواه در ارتباط مجدد:"
+
+#: ../properties/nm-ssh-dialog.ui.h:43
+msgid "Use custom _tunnel Maximum Transmission Unit (MTU):"
+msgstr "استفاده از _تونل بیشینه ارسال واحد دلخواه (MTU):"
+
+#: ../properties/nm-ssh-dialog.ui.h:44
+msgid "Use custom gateway p_ort:"
+msgstr "استفاده از _درگاه دروازه‌ی اختصاصی:"
+
+#: ../properties/nm-ssh-dialog.ui.h:45
+msgid "User Certificate:"
+msgstr "تاییدیه کاربر:"
+
+#: ../properties/nm-ssh-dialog.ui.h:46
+msgid "User name:"
+msgstr "نام‌کاربری:"
+
+#: ../properties/nm-ssh-dialog.ui.h:47
+msgid "_Gateway:"
+msgstr "_دروازه:"
+
+#: ../src/nm-ssh-service.c:192
+#, c-format
+msgid "invalid address '%s'"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:204
+#, c-format
+msgid "invalid integer property '%s' or out of range [%d -> %d]"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:214
+#, c-format
+msgid "invalid boolean property '%s' (not yes or no)"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:221
+#, c-format
+msgid "unhandled property '%s' type %s"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:232
+#, c-format
+msgid "property '%s' invalid or not supported"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:249
+msgid "No VPN configuration options."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:272
+msgid "No VPN secrets!"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:741
+msgid "Could not find the ssh binary."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:752
+msgid "Invalid HMAC auth."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:764 ../src/nm-ssh-service.c:1160
+#: ../src/nm-ssh-service.c:1230
+msgid "Invalid connection type."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:799
+#, c-format
+msgid "Invalid proxy type '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:835
+#, c-format
+msgid "Invalid port number '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:885
+#, c-format
+msgid "Invalid reneg seconds '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:909
+#, c-format
+msgid "Invalid TUN MTU size '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:924
+#, c-format
+msgid "Invalid fragment size '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:992
+msgid "Missing required local IP address for static key mode."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1005
+msgid "Missing required remote IP address for static key mode."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1030
+#, c-format
+msgid "Unknown connection type '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1149 ../src/nm-ssh-service.c:1220
+msgid ""
+"Could not process the request because the VPN connection settings were "
+"invalid."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1174
+msgid "Could not process the request because no username was provided."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1364
+msgid "Don't quit when VPN connection terminates"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1365
+msgid "Enable verbose debug logging (may expose passwords)"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1379
+msgid ""
+"nm-vpnc-service provides integrated SSH capability to NetworkManager."
+msgstr ""

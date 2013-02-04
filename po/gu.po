@@ -1,0 +1,175 @@
+# translation of gu.po to Gujarati
+# Gujarati translation of network-manager-ssh.
+# Copyright (C) 2009 network-manager-ssh's COPYRIGHT HOLDER
+# This file is distributed under the same license as the network-manager-ssh package.
+#
+# Sweta Kothari <swkothar@redhat.com>, 2009, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: gu\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=NetworkManager&component=VPN: ssh\n"
+"POT-Creation-Date: 2010-12-25 21:16+0000\n"
+"PO-Revision-Date: 2011-02-18 11:13+0530\n"
+"Last-Translator: Sweta Kothari <swkothar@redhat.com>\n"
+"Language-Team: Gujarati\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:130
+msgid "_Password:"
+msgstr "પાસવર્ડ (_P):"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:131
+msgid "_Secondary Password:"
+msgstr "ગૌણ પાસવર્ડ (_S):"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:248
+msgid "_Username:"
+msgstr "વપરાશકર્તા નામ (_U):"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:250
+msgid "_Domain:"
+msgstr "ડોમેઇન (_D):"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:346
+msgid "Connect _anonymously"
+msgstr "અવ્યસ્થિત રીતે જોડાવો (_a)"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:351
+msgid "Connect as _user:"
+msgstr "વપરાશકર્તા તરીકે જોડાવો (_u)"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:456
+msgid "_Remember password for this session"
+msgstr "આ સત્ર માટે પાસવર્ડને યાદ રાખો (_R)"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:458
+msgid "_Save password in keyring"
+msgstr "કિરીંગ માં પાસવર્ડને સંગ્રહો (_S)"
+
+#: ../auth-dialog/main.c:94
+#, c-format
+msgid "You need to authenticate to access the Virtual Private Network '%s'."
+msgstr "વર્ચ્યુઅલ ખાનગી નેટવર્ક '%s' ને દાખલ કરવા માટે તમારે સત્તાધિકરણની જરૂર છે."
+
+#: ../auth-dialog/main.c:95
+msgid "Authenticate VPN"
+msgstr "સત્તાધિકરણ VPN"
+
+#: ../auth-dialog/main.c:116
+msgid "Certificate pass_word:"
+msgstr "પ્રમાણપત્ર પાસવર્ડ (_w):"
+
+#: ../auth-dialog/main.c:130
+msgid "Certificate password:"
+msgstr "પ્રમાણપત્ર પાસવર્ડ:"
+
+#: ../properties/auth-helpers.c:207
+msgid "Choose a Certificate Authority certificate..."
+msgstr "સત્તા પ્રમાણપત્રને પસંદ કરો..."
+
+#: ../properties/auth-helpers.c:226
+msgid "Choose your personal certificate..."
+msgstr "તમારા વ્યક્તિગત પ્રમાણપત્રને પસંદ કરો..."
+
+#: ../properties/auth-helpers.c:244
+msgid "Choose your private key..."
+msgstr "તમારી ખાનગી કીને પસંદ કરો..."
+
+#: ../properties/auth-helpers.c:302
+msgid "Choose an SSH static key..."
+msgstr "SSH સ્થિર કીને પસંદ કરો..."
+
+#: ../properties/auth-helpers.c:326 ../properties/auth-helpers.c:1078
+#: ../properties/auth-helpers.c:1451
+msgid "None"
+msgstr "કંઇ નહિં"
+
+#: ../properties/auth-helpers.c:775
+#| msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
+msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
+msgstr "PEM અથવા PKCS#12 પ્રમાણપત્રો (*.pem, *.crt, *.key, *.cer, *.p12)"
+
+#: ../properties/auth-helpers.c:776
+msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
+msgstr "PEM પ્રમાણપત્રો (*.pem, *.crt, *.key, *.cer)"
+
+#: ../properties/auth-helpers.c:836
+msgid "SSH Static Keys (*.key)"
+msgstr "SSH સ્ટેટીક કીઓ (*.key)"
+
+#: ../properties/auth-helpers.c:995 ../properties/auth-helpers.c:1070
+msgid "Default"
+msgstr "મૂળભૂત"
+
+#: ../properties/auth-helpers.c:1080
+msgid "MD-5"
+msgstr "MD-5"
+
+#: ../properties/auth-helpers.c:1082
+msgid "SHA-1"
+msgstr "SHA-1"
+
+#: ../properties/auth-helpers.c:1084
+#| msgid "SHA-1"
+msgid "SHA-224"
+msgstr "SHA-224"
+
+#: ../properties/auth-helpers.c:1086
+#| msgid "SHA-1"
+msgid "SHA-256"
+msgstr "SHA-256"
+
+#: ../properties/auth-helpers.c:1088
+#| msgid "SHA-1"
+msgid "SHA-384"
+msgstr "SHA-384"
+
+#: ../properties/auth-helpers.c:1090
+#| msgid "SHA-1"
+msgid "SHA-512"
+msgstr "SHA-512"
+
+#: ../properties/auth-helpers.c:1092
+msgid "RIPEMD-160"
+msgstr "RIPEMD-160"
+
+#: ../properties/auth-helpers.c:1253
+msgid "Not required"
+msgstr "જરૂરી નથી"
+
+#: ../properties/auth-helpers.c:1255
+msgid "HTTP"
+msgstr "HTTP"
+
+#: ../properties/auth-helpers.c:1257
+msgid "SOCKS"
+msgstr "SOCKS"
+
+#: ../properties/nm-ssh.c:52
+msgid "SSH"
+msgstr "SSH"
+
+#: ../properties/nm-ssh.c:53
+msgid "Compatible with the SSH server."
+msgstr "SSH સર્વર સાથે સુસંગત."
+
+#: ../properties/nm-ssh.c:321
+msgid "Certificates (TLS)"
+msgstr "પ્રમાણપત્રો (TLS)"
+
+#: ../properties/nm-ssh.c:335
+msgid "Password"
+msgstr "પાસવર્ડ"
+
+#: ../properties/nm-ssh.c:352
+msgid "Password with Certificates (TLS)"
+msgstr "પ્રમાણપત્રો સાથે પાસવર્ડ (TLS)"
+
+#: ../properties/nm-ssh.c:364
+msgid "Static Key"
+msgstr "સ્ટેટીક કી"
+

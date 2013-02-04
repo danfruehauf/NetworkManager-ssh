@@ -1,0 +1,761 @@
+# Swedish messages for NetworkManager ssh.
+# Copyright (C) 2004-2011 Free Software Foundation, Inc.
+# Christian Rose <menthos@menthos.com>, 2004, 2005, 2006.
+# Daniel Nylander <po@danielnylander.se>, 2006, 2007, 2008, 2009, 2010, 2011.
+#
+# $Id: sv.po,v 1.6 2006/12/10 18:35:50 dnylande Exp $
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: NetworkManager-ssh\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-04-09 10:29+0200\n"
+"PO-Revision-Date: 2011-04-09 10:35+0100\n"
+"Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
+"Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
+"Language: sv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:130
+msgid "_Password:"
+msgstr "_Lösenord:"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:131
+msgid "_Secondary Password:"
+msgstr "_Sekundärt lösenord:"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:248
+msgid "_Username:"
+msgstr "_Användarnamn:"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:250
+msgid "_Domain:"
+msgstr "_Domän:"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:348
+msgid "Connect _anonymously"
+msgstr "Anslut anon_ymt"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:353
+msgid "Connect as _user:"
+msgstr "Anslut som _användare:"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:458
+msgid "_Remember password for this session"
+msgstr "_Kom ihåg lösenordet för denna session"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:460
+msgid "_Save password in keyring"
+msgstr "_Spara lösenordet i nyckelring"
+
+#: ../auth-dialog/main.c:103
+#, c-format
+msgid "You need to authenticate to access the Virtual Private Network '%s'."
+msgstr "Du måsta autentisera för att komma åt VPN-nätverket \"%s\"."
+
+#: ../auth-dialog/main.c:104
+msgid "Authenticate VPN"
+msgstr "Autentisera VPN"
+
+#: ../auth-dialog/main.c:125
+msgid "Certificate pass_word:"
+msgstr "Certifikatlöse_nord:"
+
+#: ../auth-dialog/main.c:139
+msgid "Certificate password:"
+msgstr "Certifikatlösenord:"
+
+#: ../properties/auth-helpers.c:202
+msgid "Choose a Certificate Authority certificate..."
+msgstr "Välj ett CA-certifikat (Certifikatutfärdare)..."
+
+#: ../properties/auth-helpers.c:221
+msgid "Choose your personal certificate..."
+msgstr "Välj ditt personliga certifikat..."
+
+#: ../properties/auth-helpers.c:239
+msgid "Choose your private key..."
+msgstr "Välj din privata nyckel..."
+
+#: ../properties/auth-helpers.c:297
+msgid "Choose an SSH static key..."
+msgstr "Välj en statisk SSH-nyckel..."
+
+#: ../properties/auth-helpers.c:321
+#: ../properties/auth-helpers.c:1104
+#: ../properties/auth-helpers.c:1494
+msgid "None"
+msgstr "Ingen"
+
+#: ../properties/auth-helpers.c:801
+msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
+msgstr "PEM eller PKCS#12-certifikat (*.pem, *.crt, *.key, *.cer, *.p12)"
+
+#: ../properties/auth-helpers.c:802
+msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
+msgstr "PEM-certifikat (*.pem, *.crt, *.key, *.cer)"
+
+#: ../properties/auth-helpers.c:862
+msgid "SSH Static Keys (*.key)"
+msgstr "Statiska SSH-nycklar (*.key)"
+
+#: ../properties/auth-helpers.c:1021
+#: ../properties/auth-helpers.c:1096
+msgid "Default"
+msgstr "Standard"
+
+#: ../properties/auth-helpers.c:1106
+msgid "MD-5"
+msgstr "MD-5"
+
+#: ../properties/auth-helpers.c:1108
+msgid "SHA-1"
+msgstr "SHA-1"
+
+#: ../properties/auth-helpers.c:1110
+msgid "SHA-224"
+msgstr "SHA-224"
+
+#: ../properties/auth-helpers.c:1112
+msgid "SHA-256"
+msgstr "SHA-256"
+
+#: ../properties/auth-helpers.c:1114
+msgid "SHA-384"
+msgstr "SHA-384"
+
+#: ../properties/auth-helpers.c:1116
+msgid "SHA-512"
+msgstr "SHA-512"
+
+#: ../properties/auth-helpers.c:1118
+msgid "RIPEMD-160"
+msgstr "RIPEMD-160"
+
+#: ../properties/auth-helpers.c:1293
+#: ../properties/nm-ssh-dialog.ui.h:16
+msgid "Not required"
+msgstr "Krävs inte"
+
+#: ../properties/auth-helpers.c:1295
+msgid "HTTP"
+msgstr "HTTP"
+
+#: ../properties/auth-helpers.c:1297
+msgid "SOCKS"
+msgstr "SOCKS"
+
+#: ../properties/nm-ssh.c:53
+msgid "SSH"
+msgstr "SSH"
+
+#: ../properties/nm-ssh.c:54
+msgid "Compatible with the SSH server."
+msgstr "Kompatibel med SSH-servern."
+
+#: ../properties/nm-ssh.c:323
+msgid "Certificates (TLS)"
+msgstr "Certifikat (TLS)"
+
+#: ../properties/nm-ssh.c:337
+msgid "Password"
+msgstr "Lösenord"
+
+#: ../properties/nm-ssh.c:354
+msgid "Password with Certificates (TLS)"
+msgstr "Lösenord med certifikat (TLS)"
+
+#: ../properties/nm-ssh.c:366
+msgid "Static Key"
+msgstr "Statisk nyckel"
+
+#: ../properties/nm-ssh-dialog.ui.h:1
+msgid " "
+msgstr " "
+
+#: ../properties/nm-ssh-dialog.ui.h:2
+msgid "<b>Authentication</b>"
+msgstr "<b>Autentisering</b>"
+
+#: ../properties/nm-ssh-dialog.ui.h:3
+msgid "<b>General</b>"
+msgstr "<b>Allmänt</b>"
+
+#: ../properties/nm-ssh-dialog.ui.h:4
+msgid ""
+"<i>Connect only to servers whose certificate matches the given subject.\n"
+"Example: /CN=myvpn.company.com</i>"
+msgstr ""
+"<i>Anslut endast till servrar vars certifikat matchar angiven information.\n"
+"Exempel: /CN=mittvpn.företag.se</i>"
+
+#: ../properties/nm-ssh-dialog.ui.h:6
+msgid "<i>If key direction is used, it must be the opposite of that used on the VPN peer.  For example, if the peer uses '1', this connection must use '0'.  If you are unsure what value to use, contact your system administrator.</i>"
+msgstr "<i>Om nyckelriktning används så måste den vara motsatsen till den som används på VPN-parten.  Till exempel om parten använder \"1\" måste denna anslutning vara \"0\".  Om du är osäker vilket värde du ska använda kan du kontakta din systemadministratör.</i>"
+
+#: ../properties/nm-ssh-dialog.ui.h:7
+msgid "<i>Select this option if your organization requires the use of a proxy server to access the Internet.</i>"
+msgstr "<i>Välj detta alternativ om din organisation kräver att en proxyserver används för att komma åt Internet.</i>"
+
+#: ../properties/nm-ssh-dialog.ui.h:8
+msgid "Ad_vanced..."
+msgstr "A_vancerat..."
+
+#: ../properties/nm-ssh-dialog.ui.h:9
+msgid "CA Certificate:"
+msgstr "CA-certifikat:"
+
+#: ../properties/nm-ssh-dialog.ui.h:10
+msgid "Cipher:"
+msgstr "Skiffer:"
+
+#: ../properties/nm-ssh-dialog.ui.h:11
+msgid "General"
+msgstr "Allmänt"
+
+#: ../properties/nm-ssh-dialog.ui.h:12
+msgid "HMAC Authentication:"
+msgstr "HMAC-autentisering:"
+
+#: ../properties/nm-ssh-dialog.ui.h:13
+msgid "Key Direction:"
+msgstr "Nyckelriktning:"
+
+#: ../properties/nm-ssh-dialog.ui.h:14
+msgid "Key File:"
+msgstr "Nyckelfil:"
+
+#: ../properties/nm-ssh-dialog.ui.h:15
+msgid "Local IP Address:"
+msgstr "Lokal IP-adress:"
+
+#: ../properties/nm-ssh-dialog.ui.h:17
+msgid "SSH Advanced Options"
+msgstr "Avancerade alternativ för SSH"
+
+#: ../properties/nm-ssh-dialog.ui.h:18
+msgid "Password:"
+msgstr "Lösenord:"
+
+#: ../properties/nm-ssh-dialog.ui.h:19
+msgid "Port:"
+msgstr "Port:"
+
+#: ../properties/nm-ssh-dialog.ui.h:20
+msgid "Private Key Password:"
+msgstr "Lösenord för privat nyckel:"
+
+#: ../properties/nm-ssh-dialog.ui.h:21
+msgid "Private Key:"
+msgstr "Privat nyckel:"
+
+#: ../properties/nm-ssh-dialog.ui.h:22
+msgid "Proxies"
+msgstr "Proxyservrar"
+
+#: ../properties/nm-ssh-dialog.ui.h:23
+msgid "Proxy Password:"
+msgstr "Lösenord för proxy:"
+
+#: ../properties/nm-ssh-dialog.ui.h:24
+msgid "Proxy Type:"
+msgstr "Proxytyp:"
+
+#: ../properties/nm-ssh-dialog.ui.h:25
+msgid "Proxy Username:"
+msgstr "Användarnamn för proxy:"
+
+#: ../properties/nm-ssh-dialog.ui.h:26
+msgid "Remote IP Address:"
+msgstr "Fjärr-IP-adress:"
+
+#: ../properties/nm-ssh-dialog.ui.h:27
+msgid "Restrict tunnel TCP Maximum Segment Size (MSS)"
+msgstr "Begränsa TCP Maximum Segment Size (MSS) för tunneln"
+
+#: ../properties/nm-ssh-dialog.ui.h:28
+msgid "Retry indefinitely when errors occur"
+msgstr "Försök om och om igen när fel uppstår"
+
+#: ../properties/nm-ssh-dialog.ui.h:29
+msgid "Security"
+msgstr "Säkerhet"
+
+#: ../properties/nm-ssh-dialog.ui.h:30
+msgid "Server Address:"
+msgstr "Serveradress:"
+
+#: ../properties/nm-ssh-dialog.ui.h:31
+msgid "Show password"
+msgstr "Visa lösenord"
+
+#: ../properties/nm-ssh-dialog.ui.h:32
+msgid "Show passwords"
+msgstr "Visa lösenord"
+
+#: ../properties/nm-ssh-dialog.ui.h:33
+msgid "Static Key:"
+msgstr "Statisk nyckel:"
+
+#: ../properties/nm-ssh-dialog.ui.h:34
+msgid "Subject Match:"
+msgstr "Matcha följande:"
+
+#: ../properties/nm-ssh-dialog.ui.h:35
+msgid "TLS Authentication"
+msgstr "TLS-autentisering"
+
+#: ../properties/nm-ssh-dialog.ui.h:36
+msgid "Type:"
+msgstr "Typ:"
+
+#: ../properties/nm-ssh-dialog.ui.h:37
+msgid "Use L_ZO data compression"
+msgstr "Använd L_ZO-datakomprimering"
+
+#: ../properties/nm-ssh-dialog.ui.h:38
+msgid "Use a TA_P device"
+msgstr "Använd en TA_P-enhet"
+
+#: ../properties/nm-ssh-dialog.ui.h:39
+msgid "Use a _TCP connection"
+msgstr "Använd en _TCP-anslutning"
+
+#: ../properties/nm-ssh-dialog.ui.h:40
+msgid "Use additional TLS authentication"
+msgstr "Använd ytterligare TLS-autentisering"
+
+#: ../properties/nm-ssh-dialog.ui.h:41
+msgid "Use custom UDP _fragment size:"
+msgstr "Använd anpassad storlek på UDP-_fragment:"
+
+#: ../properties/nm-ssh-dialog.ui.h:42
+msgid "Use custom _renegotiation interval:"
+msgstr "Använd anpassat intervall för _omförhandling:"
+
+#: ../properties/nm-ssh-dialog.ui.h:43
+msgid "Use custom _tunnel Maximum Transmission Unit (MTU):"
+msgstr "Använd anpassad Maximum Transmission Unit (MTU) för _tunneln:"
+
+#: ../properties/nm-ssh-dialog.ui.h:44
+msgid "Use custom gateway p_ort:"
+msgstr "Använd anpassad gatewayp_ort:"
+
+#: ../properties/nm-ssh-dialog.ui.h:45
+msgid "User Certificate:"
+msgstr "Användarcertifikat:"
+
+#: ../properties/nm-ssh-dialog.ui.h:46
+msgid "User name:"
+msgstr "Användarnamn:"
+
+#: ../properties/nm-ssh-dialog.ui.h:47
+msgid "_Gateway:"
+msgstr "_Gateway:"
+
+#: ../src/nm-ssh-service.c:192
+#, c-format
+msgid "invalid address '%s'"
+msgstr "ogiltig adress \"%s\""
+
+#: ../src/nm-ssh-service.c:204
+#, c-format
+msgid "invalid integer property '%s' or out of range [%d -> %d]"
+msgstr "ogiltig heltalsegenskap \"%s\" eller utanför intervallet [%d -> %d]"
+
+#: ../src/nm-ssh-service.c:214
+#, c-format
+msgid "invalid boolean property '%s' (not yes or no)"
+msgstr "ogiltig boolesk egenskap \"%s\" (inte yes eller no)"
+
+#: ../src/nm-ssh-service.c:221
+#, c-format
+msgid "unhandled property '%s' type %s"
+msgstr "ohantera egenskap \"%s\" typ %s"
+
+#: ../src/nm-ssh-service.c:232
+#, c-format
+msgid "property '%s' invalid or not supported"
+msgstr "egenskapen \"%s\" är ogiltig eller stöds inte"
+
+#: ../src/nm-ssh-service.c:249
+msgid "No VPN configuration options."
+msgstr "Inga VPN-konfigurationsalterntiv."
+
+#: ../src/nm-ssh-service.c:272
+msgid "No VPN secrets!"
+msgstr "Inga VPN-hemligheter!"
+
+#: ../src/nm-ssh-service.c:744
+msgid "Could not find the ssh binary."
+msgstr "Kunde inte hitta binärfilen ssh."
+
+#: ../src/nm-ssh-service.c:755
+msgid "Invalid HMAC auth."
+msgstr "Ogiltig HMAC-autentisering."
+
+#: ../src/nm-ssh-service.c:767
+#: ../src/nm-ssh-service.c:1163
+#: ../src/nm-ssh-service.c:1233
+msgid "Invalid connection type."
+msgstr "Ogiltig anslutningstyp."
+
+#: ../src/nm-ssh-service.c:802
+#, c-format
+msgid "Invalid proxy type '%s'."
+msgstr "Ogiltig proxytyp \"%s\"."
+
+#: ../src/nm-ssh-service.c:838
+#, c-format
+msgid "Invalid port number '%s'."
+msgstr "Ogiltigt portnummer \"%s\"."
+
+#: ../src/nm-ssh-service.c:888
+#, c-format
+msgid "Invalid reneg seconds '%s'."
+msgstr "Ogiltigt antal sekunder för omförhandling \"%s\"."
+
+#: ../src/nm-ssh-service.c:912
+#, c-format
+msgid "Invalid TUN MTU size '%s'."
+msgstr "Ogiltig TUN MTU-storlek \"%s\"."
+
+#: ../src/nm-ssh-service.c:927
+#, c-format
+msgid "Invalid fragment size '%s'."
+msgstr "Ogiltig fragmenteringsstorlek \"%s\"."
+
+#: ../src/nm-ssh-service.c:995
+msgid "Missing required local IP address for static key mode."
+msgstr "Saknar nödvändig lokal IP-adress för statiskt nyckelläge."
+
+#: ../src/nm-ssh-service.c:1008
+msgid "Missing required remote IP address for static key mode."
+msgstr "Saknar nödvändig fjärr-IP-adress för statiskt nyckelläge."
+
+#: ../src/nm-ssh-service.c:1033
+#, c-format
+msgid "Unknown connection type '%s'."
+msgstr "Okänd anslutningstyp \"%s\"."
+
+#: ../src/nm-ssh-service.c:1152
+#: ../src/nm-ssh-service.c:1223
+msgid "Could not process the request because the VPN connection settings were invalid."
+msgstr "Kunde inte behandla begäran eftersom inställningar i VPN-konfigurationen var ogiltiga."
+
+#: ../src/nm-ssh-service.c:1177
+msgid "Could not process the request because no username was provided."
+msgstr "Kunde inte behandla begäran därför att inget användarnamn tillhandahölls."
+
+#: ../src/nm-ssh-service.c:1367
+msgid "Don't quit when VPN connection terminates"
+msgstr "Avsluta inte när VPN-anslutningen termineras"
+
+#: ../src/nm-ssh-service.c:1368
+msgid "Enable verbose debug logging (may expose passwords)"
+msgstr "Aktivera informativ felsökningsloggning (kan exponera lösenord)"
+
+#: ../src/nm-ssh-service.c:1382
+msgid "nm-vpnc-service provides integrated SSH capability to NetworkManager."
+msgstr "nm-vpnc-service tillhandahåller integrerade SSH-förmågor till Nätverkshanterare."
+
+#~ msgid "Certificate Password:"
+#~ msgstr "Certifikatlösenord:"
+#~ msgid "Select A File"
+#~ msgstr "Välj en fil"
+#~ msgid "gtk-cancel"
+#~ msgstr "Avbryt"
+#~ msgid "gtk-ok"
+#~ msgstr "OK"
+#~ msgid "page 1"
+#~ msgstr "sida 1"
+#~ msgid "page 2"
+#~ msgstr "sida 2"
+#~ msgid "page 3"
+#~ msgstr "sida 3"
+#~ msgid "page 4"
+#~ msgstr "sida 4"
+#~ msgid "Add, Remove, and Edit VPN Connections"
+#~ msgstr "Lägg till, ta bort och redigera VPN-anslutningar"
+#~ msgid "VPN Connection Manager (SSH)"
+#~ msgstr "VPN-anslutningshanterare (SSH)"
+#~ msgid "The following SSH connection will be created:"
+#~ msgstr "Följande SSH-anslutning kommer att skapas:"
+#~ msgid "Name:  %s"
+#~ msgstr "Namn:  %s"
+#~ msgid "Connection Type: X.509 Certificates"
+#~ msgstr "Anslutningstyp: X.509-certifikat"
+#~ msgid "CA:  %s"
+#~ msgstr "CA:  %s"
+#~ msgid "Cert:  %s"
+#~ msgstr "Cert:   %s"
+#~ msgid "Key:  %s"
+#~ msgstr "Nyckel: %s"
+#~ msgid "Connection Type: Shared Key"
+#~ msgstr "Anslutningstyp: Delad nyckel"
+#~ msgid "Shared Key:  %s"
+#~ msgstr "Delad nyckel: %s"
+#~ msgid "Remote IP:  %s"
+#~ msgstr "Fjärr-IP:  %s"
+#~ msgid "Connection Type: Password"
+#~ msgstr "Anslutningstyp: Lösenord"
+#~ msgid "Username:  %s"
+#~ msgstr "Användarnamn:  %s"
+#~ msgid "Connection Type: X.509 with Password Authentication"
+#~ msgstr "Anslutningstyp: X.509 med lösenordsautentisering"
+#~ msgid "Remote:  %s"
+#~ msgstr "Fjärr:  %s"
+#~ msgid "Device: %s"
+#~ msgstr "Enhet: %s"
+#~ msgid "TAP"
+#~ msgstr "TAP"
+#~ msgid "TUN"
+#~ msgstr "TUN"
+#~ msgid "Protocol: %s"
+#~ msgstr "Protokoll: %s"
+#~ msgid "TCP"
+#~ msgstr "TCP"
+#~ msgid "UDP"
+#~ msgstr "UDP"
+#~ msgid "Routes:  %s"
+#~ msgstr "Vägar:  %s"
+#~ msgid "Use LZO Compression: %s"
+#~ msgstr "Använd LZO-komprimering: %s"
+#~ msgid "Yes"
+#~ msgstr "Ja"
+#~ msgid "TLS auth:  %s %s"
+#~ msgstr "TLS-autentisering:  %s %s"
+#~ msgid "The connection details can be changed using the \"Edit\" button."
+#~ msgstr ""
+#~ "Anslutningsdetaljerna kan ändras genom att knappen \"Redigera\" används."
+#~ msgid "Cannot import settings"
+#~ msgstr "Kan inte importera inställningar"
+#~ msgid "The VPN settings file '%s' does not contain valid data."
+#~ msgstr "VPN-inställningsfilen \"%s\" innehåller inte giltiga data."
+#~ msgid "Select file to import"
+#~ msgstr "Välj fil att importera"
+#~ msgid "Select certificate to use"
+#~ msgstr "Välj certifikat att använda"
+#~ msgid "Select key to use"
+#~ msgstr "Välj nyckel att använda"
+#~ msgid "Select shared key to use"
+#~ msgstr "Välj delad nyckel att använda"
+#~ msgid "Select TA to use"
+#~ msgstr "Välj TA att använda"
+#~ msgid "Save as..."
+#~ msgstr "Spara som..."
+#~ msgid "A file named \"%s\" already exists."
+#~ msgstr "En fil med namnet \"%s\" finns redan."
+#~ msgid "Do you want to replace it with the one you are saving?"
+#~ msgstr "Vill du ersätta den med den du håller på att spara?"
+#~ msgid "Failed to export configuration"
+#~ msgstr "Misslyckades med att exportera konfiguration"
+#~ msgid "Failed to save file %s"
+#~ msgstr "Misslyckades med att spara filen %s"
+#~ msgid "65536"
+#~ msgstr "65536"
+#~ msgid "<i>example: 172.16.0.0/16 10.11.12.0/24</i>"
+#~ msgstr "<i>exempel: 172.16.0.0/16 10.11.12.0/24</i>"
+#~ msgid "C_A file:"
+#~ msgstr "C_A-fil:"
+#~ msgid "Connection na_me:"
+#~ msgstr "Anslutningsna_mn:"
+#~ msgid "Import _Saved Configuration..."
+#~ msgstr "Importera _sparad konfiguration..."
+#~ msgid ""
+#~ "Name used to identify the connection to the private network, e.g. "
+#~ "\"Campus VPN\" or \"Corporate Network\""
+#~ msgstr ""
+#~ "Namn som används för att identifiera anslutningen till det privata "
+#~ "nätverket, exempelvis \"Campus-VPN\" eller \"Företagsnätverket\""
+#~ msgid "Network"
+#~ msgstr "Nätverk"
+#~ msgid "Only use _VPN connection for these addresses:"
+#~ msgstr "Använd endast _VPN-anslutning för dessa adresser:"
+#~ msgid ""
+#~ "Please enter the information provided by your system administrator below. "
+#~ "Do not enter your password here as you will be prompted when connecting."
+#~ msgstr ""
+#~ "Ange den information som har tillhandahållits av din systemadministratör "
+#~ "nedan. Ange inte lösenordet här eftersom du kommer att efterfrågas det "
+#~ "när du ansluter."
+#~ msgid ""
+#~ "Please note that the file you import is not an SSH configuration "
+#~ "file. Ask your administrator for the file."
+#~ msgstr ""
+#~ "Observera att filen som du importerar inte är en konfigurationsfil för "
+#~ "SSH. Fråga din administratör efter filen."
+#~ msgid "Shared _key:"
+#~ msgstr "Delad _nyckel:"
+#~ msgid "TLS-Auth"
+#~ msgstr "TLS-Auth"
+#~ msgid "Use _TLS auth:"
+#~ msgstr "Använd _TLS-autentisering:"
+#~ msgid "Use cip_her:"
+#~ msgstr "Använd s_kiffer:"
+#~ msgid ""
+#~ "X.509 Certificates\n"
+#~ "Pre-shared key\n"
+#~ "Password Authentication\n"
+#~ "X.509 with Password Authentication"
+#~ msgstr ""
+#~ "X.509-ertifikat\n"
+#~ "Delad nyckel\n"
+#~ "Lösenordsautentisering\n"
+#~ "X.509 med lösenordsautentisering"
+#~ msgid "_0"
+#~ msgstr "_0"
+#~ msgid "_1"
+#~ msgstr "_1"
+#~ msgid "_Gateway address:"
+#~ msgstr "_Gatewayadress:"
+#~ msgid "_Key:"
+#~ msgstr "_Nyckel:"
+#~ msgid "_Local IP:"
+#~ msgstr "_Lokal IP:"
+#~ msgid "_Remote IP:"
+#~ msgstr "_Fjärr-IP:"
+#~ msgid "_User name:"
+#~ msgstr "An_vändarnamn:"
+#~ msgid "_none"
+#~ msgstr "_inget"
+#~ msgid ""
+#~ "The VPN login failed because the user name and password were not accepted "
+#~ "or the certificate password was wrong."
+#~ msgstr ""
+#~ "VPN-inloggningen misslyckades eftersom användarnamnet och lösenordet inte "
+#~ "accepterades eller att certifikatlösenordet var felaktigt."
+#~ msgid "The VPN login failed because the VPN program could not be started."
+#~ msgstr ""
+#~ "VPN-inloggningen misslyckades eftersom VPN-programmet inte kunde startas."
+#~ msgid ""
+#~ "The VPN login failed because the VPN program could not connect to the VPN "
+#~ "server."
+#~ msgstr ""
+#~ "VPN-inloggningen misslyckades eftersom VPN-programmet inte kunde ansluta "
+#~ "till VPN-servern."
+#~ msgid ""
+#~ "The VPN login failed because the VPN program received an invalid "
+#~ "configuration from the VPN server."
+#~ msgstr ""
+#~ "VPN-inloggningen misslyckades eftersom VPN-programmet mottog en ogiltig "
+#~ "konfiguration från VPN-servern."
+#~ msgid "VPN connection failed"
+#~ msgstr "VPN-anslutningen misslyckades"
+#~ msgid "<b>Connection Information</b>"
+#~ msgstr "<b>Anslutningsinformation</b>"
+#~ msgid "CA  file:"
+#~ msgstr "CA-fil:"
+#~ msgid "Optional"
+#~ msgstr "Valfritt"
+#~ msgid "X.509"
+#~ msgstr "X.509"
+#~ msgid "X.509/Pass"
+#~ msgstr "X.509/Lösenord"
+#~ msgid "_Import Saved Configuration..."
+#~ msgstr "_Importera sparad konfiguration..."
+#~ msgid "_Only use VPN connection for these addresses"
+#~ msgstr "Använd _endast VPN-anslutning för dessa adresser"
+#~ msgid ""
+#~ "_Name used to identify the connection to the private network, e.g. "
+#~ "\"Campus VPN\" or \"Corporate Network\""
+#~ msgstr ""
+#~ "_Namn som används för att identifiera anslutningen till det privata "
+#~ "nätverket, exempelvis \"Campus-VPN\" eller \"Företagsnätverket\""
+#~ msgid "Remember password for this session"
+#~ msgstr "Kom ihåg lösenordet för denna session"
+#~ msgid "Save password in keyring"
+#~ msgstr "Spara lösenordet i nyckelring"
+#~ msgid "VPN Connection Manager"
+#~ msgstr "VPN-anslutningshanterare"
+#~ msgid "VPN Connection Manager (vpnc)"
+#~ msgstr "VPN-anslutningshanterare (vpnc)"
+#~ msgid "Name:"
+#~ msgstr "Namn:"
+#~ msgid "Username: %s"
+#~ msgstr "Användarnamn: %s"
+#~ msgid "User Name:"
+#~ msgstr "Användarnamn:"
+#~ msgid "CA:"
+#~ msgstr "CA:"
+#~ msgid "Cert:"
+#~ msgstr "Cert:"
+#~ msgid "Key"
+#~ msgstr "Nyckel"
+#~ msgid "Connection Type"
+#~ msgstr "Anslutningstyp"
+#~ msgid "Local IP"
+#~ msgstr "Lokalt IP"
+#~ msgid "Remote IP"
+#~ msgstr "Fjärr-IP"
+#~ msgid "Remote: %s"
+#~ msgstr "Fjärr: %s"
+#~ msgid "Remote:"
+#~ msgstr "Fjärr:"
+#~ msgid "Device:"
+#~ msgstr "Enhet:"
+#~ msgid "Device"
+#~ msgstr "Enhet"
+#~ msgid "Protocol:"
+#~ msgstr "Protokoll:"
+#~ msgid "Protocol"
+#~ msgstr "Protokoll"
+#~ msgid "Routes:"
+#~ msgstr "Vägar:"
+#~ msgid "Routes"
+#~ msgstr "Vägar"
+#~ msgid "Use LZO Compression:"
+#~ msgstr "Använd LZO-komprimering:"
+#~ msgid "Use LZO Compression"
+#~ msgstr "Använd LZO-komprimering"
+#~ msgid ""
+#~ "The VPN login failed because the user name and password were not accepted."
+#~ msgstr ""
+#~ "VPN-inloggningen misslyckades eftersom användarnamnet och lösenordet inte "
+#~ "accepterades."
+#~ msgid "Group Name:"
+#~ msgstr "Gruppnamn:"
+#~ msgid "Override user name"
+#~ msgstr "Åsidosätt användarnamn"
+#~ msgid "_Import..."
+#~ msgstr "_Importera..."
+#~ msgid "Compatible Cisco VPN client (vpnc)"
+#~ msgstr "Kompatibel Cisco VPN-klient (vpnc)"
+#~ msgid "\tDomain:  %s\n"
+#~ msgstr "\tDomän:  %s\n"
+#~ msgid ""
+#~ "The following vpnc VPN connection will be created:\n"
+#~ "\n"
+#~ "\tName:  %s\n"
+#~ "\n"
+#~ "\tGateway:  %s\n"
+#~ "\tGroup Name:  %s\n"
+#~ "%s%s%s\n"
+#~ "The connection details can be changed using the \"Edit\" button.\n"
+#~ msgstr ""
+#~ "Följande vpnc-VPN-anslutning kommer att skapas:\n"
+#~ "\n"
+#~ "\tNamn:  %s\n"
+#~ "\n"
+#~ "\tGateway:  %s\n"
+#~ "\tGruppnamn:  %s\n"
+#~ "%s%s%s\n"
+#~ "Anslutningsdetaljerna kan ändras genom att använda knappen \"Redigera\".\n"
+#~ msgid "TCP tunneling not supported"
+#~ msgstr "TCP-tunnling stöds inte"
+#~ msgid ""
+#~ "The VPN settings file '%s' specifies that VPN traffic should be tunneled "
+#~ "through TCP which is currently not supported in the vpnc software.\n"
+#~ "\n"
+#~ "The connection can still be created, with TCP tunneling disabled, however "
+#~ "it may not work as expected."
+#~ msgstr ""
+#~ "VPN-inställningsfilen \"%s\" anger att VPN-trafiken ska tunnlas genom TCP "
+#~ "vilket för tillfället inte stöds i vpnc-programvaran.\n"
+#~ "\n"
+#~ "Anslutningen kan fortfarande skapas, med inaktiverad TCP-tunnling, men "
+#~ "det kanske inte fungerar som väntat."
+

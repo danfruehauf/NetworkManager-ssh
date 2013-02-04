@@ -1,0 +1,9 @@
+[VPN Connection]
+name=ssh
+service=org.freedesktop.NetworkManager.ssh
+program=@LIBEXECDIR@/nm-ssh-service
+
+[GNOME]
+auth-dialog=nm-ssh-auth-dialog
+properties=libnm-ssh-properties
+

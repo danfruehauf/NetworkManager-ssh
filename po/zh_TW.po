@@ -1,0 +1,216 @@
+# Chinese (Taiwan) translation of NetworkManager-ssh.
+# Copyright (C) 2007 Free Software Foundation, Inc.
+# Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>, 2007, 2009.
+# Wei-Lun Chao <chaoweilun@gmail.com>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: NetworkManager-ssh 0.8.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-01-25 19:37+0800\n"
+"PO-Revision-Date: 2011-01-25 17:31+0800\n"
+"Last-Translator: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>\n"
+"Language-Team: Chinese (traditional) <community@linuxhall.org>\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:130
+msgid "_Password:"
+msgstr "密碼(_P):"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:131
+msgid "_Secondary Password:"
+msgstr "第二組密碼(_S):"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:248
+msgid "_Username:"
+msgstr "使用者名稱(_U):"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:250
+msgid "_Domain:"
+msgstr "網域(_D):"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:346
+msgid "Connect _anonymously"
+msgstr "匿名連線(_A)"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:351
+msgid "Connect as _user:"
+msgstr "以使用者連線(_U):"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:456
+msgid "_Remember password for this session"
+msgstr "記住這個作業階段的密碼(_R)"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:458
+msgid "_Save password in keyring"
+msgstr "將密碼儲存到鑰匙圈(_S)"
+
+#: ../auth-dialog/main.c:94
+#, c-format
+msgid "You need to authenticate to access the Virtual Private Network '%s'."
+msgstr "您需要驗證才能存取虛擬私人網路「%s」。"
+
+#: ../auth-dialog/main.c:95
+msgid "Authenticate VPN"
+msgstr "驗證 VPN"
+
+#: ../auth-dialog/main.c:116
+msgid "Certificate pass_word:"
+msgstr "憑證密碼(_W):"
+
+#: ../auth-dialog/main.c:130
+msgid "Certificate password:"
+msgstr "憑證密碼:"
+
+#: ../properties/auth-helpers.c:207
+msgid "Choose a Certificate Authority certificate..."
+msgstr "選擇一個憑證管理中心的憑證…"
+
+#: ../properties/auth-helpers.c:226
+msgid "Choose your personal certificate..."
+msgstr "選擇您的個人憑證…"
+
+#: ../properties/auth-helpers.c:244
+msgid "Choose your private key..."
+msgstr "選擇您的私密金鑰…"
+
+#: ../properties/auth-helpers.c:302
+msgid "Choose an SSH static key..."
+msgstr "選擇 SSH 靜態金鑰…"
+
+#: ../properties/auth-helpers.c:326 ../properties/auth-helpers.c:1084
+#: ../properties/auth-helpers.c:1457
+msgid "None"
+msgstr "無"
+
+#: ../properties/auth-helpers.c:781
+msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
+msgstr "PEM 或 PKCS#12 憑證 (*.pem, *.crt, *.key, *.cer, *.p12)"
+
+#: ../properties/auth-helpers.c:782
+msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
+msgstr "PEM 憑證 (*.pem, *.crt, *.key, *.cer)"
+
+#: ../properties/auth-helpers.c:842
+msgid "SSH Static Keys (*.key)"
+msgstr "SSH 靜態金鑰 (*.key)"
+
+#: ../properties/auth-helpers.c:1001 ../properties/auth-helpers.c:1076
+msgid "Default"
+msgstr "預設值"
+
+#: ../properties/auth-helpers.c:1086
+msgid "MD-5"
+msgstr "MD-5"
+
+#: ../properties/auth-helpers.c:1088
+msgid "SHA-1"
+msgstr "SHA-1"
+
+#: ../properties/auth-helpers.c:1090
+msgid "SHA-224"
+msgstr "SHA-224"
+
+#: ../properties/auth-helpers.c:1092
+msgid "SHA-256"
+msgstr "SHA-256"
+
+#: ../properties/auth-helpers.c:1094
+msgid "SHA-384"
+msgstr "SHA-384"
+
+#: ../properties/auth-helpers.c:1096
+msgid "SHA-512"
+msgstr "SHA-512"
+
+#: ../properties/auth-helpers.c:1098
+msgid "RIPEMD-160"
+msgstr "RIPEMD-160"
+
+#: ../properties/auth-helpers.c:1259
+msgid "Not required"
+msgstr "不需要"
+
+#: ../properties/auth-helpers.c:1261
+msgid "HTTP"
+msgstr "HTTP"
+
+#: ../properties/auth-helpers.c:1263
+msgid "SOCKS"
+msgstr "SOCKS"
+
+#: ../properties/nm-ssh.c:52
+msgid "SSH"
+msgstr "SSH"
+
+#: ../properties/nm-ssh.c:53
+msgid "Compatible with the SSH server."
+msgstr "相容於 SSH 伺服器。"
+
+#: ../properties/nm-ssh.c:321
+msgid "Certificates (TLS)"
+msgstr "憑證 (TLS)"
+
+#: ../properties/nm-ssh.c:335
+msgid "Password"
+msgstr "密碼"
+
+#: ../properties/nm-ssh.c:352
+msgid "Password with Certificates (TLS)"
+msgstr "憑證密碼 (TLS)"
+
+#: ../properties/nm-ssh.c:364
+msgid "Static Key"
+msgstr "靜態金鑰"
+
+#~ msgid " "
+#~ msgstr " "
+
+#~ msgid "<b>Authentication</b>"
+#~ msgstr "<b>驗證</b>"
+
+#~ msgid "<b>General</b>"
+#~ msgstr "<b>一般</b>"
+
+#~ msgid ""
+#~ "<i>If key direction is used, it must be the opposite of that used on the "
+#~ "VPN peer.  For example, if the peer uses '1', this connection must use "
+#~ "'0'.  If you are unsure what value to use, contact your system "
+#~ "administrator.</i>"
+#~ msgstr ""
+#~ "<i>如果使用金鑰方向，在 VPN 對等端也同樣必須使用。舉例來說，如果對等端使用"
+#~ "「1」，這個連線必須使用「0」。如果您不確定要使用什麼數值，請連絡您的系統管"
+#~ "理員。</i>"
+
+#~ msgid "Ad_vanced..."
+#~ msgstr "進階(_V)…"
+
+#~ msgid "CA Certificate:"
+#~ msgstr "CA 憑證:"
+
+#~ msgid "Cipher:"
+#~ msgstr "加密器:"
+
+#~ msgid "General"
+#~ msgstr "一般"
+
+#~ msgid "HMAC Authentication:"
+#~ msgstr "HMAC 驗證:"
+
+#~ msgid "Key Direction:"
+#~ msgstr "金鑰方向:"
+
+#~ msgid "Key File:"
+#~ msgstr "金鑰檔案:"
+
+#~ msgid "Local IP Address:"
+#~ msgstr "本地端 IP 位址:"
+
+#~ msgid "SSH Advanced Options"
+#~ msgstr "SSH 進階選項"
+
+#~ msgid "Password:"
+#~ msgstr "密碼:"

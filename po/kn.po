@@ -1,0 +1,265 @@
+# translation of network-manager-ssh.master.kn.po to Kannada
+# Kannada translation of network-manager-ssh.
+# Copyright (C) 2009 network-manager-ssh's COPYRIGHT HOLDER
+# This file is distributed under the same license as the network-manager-ssh package.
+#
+# Shankar Prasad <svenkate@redhat.com>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: network-manager-ssh.master.kn\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=NetworkManager&component=VPN: ssh\n"
+"POT-Creation-Date: 2009-09-28 11:36+0000\n"
+"PO-Revision-Date: 2009-10-30 12:23+0530\n"
+"Last-Translator: Shankar Prasad <svenkate@redhat.com>\n"
+"Language-Team: Kannada <en@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:130
+msgid "_Password:"
+msgstr "ಗುಪ್ತಪದ(_P):"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:131
+msgid "_Secondary Password:"
+msgstr "ಸೆಕೆಂಡರಿ ಗುಪ್ತಪದ(_S):"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:248
+msgid "_Username:"
+msgstr "ಬಳಕೆದಾರಹೆಸರು(_U):"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:250
+msgid "_Domain:"
+msgstr "ಡೊಮೈನ್(_D):"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:342
+msgid "Connect _anonymously"
+msgstr "ಅನಾಮಧೇಯವಾಗಿ ಸಂಪರ್ಕಹೊಂದು(_a)"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:347
+msgid "Connect as _user:"
+msgstr "ಈ ಬಳಕೆದಾರರಾಗಿ ಸಂಪರ್ಕಹೊಂದು(_u):"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:456
+msgid "_Remember password for this session"
+msgstr "ಈ ಅಧಿವೇಶನಕ್ಕಾಗಿ ಗುಪ್ತಪದವನ್ನು ನೆನಪಿಟ್ಟುಕೊ(_R)"
+
+#: ../auth-dialog/gnome-two-password-dialog.c:458
+msgid "_Save password in keyring"
+msgstr "ಗುಪ್ತಪದವನ್ನು ಕೀಲಿಸುರುಳಿಯಲ್ಲಿ ಉಳಿಸು(_S)"
+
+#: ../auth-dialog/main.c:127
+#, c-format
+msgid "You need to authenticate to access the Virtual Private Network '%s'."
+msgstr "ನೀವು ವರ್ಚುವಲ್ ಪ್ರೈವೇಟ್ ನೆಟ್‌ವರ್ಕ್ '%s' ಅನ್ನು ನಿಲುಕಿಸಿಕೊಳ್ಳಲು ದೃಢೀಕರಿಸಬೇಕಾಗುತ್ತದೆ."
+
+#: ../auth-dialog/main.c:128
+msgid "Authenticate VPN"
+msgstr "VPN ಅನ್ನು ದೃಢೀಕರಿಸಿ"
+
+#: ../auth-dialog/main.c:149
+msgid "Certificate pass_word:"
+msgstr "ಪ್ರಮಾಣಪತ್ರದ ಗುಪ್ತಪದ(_w):"
+
+#: ../auth-dialog/main.c:163
+msgid "Certificate password:"
+msgstr "ಪ್ರಮಾಣಪತ್ರದ ಗುಪ್ತಪದ:"
+
+#: ../properties/auth-helpers.c:160
+msgid "Choose a Certificate Authority certificate..."
+msgstr "ಪ್ರಮಾಣಪತ್ರ ಅಥಾರಿಟಿಯ ಪ್ರಮಾಣಪತ್ರವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ..."
+
+#: ../properties/auth-helpers.c:179
+msgid "Choose your personal certificate..."
+msgstr "ನಿಮ್ಮ ವಯಕ್ತಿಕ ಪ್ರಮಾಣಪತ್ರವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ..."
+
+#: ../properties/auth-helpers.c:197
+msgid "Choose your private key..."
+msgstr "ನಿಮ್ಮ ಖಾಸಗಿ ಕೀಲಿಯನ್ನು ಆರಿಸಿ..."
+
+#: ../properties/auth-helpers.c:250
+msgid "Choose an SSH static key..."
+msgstr "ಒಂದು SSH ಸ್ಥಿರ ಕೀಲಿಯನ್ನು ಆಯ್ಕೆ ಮಾಡಿ..."
+
+#: ../properties/auth-helpers.c:274 ../properties/auth-helpers.c:949
+#: ../properties/auth-helpers.c:1126
+msgid "None"
+msgstr "ಯಾವುದೂ ಇಲ್ಲ"
+
+#: ../properties/auth-helpers.c:691
+msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
+msgstr "PEM ಪ್ರಮಾಣಪತ್ರಗಳು (*.pem, *.crt, *.key, *.cer)"
+
+#: ../properties/auth-helpers.c:751
+msgid "SSH Static Keys (*.key)"
+msgstr "SSH ಸ್ಥಿರ ಕೀಲಿಗಳು (*.key)"
+
+#: ../properties/auth-helpers.c:871 ../properties/auth-helpers.c:941
+msgid "Default"
+msgstr "ಪೂರ್ವನಿಯೋಜಿತ"
+
+#: ../properties/auth-helpers.c:951
+msgid "MD-5"
+msgstr "MD-5"
+
+#: ../properties/auth-helpers.c:953
+msgid "SHA-1"
+msgstr "SHA-1"
+
+#: ../properties/nm-ssh.c:53
+msgid "SSH"
+msgstr "SSH"
+
+#: ../properties/nm-ssh.c:54
+msgid "Compatible with the SSH server."
+msgstr "SSH ಪರಿಚಾರಕದೊಂದಿಗೆ ಹೊಂದಿಕೆಯಾಗುತ್ತದೆ."
+
+#: ../properties/nm-ssh.c:322
+msgid "Certificates (TLS)"
+msgstr "ಪ್ರಮಾಣಪತ್ರಗಳು (TLS)"
+
+#: ../properties/nm-ssh.c:336
+msgid "Password"
+msgstr "ಗುಪ್ತಪದ"
+
+#: ../properties/nm-ssh.c:353
+msgid "Password with Certificates (TLS)"
+msgstr "ಪ್ರಮಾಣಪತ್ರಗಳೊಂದಿಗಿನ ಗುಪ್ತಪದ (TLS)"
+
+#: ../properties/nm-ssh.c:365
+msgid "Static Key"
+msgstr "ಸ್ಥಿರ ಕೀಲಿ"
+
+#: ../properties/nm-ssh-dialog.glade.h:1
+msgid " "
+msgstr " "
+
+#: ../properties/nm-ssh-dialog.glade.h:2
+msgid "<b>Authentication</b>"
+msgstr "<b>ದೃಢೀಕರಣ</b>"
+
+#: ../properties/nm-ssh-dialog.glade.h:3
+msgid "<b>General</b>"
+msgstr "<b>ಸಾಮಾನ್ಯ</b>"
+
+#: ../properties/nm-ssh-dialog.glade.h:4
+msgid ""
+"<i>If key direction is used, it must be the opposite of that used on the VPN "
+"peer.  For example, if the peer uses '1', this connection must use '0'.  If "
+"you are unsure what value to use, contact your system administrator.</i>"
+msgstr ""
+"<i>ಕೀಲಿ ದಿಕ್ಕನ್ನು ಬಳಸಿದಲ್ಲಿ, ಅದು VPN ಪೀರ್‌ ನಲ್ಲಿ ಬಳಸಲಾಗಿದುದಕ್ಕೆ ವಿರುದ್ಧವಾಗಿರಬೇಕು.  "
+"ಉದಾಹರಣೆಗೆ, ಪೀರ್ '1' ಅನ್ನು ಬಳಸಿದಲ್ಲಿ, ಈ ಸಂಪರ್ಕವು '0' ಅನ್ನು ಬಳಸಬೇಕು.  ಯಾವುದನ್ನು "
+"ಬಳಸಬೇಕು ಎಂದು ನಿಮಗೆ ಖಚಿತವಾಗಿ ಗೊತ್ತಿರದೆ ಇದ್ದಲ್ಲಿ ನಿಮ್ಮ ಗಣಕ ವ್ಯವಸ್ಥಾಪಕರನ್ನು ಸಂಪರ್ಕಿಸಿ.</"
+"i>"
+
+#: ../properties/nm-ssh-dialog.glade.h:5
+msgid "Ad_vanced..."
+msgstr "ಸುಧಾರಿತ(_v)..."
+
+#: ../properties/nm-ssh-dialog.glade.h:6
+msgid "CA Certificate:"
+msgstr "CA ಪ್ರಮಾಣಪತ್ರ:"
+
+#: ../properties/nm-ssh-dialog.glade.h:7
+msgid "Cipher:"
+msgstr "ಸಿಫರ್:"
+
+#: ../properties/nm-ssh-dialog.glade.h:8
+msgid "General"
+msgstr "ಸಾಮಾನ್ಯ"
+
+#: ../properties/nm-ssh-dialog.glade.h:9
+msgid "HMAC Authentication:"
+msgstr "HMAC ದೃಢೀಕರಣ:"
+
+#: ../properties/nm-ssh-dialog.glade.h:10
+msgid "Key Direction:"
+msgstr "ಕೀಲಿ ದಿಕ್ಕು:"
+
+#: ../properties/nm-ssh-dialog.glade.h:11
+msgid "Key File:"
+msgstr "ಕೀಲಿ ಕಡತ:"
+
+#: ../properties/nm-ssh-dialog.glade.h:12
+msgid "Local IP Address:"
+msgstr "ಸ್ಥಳೀಯ IP ವಿಳಾಸ:"
+
+#: ../properties/nm-ssh-dialog.glade.h:13
+msgid "SSH Advanced Options"
+msgstr "SSH ಸುಧಾರಿತ ಆಯ್ಕೆಗಳು"
+
+#: ../properties/nm-ssh-dialog.glade.h:14
+msgid "Password:"
+msgstr "ಗುಪ್ತಪದ:"
+
+#: ../properties/nm-ssh-dialog.glade.h:15
+msgid "Private Key Password:"
+msgstr "ಖಾಸಗಿ ಕೀಲಿ ಗುಪ್ತಪದ:"
+
+#: ../properties/nm-ssh-dialog.glade.h:16
+msgid "Private Key:"
+msgstr "ಖಾಸಗಿ ಕೀಲಿ:"
+
+#: ../properties/nm-ssh-dialog.glade.h:17
+msgid "Remote IP Address:"
+msgstr "ದೂರಸ್ಥ IP ವಿಳಾಸ:"
+
+#: ../properties/nm-ssh-dialog.glade.h:18
+msgid "Security"
+msgstr "ಸುರಕ್ಷತೆ"
+
+#: ../properties/nm-ssh-dialog.glade.h:19
+msgid "Show passwords"
+msgstr "ಗುಪ್ತಪದಗಳನ್ನು ತೋರಿಸು"
+
+#: ../properties/nm-ssh-dialog.glade.h:20
+msgid "Static Key:"
+msgstr "ಸ್ಥಿರ ಕೀಲಿ:"
+
+#: ../properties/nm-ssh-dialog.glade.h:21
+msgid "TLS Authentication"
+msgstr "TLS ದೃಢೀಕರಣ"
+
+#: ../properties/nm-ssh-dialog.glade.h:22
+msgid "Type:"
+msgstr "ಬಗೆ:"
+
+#: ../properties/nm-ssh-dialog.glade.h:23
+msgid "Use L_ZO data compression"
+msgstr "L_ZO ದತ್ತಾಂಶ ಸಂಕುಚನವನ್ನು ಬಳಸು"
+
+#: ../properties/nm-ssh-dialog.glade.h:24
+msgid "Use a TA_P device"
+msgstr "ಒಂದು TA_P ಸಾಧನವನ್ನು ಬಳಸು"
+
+#: ../properties/nm-ssh-dialog.glade.h:25
+msgid "Use a _TCP connection"
+msgstr "ಒಂದು _TCP ಸಂಪರ್ಕವನ್ನು ಬಳಸು"
+
+#: ../properties/nm-ssh-dialog.glade.h:26
+msgid "Use additional TLS authentication"
+msgstr "ಹೆಚ್ಚುವರಿ TLS ದೃಢೀಕರಣವನ್ನು ಬಳಸಿ"
+
+#: ../properties/nm-ssh-dialog.glade.h:27
+msgid "Use custom _renegotiation interval:"
+msgstr "ಇಚ್ಛೆಯ ಮರುಸಂಧಾನ ಕಾಲಾವಧಿಯನ್ನು ಬಳಸು(_r):"
+
+#: ../properties/nm-ssh-dialog.glade.h:28
+msgid "Use custom gateway p_ort:"
+msgstr "ಇಚ್ಛೆಯ ಗೇಟ್‌ವೆ ಸಂಪರ್ಕಸ್ಥಾನವನ್ನು ಬಳಸು(_o):"
+
+#: ../properties/nm-ssh-dialog.glade.h:29
+msgid "User Certificate:"
+msgstr "ಬಳಕೆದಾರ ಪ್ರಮಾಣಪತ್ರ:"
+
+#: ../properties/nm-ssh-dialog.glade.h:30
+msgid "User name:"
+msgstr "ಬಳಕೆದಾರ ಹೆಸರು:"
+
+#: ../properties/nm-ssh-dialog.glade.h:31
+msgid "_Gateway:"
+msgstr "ಗೇಟ್‌ವೇ(_G):"
+
