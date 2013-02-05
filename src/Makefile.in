@@ -34,8 +34,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-libexec_PROGRAMS = nm-ssh-service$(EXEEXT) \
-	nm-ssh-service-ssh-helper$(EXEEXT)
+libexec_PROGRAMS = nm-ssh-service$(EXEEXT)
 subdir = src
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -57,12 +56,6 @@ nm_ssh_service_OBJECTS = $(am_nm_ssh_service_OBJECTS)
 am__DEPENDENCIES_1 =
 nm_ssh_service_DEPENDENCIES = $(am__DEPENDENCIES_1) \
 	$(top_builddir)/common/libnm-ssh-common.la
-am_nm_ssh_service_ssh_helper_OBJECTS =  \
-	nm-ssh-service-ssh-helper.$(OBJEXT)
-nm_ssh_service_ssh_helper_OBJECTS =  \
-	$(am_nm_ssh_service_ssh_helper_OBJECTS)
-nm_ssh_service_ssh_helper_DEPENDENCIES =  \
-	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -76,10 +69,6 @@ CCLD = $(CC)
 LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
-SOURCES = $(nm_ssh_service_SOURCES) \
-	$(nm_ssh_service_ssh_helper_SOURCES)
-DIST_SOURCES = $(nm_ssh_service_SOURCES) \
-	$(nm_ssh_service_ssh_helper_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -257,13 +246,6 @@ nm_ssh_service_LDADD = \
 	$(NM_LIBS) \
         $(top_builddir)/common/libnm-ssh-common.la
 
-nm_ssh_service_ssh_helper_SOURCES = \
-	nm-ssh-service-ssh-helper.c
-
-nm_ssh_service_ssh_helper_LDADD = \
-	$(DBUS_LIBS) \
-	$(NM_LIBS)
-
 CLEANFILES = *~
 all: all-am
 
@@ -345,9 +327,6 @@ clean-libexecPROGRAMS:
 nm-ssh-service$(EXEEXT): $(nm_ssh_service_OBJECTS) $(nm_ssh_service_DEPENDENCIES) 
 	@rm -f nm-ssh-service$(EXEEXT)
 	$(LINK) $(nm_ssh_service_OBJECTS) $(nm_ssh_service_LDADD) $(LIBS)
-nm-ssh-service-ssh-helper$(EXEEXT): $(nm_ssh_service_ssh_helper_OBJECTS) $(nm_ssh_service_ssh_helper_DEPENDENCIES) 
-	@rm -f nm-ssh-service-ssh-helper$(EXEEXT)
-	$(LINK) $(nm_ssh_service_ssh_helper_OBJECTS) $(nm_ssh_service_ssh_helper_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -355,7 +334,6 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/nm-ssh-service-ssh-helper.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/nm-ssh-service.Po@am__quote@
 
 .c.o:

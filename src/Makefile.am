@@ -12,7 +12,7 @@ AM_CPPFLAGS = \
 	-DDATADIR=\"$(datadir)\" \
 	-I$(top_srcdir)
 
-libexec_PROGRAMS = nm-ssh-service nm-ssh-service-ssh-helper
+libexec_PROGRAMS = nm-ssh-service
 
 nm_ssh_service_SOURCES = \
 	nm-ssh-service.c \
@@ -21,12 +21,5 @@ nm_ssh_service_SOURCES = \
 nm_ssh_service_LDADD = \
 	$(NM_LIBS) \
         $(top_builddir)/common/libnm-ssh-common.la
-
-nm_ssh_service_ssh_helper_SOURCES = \
-	nm-ssh-service-ssh-helper.c
-
-nm_ssh_service_ssh_helper_LDADD = \
-	$(DBUS_LIBS) \
-	$(NM_LIBS)
 
 CLEANFILES = *~

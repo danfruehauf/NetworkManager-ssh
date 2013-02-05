@@ -68,14 +68,14 @@ G_DEFINE_TYPE (NMSshPlugin, nm_ssh_plugin, NM_TYPE_VPN_PLUGIN)
 #define NM_SSH_PLUGIN_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), NM_TYPE_SSH_PLUGIN, NMSshPluginPrivate))
 
 typedef struct {
+	// TODO remove remove!!
 	char *username;
 	char *password;
-	char *priv_key_pass;
-	char *proxy_username;
-	char *proxy_password;
+
 	char *remote_gw;
 	char *local_addr;
 	char *remote_addr;
+	char *netmask;
 
 	/* fds for handling input/output of the SSH process */
 	GIOChannel *ssh_stdin_channel;
@@ -87,10 +87,7 @@ typedef struct {
 	/* hold local and remote tun numbers */
 	gint remote_tun_number;
 	gint local_tun_number;
-
-	// TODO remove
-	GIOChannel *socket_channel;
-	guint socket_channel_eventid;
+	guint mtu;
 } NMSshPluginIOData;
 
 typedef struct {
@@ -372,279 +369,6 @@ write_user_pass (GIOChannel *channel,
 	g_free (buf);
 }
 
-static gboolean
-handle_management_socket (NMVPNPlugin *plugin,
-                          GIOChannel *source,
-                          GIOCondition condition,
-                          NMVPNPluginFailure *out_failure)
-{
-	NMSshPluginIOData *io_data = NM_SSH_PLUGIN_GET_PRIVATE (plugin)->io_data;
-	gboolean again = TRUE;
-	char *str = NULL, *auth = NULL, *buf;
-
-	if (!(condition & G_IO_IN))
-		return TRUE;
-
-	if (g_io_channel_read_line (source, &str, NULL, NULL, NULL) != G_IO_STATUS_NORMAL)
-		return TRUE;
-
-	if (strlen (str) < 1)
-		goto out;
-
-	auth = get_detail (str, ">PASSWORD:Need '");
-	if (auth) {
-		if (strcmp (auth, "Auth") == 0) {
-			if (io_data->username != NULL && io_data->password != NULL)
-				write_user_pass (source, auth, io_data->username, io_data->password);
-			else
-				g_warning ("Auth requested but one of username or password is missing");
-		} else if (!strcmp (auth, "Private Key")) {
-			if (io_data->priv_key_pass) {
-				char *qpass;
-
-				/* Quote strings passed back to ssh */
-				qpass = ovpn_quote_string (io_data->priv_key_pass);
-				buf = g_strdup_printf ("password \"%s\" \"%s\"\n", auth, qpass);
-				memset (qpass, 0, strlen (qpass));
-				g_free (qpass);
-
-				/* Will always write everything in blocking channels (on success) */
-				g_io_channel_write_chars (source, buf, strlen (buf), NULL, NULL);
-				g_io_channel_flush (source, NULL);
-				g_free (buf);
-			} else
-				g_warning ("Certificate password requested but private key password == NULL");
-		} else if (strcmp (auth, "HTTP Proxy") == 0) {
-			if (io_data->proxy_username != NULL && io_data->proxy_password != NULL)
-				write_user_pass (source, auth, io_data->proxy_username, io_data->proxy_password);
-			else
-				g_warning ("HTTP Proxy auth requested but either proxy username or password is missing");
-		} else {
-			g_warning ("No clue what to send for username/password request for '%s'", auth);
-			if (out_failure)
-				*out_failure = NM_VPN_PLUGIN_FAILURE_CONNECT_FAILED;
-			again = FALSE;
-		}
-		g_free (auth);
-	}
-
-	auth = get_detail (str, ">PASSWORD:Verification Failed: '");
-	if (auth) {
-		if (!strcmp (auth, "Auth"))
-			g_warning ("Password verification failed");
-		else if (!strcmp (auth, "Private Key"))
-			g_warning ("Private key verification failed");
-		else
-			g_warning ("Unknown verification failed: %s", auth);
-
-		g_free (auth);
-
-		if (out_failure)
-			*out_failure = NM_VPN_PLUGIN_FAILURE_LOGIN_FAILED;
-		again = FALSE;
-	}
-
-out:
-	g_free (str);
-	return again;
-}
-
-static gboolean
-handle_management_socket2 (NMVPNPlugin *plugin,
-                          GIOChannel *source,
-                          GIOCondition condition,
-                          NMVPNPluginFailure *out_failure)
-{
-	NMSshPluginIOData *io_data = NM_SSH_PLUGIN_GET_PRIVATE (plugin)->io_data;
-	gboolean again = TRUE;
-	char *str = NULL, *auth = NULL, *buf;
-
-	if (!(condition & G_IO_IN))
-		return TRUE;
-
-	if (g_io_channel_read_line (source, &str, NULL, NULL, NULL) != G_IO_STATUS_NORMAL)
-		return TRUE;
-
-	if (strlen (str) < 1)
-		goto out;
-
-	auth = get_detail (str, ">PASSWORD:Need '");
-	if (auth) {
-		if (strcmp (auth, "Auth") == 0) {
-			if (io_data->username != NULL && io_data->password != NULL)
-				write_user_pass (source, auth, io_data->username, io_data->password);
-			else
-				g_warning ("Auth requested but one of username or password is missing");
-		} else if (!strcmp (auth, "Private Key")) {
-			if (io_data->priv_key_pass) {
-				char *qpass;
-
-				/* Quote strings passed back to ssh */
-				qpass = ovpn_quote_string (io_data->priv_key_pass);
-				buf = g_strdup_printf ("password \"%s\" \"%s\"\n", auth, qpass);
-				memset (qpass, 0, strlen (qpass));
-				g_free (qpass);
-
-				/* Will always write everything in blocking channels (on success) */
-				g_io_channel_write_chars (source, buf, strlen (buf), NULL, NULL);
-				g_io_channel_flush (source, NULL);
-				g_free (buf);
-			} else
-				g_warning ("Certificate password requested but private key password == NULL");
-		} else if (strcmp (auth, "HTTP Proxy") == 0) {
-			if (io_data->proxy_username != NULL && io_data->proxy_password != NULL)
-				write_user_pass (source, auth, io_data->proxy_username, io_data->proxy_password);
-			else
-				g_warning ("HTTP Proxy auth requested but either proxy username or password is missing");
-		} else {
-			g_warning ("No clue what to send for username/password request for '%s'", auth);
-			if (out_failure)
-				*out_failure = NM_VPN_PLUGIN_FAILURE_CONNECT_FAILED;
-			again = FALSE;
-		}
-		g_free (auth);
-	}
-
-	auth = get_detail (str, ">PASSWORD:Verification Failed: '");
-	if (auth) {
-		if (!strcmp (auth, "Auth"))
-			g_warning ("Password verification failed");
-		else if (!strcmp (auth, "Private Key"))
-			g_warning ("Private key verification failed");
-		else
-			g_warning ("Unknown verification failed: %s", auth);
-
-		g_free (auth);
-
-		if (out_failure)
-			*out_failure = NM_VPN_PLUGIN_FAILURE_LOGIN_FAILED;
-		again = FALSE;
-	}
-
-out:
-	g_free (str);
-	return again;
-}
-
-static gboolean
-nm_ssh_stdout_cb (GIOChannel *source, GIOCondition condition, gpointer user_data)
-{
-	NMVPNPlugin *plugin = NM_VPN_PLUGIN (user_data);
-	NMVPNPluginFailure failure = NM_VPN_PLUGIN_FAILURE_CONNECT_FAILED;
-	NMSshPluginIOData *io_data = NM_SSH_PLUGIN_GET_PRIVATE (plugin)->io_data;
-	char *str = NULL, *auth = NULL, *buf;
-
-	if (!(condition & G_IO_IN))
-		return TRUE;
-
-	if (g_io_channel_read_line (source, &str, NULL, NULL, NULL) != G_IO_STATUS_NORMAL)
-		return TRUE;
-
-	if (strlen (str) < 1) {
-		g_free(str);
-		return TRUE;
-	}
-
-	/* Probe for remote tun number */
-	// TODO rather ugly and hardcoded
-	if (strncmp (str, "debug1: Requesting tun unit", 27) == 0) {
-		sscanf(str, "debug1: Requesting tun unit %d", &io_data->remote_tun_number);
-		g_message("Remote tun: %d", io_data->remote_tun_number);
-		g_message(str);
-	} else if (strncmp (str, "debug1: sys_tun_open:", 21) == 0) {
-		sscanf(str, "debug1: sys_tun_open: tun%d", &io_data->local_tun_number);
-		g_message("Local tun: %d", io_data->local_tun_number);
-		g_message(str);
-		// TODO Starting time here for getting local interface up...
-	} else if (strncmp (str, "Tunnel device open failed.", 26) == 0) {
-		/* Opening of tun device failed... :( */
-		g_warning("Tunnel device open failed.");
-		nm_vpn_plugin_set_state (plugin, NM_VPN_SERVICE_STATE_STOPPED);
-		// TODO use a proper regexp
-		// TODO it comes neither on STDOUT nor STDERR WTF?!
-		// TODO interaction is done after SSH opens a TTY, not good for us...
-	} else if (strncmp (str, "The authenticity of host", 24) == 0) {
-		/* User will have to accept this new host with its fingerprint */
-		g_warning("It is not a known host, continue connecting?");
-		// TODO PROMPT FOR USER!!
-		//nm_vpn_plugin_set_state (plugin, NM_VPN_SERVICE_STATE_STOPPED);
-	}
-	// TODO PROBE FOR PASSWORD PROMPT HERE
-
-	g_message(str);
-
-	g_free(str);
-	return TRUE;
-}
-
-static gboolean
-nm_ssh_socket_data_cb (GIOChannel *source, GIOCondition condition, gpointer user_data)
-{
-	NMVPNPlugin *plugin = NM_VPN_PLUGIN (user_data);
-	NMVPNPluginFailure failure = NM_VPN_PLUGIN_FAILURE_CONNECT_FAILED;
-
-	if (!handle_management_socket (plugin, source, condition, &failure)) {
-		nm_vpn_plugin_failure (plugin, failure);
-		nm_vpn_plugin_set_state (plugin, NM_VPN_SERVICE_STATE_STOPPED);
-		return FALSE;
-	}
-
-	return TRUE;
-}
-
-// TODO TODO
-static gboolean
-nm_ssh_connect_timer_cb2 (gpointer data)
-{
-	NMSshPlugin *plugin = NM_SSH_PLUGIN (data);
-	NMSshPluginPrivate *priv = NM_SSH_PLUGIN_GET_PRIVATE (plugin);
-	struct sockaddr_in     serv_addr;
-	gboolean               connected = FALSE;
-	gint                   socket_fd = -1;
-	NMSshPluginIOData *io_data = priv->io_data;
-
-	priv->connect_count++;
-
-	/* open socket and start listener */
-	socket_fd = socket (PF_INET, SOCK_STREAM, IPPROTO_TCP);
-	if (socket_fd < 0)
-		return FALSE;
-
-	serv_addr.sin_family = AF_INET;
-	if (inet_pton (AF_INET, "127.0.0.1", &(serv_addr.sin_addr)) <= 0)
-		g_warning ("%s: could not convert 127.0.0.1", __func__);
-	serv_addr.sin_port = htons (1194);
- 
-	connected = (connect (socket_fd, (struct sockaddr *) &serv_addr, sizeof (serv_addr)) == 0);
-	if (!connected) {
-		close (socket_fd);
-		if (priv->connect_count <= 30)
-			return TRUE;
-
-		priv->connect_timer = 0;
-
-		g_warning ("Could not open management socket");
-		nm_vpn_plugin_failure (NM_VPN_PLUGIN (plugin), NM_VPN_PLUGIN_FAILURE_CONNECT_FAILED);
-		nm_vpn_plugin_set_state (NM_VPN_PLUGIN (plugin), NM_VPN_SERVICE_STATE_STOPPED);
-	} else {
-		GIOChannel *ssh_socket_channel;
-		guint ssh_socket_channel_eventid;
-
-		ssh_socket_channel = g_io_channel_unix_new (socket_fd);
-		ssh_socket_channel_eventid = g_io_add_watch (ssh_socket_channel,
-		                                                 G_IO_IN,
-		                                                 nm_ssh_socket_data_cb,
-		                                                 plugin);
-
-		g_io_channel_set_encoding (ssh_socket_channel, NULL, NULL);
-		io_data->socket_channel = ssh_socket_channel;
-		io_data->socket_channel_eventid = ssh_socket_channel_eventid;
-	}
-
-	priv->connect_timer = 0;
-	return FALSE;
-}
-
 static void
 send_ip4_config (DBusGConnection *connection, GHashTable *config)
 {
@@ -719,50 +443,32 @@ addr_to_gvalue (const char *str)
 }
 
 static gboolean
-send_network_config (NMVPNPlugin *plugin)
+send_network_config (NMSshPlugin *plugin)
 {
 	NMSshPluginPrivate *priv = NM_SSH_PLUGIN_GET_PRIVATE (plugin);
 
 	DBusGConnection *connection;
 	GHashTable *config;
-	char *tmp;
 	GValue *val;
-	int i;
 	GError *err = NULL;
-	GValue *dns_list = NULL;
-	GValue *nbns_list = NULL;
-	GValue *dns_domain = NULL;
-	struct in_addr temp_addr;
-	char **iter;
+	char *tun_device;
 
 	connection = dbus_g_bus_get (DBUS_BUS_SYSTEM, &err);
 	if (!connection) {
 		g_warning ("Could not get the system bus: %s", err->message);
-		// TODO TODO
-		//nm_vpn_plugin_failure (plugin, err);
-		nm_vpn_plugin_set_state (plugin, NM_VPN_SERVICE_STATE_STOPPED);
+		nm_vpn_plugin_set_state ((NMVPNPlugin*)plugin, NM_VPN_SERVICE_STATE_STOPPED);
 		return FALSE;
 	}
 
 	config = g_hash_table_new (g_str_hash, g_str_equal);
 
-	// TODO TODO TODO
-	// TODO TODO TODO
-	// TODO TODO TODO
-	//val = addr_to_gvalue ("172.16.40.1");
-	//g_hash_table_insert (config, NM_VPN_PLUGIN_IP4_CONFIG_INT_GATEWAY, val);
+	g_message ("local_addr %s", priv->io_data->local_addr);
+	g_message ("remote_addr %s", priv->io_data->remote_addr);
+	g_message ("remote_gw %s", priv->io_data->remote_gw);
+	g_message ("netmask %s", priv->io_data->netmask);
+	g_message ("local_tun_device tun%d", priv->io_data->local_tun_number);
 
-	//val = addr_to_gvalue ("172.16.40.2");
-	//g_hash_table_insert (config, NM_VPN_PLUGIN_IP4_CONFIG_ADDRESS, val);
-
-	//val = addr_to_gvalue ("173.204.238.133");
-	//g_hash_table_insert (config, NM_VPN_PLUGIN_IP4_CONFIG_EXT_GATEWAY, val);
-	g_warning ("local_addr %s", priv->io_data->local_addr);
-	g_warning ("remote_addr %s", priv->io_data->remote_addr);
-	g_warning ("remote_gw %s", priv->io_data->remote_gw);
-	g_warning ("local_tun_interface %d", priv->io_data->local_tun_number);
-
-	// Retrieve local address
+	/* Retrieve local address */
 	if (priv->io_data->local_addr != NULL)
 	{
 		val = addr_to_gvalue (priv->io_data->local_addr);
@@ -773,7 +479,7 @@ send_network_config (NMVPNPlugin *plugin)
 		g_warning ("local_addr unset.");
 	}
 
-	// Retrieve remote address
+	/* Retrieve remote address */
 	if (priv->io_data->remote_addr != NULL)
 	{
 		val = addr_to_gvalue (priv->io_data->remote_addr);
@@ -785,7 +491,7 @@ send_network_config (NMVPNPlugin *plugin)
 		g_warning ("remote_addr unset.");
 	}
 
-	// Retrieve remote gw address
+	/* Retrieve remote gw address */
 	if (priv->io_data->remote_gw != NULL)
 	{
 		val = addr_to_gvalue (priv->io_data->remote_gw);
@@ -796,12 +502,12 @@ send_network_config (NMVPNPlugin *plugin)
 		g_warning ("remote_gw unset.");
 	}
 
-	// Retrieve tun interface
+	/* Retrieve tun interface */
 	if (priv->io_data->local_tun_number != -1)
 	{
-		//val = str_to_gvalue (priv->io_data->local_tun_number, FALSE);
-		// TODO HARDCODED!!
-		val = str_to_gvalue ("tun100", FALSE);
+		asprintf(&tun_device, "tun%d", priv->io_data->local_tun_number);
+		val = str_to_gvalue (tun_device, FALSE);
+		free(tun_device);
 		g_hash_table_insert (config, NM_VPN_PLUGIN_IP4_CONFIG_TUNDEV, val);
 	}
 	else
@@ -820,41 +526,35 @@ send_network_config (NMVPNPlugin *plugin)
 	return TRUE;
 }
 
-static gint
-nm_ssh_get_free_tun_device (void)
-{
-	gint tun_device;
-
-	for (tun_device = 0; tun_device <= 255; tun_device++)
-	{
-		if (system("/sbin/ifconfig tun" + itoa(tun_device)))
-		{
-			return tun_device;
-		}
-	}
-	return -1;
-}
-
 static gboolean
-nm_ssh_connect_timer_cb (gpointer data)
+nm_ssh_local_tun_up_cb (gpointer data)
 {
 	NMSshPlugin *plugin = NM_SSH_PLUGIN (data);
 	NMSshPluginPrivate *priv = NM_SSH_PLUGIN_GET_PRIVATE (plugin);
-	struct sockaddr_in     serv_addr;
-	gboolean               connected = FALSE;
-	gint                   socket_fd = -1;
 	NMSshPluginIOData *io_data = priv->io_data;
+	char *ifconfig_cmd;
 
 	priv->connect_count++;
 
+	/* format the ifconfig command */
+	asprintf(&ifconfig_cmd, "/sbin/ifconfig tun%d %s netmask %s pointopoint %s mtu %d",
+		io_data->local_tun_number,
+		io_data->local_addr,
+		io_data->netmask,
+		io_data->remote_addr,
+		priv->io_data->mtu);
 
-	if (system("/sbin/ifconfig tun100 172.16.40.2 netmask 255.255.255.252 pointopoint 172.16.40.1") != 0 &&
+	g_message ("Running: '%s'", ifconfig_cmd);
+
+	if (system(ifconfig_cmd) != 0 &&
 		priv->connect_count <= 30)
 	{
+		free(ifconfig_cmd);
 		return TRUE;
 	}
+	free(ifconfig_cmd);
 
-	g_warning ("Interface tun100 configured.");
+	g_message ("Interface tun%d configured.", io_data->local_tun_number);
 
 	priv->connect_timer = 0;
 	send_network_config(plugin);
@@ -862,13 +562,85 @@ nm_ssh_connect_timer_cb (gpointer data)
 	return FALSE;
 }
 
+
 static void
-nm_ssh_schedule_connect_timer (NMSshPlugin *plugin)
+nm_ssh_schedule_ifconfig_timer (NMSshPlugin *plugin)
 {
 	NMSshPluginPrivate *priv = NM_SSH_PLUGIN_GET_PRIVATE (plugin);
 
 	if (priv->connect_timer == 0)
-		priv->connect_timer = g_timeout_add (1000, nm_ssh_connect_timer_cb, plugin);
+		priv->connect_timer = g_timeout_add (1000, nm_ssh_local_tun_up_cb, plugin);
+}
+
+static gboolean
+nm_ssh_stdout_cb (GIOChannel *source, GIOCondition condition, gpointer user_data)
+{
+	NMVPNPlugin *plugin = NM_VPN_PLUGIN (user_data);
+	NMSshPluginIOData *io_data = NM_SSH_PLUGIN_GET_PRIVATE (plugin)->io_data;
+	char *str = NULL;
+
+	if (!(condition & G_IO_IN))
+		return TRUE;
+
+	if (g_io_channel_read_line (source, &str, NULL, NULL, NULL) != G_IO_STATUS_NORMAL)
+		return TRUE;
+
+	if (strlen (str) < 1) {
+		g_free(str);
+		return TRUE;
+	}
+
+	/* Probe for remote tun number */
+	// TODO rather ugly and hardcoded
+	// TODO use g_strstr
+	if (strncmp (str, "debug1: Requesting tun unit", 27) == 0) {
+		sscanf(str, "debug1: Requesting tun unit %d", &io_data->remote_tun_number);
+		g_message("Remote tun: %d", io_data->remote_tun_number);
+		g_message(str);
+	} else if (strncmp (str, "debug1: sys_tun_open:", 21) == 0) {
+		sscanf(str, "debug1: sys_tun_open: tun%d", &io_data->local_tun_number);
+		g_message("Local tun: %d", io_data->local_tun_number);
+		g_message(str);
+		/* Starting timer here for getting local interface up... */
+		nm_ssh_schedule_ifconfig_timer ((NMSshPlugin*)plugin);
+	} else if (strncmp (str, "Tunnel device open failed.", 26) == 0) {
+		/* Opening of tun device failed... :( */
+		g_warning("Tunnel device open failed.");
+		nm_vpn_plugin_set_state (plugin, NM_VPN_SERVICE_STATE_STOPPED);
+		// TODO use a proper regexp
+		// TODO it comes neither on STDOUT nor STDERR WTF?!
+		// TODO interaction is done after SSH opens a TTY, not good for us...
+	} else if (strncmp (str, "The authenticity of host", 24) == 0) {
+		/* User will have to accept this new host with its fingerprint */
+		g_warning("It is not a known host, continue connecting?");
+		// TODO PROMPT FOR USER!!
+		//nm_vpn_plugin_set_state (plugin, NM_VPN_SERVICE_STATE_STOPPED);
+	}
+	// TODO PROBE FOR PASSWORD PROMPT HERE
+
+	g_message(str);
+
+	g_free(str);
+	return TRUE;
+}
+
+static gint
+nm_ssh_get_free_tun_device (void)
+{
+	gint tun_device;
+	char *system_cmd;
+
+	for (tun_device = 0; tun_device <= 255; tun_device++)
+	{
+		asprintf(&system_cmd, "/sbin/ifconfig tun%d", tun_device);
+		if (system(system_cmd) != 0)
+		{
+			free(system_cmd);
+			return tun_device;
+		}
+		free(system_cmd);
+	}
+	return -1;
 }
 
 static void
@@ -907,12 +679,25 @@ ssh_watch_cb (GPid pid, gint status, gpointer user_data)
 	}
 
 	/* Try to get the last bits of data from ssh */
-	if (priv->io_data && priv->io_data->socket_channel) {
-		GIOChannel *channel = priv->io_data->socket_channel;
+	if (priv->io_data && priv->io_data->ssh_stdout_channel) {
+		GIOChannel *channel = priv->io_data->ssh_stdout_channel;
 		GIOCondition condition;
 
 		while ((condition = g_io_channel_get_buffer_condition (channel)) & G_IO_IN) {
-			if (!handle_management_socket (plugin, channel, condition, &failure)) {
+			if (!nm_ssh_stdout_cb (channel, condition, plugin)) {
+				good_exit = FALSE;
+				break;
+			}
+		}
+	}
+
+	/* Try to get the last bits of data from ssh */
+	if (priv->io_data && priv->io_data->ssh_stderr_channel) {
+		GIOChannel *channel = priv->io_data->ssh_stderr_channel;
+		GIOCondition condition;
+
+		while ((condition = g_io_channel_get_buffer_condition (channel)) & G_IO_IN) {
+			if (!nm_ssh_stdout_cb (channel, condition, plugin)) {
 				good_exit = FALSE;
 				break;
 			}
@@ -1011,41 +796,24 @@ add_ssh_arg_int (GPtrArray *args, const char *arg)
 	return TRUE;
 }
 
-static void
-add_cert_args (GPtrArray *args, NMSettingVPN *s_vpn)
+static gboolean
+extract_int (const char *arg, long int *retval, int range_begin, int range_end)
 {
-	const char *ca, *cert, *key;
+	long int tmp_int;
 
-	g_return_if_fail (args != NULL);
-	g_return_if_fail (s_vpn != NULL);
-
-	ca = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_CA);
-	cert = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_CERT);
-	key = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_KEY);
-
-	if (   ca && strlen (ca)
-	    && cert && strlen (cert)
-	    && key && strlen (key)
-	    && !strcmp (ca, cert)
-	    && !strcmp (ca, key)) {
-		add_ssh_arg (args, "--pkcs12");
-		add_ssh_arg (args, ca);
-	} else {
-		if (ca && strlen (ca)) {
-			add_ssh_arg (args, "--ca");
-			add_ssh_arg (args, ca);
-		}
-
-		if (cert && strlen (cert)) {
-			add_ssh_arg (args, "--cert");
-			add_ssh_arg (args, cert);
-		}
-
-		if (key && strlen (key)) {
-			add_ssh_arg (args, "--key");
-			add_ssh_arg (args, key);
-		}
+	/* Convert -> int and back to string for security's sake since
+	 * strtol() ignores some leading and trailing characters.
+	 */
+	errno = 0;
+	tmp_int = strtol (arg, NULL, 10);
+	if (errno != 0)
+		return FALSE;
+	if (tmp_int <= range_end && tmp_int >= range_begin)
+	{
+		*retval = tmp_int;
+		return TRUE;
 	}
+	return FALSE;
 }
 
 static gboolean
@@ -1055,10 +823,14 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
                                  GError **error)
 {
 	NMSshPluginPrivate *priv = NM_SSH_PLUGIN_GET_PRIVATE (plugin);
-	const char *ssh_binary, *auth, *connection_type, *tmp, *tmp2, *tmp3, *tmp4, *remote, *port;
+	const char *ssh_binary, *connection_type, *tmp;
+	const char *remote, *port, *mtu;
+	char *tmp_arg;
+	long int tmp_int;
 	GPtrArray *args;
 	GSource *ssh_watch;
 	GPid pid;
+	gint ssh_stdin_fd, ssh_stdout_fd, ssh_stderr_fd;
 
 	/* Find ssh */
 	ssh_binary = nm_find_ssh ();
@@ -1070,19 +842,106 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		             _("Could not find the ssh binary."));
 		return FALSE;
 	}
-  
- 	auth = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_AUTH);
- 	if (auth) {
- 		if (!validate_auth(auth)) {
- 			g_set_error (error,
- 			             NM_VPN_PLUGIN_ERROR,
- 			             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
- 			             "%s",
- 			             _("Invalid HMAC auth."));
- 			return FALSE;
- 		}
- 	}
 
+	/* Allocate io_data structure */
+	priv->io_data = g_malloc0 (sizeof (NMSshPluginIOData));
+  
+	args = g_ptr_array_new ();
+	add_ssh_arg (args, ssh_binary);
+
+	/* We'll need this when sending ip4 config data */
+	// TODO TODO resolve remote
+	priv->io_data->local_tun_number = -1;
+	// TODO make it configurable
+	priv->io_data->remote_tun_number = 100;
+	// TODO hardcoded, although MTU is extracted
+	priv->io_data->mtu = 1400;
+	// TODO hardcoded
+	priv->io_data->netmask = g_strdup("255.255.255.252");
+	// TODO hardcoded
+	priv->io_data->username = g_strdup("root");
+
+	/* Get a local tun */
+	priv->io_data->local_tun_number = nm_ssh_get_free_tun_device();
+	if (priv->io_data->local_tun_number == -1)
+	{
+		g_warning("Could not assign a free tun device.");
+		nm_vpn_plugin_set_state ((NMVPNPlugin*)plugin, NM_VPN_SERVICE_STATE_STOPPED);
+		return FALSE;
+	}
+
+	// TODO TODO
+	// TODO TODO
+	// EVERYTHING IS HARDCODED!!!
+	free_ssh_args (args);
+	args = g_ptr_array_new ();
+	add_ssh_arg (args, ssh_binary);
+
+	/* Set verbose mode, we'll parse the arguments */
+	add_ssh_arg (args, "-v");
+
+	/* Set TCP keep alive, so VPN stays up... */
+	// TODO add a configurable value
+	add_ssh_arg (args, "-o"); add_ssh_arg (args, "ServerAliveInterval=10");
+	add_ssh_arg (args, "-o"); add_ssh_arg (args, "TCPKeepAlive=yes");
+
+	/* The -w option, provide a remote and local tun device */
+	asprintf (&tmp_arg, "%d:%d", priv->io_data->local_tun_number, priv->io_data->remote_tun_number);
+	add_ssh_arg (args, "-w"); add_ssh_arg (args, tmp_arg);
+	free(tmp_arg);
+
+	/* only root is supported... */
+	add_ssh_arg (args, "-l"); add_ssh_arg (args, priv->io_data->username);
+
+	remote = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_REMOTE);
+	if (!(remote && strlen (remote))) {
+		g_set_error (error,
+		             NM_VPN_PLUGIN_ERROR,
+		             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
+		             _("Please set remote address."));
+					// TODO add translation
+		free_ssh_args (args);
+		return FALSE;
+	} else {
+		priv->io_data->remote_gw = g_strdup(remote);
+	}
+
+	/* Port */
+	port = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_PORT);
+	add_ssh_arg (args, "-p");
+	if (port && strlen (port)) {
+		if (!extract_int (port, &tmp_int, 1, 65535)) {
+			g_set_error (error,
+			             NM_VPN_PLUGIN_ERROR,
+			             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
+			             _("Invalid port number '%s'."),
+			             port);
+			free_ssh_args (args);
+			return FALSE;
+		}
+		add_ssh_arg (args, (gpointer) g_strdup_printf ("%d", (guint32) tmp_int));
+		// TODO doesn't quit nicely
+	} else {
+		/* Default to SSH port 22 */
+		add_ssh_arg (args, "22");
+	}
+
+	// TODO use MTU!!
+	/* TUN MTU size */
+	mtu = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_TUNNEL_MTU);
+	if (mtu && strlen (mtu)) {
+		if (!add_ssh_arg_int (args, mtu)) {
+			g_set_error (error,
+			             NM_VPN_PLUGIN_ERROR,
+			             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
+			             _("Invalid TUN MTU size '%s'."),
+			             mtu);
+			free_ssh_args (args);
+			return FALSE;
+		}
+	}
+
+	/* Now append configuration options which are dependent on the configuration type */
 	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_CONNECTION_TYPE);
 	connection_type = validate_connection_type (tmp);
 	if (!connection_type) {
@@ -1094,223 +953,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		return FALSE;
 	}
 
-	args = g_ptr_array_new ();
-	add_ssh_arg (args, ssh_binary);
-
-	remote = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_REMOTE);
-	if (remote && strlen (remote)) {
-		add_ssh_arg (args, "--remote");
-		add_ssh_arg (args, remote);
-	}
-
-	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_PROXY_TYPE);
-	tmp2 = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_PROXY_SERVER);
-	tmp3 = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_PROXY_PORT);
-	tmp4 = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_PROXY_RETRY);
-	if (tmp && strlen (tmp) && tmp2 && strlen (tmp2)) {
-		if (!strcmp (tmp, "http")) {
-			add_ssh_arg (args, "--http-proxy");
-			add_ssh_arg (args, tmp2);
-			add_ssh_arg (args, tmp3 ? tmp3 : "8080");
-			add_ssh_arg (args, "auto");  /* Automatic proxy auth method detection */
-			if (tmp4)
-				add_ssh_arg (args, "--http-proxy-retry");
-		} else if (!strcmp (tmp, "socks")) {
-			add_ssh_arg (args, "--socks-proxy");
-			add_ssh_arg (args, tmp2);
-			add_ssh_arg (args, tmp3 ? tmp3 : "1080");
-			if (tmp4)
-				add_ssh_arg (args, "--socks-proxy-retry");
-		} else {
-			g_set_error (error,
-				         NM_VPN_PLUGIN_ERROR,
-				         NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
-				         _("Invalid proxy type '%s'."),
-				         tmp);
-			return FALSE;
-		}
-	}
-
-	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_COMP_LZO);
-	if (tmp && !strcmp (tmp, "yes"))
-		add_ssh_arg (args, "--comp-lzo");
-
-	add_ssh_arg (args, "--nobind");
-
-	/* Device, either tun or tap */
-	add_ssh_arg (args, "--dev");
-	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_TAP_DEV);
-	if (tmp && !strcmp (tmp, "yes"))
-		add_ssh_arg (args, "tap");
-	else
-		add_ssh_arg (args, "tun");
-
-	/* Protocol, either tcp or udp */
-	add_ssh_arg (args, "--proto");
-	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_PROTO_TCP);
-	if (tmp && !strcmp (tmp, "yes"))
-		add_ssh_arg (args, "tcp-client");
-	else
-		add_ssh_arg (args, "udp");
-
-	/* Port */
-	add_ssh_arg (args, "--port");
-	port = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_PORT);
-	if (port && strlen (port)) {
-		if (!add_ssh_arg_int (args, port)) {
-			g_set_error (error,
-			             NM_VPN_PLUGIN_ERROR,
-			             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
-			             _("Invalid port number '%s'."),
-			             port);
-			free_ssh_args (args);
-			return FALSE;
-		}
-	} else {
-		/* Default to IANA assigned port 1194 */
-		add_ssh_arg (args, "1194");
-	}
-
-	/* Cipher */
-	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_CIPHER);
-	if (tmp && strlen (tmp)) {
-		add_ssh_arg (args, "--cipher");
-		add_ssh_arg (args, tmp);
-	}
-
-	/* Auth */
-	if (auth) {
-		add_ssh_arg (args, "--auth");
-		add_ssh_arg (args, auth);
-	}
-	add_ssh_arg (args, "--auth-nocache");
-
-	/* TA */
-	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_TA);
-	if (tmp && strlen (tmp)) {
-		add_ssh_arg (args, "--tls-auth");
-		add_ssh_arg (args, tmp);
-
-		tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_TA_DIR);
-		if (tmp && strlen (tmp))
-			add_ssh_arg (args, tmp);
-	}
-
-	/* tls-remote */
-	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_TLS_REMOTE);
-	if (tmp && strlen (tmp)) {
-                add_ssh_arg (args, "--tls-remote");
-                add_ssh_arg (args, tmp);
-	}
-
-	/* Reneg seconds */
-	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_RENEG_SECONDS);
-	if (tmp && strlen (tmp)) {
-		add_ssh_arg (args, "--reneg-sec");
-		if (!add_ssh_arg_int (args, tmp)) {
-			g_set_error (error,
-			             NM_VPN_PLUGIN_ERROR,
-			             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
-			             _("Invalid reneg seconds '%s'."),
-			             tmp);
-			free_ssh_args (args);
-			return FALSE;
-		}
-	}
-
-	if (debug) {
-		add_ssh_arg (args, "--verb");
-		add_ssh_arg (args, "10");
-	} else {
-		/* Syslog */
-		add_ssh_arg (args, "--syslog");
-		add_ssh_arg (args, "nm-ssh");
-	}
-
-	/* TUN MTU size */
-	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_TUNNEL_MTU);
-	if (tmp && strlen (tmp)) {
-		add_ssh_arg (args, "--tun-mtu");
-		if (!add_ssh_arg_int (args, tmp)) {
-			g_set_error (error,
-			             NM_VPN_PLUGIN_ERROR,
-			             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
-			             _("Invalid TUN MTU size '%s'."),
-			             tmp);
-			free_ssh_args (args);
-			return FALSE;
-		}
-	}
-
-	/* fragment size */
-	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_FRAGMENT_SIZE);
-	if (tmp && strlen (tmp)) {
-		add_ssh_arg (args, "--fragment");
-		if (!add_ssh_arg_int (args, tmp)) {
-			g_set_error (error,
-			             NM_VPN_PLUGIN_ERROR,
-			             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
-			             _("Invalid fragment size '%s'."),
-			             tmp);
-			free_ssh_args (args);
-			return FALSE;
-		}
-	}
-
-	/* mssfix */
-	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_MSSFIX);
-	if (tmp && !strcmp (tmp, "yes")) {
-		add_ssh_arg (args, "--mssfix");
-	}
-
-	/* Punch script security in the face; this option was added to SSH 2.1-rc9
-	 * and defaults to disallowing any scripts, a behavior change from previous
-	 * versions.
-	 */
-	add_ssh_arg (args, "--script-security");
-	add_ssh_arg (args, "2");
-
-	/* Up script, called when connection has been established or has been restarted */
-	add_ssh_arg (args, "--up");
-	if (debug)
-		add_ssh_arg (args, NM_SSH_HELPER_PATH " --helper-debug");
-	else
-		add_ssh_arg (args, NM_SSH_HELPER_PATH);
-	add_ssh_arg (args, "--up-restart");
-
-	/* Keep key and tun if restart is needed */
-	add_ssh_arg (args, "--persist-key");
-	add_ssh_arg (args, "--persist-tun");
-
-	/* Management socket for localhost access to supply username and password */
-	add_ssh_arg (args, "--management");
-	add_ssh_arg (args, "127.0.0.1");
-	/* with have nobind, thus 1194 should be free, it is the IANA assigned port */
-	add_ssh_arg (args, "1194");
-	/* Query on the management socket for user/pass */
-	add_ssh_arg (args, "--management-query-passwords");
-
-	/* do not let ssh setup routes or addresses, NM will handle it */
-	add_ssh_arg (args, "--route-noexec");
-	add_ssh_arg (args, "--ifconfig-noexec");
-
-	/* Now append configuration options which are dependent on the configuration type */
-	if (!strcmp (connection_type, NM_SSH_CONTYPE_TLS)) {
-		add_ssh_arg (args, "--client");
-		add_cert_args (args, s_vpn);
-	} else if (!strcmp (connection_type, NM_SSH_CONTYPE_STATIC_KEY)) {
-		tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_STATIC_KEY);
-		if (tmp && strlen (tmp)) {
-			add_ssh_arg (args, "--secret");
-			add_ssh_arg (args, tmp);
-
-			tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_STATIC_KEY_DIRECTION);
-			if (tmp && strlen (tmp))
-				add_ssh_arg (args, tmp);
-		}
-
-		add_ssh_arg (args, "--ifconfig");
-
+	if (!strcmp (connection_type, NM_SSH_CONTYPE_STATIC_KEY)) {
 		tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_LOCAL_IP);
 		if (!tmp) {
 			/* Insufficient data (FIXME: this should really be detected when validating the properties */
@@ -1318,11 +961,12 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 			             NM_VPN_PLUGIN_ERROR,
 			             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
 			             "%s",
-			             _("Missing required local IP address for static key mode."));
+						// TODO Edit translation
+			             _("Missing required local IP address."));
 			free_ssh_args (args);
 			return FALSE;
 		}
-		add_ssh_arg (args, tmp);
+		priv->io_data->local_addr = g_strdup(tmp);
 
 		tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_REMOTE_IP);
 		if (!tmp) {
@@ -1331,27 +975,12 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 			             NM_VPN_PLUGIN_ERROR,
 			             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
 			             "%s",
-			             _("Missing required remote IP address for static key mode."));
+						// TODO Edit translation
+			             _("Missing required remote IP address."));
 			free_ssh_args (args);
 			return FALSE;
 		}
-		add_ssh_arg (args, tmp);
-	} else if (!strcmp (connection_type, NM_SSH_CONTYPE_PASSWORD)) {
-		/* Client mode */
-		add_ssh_arg (args, "--client");
-		/* Use user/path authentication */
-		add_ssh_arg (args, "--auth-user-pass");
-
-		tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_CA);
-		if (tmp && strlen (tmp)) {
-			add_ssh_arg (args, "--ca");
-			add_ssh_arg (args, tmp);
-		}
-	} else if (!strcmp (connection_type, NM_SSH_CONTYPE_PASSWORD_TLS)) {
-		add_ssh_arg (args, "--client");
-		add_cert_args (args, s_vpn);
-		/* Use user/path authentication */
-		add_ssh_arg (args, "--auth-user-pass");
+		priv->io_data->remote_addr = g_strdup(tmp);
 	} else {
 		g_set_error (error,
 		             NM_VPN_PLUGIN_ERROR,
@@ -1362,51 +991,23 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		return FALSE;
 	}
 
-	g_ptr_array_add (args, NULL);
+	/* connect to remote */
+	add_ssh_arg (args, priv->io_data->remote_gw);
 
+	/* Command line to run on remote machine */
+	asprintf (&tmp_arg, "/sbin/ifconfig tun%d inet %s netmask %s pointopoint %s mtu %d",
+		priv->io_data->remote_tun_number,
+		priv->io_data->remote_addr,
+		priv->io_data->netmask,
+		priv->io_data->local_addr,
+		priv->io_data->mtu);
+	add_ssh_arg (args, tmp_arg);
+	free(tmp_arg);
 
-	// TODO TODO
-	priv->io_data = g_malloc0 (sizeof (NMSshPluginIOData));
-
-	/* We'll need this when sending ip4 config data */
-	// TODO TODO resolve remote
-	priv->io_data->remote_gw = g_strdup("173.204.238.133");
-	priv->io_data->local_addr = g_strdup("172.16.40.2");
-	priv->io_data->remote_addr = g_strdup("172.16.40.1");
-	priv->io_data->local_tun_number = 100;
-	priv->io_data->remote_tun_number = 100;
-
-
-	/* Get a local tun */
-	priv->io_data->local_tun_number = nm_ssh_get_free_tun_device();
-	if (priv->io_data->local_tun_number == -1)
-	{
-		g_warning("Could not assign a free tun device.");
-		nm_vpn_plugin_set_state (plugin, NM_VPN_SERVICE_STATE_STOPPED);
-	}
-
-	// TODO TODO
-	// TODO TODO
-	// TODO TODO
-	// TODO TODO
-	// EVERYTHING IS HARDCODED!!!
-	free_ssh_args (args);
-	args = g_ptr_array_new ();
-	add_ssh_arg (args, ssh_binary);
-
-	add_ssh_arg (args, "-v");
-	add_ssh_arg (args, "-p"); add_ssh_arg (args, port);
-	add_ssh_arg (args, "-o"); add_ssh_arg (args, "ServerAliveInterval=10");
-	add_ssh_arg (args, "-o"); add_ssh_arg (args, "TCPKeepAlive=yes");
-	add_ssh_arg (args, "-w"); add_ssh_arg (args, ltoa(priv->io_data->local_tun_number) + ":100");
-	add_ssh_arg (args, "-l"); add_ssh_arg (args, "root");
-	add_ssh_arg (args, remote);
-	//add_ssh_arg (args, "/sbin/ifconfig tun100 172.16.40.1 netmask 255.255.255.252");
-	add_ssh_arg (args, "/sbin/ifconfig tun100 inet 172.16.40.1 netmask 255.255.255.252 pointopoint 172.16.40.2");
+	/* Wrap it up */
 	g_ptr_array_add (args, NULL);
 
 	/* Spawn with pipes */
-	gint ssh_stdin_fd, ssh_stdout_fd, ssh_stderr_fd;
 	if (!g_spawn_async_with_pipes (NULL, (char **) args->pdata, NULL,
 						G_SPAWN_DO_NOT_REAP_CHILD, NULL, NULL, &pid,
 						&ssh_stdin_fd, &ssh_stdout_fd, &ssh_stderr_fd,
@@ -1447,42 +1048,6 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	g_source_set_callback (ssh_watch, (GSourceFunc) ssh_watch_cb, plugin, NULL);
 	g_source_attach (ssh_watch, NULL);
 	g_source_unref (ssh_watch);
-
-	nm_ssh_schedule_connect_timer (plugin);
-	return TRUE;
-
-	/* Listen to the management socket for a few connection types:
-	   PASSWORD: Will require username and password
-	   X509USERPASS: Will require username and password and maybe certificate password
-	   X509: May require certificate password
-	*/
-	if (   !strcmp (connection_type, NM_SSH_CONTYPE_TLS)
-	    || !strcmp (connection_type, NM_SSH_CONTYPE_PASSWORD)
-	    || !strcmp (connection_type, NM_SSH_CONTYPE_PASSWORD_TLS)
-	    || nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_HTTP_PROXY_USERNAME)) {
-
-		priv->io_data = g_malloc0 (sizeof (NMSshPluginIOData));
-
-		tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_USERNAME);
-		priv->io_data->username = tmp ? g_strdup (tmp) : NULL;
-		/* Use the default username if it wasn't overridden by the user */
-		if (!priv->io_data->username && default_username)
-			priv->io_data->username = g_strdup (default_username);
-
-		tmp = nm_setting_vpn_get_secret (s_vpn, NM_SSH_KEY_PASSWORD);
-		priv->io_data->password = tmp ? g_strdup (tmp) : NULL;
-
-		tmp = nm_setting_vpn_get_secret (s_vpn, NM_SSH_KEY_CERTPASS);
-		priv->io_data->priv_key_pass = tmp ? g_strdup (tmp) : NULL;
-
-		tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_HTTP_PROXY_USERNAME);
-		priv->io_data->proxy_username = tmp ? g_strdup (tmp) : NULL;
-
-		tmp = nm_setting_vpn_get_secret (s_vpn, NM_SSH_KEY_HTTP_PROXY_PASSWORD);
-		priv->io_data->proxy_password = tmp ? g_strdup (tmp) : NULL;
-
-		nm_ssh_schedule_connect_timer (plugin);
-	}
 
 	return TRUE;
 }
@@ -1692,8 +1257,6 @@ plugin_state_changed (NMSshPlugin *plugin,
                       NMVPNServiceState state,
                       gpointer user_data)
 {
-	NMSshPluginPrivate *priv = NM_SSH_PLUGIN_GET_PRIVATE (plugin);
-
 	switch (state) {
 	case NM_VPN_SERVICE_STATE_UNKNOWN:
 	case NM_VPN_SERVICE_STATE_INIT:
