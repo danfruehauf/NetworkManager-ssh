@@ -28,6 +28,8 @@
 #endif
 
 #include <glib/gi18n.h>
+// TODO remove and use with autoconf
+#include <gio/gio.h>
 #include <dbus/dbus.h>
 #include <dbus/dbus-glib-lowlevel.h>
 #include <dbus/dbus-glib.h>
@@ -61,7 +63,9 @@
 static gboolean debug = FALSE;
 static GMainLoop *loop = NULL;
 
-#define NM_SSH_HELPER_PATH		LIBEXECDIR"/nm-ssh-service-ssh-helper"
+// TODO hardcoded
+#define SSH_AGENT_PARENT_DIR		"/tmp"
+#define SSH_AGENT_SOCKET_ENV_VAR	"SSH_AUTH_SOCK"
 
 G_DEFINE_TYPE (NMSshPlugin, nm_ssh_plugin, NM_TYPE_VPN_PLUGIN)
 
@@ -505,9 +509,10 @@ send_network_config (NMSshPlugin *plugin)
 	/* Retrieve tun interface */
 	if (priv->io_data->local_tun_number != -1)
 	{
-		asprintf(&tun_device, "tun%d", priv->io_data->local_tun_number);
+		tun_device =
+			(gpointer) g_strdup_printf ("tun%d", priv->io_data->local_tun_number);
 		val = str_to_gvalue (tun_device, FALSE);
-		free(tun_device);
+		g_free(tun_device);
 		g_hash_table_insert (config, NM_VPN_PLUGIN_IP4_CONFIG_TUNDEV, val);
 	}
 	else
@@ -537,7 +542,8 @@ nm_ssh_local_tun_up_cb (gpointer data)
 	priv->connect_count++;
 
 	/* format the ifconfig command */
-	asprintf(&ifconfig_cmd, "/sbin/ifconfig tun%d %s netmask %s pointopoint %s mtu %d",
+	ifconfig_cmd = (gpointer) g_strdup_printf (
+		"/sbin/ifconfig tun%d %s netmask %s pointopoint %s mtu %d",
 		io_data->local_tun_number,
 		io_data->local_addr,
 		io_data->netmask,
@@ -549,10 +555,10 @@ nm_ssh_local_tun_up_cb (gpointer data)
 	if (system(ifconfig_cmd) != 0 &&
 		priv->connect_count <= 30)
 	{
-		free(ifconfig_cmd);
+		g_free(ifconfig_cmd);
 		return TRUE;
 	}
-	free(ifconfig_cmd);
+	g_free(ifconfig_cmd);
 
 	g_message ("Interface tun%d configured.", io_data->local_tun_number);
 
@@ -592,18 +598,17 @@ nm_ssh_stdout_cb (GIOChannel *source, GIOCondition condition, gpointer user_data
 
 	/* Probe for remote tun number */
 	// TODO rather ugly and hardcoded
-	// TODO use g_strstr
-	if (strncmp (str, "debug1: Requesting tun unit", 27) == 0) {
+	if (g_str_has_prefix(str, "debug1: Requesting tun unit")) {
 		sscanf(str, "debug1: Requesting tun unit %d", &io_data->remote_tun_number);
 		g_message("Remote tun: %d", io_data->remote_tun_number);
 		g_message(str);
-	} else if (strncmp (str, "debug1: sys_tun_open:", 21) == 0) {
+	} else if (g_str_has_prefix (str, "debug1: sys_tun_open:")) {
 		sscanf(str, "debug1: sys_tun_open: tun%d", &io_data->local_tun_number);
 		g_message("Local tun: %d", io_data->local_tun_number);
 		g_message(str);
 		/* Starting timer here for getting local interface up... */
 		nm_ssh_schedule_ifconfig_timer ((NMSshPlugin*)plugin);
-	} else if (strncmp (str, "Tunnel device open failed.", 26) == 0) {
+	} else if (g_str_has_prefix (str, "Tunnel device open failed.")) {
 		/* Opening of tun device failed... :( */
 		g_warning("Tunnel device open failed.");
 		nm_vpn_plugin_set_state (plugin, NM_VPN_SERVICE_STATE_STOPPED);
@@ -632,13 +637,13 @@ nm_ssh_get_free_tun_device (void)
 
 	for (tun_device = 0; tun_device <= 255; tun_device++)
 	{
-		asprintf(&system_cmd, "/sbin/ifconfig tun%d", tun_device);
+		system_cmd = (gpointer) g_strdup_printf ("/sbin/ifconfig tun%d", tun_device);
 		if (system(system_cmd) != 0)
 		{
-			free(system_cmd);
+			g_free(system_cmd);
 			return tun_device;
 		}
-		free(system_cmd);
+		g_free(system_cmd);
 	}
 	return -1;
 }
@@ -816,6 +821,113 @@ extract_int (const char *arg, long int *retval, int range_begin, int range_end)
 	return FALSE;
 }
 
+char *
+get_ssh_agent_socket (const char *directory, GError **error)
+{
+	/* Search a /tmp/ssh- for the agent socket and returns it */
+	GFileEnumerator *enumerator;
+	GFile           *ssh_dir;
+	GFileInfo       *info;
+	const char      *name;
+	char            *ssh_socket = NULL;
+
+	ssh_dir = g_file_new_for_path(directory);
+	enumerator = g_file_enumerate_children (ssh_dir, NULL, 0, NULL, error);
+	if (enumerator == NULL)
+	{
+		return FALSE;
+	}
+
+	/* Iterate on files in /tmp/ssh-XXXXXXXXXX directory */
+	while ((info = g_file_enumerator_next_file (enumerator,
+		NULL, error)) != NULL &&
+		ssh_socket == NULL)
+	{
+		name = g_file_info_get_name (info);
+		if (debug && name) {
+			g_message ("Searching ssh-agent socket in name: '%s'\n", name);
+		}
+
+		/* Basically we want to find a ssh-agent associated with the given
+		   user that was passed to the function */
+		if (G_FILE_TYPE_SPECIAL == g_file_info_get_file_type (info) &&
+			NULL != name && g_str_has_prefix(name, "agent.")) {
+			/* Alright, lets get the socket file for this directory */
+			ssh_socket = g_strconcat(SSH_AGENT_SOCKET_ENV_VAR, "=", directory, "/", name, NULL);
+		}
+		g_object_unref (info);
+	}
+	g_file_enumerator_close (enumerator, NULL, NULL);
+
+	/* Return a copy of the ssh_socket variable if successful */
+	if (ssh_socket)
+		return g_strdup(ssh_socket);
+
+	return NULL;
+}
+
+static gboolean
+probe_ssh_agent_socket (const char *username, GError **error, char **env_ssh_sock)
+{
+	GFileEnumerator *enumerator;
+	GFile           *ssh_agent_parent_dir;
+	GFileInfo       *info;
+	GFileType       file_type;
+	char            *ssh_dir_path;
+	const char      *name;
+	const char      *owner;
+
+	/* iterate over /tmp/ssh-* directories */
+	ssh_agent_parent_dir = g_file_new_for_path(SSH_AGENT_PARENT_DIR);
+	enumerator = g_file_enumerate_children (ssh_agent_parent_dir, "standard::*,owner::user", 0, NULL, error);
+
+	if (enumerator == NULL)
+	{
+		/* Handle error */
+		g_warning("Error getting ssh-agent socket.");
+		return FALSE;
+	}
+
+	/* Reset is just in case because it's the loop condition */
+	*env_ssh_sock = NULL;
+
+	/* Iterate on parent directory where ssh-agent will open sockets */
+	while ((info = g_file_enumerator_next_file (enumerator,
+		NULL, error)) != NULL &&
+		*env_ssh_sock == NULL)
+	{
+		name = g_file_info_get_name (info);
+		owner = g_file_info_get_attribute_string (info, G_FILE_ATTRIBUTE_OWNER_USER);
+
+		if (debug && name) {
+			g_message ("Searching ssh-agent socket directory: '%s'\n", name);
+		}
+
+		/* Basically we want to find a ssh-agent associated with the given
+		   user that was passed to the function */
+		if (G_FILE_TYPE_DIRECTORY == g_file_info_get_file_type (info) &&
+			name != NULL && g_str_has_prefix(name, "ssh-") &&
+			owner != NULL && strcmp(owner, username) == 0) {
+
+			/* Alright, lets get the socket file for this directory */
+			ssh_dir_path = g_strconcat(SSH_AGENT_PARENT_DIR, "/", name, NULL);
+			*env_ssh_sock = get_ssh_agent_socket(ssh_dir_path, error);
+			free(ssh_dir_path);
+
+			if (debug && *env_ssh_sock)
+				g_message("Found ssh-agent socket at: '%s'", *env_ssh_sock);
+		}
+		g_object_unref (info);
+	}
+	g_file_enumerator_close (enumerator, NULL, NULL);
+
+	/* Return TRUE if we've found something... */
+	if (*env_ssh_sock)
+		return TRUE;
+
+	return FALSE;
+}
+
 static gboolean
 nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
                                  NMSettingVPN *s_vpn,
@@ -826,6 +938,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	const char *ssh_binary, *connection_type, *tmp;
 	const char *remote, *port, *mtu;
 	char *tmp_arg;
+	char *envp[16];
 	long int tmp_int;
 	GPtrArray *args;
 	GSource *ssh_watch;
@@ -854,8 +967,6 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	priv->io_data->local_tun_number = -1;
 	// TODO make it configurable
 	priv->io_data->remote_tun_number = 100;
-	// TODO hardcoded, although MTU is extracted
-	priv->io_data->mtu = 1400;
 	// TODO hardcoded
 	priv->io_data->netmask = g_strdup("255.255.255.252");
 	// TODO hardcoded
@@ -884,11 +995,13 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	// TODO add a configurable value
 	add_ssh_arg (args, "-o"); add_ssh_arg (args, "ServerAliveInterval=10");
 	add_ssh_arg (args, "-o"); add_ssh_arg (args, "TCPKeepAlive=yes");
+	add_ssh_arg (args, "-o"); add_ssh_arg (args, "NumberOfPasswordPrompts=0");
 
 	/* The -w option, provide a remote and local tun device */
-	asprintf (&tmp_arg, "%d:%d", priv->io_data->local_tun_number, priv->io_data->remote_tun_number);
+	tmp_arg = (gpointer) g_strdup_printf (
+			"%d:%d", priv->io_data->local_tun_number, priv->io_data->remote_tun_number);
 	add_ssh_arg (args, "-w"); add_ssh_arg (args, tmp_arg);
-	free(tmp_arg);
+	g_free(tmp_arg);
 
 	/* only root is supported... */
 	add_ssh_arg (args, "-l"); add_ssh_arg (args, priv->io_data->username);
@@ -926,11 +1039,10 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		add_ssh_arg (args, "22");
 	}
 
-	// TODO use MTU!!
 	/* TUN MTU size */
 	mtu = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_TUNNEL_MTU);
 	if (mtu && strlen (mtu)) {
-		if (!add_ssh_arg_int (args, mtu)) {
+		if (!extract_int (mtu, &tmp_int, 1, 9000)) {
 			g_set_error (error,
 			             NM_VPN_PLUGIN_ERROR,
 			             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
@@ -939,6 +1051,10 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 			free_ssh_args (args);
 			return FALSE;
 		}
+		priv->io_data->mtu = tmp_int;
+	} else {
+		/* Default MTU of 1500 */
+		priv->io_data->mtu = 1500;
 	}
 
 	/* Now append configuration options which are dependent on the configuration type */
@@ -995,20 +1111,32 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	add_ssh_arg (args, priv->io_data->remote_gw);
 
 	/* Command line to run on remote machine */
-	asprintf (&tmp_arg, "/sbin/ifconfig tun%d inet %s netmask %s pointopoint %s mtu %d",
+	tmp_arg = (gpointer) g_strdup_printf (
+		"/sbin/ifconfig tun%d inet %s netmask %s pointopoint %s mtu %d",
 		priv->io_data->remote_tun_number,
 		priv->io_data->remote_addr,
 		priv->io_data->netmask,
 		priv->io_data->local_addr,
 		priv->io_data->mtu);
 	add_ssh_arg (args, tmp_arg);
-	free(tmp_arg);
+	g_free(tmp_arg);
 
 	/* Wrap it up */
 	g_ptr_array_add (args, NULL);
 
+	/* Set SSH_AUTH_SOCK from ssh-agent */
+	/* TODO DAN HARDCODED!!! */
+	if (!probe_ssh_agent_socket("dan", error, &envp[0])) {
+		free_ssh_args (args);
+		return FALSE;
+	}
+	envp[1] = NULL;
+
+	if (debug)
+		g_message ("Using ssh-agent socket: '%s'", envp[0]);
+
 	/* Spawn with pipes */
-	if (!g_spawn_async_with_pipes (NULL, (char **) args->pdata, NULL,
+	if (!g_spawn_async_with_pipes (NULL, (char **) args->pdata, envp,
 						G_SPAWN_DO_NOT_REAP_CHILD, NULL, NULL, &pid,
 						&ssh_stdin_fd, &ssh_stdout_fd, &ssh_stderr_fd,
 						error)) {
