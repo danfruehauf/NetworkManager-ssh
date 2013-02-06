@@ -1,8 +1,7 @@
 /* -*- Mode: C; tab-width: 4; indent-tabs-mode: t; c-basic-offset: 4 -*- */
 /* nm-ssh-service - ssh integration with NetworkManager
  *
- * Copyright (C) 2005 - 2008 Tim Niemueller <tim@niemueller.de>
- * Copyright (C) 2005 - 2010 Dan Williams <dcbw@redhat.com>
+ * Copyright (C) 2013 Dan Fruehauf <malkodan@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +27,6 @@
 #endif
 
 #include <glib/gi18n.h>
-// TODO remove and use with autoconf
 #include <gio/gio.h>
 #include <dbus/dbus.h>
 #include <dbus/dbus-glib-lowlevel.h>
@@ -872,7 +870,6 @@ probe_ssh_agent_socket (const char *username, GError **error, char **env_ssh_soc
 	GFileEnumerator *enumerator;
 	GFile           *ssh_agent_parent_dir;
 	GFileInfo       *info;
-	GFileType       file_type;
 	char            *ssh_dir_path;
 	const char      *name;
 	const char      *owner;
