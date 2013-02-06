@@ -819,7 +819,7 @@ extract_int (const char *arg, long int *retval, int range_begin, int range_end)
 	return FALSE;
 }
 
-char *
+static char *
 get_ssh_agent_socket (const char *directory, GError **error)
 {
 	/* Search a /tmp/ssh- for the agent socket and returns it */
