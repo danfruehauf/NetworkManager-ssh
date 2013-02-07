@@ -90,6 +90,11 @@
 #define NM_SSH_CONTYPE_PASSWORD     "password"
 #define NM_SSH_CONTYPE_PASSWORD_TLS "password-tls"
 
+/* New values */
+#define	NM_SSH_KEY_NETMASK "netmask"
+#define	NM_SSH_KEY_REMOTE_TUN "remote-tun"
+#define	NM_SSH_KEY_EXTRA_OPTS "extra-opts"
+
 typedef struct {
 	NMVPNPlugin parent;
 } NMSshPlugin;

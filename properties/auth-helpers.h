@@ -44,17 +44,7 @@ void sk_init_auth_widget (GtkBuilder *builder,
                           ChangedCallback changed_cb,
                           gpointer user_data);
 
-gboolean auth_widget_check_validity (GtkBuilder *builder, const char *contype, GError **error);
-
-gboolean auth_widget_update_connection (GtkBuilder *builder,
-                                        const char *contype,
-                                        NMSettingVPN *s_vpn);
-
-GtkFileFilter *tls_file_chooser_filter_new (gboolean pkcs_allowed);
-
-GtkFileFilter *sk_file_chooser_filter_new (void);
-
-GtkWidget *advanced_dialog_new (GHashTable *hash, const char *contype);
+GtkWidget *advanced_dialog_new (GHashTable *hash);
 
 GHashTable *advanced_dialog_new_hash_from_connection (NMConnection *connection, GError **error);
 
