@@ -804,8 +804,6 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	/* We'll need this when sending ip4 config data */
 	// TODO TODO resolve remote
 	priv->io_data->local_tun_number = -1;
-	// TODO make it configurable
-	priv->io_data->remote_tun_number = 100;
 	// TODO hardcoded
 	priv->io_data->netmask = g_strdup("255.255.255.252");
 	// TODO hardcoded
@@ -832,12 +830,6 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	add_ssh_arg (args, "-o"); add_ssh_arg (args, "ServerAliveInterval=10");
 	add_ssh_arg (args, "-o"); add_ssh_arg (args, "TCPKeepAlive=yes");
 	add_ssh_arg (args, "-o"); add_ssh_arg (args, "NumberOfPasswordPrompts=0");
-
-	/* The -w option, provide a remote and local tun device */
-	tmp_arg = (gpointer) g_strdup_printf (
-			"%d:%d", priv->io_data->local_tun_number, priv->io_data->remote_tun_number);
-	add_ssh_arg (args, "-w"); add_ssh_arg (args, tmp_arg);
-	g_free(tmp_arg);
 
 	/* only root is supported... */
 	add_ssh_arg (args, "-l"); add_ssh_arg (args, priv->io_data->username);
@@ -893,6 +885,25 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		priv->io_data->mtu = 1500;
 	}
 
+	/* Remote tun device */
+	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_REMOTE_TUN);
+	if (tmp && strlen (tmp)) {
+		if (!extract_int (tmp, &tmp_int, 0, 255)) {
+			g_set_error (error,
+			             NM_VPN_PLUGIN_ERROR,
+			             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
+			             _("Invalid TUN device number '%s'."),
+			             tmp);
+						// TODO translation
+			free_ssh_args (args);
+			return FALSE;
+		}
+		priv->io_data->remote_tun_number = tmp_int;
+	} else {
+		/* Use tun100 by default*/
+		priv->io_data->remote_tun_number = 100;
+	}
+
 	/* Remote IP */
 	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_REMOTE_IP);
 	if (!tmp) {
@@ -937,6 +948,13 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		return FALSE;
 	}
 	priv->io_data->netmask = g_strdup(tmp);
+
+	/* The -w option, provide a remote and local tun device */
+	tmp_arg = (gpointer) g_strdup_printf (
+			"%d:%d", priv->io_data->local_tun_number, priv->io_data->remote_tun_number);
+	add_ssh_arg (args, "-w"); add_ssh_arg (args, tmp_arg);
+	g_free(tmp_arg);
+
 
 	/* connect to remote */
 	add_ssh_arg (args, priv->io_data->remote_gw);
