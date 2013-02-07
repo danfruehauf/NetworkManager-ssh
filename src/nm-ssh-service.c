@@ -52,7 +52,6 @@
 
 #include "nm-ssh-service.h"
 #include "nm-utils.h"
-#include "common/utils.h"
 
 #if !defined(DIST_VERSION)
 # define DIST_VERSION VERSION

@@ -39,7 +39,6 @@
 #include "auth-helpers.h"
 #include "nm-ssh.h"
 #include "src/nm-ssh-service.h"
-#include "common/utils.h"
 
 #define PW_TYPE_SAVE   0
 #define PW_TYPE_ASK    1
@@ -78,47 +77,6 @@ setup_secret_widget (GtkBuilder *builder,
 	}
 
 	return widget;
-}
-
-static void
-tls_cert_changed_cb (GtkWidget *widget, GtkWidget *next_widget)
-{
-	GtkFileChooser *this, *next;
-	char *fname, *next_fname;
-
-	/* If the just-changed file chooser is a PKCS#12 file, then all of the
-	 * TLS filechoosers have to be PKCS#12.  But if it just changed to something
-	 * other than a PKCS#12 file, then clear out the other file choosers.
-	 *
-	 * Basically, all the choosers have to contain PKCS#12 files, or none of
-	 * them can, because PKCS#12 files contain everything required for the TLS
-	 * connection (CA, client cert, private key).
-	 */
-
-	this = GTK_FILE_CHOOSER (widget);
-	next = GTK_FILE_CHOOSER (next_widget);
-
-	fname = gtk_file_chooser_get_filename (this);
-	if (is_pkcs12 (fname)) {
-		/* Make sure all choosers have this PKCS#12 file */
-		next_fname = gtk_file_chooser_get_filename (next);
-		if (!next_fname || strcmp (fname, next_fname)) {
-			/* Next chooser was different, make it the same as the first */
-			gtk_file_chooser_set_filename (next, fname);
-		}
-		g_free (fname);
-		g_free (next_fname);
-		return;
-	}
-	g_free (fname);
-
-	/* Just-chosen file isn't PKCS#12 or no file was chosen, so clear out other
-	 * file selectors that have PKCS#12 files in them.
-	 */
-	next_fname = gtk_file_chooser_get_filename (next);
-	if (is_pkcs12 (next_fname))
-		gtk_file_chooser_set_filename (next, NULL);
-	g_free (next_fname);
 }
 
 static void

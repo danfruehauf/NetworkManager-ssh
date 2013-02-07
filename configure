@@ -14384,7 +14384,7 @@ _ACEOF
 
 fi
 
-ac_config_files="$ac_config_files Makefile src/Makefile common/Makefile auth-dialog/Makefile properties/Makefile properties/tests/Makefile properties/tests/conf/Makefile po/Makefile.in"
+ac_config_files="$ac_config_files Makefile src/Makefile properties/Makefile properties/tests/Makefile properties/tests/conf/Makefile po/Makefile.in"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -15403,8 +15403,6 @@ do
     "default-1") CONFIG_COMMANDS="$CONFIG_COMMANDS default-1" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
-    "common/Makefile") CONFIG_FILES="$CONFIG_FILES common/Makefile" ;;
-    "auth-dialog/Makefile") CONFIG_FILES="$CONFIG_FILES auth-dialog/Makefile" ;;
     "properties/Makefile") CONFIG_FILES="$CONFIG_FILES properties/Makefile" ;;
     "properties/tests/Makefile") CONFIG_FILES="$CONFIG_FILES properties/tests/Makefile" ;;
     "properties/tests/conf/Makefile") CONFIG_FILES="$CONFIG_FILES properties/tests/conf/Makefile" ;;
