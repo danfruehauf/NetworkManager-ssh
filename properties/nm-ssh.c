@@ -141,6 +141,36 @@ check_validity (SshPluginUiWidget *self, GError **error)
 		return FALSE;
 	}
 
+	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "remote_ip_entry"));
+	str = gtk_entry_get_text (GTK_ENTRY (widget));
+	if (!str || !strlen (str)) {
+		g_set_error (error,
+		             SSH_PLUGIN_UI_ERROR,
+		             SSH_PLUGIN_UI_ERROR_INVALID_PROPERTY,
+		             NM_SSH_KEY_REMOTE_IP);
+		return FALSE;
+	}
+
+	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "local_ip_entry"));
+	str = gtk_entry_get_text (GTK_ENTRY (widget));
+	if (!str || !strlen (str)) {
+		g_set_error (error,
+		             SSH_PLUGIN_UI_ERROR,
+		             SSH_PLUGIN_UI_ERROR_INVALID_PROPERTY,
+		             NM_SSH_KEY_LOCAL_IP);
+		return FALSE;
+	}
+
+	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "netmask_entry"));
+	str = gtk_entry_get_text (GTK_ENTRY (widget));
+	if (!str || !strlen (str)) {
+		g_set_error (error,
+		             SSH_PLUGIN_UI_ERROR,
+		             SSH_PLUGIN_UI_ERROR_INVALID_PROPERTY,
+		             NM_SSH_KEY_NETMASK);
+		return FALSE;
+	}
+
 	return TRUE;
 }
 
@@ -148,36 +178,6 @@ static void
 stuff_changed_cb (GtkWidget *widget, gpointer user_data)
 {
 	g_signal_emit_by_name (SSH_PLUGIN_UI_WIDGET (user_data), "changed");
-}
-
-static void
-auth_combo_changed_cb (GtkWidget *combo, gpointer user_data)
-{
-	SshPluginUiWidget *self = SSH_PLUGIN_UI_WIDGET (user_data);
-	SshPluginUiWidgetPrivate *priv = SSH_PLUGIN_UI_WIDGET_GET_PRIVATE (self);
-	GtkWidget *auth_notebook;
-	GtkWidget *show_passwords;
-	GtkTreeModel *model;
-	GtkTreeIter iter;
-	gint new_page = 0;
-
-	auth_notebook = GTK_WIDGET (gtk_builder_get_object (priv->builder, "auth_notebook"));
-	g_assert (auth_notebook);
-	show_passwords = GTK_WIDGET (gtk_builder_get_object (priv->builder, "show_passwords"));
-	g_assert (auth_notebook);
-
-	model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo));
-	g_assert (model);
-	g_assert (gtk_combo_box_get_active_iter (GTK_COMBO_BOX (combo), &iter));
-
-	gtk_tree_model_get (model, &iter, COL_AUTH_PAGE, &new_page, -1);
-
-	/* Static key page doesn't have any passwords */
-	gtk_widget_set_sensitive (show_passwords, new_page != 3);
-
-	gtk_notebook_set_current_page (GTK_NOTEBOOK (auth_notebook), new_page);
-
-	stuff_changed_cb (combo, self);
 }
 
 static void
@@ -253,11 +253,45 @@ init_plugin_ui (SshPluginUiWidget *self, NMConnection *connection, GError **erro
 
 	priv->group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
+	/* Remote GW (SSH host) */
 	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "gateway_entry"));
 	g_return_val_if_fail (widget != NULL, FALSE);
 	gtk_size_group_add_widget (priv->group, widget);
 	if (s_vpn) {
 		value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_REMOTE);
+		if (value)
+			gtk_entry_set_text (GTK_ENTRY (widget), value);
+	}
+	g_signal_connect (G_OBJECT (widget), "changed", G_CALLBACK (stuff_changed_cb), self);
+
+	/* Remote IP */
+	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "remote_ip_entry"));
+	g_return_val_if_fail (widget != NULL, FALSE);
+	gtk_size_group_add_widget (priv->group, widget);
+	if (s_vpn) {
+		value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_REMOTE_IP);
+		if (value)
+			gtk_entry_set_text (GTK_ENTRY (widget), value);
+	}
+	g_signal_connect (G_OBJECT (widget), "changed", G_CALLBACK (stuff_changed_cb), self);
+
+	/* Local IP */
+	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "local_ip_entry"));
+	g_return_val_if_fail (widget != NULL, FALSE);
+	gtk_size_group_add_widget (priv->group, widget);
+	if (s_vpn) {
+		value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_LOCAL_IP);
+		if (value)
+			gtk_entry_set_text (GTK_ENTRY (widget), value);
+	}
+	g_signal_connect (G_OBJECT (widget), "changed", G_CALLBACK (stuff_changed_cb), self);
+
+	/* Netmask */
+	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "netmask_entry"));
+	g_return_val_if_fail (widget != NULL, FALSE);
+	gtk_size_group_add_widget (priv->group, widget);
+	if (s_vpn) {
+		value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_NETMASK);
 		if (value)
 			gtk_entry_set_text (GTK_ENTRY (widget), value);
 	}
@@ -298,7 +332,7 @@ update_connection (NMVpnPluginUiWidgetInterface *iface,
 	SshPluginUiWidgetPrivate *priv = SSH_PLUGIN_UI_WIDGET_GET_PRIVATE (self);
 	NMSettingVPN *s_vpn;
 	GtkWidget *widget;
-	char *str;
+	const char *str;
 	gboolean valid = FALSE;
 
 	if (!check_validity (self, error))
@@ -309,9 +343,27 @@ update_connection (NMVpnPluginUiWidgetInterface *iface,
 
 	/* Gateway */
 	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "gateway_entry"));
-	str = (char *) gtk_entry_get_text (GTK_ENTRY (widget));
+	str = gtk_entry_get_text (GTK_ENTRY (widget));
 	if (str && strlen (str))
 		nm_setting_vpn_add_data_item (s_vpn, NM_SSH_KEY_REMOTE, str);
+
+	/* Remote IP */
+	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "remote_ip_entry"));
+	str = gtk_entry_get_text (GTK_ENTRY (widget));
+	if (str && strlen (str))
+		nm_setting_vpn_add_data_item (s_vpn, NM_SSH_KEY_REMOTE_IP, str);
+
+	/* Local IP */
+	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "local_ip_entry"));
+	str = gtk_entry_get_text (GTK_ENTRY (widget));
+	if (str && strlen (str))
+		nm_setting_vpn_add_data_item (s_vpn, NM_SSH_KEY_LOCAL_IP, str);
+
+	/* Netmask */
+	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "netmask_entry"));
+	str = gtk_entry_get_text (GTK_ENTRY (widget));
+	if (str && strlen (str))
+		nm_setting_vpn_add_data_item (s_vpn, NM_SSH_KEY_NETMASK, str);
 
 	if (priv->advanced)
 		g_hash_table_foreach (priv->advanced, hash_copy_advanced, s_vpn);

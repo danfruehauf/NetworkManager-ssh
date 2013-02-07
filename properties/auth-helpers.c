@@ -202,171 +202,6 @@ init_one_pw_combo (GtkBuilder *builder,
 	g_signal_connect (G_OBJECT (widget), "changed", G_CALLBACK (changed_cb), user_data);
 }
 
-static void
-pw_setup (GtkBuilder *builder,
-          GtkSizeGroup *group, 
-          NMSettingVPN *s_vpn,
-          const char *prefix,
-          ChangedCallback changed_cb,
-          gpointer user_data)
-{
-	GtkWidget *widget;
-	const char *value;
-	char *tmp;
-
-	tmp = g_strdup_printf ("%s_username_entry", prefix);
-	widget = GTK_WIDGET (gtk_builder_get_object (builder, tmp));
-	g_free (tmp);
-	gtk_size_group_add_widget (group, widget);
-
-	if (s_vpn) {
-		value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_USERNAME);
-		if (value && strlen (value))
-			gtk_entry_set_text (GTK_ENTRY (widget), value);
-	}
-	g_signal_connect (G_OBJECT (widget), "changed", G_CALLBACK (changed_cb), user_data);
-
-	/* Fill in the user password */
-	tmp = g_strdup_printf ("%s_password_entry", prefix);
-	widget = setup_secret_widget (builder, tmp, s_vpn, NM_SSH_KEY_PASSWORD);
-	g_free (tmp);
-	gtk_size_group_add_widget (group, widget);
-	g_signal_connect (widget, "changed", G_CALLBACK (changed_cb), user_data);
-
-	init_one_pw_combo (builder, s_vpn, prefix, NM_SSH_KEY_PASSWORD, widget, changed_cb, user_data);
-}
-
-static gboolean
-validate_file_chooser (GtkBuilder *builder, const char *name)
-{
-	GtkWidget *widget;
-	char *str;
-	gboolean valid = FALSE;
-
-	widget = GTK_WIDGET (gtk_builder_get_object (builder, name));
-	str = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (widget));
-	if (str && strlen (str))
-		valid = TRUE;
-	g_free (str);
-	return valid;
-}
-
-static gboolean
-validate_tls (GtkBuilder *builder, const char *prefix, GError **error)
-{
-	char *tmp;
-	gboolean valid, encrypted = FALSE;
-	GtkWidget *widget;
-	char *str;
-
-	tmp = g_strdup_printf ("%s_ca_cert_chooser", prefix);
-	valid = validate_file_chooser (builder, tmp);
-	g_free (tmp);
-	if (!valid) {
-		g_set_error (error,
-		             SSH_PLUGIN_UI_ERROR,
-		             SSH_PLUGIN_UI_ERROR_INVALID_PROPERTY,
-		             NM_SSH_KEY_CA);
-		return FALSE;
-	}
-
-	tmp = g_strdup_printf ("%s_user_cert_chooser", prefix);
-	valid = validate_file_chooser (builder, tmp);
-	g_free (tmp);
-	if (!valid) {
-		g_set_error (error,
-		             SSH_PLUGIN_UI_ERROR,
-		             SSH_PLUGIN_UI_ERROR_INVALID_PROPERTY,
-		             NM_SSH_KEY_CERT);
-		return FALSE;
-	}
-
-	tmp = g_strdup_printf ("%s_private_key_chooser", prefix);
-	widget = GTK_WIDGET (gtk_builder_get_object (builder, tmp));
-	valid = validate_file_chooser (builder, tmp);
-	g_free (tmp);
-	if (!valid) {
-		g_set_error (error,
-		             SSH_PLUGIN_UI_ERROR,
-		             SSH_PLUGIN_UI_ERROR_INVALID_PROPERTY,
-		             NM_SSH_KEY_KEY);
-		return FALSE;
-	}
-
-	/* Encrypted certificates require a password */
-	str = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (widget));
-	encrypted = is_encrypted (str);
-	g_free (str);
-	if (encrypted) {
-		tmp = g_strdup_printf ("%s_private_key_password_entry", prefix);
-		widget = GTK_WIDGET (gtk_builder_get_object (builder, tmp));
-		g_free (tmp);
-
-		if (!gtk_entry_get_text_length (GTK_ENTRY (widget))) {
-			g_set_error (error,
-			             SSH_PLUGIN_UI_ERROR,
-			             SSH_PLUGIN_UI_ERROR_INVALID_PROPERTY,
-			             NM_SSH_KEY_CERTPASS);
-			return FALSE;
-		}
-	}
-
-	return TRUE;
-}
-
-static void
-update_pw (GtkBuilder *builder, const char *prefix, NMSettingVPN *s_vpn)
-{
-	GtkWidget *widget;
-	NMSettingSecretFlags pw_flags;
-	char *tmp;
-	const char *str;
-
-	g_return_if_fail (builder != NULL);
-	g_return_if_fail (prefix != NULL);
-	g_return_if_fail (s_vpn != NULL);
-
-	tmp = g_strdup_printf ("%s_username_entry", prefix);
-	widget = GTK_WIDGET (gtk_builder_get_object (builder, tmp));
-	g_free (tmp);
-
-	str = gtk_entry_get_text (GTK_ENTRY (widget));
-	if (str && strlen (str))
-		nm_setting_vpn_add_data_item (s_vpn, NM_SSH_KEY_USERNAME, str);
-
-	/* Password */
-	tmp = g_strdup_printf ("%s_password_entry", prefix);
-	widget = (GtkWidget *) gtk_builder_get_object (builder, tmp);
-	g_assert (widget);
-	g_free (tmp);
-
-	str = gtk_entry_get_text (GTK_ENTRY (widget));
-	if (str && strlen (str))
-		nm_setting_vpn_add_secret (s_vpn, NM_SSH_KEY_PASSWORD, str);
-
-	/* Update password flags */
-	pw_flags = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (widget), "flags"));
-	pw_flags &= ~(NM_SETTING_SECRET_FLAG_NOT_SAVED | NM_SETTING_SECRET_FLAG_NOT_REQUIRED);
-
-	tmp = g_strdup_printf ("%s_pass_type_combo", prefix);
-	widget = GTK_WIDGET (gtk_builder_get_object (builder, tmp));
-	g_free (tmp);
-
-	switch (gtk_combo_box_get_active (GTK_COMBO_BOX (widget))) {
-	case PW_TYPE_SAVE:
-		break;
-	case PW_TYPE_UNUSED:
-		pw_flags |= NM_SETTING_SECRET_FLAG_NOT_REQUIRED;
-		break;
-	case PW_TYPE_ASK:
-	default:
-		pw_flags |= NM_SETTING_SECRET_FLAG_NOT_SAVED;
-		break;
-	}
-
-	nm_setting_set_secret_flags (NM_SETTING (s_vpn), NM_SSH_KEY_PASSWORD, pw_flags, NULL);
-}
-
 static const char *
 find_tag (const char *tag, const char *buf, gsize len)
 {
@@ -386,9 +221,6 @@ find_tag (const char *tag, const char *buf, gsize len)
 static const char *advanced_keys[] = {
 	NM_SSH_KEY_PORT,
 	NM_SSH_KEY_TUNNEL_MTU,
-	NM_SSH_KEY_REMOTE_IP,
-	NM_SSH_KEY_LOCAL_IP,
-	NM_SSH_KEY_NETMASK,
 	NM_SSH_KEY_EXTRA_OPTS,
 	NM_SSH_KEY_REMOTE_TUN,
 	NULL
@@ -449,7 +281,7 @@ extra_opts_toggled_cb (GtkWidget *check, gpointer user_data)
 	GtkBuilder *builder = (GtkBuilder *) user_data;
 	GtkWidget *widget;
 
-	widget = GTK_WIDGET (gtk_builder_get_object (builder, "extra_opts_textbutton"));
+	widget = GTK_WIDGET (gtk_builder_get_object (builder, "extra_opts_entry"));
 	gtk_widget_set_sensitive (widget, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (check)));
 }
 
@@ -459,7 +291,7 @@ remote_tun_toggled_cb (GtkWidget *check, gpointer user_data)
 	GtkBuilder *builder = (GtkBuilder *) user_data;
 	GtkWidget *widget;
 
-	widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_tun_textbutton"));
+	widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_tun_spinbutton"));
 	gtk_widget_set_sensitive (widget, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (check)));
 }
 
@@ -491,6 +323,7 @@ advanced_dialog_new (GHashTable *hash)
 	GtkWidget *widget;
 	const char *value;
 	GError *error = NULL;
+	long int tmp;
 
 	g_return_val_if_fail (hash != NULL, NULL);
 
@@ -522,11 +355,9 @@ advanced_dialog_new (GHashTable *hash)
 
 	value = g_hash_table_lookup (hash, NM_SSH_KEY_PORT);
 	if (value && strlen (value)) {
-		long int tmp;
-
 		errno = 0;
 		tmp = strtol (value, NULL, 10);
-		if (errno == 0 && tmp > 0 && tmp < 65536 && tmp != 22) {
+		if (errno == 0 && tmp > 0 && tmp < 65536) {
 			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), TRUE);
 
 			widget = GTK_WIDGET (gtk_builder_get_object (builder, "port_spinbutton"));
@@ -548,8 +379,6 @@ advanced_dialog_new (GHashTable *hash)
 
 	value = g_hash_table_lookup (hash, NM_SSH_KEY_TUNNEL_MTU);
 	if (value && strlen (value)) {
-		long int tmp;
-
 		errno = 0;
 		tmp = strtol (value, NULL, 10);
 		if (errno == 0 && tmp > 0 && tmp < 65536) {
@@ -575,13 +404,13 @@ advanced_dialog_new (GHashTable *hash)
 	if (value && strlen (value)) {
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), TRUE);
 
-		widget = GTK_WIDGET (gtk_builder_get_object (builder, "extra_opts_textbutton"));
+		widget = GTK_WIDGET (gtk_builder_get_object (builder, "extra_opts_entry"));
 		gtk_entry_set_text (GTK_ENTRY (widget), value);
 		gtk_widget_set_sensitive (widget, TRUE);
 	} else {
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), FALSE);
 
-		widget = GTK_WIDGET (gtk_builder_get_object (builder, "extra_opts_textbutton"));
+		widget = GTK_WIDGET (gtk_builder_get_object (builder, "extra_opts_entry"));
 		gtk_entry_set_text (GTK_ENTRY (widget), "");
 		gtk_widget_set_sensitive (widget, FALSE);
 	}
@@ -591,17 +420,21 @@ advanced_dialog_new (GHashTable *hash)
 	g_signal_connect (G_OBJECT (widget), "toggled", G_CALLBACK (remote_tun_toggled_cb), builder);
 
 	value = g_hash_table_lookup (hash, NM_SSH_KEY_REMOTE_TUN);
-	if (value && strlen (value) && g_strcmp0 (value, "tun100") != 0) {
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), TRUE);
+	if (value && strlen (value)) {
+		errno = 0;
+		tmp = strtol (value, NULL, 10);
+		if (errno == 0 && tmp > 0 && tmp < 256) {
+			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), TRUE);
 
-		widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_tun_textbutton"));
-		gtk_entry_set_text (GTK_ENTRY (widget), value);
+			widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_tun_spinbutton"));
+			gtk_spin_button_set_value (GTK_SPIN_BUTTON (widget), (gdouble) tmp);
+		}
 		gtk_widget_set_sensitive (widget, TRUE);
 	} else {
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), FALSE);
 
-		widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_tun_textbutton"));
-		gtk_entry_set_text (GTK_ENTRY (widget), "tun100");
+		widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_tun_spinbutton"));
+		gtk_spin_button_set_value (GTK_SPIN_BUTTON (widget), 100.0);
 		gtk_widget_set_sensitive (widget, FALSE);
 	}
 
@@ -613,9 +446,9 @@ out:
 GHashTable *
 advanced_dialog_new_hash_from_dialog (GtkWidget *dialog, GError **error)
 {
-	GHashTable *hash;
-	GtkWidget *widget;
-	GtkBuilder *builder;
+	GHashTable  *hash;
+	GtkWidget   *widget;
+	GtkBuilder  *builder;
 
 	g_return_val_if_fail (dialog != NULL, NULL);
 	if (error)
@@ -648,18 +481,18 @@ advanced_dialog_new_hash_from_dialog (GtkWidget *dialog, GError **error)
 	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget))) {
 		const gchar *extra_options;
 
-		widget = GTK_WIDGET (gtk_builder_get_object (builder, "extra_opts_textbutton"));
+		widget = GTK_WIDGET (gtk_builder_get_object (builder, "extra_opts_entry"));
 		extra_options = gtk_entry_get_text (GTK_ENTRY (widget));
-		g_hash_table_insert (hash, g_strdup (NM_SSH_KEY_EXTRA_OPTS), g_strdup_printf ("%s", extra_options));
+		g_hash_table_insert (hash, g_strdup (NM_SSH_KEY_EXTRA_OPTS), g_strdup(extra_options));
 	}
 
 	widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_tun_checkbutton"));
 	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget))) {
-		const gchar *remote_tun;
+		int remote_tun;
 
-		widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_tun_textbutton"));
-		remote_tun = gtk_entry_get_text (GTK_ENTRY (widget));
-		g_hash_table_insert (hash, g_strdup (NM_SSH_KEY_REMOTE_TUN), g_strdup_printf ("%s", remote_tun));
+		widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_tun_spinbutton"));
+		remote_tun = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (widget));
+		g_hash_table_insert (hash, g_strdup (NM_SSH_KEY_REMOTE_TUN), g_strdup_printf ("%d", remote_tun));
 	}
 
 	return hash;

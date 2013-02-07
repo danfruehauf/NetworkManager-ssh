@@ -108,46 +108,14 @@ typedef struct {
 } ValidProperty;
 
 static ValidProperty valid_properties[] = {
-	{ NM_SSH_KEY_AUTH,                 G_TYPE_STRING, 0, 0, FALSE },
-	{ NM_SSH_KEY_CA,                   G_TYPE_STRING, 0, 0, FALSE },
-	{ NM_SSH_KEY_CERT,                 G_TYPE_STRING, 0, 0, FALSE },
-	{ NM_SSH_KEY_CIPHER,               G_TYPE_STRING, 0, 0, FALSE },
-	{ NM_SSH_KEY_COMP_LZO,             G_TYPE_BOOLEAN, 0, 0, FALSE },
-	{ NM_SSH_KEY_CONNECTION_TYPE,      G_TYPE_STRING, 0, 0, FALSE },
-	{ NM_SSH_KEY_FRAGMENT_SIZE,        G_TYPE_INT, 0, G_MAXINT, FALSE },
-	{ NM_SSH_KEY_KEY,                  G_TYPE_STRING, 0, 0, FALSE },
-	{ NM_SSH_KEY_LOCAL_IP,             G_TYPE_STRING, 0, 0, TRUE },
-	{ NM_SSH_KEY_MSSFIX,               G_TYPE_BOOLEAN, 0, 0, FALSE },
-	{ NM_SSH_KEY_PROTO_TCP,            G_TYPE_BOOLEAN, 0, 0, FALSE },
-	{ NM_SSH_KEY_PORT,                 G_TYPE_INT, 1, 65535, FALSE },
-	{ NM_SSH_KEY_PROXY_TYPE,           G_TYPE_STRING, 0, 0, FALSE },
-	{ NM_SSH_KEY_PROXY_SERVER,         G_TYPE_STRING, 0, 0, FALSE },
-	{ NM_SSH_KEY_PROXY_PORT,           G_TYPE_INT, 1, 65535, FALSE },
-	{ NM_SSH_KEY_PROXY_RETRY,          G_TYPE_BOOLEAN, 0, 0, FALSE },
-	{ NM_SSH_KEY_HTTP_PROXY_USERNAME,  G_TYPE_STRING, 0, 0, FALSE },
 	{ NM_SSH_KEY_REMOTE,               G_TYPE_STRING, 0, 0, FALSE },
+	{ NM_SSH_KEY_LOCAL_IP,             G_TYPE_STRING, 0, 0, TRUE },
 	{ NM_SSH_KEY_REMOTE_IP,            G_TYPE_STRING, 0, 0, TRUE },
-	{ NM_SSH_KEY_RENEG_SECONDS,        G_TYPE_INT, 0, G_MAXINT, FALSE },
-	{ NM_SSH_KEY_STATIC_KEY,           G_TYPE_STRING, 0, 0, FALSE },
-	{ NM_SSH_KEY_STATIC_KEY_DIRECTION, G_TYPE_INT, 0, 1, FALSE },
-	{ NM_SSH_KEY_TA,                   G_TYPE_STRING, 0, 0, FALSE },
-	{ NM_SSH_KEY_TA_DIR,               G_TYPE_INT, 0, 1, FALSE },
-	{ NM_SSH_KEY_TAP_DEV,              G_TYPE_BOOLEAN, 0, 0, FALSE },
-	{ NM_SSH_KEY_TLS_REMOTE,	       G_TYPE_STRING, 0, 0, FALSE },
+	{ NM_SSH_KEY_NETMASK,              G_TYPE_STRING, 0, 0, TRUE },
+	{ NM_SSH_KEY_PORT,                 G_TYPE_INT, 1, 65535, FALSE },
 	{ NM_SSH_KEY_TUNNEL_MTU,           G_TYPE_INT, 0, G_MAXINT, FALSE },
-	{ NM_SSH_KEY_USERNAME,             G_TYPE_STRING, 0, 0, FALSE },
-	{ NM_SSH_KEY_PASSWORD"-flags",     G_TYPE_STRING, 0, 0, FALSE },
-	{ NM_SSH_KEY_CERTPASS"-flags",     G_TYPE_STRING, 0, 0, FALSE },
-	{ NM_SSH_KEY_NOSECRET,             G_TYPE_STRING, 0, 0, FALSE },
-	{ NM_SSH_KEY_HTTP_PROXY_PASSWORD"-flags", G_TYPE_STRING, 0, 0, FALSE },
-	{ NULL,                                G_TYPE_NONE, FALSE }
-};
-
-static ValidProperty valid_secrets[] = {
-	{ NM_SSH_KEY_PASSWORD,             G_TYPE_STRING, 0, 0, FALSE },
-	{ NM_SSH_KEY_CERTPASS,             G_TYPE_STRING, 0, 0, FALSE },
-	{ NM_SSH_KEY_NOSECRET,             G_TYPE_STRING, 0, 0, FALSE },
-	{ NM_SSH_KEY_HTTP_PROXY_PASSWORD,  G_TYPE_STRING, 0, 0, FALSE },
+	{ NM_SSH_KEY_EXTRA_OPTS,           G_TYPE_STRING, 0, 0, TRUE },
+	{ NM_SSH_KEY_REMOTE_TUN,           G_TYPE_STRING, 0, 0, TRUE },
 	{ NULL,                                G_TYPE_NONE, FALSE }
 };
 
@@ -270,105 +238,6 @@ nm_ssh_properties_validate (NMSettingVPN *s_vpn, GError **error)
 		return FALSE;
 	}
 	return TRUE;
-}
-
-static gboolean
-nm_ssh_secrets_validate (NMSettingVPN *s_vpn, GError **error)
-{
-	GError *validate_error = NULL;
-	ValidateInfo info = { &valid_secrets[0], &validate_error, FALSE };
-
-	nm_setting_vpn_foreach_secret (s_vpn, validate_one_property, &info);
-	if (!info.have_items) {
-		g_set_error (error,
-		             NM_VPN_PLUGIN_ERROR,
-		             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
-		             "%s",
-		             _("No VPN secrets!"));
-		return FALSE;
-	}
-
-	if (validate_error) {
-		*error = validate_error;
-		return FALSE;
-	}
-	return TRUE;
-}
-
-static char *
-ovpn_quote_string (const char *unquoted)
-{
-	char *quoted = NULL, *q;
-	char *u = (char *) unquoted;
-
-	g_return_val_if_fail (unquoted != NULL, NULL);
-
-	/* FIXME: use unpaged memory */
-	quoted = q = g_malloc0 (strlen (unquoted) * 2);
-	while (*u) {
-		/* Escape certain characters */
-		if (*u == ' ' || *u == '\\' || *u == '"')
-			*q++ = '\\';
-		*q++ = *u++;
-	}
-
-	return quoted;
-}
-
-/* sscanf is evil, and since we can't use glib regexp stuff since it's still
- * too new for some distros, do a simple match here.
- */
-static char *
-get_detail (const char *input, const char *prefix)
-{
-	char *ret = NULL;
-	guint32 i = 0;
-	const char *p, *start;
-
-	g_return_val_if_fail (prefix != NULL, NULL);
-
-	if (!g_str_has_prefix (input, prefix))
-		return NULL;
-
-	/* Grab characters until the next ' */
-	p = start = input + strlen (prefix);
-	while (*p) {
-		if (*p == '\'') {
-			ret = g_malloc0 (i + 1);
-			strncpy (ret, start, i);
-			break;
-		}
-		p++, i++;
-	}
-
-	return ret;
-}
-
-static void
-write_user_pass (GIOChannel *channel,
-                 const char *authtype,
-                 const char *user,
-                 const char *pass)
-{
-	char *quser, *qpass, *buf;
-
-	/* Quote strings passed back to ssh */
-	quser = ovpn_quote_string (user);
-	qpass = ovpn_quote_string (pass);
-	buf = g_strdup_printf ("username \"%s\" \"%s\"\n"
-	                       "password \"%s\" \"%s\"\n",
-	                       authtype, quser,
-	                       authtype, qpass);
-	memset (qpass, 0, strlen (qpass));
-	g_free (qpass);
-	g_free (quser);
-
-	/* Will always write everything in blocking channels (on success) */
-	g_io_channel_write_chars (channel, buf, strlen (buf), NULL, NULL);
-	g_io_channel_flush (channel, NULL);
-
-	memset (buf, 0, strlen (buf));
-	g_free (buf);
 }
 
 static void
@@ -518,12 +387,16 @@ send_network_config (NMSshPlugin *plugin)
 		g_warning ("local_tun_interface unset.");
 	}
 
-	/*g_value_init (val, G_TYPE_UINT);
-	g_value_set_uint (val, 32);
-	g_hash_table_insert (config, NM_VPN_PLUGIN_IP4_CONFIG_PREFIX, val);*/
-
-	//val = str_to_gvalue ("tun100", FALSE);
-	//g_hash_table_insert (config, NM_VPN_PLUGIN_IP4_CONFIG_TUNDEV, val);
+	/* Netmask */
+	if (priv->io_data->netmask != NULL && g_str_has_prefix (priv->io_data->netmask, "255.")) {
+		guint32 addr;
+		val = addr_to_gvalue(priv->io_data->netmask);
+		addr = g_value_get_uint (val);
+		g_value_set_uint (val, nm_utils_ip4_netmask_to_prefix (addr));
+		g_hash_table_insert (config, NM_VPN_PLUGIN_IP4_CONFIG_PREFIX, val);
+	} else {
+		g_warning ("netmask unset.");
+	}
 
 	send_ip4_config (connection, config);
 	return TRUE;
@@ -711,37 +584,6 @@ ssh_watch_cb (GPid pid, gint status, gpointer user_data)
 		nm_vpn_plugin_failure (plugin, failure);
 
 	nm_vpn_plugin_set_state (plugin, NM_VPN_SERVICE_STATE_STOPPED);
-}
-
-static gboolean
-validate_auth (const char *auth)
-{
-	if (auth) {
-		if (   !strcmp (auth, NM_SSH_AUTH_NONE)
-		    || !strcmp (auth, NM_SSH_AUTH_RSA_MD4)
-		    || !strcmp (auth, NM_SSH_AUTH_MD5)
-		    || !strcmp (auth, NM_SSH_AUTH_SHA1)
-		    || !strcmp (auth, NM_SSH_AUTH_SHA224)
-		    || !strcmp (auth, NM_SSH_AUTH_SHA256)
-		    || !strcmp (auth, NM_SSH_AUTH_SHA384)
-		    || !strcmp (auth, NM_SSH_AUTH_SHA512)
-		    || !strcmp (auth, NM_SSH_AUTH_RIPEMD160))
-			return TRUE;
-	}
-	return FALSE;
-}
-
-static const char *
-validate_connection_type (const char *ctype)
-{
-	if (ctype) {
-		if (   !strcmp (ctype, NM_SSH_CONTYPE_TLS)
-		    || !strcmp (ctype, NM_SSH_CONTYPE_STATIC_KEY)
-		    || !strcmp (ctype, NM_SSH_CONTYPE_PASSWORD)
-		    || !strcmp (ctype, NM_SSH_CONTYPE_PASSWORD_TLS))
-			return ctype;
-	}
-	return NULL;
 }
 
 static const char *
@@ -932,7 +774,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
                                  GError **error)
 {
 	NMSshPluginPrivate *priv = NM_SSH_PLUGIN_GET_PRIVATE (plugin);
-	const char *ssh_binary, *connection_type, *tmp;
+	const char *ssh_binary, *tmp;
 	const char *remote, *port, *mtu;
 	char *tmp_arg;
 	char *envp[16];
@@ -950,6 +792,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
 		             "%s",
 		             _("Could not find the ssh binary."));
+					// TODO translation
 		return FALSE;
 	}
 
@@ -981,9 +824,6 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	// TODO TODO
 	// TODO TODO
 	// EVERYTHING IS HARDCODED!!!
-	free_ssh_args (args);
-	args = g_ptr_array_new ();
-	add_ssh_arg (args, ssh_binary);
 
 	/* Set verbose mode, we'll parse the arguments */
 	add_ssh_arg (args, "-v");
@@ -1054,55 +894,50 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		priv->io_data->mtu = 1500;
 	}
 
-	/* Now append configuration options which are dependent on the configuration type */
-	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_CONNECTION_TYPE);
-	connection_type = validate_connection_type (tmp);
-	if (!connection_type) {
+	/* Remote IP */
+	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_REMOTE_IP);
+	if (!tmp) {
+		/* Insufficient data (FIXME: this should really be detected when validating the properties */
 		g_set_error (error,
 		             NM_VPN_PLUGIN_ERROR,
 		             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
 		             "%s",
-		             _("Invalid connection type."));
-		return FALSE;
-	}
-
-	if (!strcmp (connection_type, NM_SSH_CONTYPE_STATIC_KEY)) {
-		tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_LOCAL_IP);
-		if (!tmp) {
-			/* Insufficient data (FIXME: this should really be detected when validating the properties */
-			g_set_error (error,
-			             NM_VPN_PLUGIN_ERROR,
-			             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
-			             "%s",
-						// TODO Edit translation
-			             _("Missing required local IP address."));
-			free_ssh_args (args);
-			return FALSE;
-		}
-		priv->io_data->local_addr = g_strdup(tmp);
-
-		tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_REMOTE_IP);
-		if (!tmp) {
-			/* Insufficient data (FIXME: this should really be detected when validating the properties */
-			g_set_error (error,
-			             NM_VPN_PLUGIN_ERROR,
-			             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
-			             "%s",
-						// TODO Edit translation
-			             _("Missing required remote IP address."));
-			free_ssh_args (args);
-			return FALSE;
-		}
-		priv->io_data->remote_addr = g_strdup(tmp);
-	} else {
-		g_set_error (error,
-		             NM_VPN_PLUGIN_ERROR,
-		             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
-		             _("Unknown connection type '%s'."),
-		             connection_type);
+					// TODO Edit translation
+		             _("Missing required remote IP address."));
 		free_ssh_args (args);
 		return FALSE;
 	}
+	priv->io_data->remote_addr = g_strdup(tmp);
+
+	/* Local IP */
+	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_LOCAL_IP);
+	if (!tmp) {
+		/* Insufficient data (FIXME: this should really be detected when validating the properties */
+		g_set_error (error,
+		             NM_VPN_PLUGIN_ERROR,
+		             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
+		             "%s",
+					// TODO Edit translation
+		             _("Missing required local IP address."));
+		free_ssh_args (args);
+		return FALSE;
+	}
+	priv->io_data->local_addr = g_strdup(tmp);
+
+	/* Netmask */
+	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_NETMASK);
+	if (!tmp) {
+		/* Insufficient data (FIXME: this should really be detected when validating the properties */
+		g_set_error (error,
+		             NM_VPN_PLUGIN_ERROR,
+		             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
+		             "%s",
+					// TODO Edit translation
+		             _("Missing required netmask."));
+		free_ssh_args (args);
+		return FALSE;
+	}
+	priv->io_data->netmask = g_strdup(tmp);
 
 	/* connect to remote */
 	add_ssh_arg (args, priv->io_data->remote_gw);
@@ -1177,59 +1012,13 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	return TRUE;
 }
 
-static const char *
-check_need_secrets (NMSettingVPN *s_vpn, gboolean *need_secrets)
-{
-	const char *tmp, *key, *ctype;
-
-	g_return_val_if_fail (s_vpn != NULL, FALSE);
-	g_return_val_if_fail (need_secrets != NULL, FALSE);
-
-	*need_secrets = FALSE;
-
-	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_CONNECTION_TYPE);
-	ctype = validate_connection_type (tmp);
-	if (!ctype)
-		return NULL;
-
-	if (!strcmp (ctype, NM_SSH_CONTYPE_PASSWORD_TLS)) {
-		/* Will require a password and maybe private key password */
-		key = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_KEY);
-		if (is_encrypted (key) && !nm_setting_vpn_get_secret (s_vpn, NM_SSH_KEY_CERTPASS))
-			*need_secrets = TRUE;
-
-		if (!nm_setting_vpn_get_secret (s_vpn, NM_SSH_KEY_PASSWORD))
-			*need_secrets = TRUE;
-	} else if (!strcmp (ctype, NM_SSH_CONTYPE_PASSWORD)) {
-		/* Will require a password */
-		if (!nm_setting_vpn_get_secret (s_vpn, NM_SSH_KEY_PASSWORD))
-			*need_secrets = TRUE;
-	} else if (!strcmp (ctype, NM_SSH_CONTYPE_TLS)) {
-		/* May require private key password */
-		key = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_KEY);
-		if (is_encrypted (key) && !nm_setting_vpn_get_secret (s_vpn, NM_SSH_KEY_CERTPASS))
-			*need_secrets = TRUE;
-	} else {
-		/* Static key doesn't need passwords */
-	}
-
-	/* HTTP Proxy might require a password; assume so if there's an HTTP proxy username */
-	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_HTTP_PROXY_USERNAME);
-	if (tmp && !nm_setting_vpn_get_secret (s_vpn, NM_SSH_KEY_HTTP_PROXY_PASSWORD))
-		*need_secrets = TRUE;
-
-	return ctype;
-}
-
 static gboolean
 real_connect (NMVPNPlugin   *plugin,
               NMConnection  *connection,
               GError       **error)
 {
 	NMSettingVPN *s_vpn;
-	const char *connection_type;
 	const char *user_name;
-	gboolean need_secrets;
 
 	s_vpn = NM_SETTING_VPN (nm_connection_get_setting (connection, NM_TYPE_SETTING_VPN));
 	if (!s_vpn) {
@@ -1241,41 +1030,11 @@ real_connect (NMVPNPlugin   *plugin,
 		return FALSE;
 	}
 
-	/* Check if we need secrets and validate the connection type */
-	connection_type = check_need_secrets (s_vpn, &need_secrets);
-	if (!connection_type) {
-		g_set_error (error,
-		             NM_VPN_PLUGIN_ERROR,
-		             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
-		             "%s",
-		             _("Invalid connection type."));
-		return FALSE;
-	}
-
 	user_name = nm_setting_vpn_get_user_name (s_vpn);
-
-	/* Need a username for any password-based connection types */
-	if (   !strcmp (connection_type, NM_SSH_CONTYPE_PASSWORD_TLS)
-	    || !strcmp (connection_type, NM_SSH_CONTYPE_PASSWORD)) {
-		if (!user_name && !nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_USERNAME)) {
-			g_set_error (error,
-			             NM_VPN_PLUGIN_ERROR,
-			             NM_VPN_PLUGIN_ERROR_CONNECTION_INVALID,
-			             "%s",
-			             _("Could not process the request because no username was provided."));
-			return FALSE;
-		}
-	}
 
 	/* Validate the properties */
 	if (!nm_ssh_properties_validate (s_vpn, error))
 		return FALSE;
-
-	/* Validate secrets */
-	if (need_secrets) {
-		if (!nm_ssh_secrets_validate (s_vpn, error))
-			return FALSE;
-	}
 
 	/* Finally try to start SSH */
 	if (!nm_ssh_start_ssh_binary (NM_SSH_PLUGIN (plugin), s_vpn, user_name, error))
@@ -1291,7 +1050,6 @@ real_need_secrets (NMVPNPlugin *plugin,
                    GError **error)
 {
 	NMSettingVPN *s_vpn;
-	const char *connection_type;
 	gboolean need_secrets = FALSE;
 
 	g_return_val_if_fail (NM_IS_VPN_PLUGIN (plugin), FALSE);
@@ -1312,7 +1070,7 @@ real_need_secrets (NMVPNPlugin *plugin,
 		return FALSE;
 	}
 
-	connection_type = check_need_secrets (s_vpn, &need_secrets);
+/*	connection_type = check_need_secrets (s_vpn, &need_secrets);
 	if (!connection_type) {
 		g_set_error (error,
 		             NM_VPN_PLUGIN_ERROR,
@@ -1320,7 +1078,7 @@ real_need_secrets (NMVPNPlugin *plugin,
 		             "%s",
 		             _("Invalid connection type."));
 		return FALSE;
-	}
+	}*/
 
 	if (need_secrets)
 		*setting_name = NM_SETTING_VPN_SETTING_NAME;

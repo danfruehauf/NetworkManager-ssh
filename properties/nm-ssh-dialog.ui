@@ -10,26 +10,14 @@
     <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustment2">
-    <property name="upper">604800</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
-  <object class="GtkAdjustment" id="adjustment3">
     <property name="lower">1</property>
     <property name="upper">65535</property>
     <property name="value">1500</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
-  <object class="GtkAdjustment" id="adjustment4">
-    <property name="lower">1</property>
-    <property name="upper">65535</property>
-    <property name="value">1300</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
-  <object class="GtkAdjustment" id="adjustment5">
-    <property name="upper">65535</property>
+  <object class="GtkAdjustment" id="adjustment3">
+    <property name="upper">255</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
@@ -241,7 +229,7 @@
                         <property name="secondary_icon_activatable">False</property>
                         <property name="primary_icon_sensitive">True</property>
                         <property name="secondary_icon_sensitive">True</property>
-                        <property name="adjustment">adjustment3</property>
+                        <property name="adjustment">adjustment2</property>
                         <property name="climb_rate">1</property>
                         <property name="numeric">True</property>
                       </object>
@@ -279,7 +267,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkEntry" id="extra_opts_textbutton">
+                      <object class="GtkEntry" id="extra_opts_entry">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="invisible_char">●</property>
@@ -308,11 +296,12 @@
                     <property name="spacing">6</property>
                     <child>
                       <object class="GtkCheckButton" id="remote_tun_checkbutton">
-                        <property name="label" translatable="yes">Remote tun:</property>
+                        <property name="label" translatable="yes">Remote tun device:</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
                         <property name="use_underline">True</property>
+                        <property name="yalign">0.49000000953674316</property>
                         <property name="draw_indicator">True</property>
                       </object>
                       <packing>
@@ -322,20 +311,23 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkEntry" id="remote_tun_textbutton">
+                      <object class="GtkSpinButton" id="remote_tun_spinbutton">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
+                        <property name="max_length">5</property>
                         <property name="invisible_char">●</property>
-                        <property name="text" translatable="yes">tun100</property>
                         <property name="invisible_char_set">True</property>
                         <property name="primary_icon_activatable">False</property>
                         <property name="secondary_icon_activatable">False</property>
                         <property name="primary_icon_sensitive">True</property>
                         <property name="secondary_icon_sensitive">True</property>
+                        <property name="adjustment">adjustment3</property>
+                        <property name="climb_rate">1</property>
+                        <property name="numeric">True</property>
                       </object>
                       <packing>
-                        <property name="expand">True</property>
-                        <property name="fill">True</property>
+                        <property name="expand">False</property>
+                        <property name="fill">False</property>
                         <property name="position">1</property>
                       </packing>
                     </child>
@@ -520,7 +512,7 @@
                       <object class="GtkTable" id="table6">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="n_rows">2</property>
+                        <property name="n_rows">3</property>
                         <property name="n_columns">2</property>
                         <property name="column_spacing">6</property>
                         <property name="row_spacing">6</property>
@@ -531,9 +523,10 @@
                             <property name="xalign">1</property>
                             <property name="xscale">0</property>
                             <child>
-                              <object class="GtkEntry" id="sk_local_address_entry">
+                              <object class="GtkEntry" id="local_ip_entry">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
+                                <property name="text" translatable="yes">172.16.40.2</property>
                                 <property name="primary_icon_activatable">False</property>
                                 <property name="secondary_icon_activatable">False</property>
                                 <property name="primary_icon_sensitive">True</property>
@@ -556,9 +549,10 @@
                             <property name="xalign">1</property>
                             <property name="xscale">0</property>
                             <child>
-                              <object class="GtkEntry" id="sk_remote_address_entry">
+                              <object class="GtkEntry" id="remote_ip_entry">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
+                                <property name="text" translatable="yes">172.16.40.1</property>
                                 <property name="primary_icon_activatable">False</property>
                                 <property name="secondary_icon_activatable">False</property>
                                 <property name="primary_icon_sensitive">True</property>
@@ -592,6 +586,38 @@
                           <packing>
                             <property name="top_attach">1</property>
                             <property name="bottom_attach">2</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="label2">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="xalign">0</property>
+                            <property name="label" translatable="yes">Netmask:</property>
+                            <property name="justify">right</property>
+                          </object>
+                          <packing>
+                            <property name="top_attach">2</property>
+                            <property name="bottom_attach">3</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkEntry" id="netmask_entry">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="invisible_char">●</property>
+                            <property name="text" translatable="yes">255.255.255.252</property>
+                            <property name="invisible_char_set">True</property>
+                            <property name="primary_icon_activatable">False</property>
+                            <property name="secondary_icon_activatable">False</property>
+                            <property name="primary_icon_sensitive">True</property>
+                            <property name="secondary_icon_sensitive">True</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="right_attach">2</property>
+                            <property name="top_attach">2</property>
+                            <property name="bottom_attach">3</property>
                           </packing>
                         </child>
                       </object>
