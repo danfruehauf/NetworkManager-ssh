@@ -601,7 +601,7 @@ export (NMVpnPluginUiInterface *iface,
 
 	fprintf (f, "MTU=%s\n", mtu);
 
-	fprintf (f, "EXTRA_OPTS=%s\n", extra_opts);
+	fprintf (f, "EXTRA_OPTS='%s'\n", extra_opts);
 
 	fprintf (f, "REMOTE_TUN=%s\n", remote_tun);
 
