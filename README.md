@@ -19,14 +19,31 @@ Basically NetworkManager-ssh integrates OpenSSH tunnel capabilities with Network
 In order to open a tunnel OpenSSH VPN, all that you have to do is run:
 
 	#!/bin/bash
+	# This is the WAN IP/hostname of the remote machine
 	REMOTE=EDIT_ME
+
+	# Remote IP in the tunnel
 	REMOTE_IP=192.168.0.1
+
+	# Local IP in the tunnel
 	LOCAL_IP=192.168.0.2
+
+	# Netmask to set (on both sides)
 	NETMASK=255.255.255.252
+
+	# SSH port to use
 	PORT=22
+
+	# MTU for tunnel
 	MTU=1500
+
+	# Extra SSH options, these would give us some nice keep alive
 	EXTRA_OPTS='-o ServerAliveInterval=10 -o TCPKeepAlive=yes'
+
+	# Remote tunnel device (tun100)
 	REMOTE_TUN=100
+
+	# Local tunnel device (tun100)
 	LOCAL_TUN=100
 
 	ssh -f -v -o NumberOfPasswordPrompts=0 $EXTRA_OPTS \
