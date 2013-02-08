@@ -1,4 +1,4 @@
-SUBDIRS = . tests
+SUBDIRS = .
 
 plugindir = $(libdir)/NetworkManager
 plugin_LTLIBRARIES = libnm-ssh-properties.la
@@ -7,9 +7,7 @@ libnm_ssh_properties_la_SOURCES = \
 	nm-ssh.c \
 	nm-ssh.h \
 	auth-helpers.c \
-	auth-helpers.h \
-	import-export.c \
-	import-export.h
+	auth-helpers.h
 
 uidir = $(datadir)/gnome-vpn-properties/ssh
 ui_DATA = nm-ssh-dialog.ui
@@ -30,8 +28,7 @@ libnm_ssh_properties_la_CFLAGS =                    \
 
 libnm_ssh_properties_la_LIBADD = \
         $(GTK_LIBS) \
-        $(NM_LIBS) \
-        $(top_builddir)/common/libnm-ssh-common.la
+        $(NM_LIBS)
 
 libnm_ssh_properties_la_LDFLAGS =   \
         -avoid-version

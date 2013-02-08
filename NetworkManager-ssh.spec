@@ -15,7 +15,7 @@ Release: 1%{snapshot}%{?dist}
 License: GPLv2+
 URL: https://github.com/danfruehauf/NetworkManager-ssh
 Group: System Environment/Base
-Source: %{name}-%{realversion}%{snapshot}.tar.gz
+Source: %{name}-%{realversion}%{snapshot}.tar.xz
 
 BuildRequires: gtk3-devel                 >= %{gtk2_version}
 BuildRequires: dbus-devel                 >= %{dbus_version}

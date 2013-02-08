@@ -1,6 +1,7 @@
 AM_CPPFLAGS = \
 	$(DBUS_CFLAGS) \
 	$(NM_CFLAGS) \
+	$(GIO_CFLAGS) \
 	-DG_DISABLE_DEPRECATED \
 	-DBINDIR=\"$(bindir)\" \
 	-DPREFIX=\""$(prefix)"\" \
@@ -19,7 +20,6 @@ nm_ssh_service_SOURCES = \
 	nm-ssh-service.h
 
 nm_ssh_service_LDADD = \
-	$(NM_LIBS) \
-        $(top_builddir)/common/libnm-ssh-common.la
+	$(NM_LIBS) $(GIO_LIBS)
 
 CLEANFILES = *~
