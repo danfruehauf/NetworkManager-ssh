@@ -13,7 +13,7 @@ Epoch:   1
 Version: 0.0.1
 Release: 1%{snapshot}%{?dist}
 License: GPLv2+
-URL: http://www.gnome.org/projects/NetworkManager/
+URL: https://github.com/danfruehauf/NetworkManager-ssh
 Group: System Environment/Base
 Source: %{name}-%{realversion}%{snapshot}.tar.gz
 
