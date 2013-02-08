@@ -43,6 +43,7 @@
 #include <sys/types.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <netdb.h>
 #include <ctype.h>
 #include <errno.h>
 
@@ -312,16 +313,82 @@ addr_to_gvalue (const char *str)
 	return val;
 }
 
+static char *
+resolve_hostname (const char *hostname)
+{
+	struct in_addr addr;
+	char *ip;
+	const char *p;
+	gboolean is_name = FALSE;
+
+	/* Check if it seems to be a hostname hostname */
+	p = hostname;
+	while (*p) {
+		if (*p != '.' && !isdigit (*p)) {
+			is_name = TRUE;
+			break;
+		}
+		p++;
+	}
+
+	/* Resolve a hostname if required */
+	if (is_name) {
+		struct addrinfo hints;
+		struct addrinfo *result = NULL, *rp;
+		int err;
+
+		memset (&hints, 0, sizeof (hints));
+
+		hints.ai_family = AF_INET;
+		hints.ai_flags = AI_ADDRCONFIG;
+		err = getaddrinfo (hostname, NULL, &hints, &result);
+		if (err != 0) {
+			g_warning ("%s: failed to look up VPN gateway address '%s' (%d)",
+			           __func__, hostname, err);
+			return NULL;
+		}
+
+		/* FIXME: so what if the name resolves to multiple IP addresses?  We
+		 * don't know which one pptp decided to use so we could end up using a
+		 * different one here, and the VPN just won't work.
+		 */
+		for (rp = result; rp; rp = rp->ai_next) {
+			if (   (rp->ai_family == AF_INET)
+			    && (rp->ai_addrlen == sizeof (struct sockaddr_in))) {
+				struct sockaddr_in *inptr = (struct sockaddr_in *) rp->ai_addr;
+
+				//memcpy (&ip, &(inptr->sin_addr), sizeof (struct in_addr));
+				ip = g_strdup(inet_ntoa (inptr->sin_addr));
+				if (debug)
+					g_message("Resolved gateway '%s'->'%s'", hostname, ip);
+				break;
+			}
+		}
+
+		freeaddrinfo (result);
+	} else {
+		errno = 0;
+		if (inet_pton (AF_INET, hostname, &addr) <= 0) {
+			g_warning ("%s: failed to convert VPN gateway address '%s' (%d)",
+			           __func__, hostname, errno);
+			return NULL;
+		}
+	}
+
+	return ip;
+}
+
 static gboolean
 send_network_config (NMSshPlugin *plugin)
 {
 	NMSshPluginPrivate *priv = NM_SSH_PLUGIN_GET_PRIVATE (plugin);
 
 	DBusGConnection *connection;
-	GHashTable *config;
-	GValue *val;
-	GError *err = NULL;
-	char *tun_device;
+	GHashTable      *config;
+	GValue          *val;
+	GError          *err = NULL;
+	char            *tun_device;
+	char            *resolved_hostname;
 
 	connection = dbus_g_bus_get (DBUS_BUS_SYSTEM, &err);
 	if (!connection) {
@@ -332,12 +399,15 @@ send_network_config (NMSshPlugin *plugin)
 
 	config = g_hash_table_new (g_str_hash, g_str_equal);
 
-	g_message ("local_addr %s", priv->io_data->local_addr);
-	g_message ("remote_addr %s", priv->io_data->remote_addr);
-	g_message ("remote_gw %s", priv->io_data->remote_gw);
-	g_message ("netmask %s", priv->io_data->netmask);
-	g_message ("local_tun_device tun%d", priv->io_data->local_tun_number);
+	if (debug) {
+		g_message ("Local TUN device: 'tun%d'", priv->io_data->local_tun_number);
+		g_message ("Remote gateway: '%s'", priv->io_data->remote_gw);
+		g_message ("Remote IP: '%s'", priv->io_data->remote_addr);
+		g_message ("Local IP: '%s'", priv->io_data->local_addr);
+		g_message ("Netmask: '%s'", priv->io_data->netmask);
+	}
 
+	// TODO handle errors better
 	/* Retrieve local address */
 	if (priv->io_data->local_addr != NULL)
 	{
@@ -364,9 +434,11 @@ send_network_config (NMSshPlugin *plugin)
 	/* Retrieve remote gw address */
 	if (priv->io_data->remote_gw != NULL)
 	{
-		val = addr_to_gvalue (priv->io_data->remote_gw);
-		// TODO add resolving here
+		/* We might have to resolve that */
+		resolved_hostname = resolve_hostname (priv->io_data->remote_gw);
+		val = addr_to_gvalue (resolved_hostname);
 		g_hash_table_insert (config, NM_VPN_PLUGIN_IP4_CONFIG_EXT_GATEWAY, val);
+		g_free (resolved_hostname);
 	}
 	else
 	{
@@ -742,9 +814,9 @@ probe_ssh_agent_socket (const char *username, GError **error, char **env_ssh_soc
 		/* Basically we want to find a ssh-agent associated with the given
 		   user that was passed to the function */
 		if (G_FILE_TYPE_DIRECTORY == g_file_info_get_file_type (info) &&
-			name != NULL && g_str_has_prefix(name, "ssh-") &&
-				(strcmp (username, "") == 0 ||
-				(owner != NULL && strcmp(owner, username) == 0)) ) {
+			name != NULL && g_str_has_prefix (name, "ssh-") &&
+				(g_strcmp0 (username, "") == 0 ||
+				(owner != NULL && g_strcmp0 (owner, username) == 0)) ) {
 
 			/* Alright, lets get the socket file for this directory */
 			ssh_dir_path = g_strconcat(SSH_AGENT_PARENT_DIR, "/", name, NULL);
