@@ -1,7 +1,8 @@
 /* -*- Mode: C; tab-width: 4; indent-tabs-mode: t; c-basic-offset: 4 -*- */
 /***************************************************************************
  *
- * Copyright (C) 2008 Dan Williams, <dcbw@redhat.com>
+ * Copyright (C) 2013 Dan Fruehauf, <malkodan@gmail.com>
+ * Based on work by Dan Williams, <dcbw@redhat.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

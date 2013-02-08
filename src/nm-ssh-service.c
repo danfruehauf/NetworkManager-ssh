@@ -69,7 +69,6 @@ G_DEFINE_TYPE (NMSshPlugin, nm_ssh_plugin, NM_TYPE_VPN_PLUGIN)
 #define NM_SSH_PLUGIN_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), NM_TYPE_SSH_PLUGIN, NMSshPluginPrivate))
 
 typedef struct {
-	// TODO remove remove!!
 	char *username;
 	char *password;
 
@@ -622,12 +621,9 @@ add_ssh_arg (GPtrArray *args, const char *arg)
 }
 
 static gboolean
-add_ssh_arg_int (GPtrArray *args, const char *arg)
+get_ssh_arg_int (const char *arg, long int *retval)
 {
 	long int tmp_int;
-
-	g_return_val_if_fail (args != NULL, FALSE);
-	g_return_val_if_fail (arg != NULL, FALSE);
 
 	/* Convert -> int and back to string for security's sake since
 	 * strtol() ignores some leading and trailing characters.
@@ -636,28 +632,9 @@ add_ssh_arg_int (GPtrArray *args, const char *arg)
 	tmp_int = strtol (arg, NULL, 10);
 	if (errno != 0)
 		return FALSE;
-	g_ptr_array_add (args, (gpointer) g_strdup_printf ("%d", (guint32) tmp_int));
+
+	*retval = tmp_int;
 	return TRUE;
-}
-
-static gboolean
-extract_int (const char *arg, long int *retval, int range_begin, int range_end)
-{
-	long int tmp_int;
-
-	/* Convert -> int and back to string for security's sake since
-	 * strtol() ignores some leading and trailing characters.
-	 */
-	errno = 0;
-	tmp_int = strtol (arg, NULL, 10);
-	if (errno != 0)
-		return FALSE;
-	if (tmp_int <= range_end && tmp_int >= range_begin)
-	{
-		*retval = tmp_int;
-		return TRUE;
-	}
-	return FALSE;
 }
 
 static char *
@@ -805,8 +782,6 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	// TODO TODO resolve remote
 	priv->io_data->local_tun_number = -1;
 	// TODO hardcoded
-	priv->io_data->netmask = g_strdup("255.255.255.252");
-	// TODO hardcoded
 	priv->io_data->username = g_strdup("root");
 
 	/* Get a local tun */
@@ -818,17 +793,10 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		return FALSE;
 	}
 
-	// TODO TODO
-	// TODO TODO
-	// EVERYTHING IS HARDCODED!!!
-
 	/* Set verbose mode, we'll parse the arguments */
 	add_ssh_arg (args, "-v");
 
-	/* Set TCP keep alive, so VPN stays up... */
-	// TODO add a configurable value
-	add_ssh_arg (args, "-o"); add_ssh_arg (args, "ServerAliveInterval=10");
-	add_ssh_arg (args, "-o"); add_ssh_arg (args, "TCPKeepAlive=yes");
+	/* No password prompts, only key authentication supported... */
 	add_ssh_arg (args, "-o"); add_ssh_arg (args, "NumberOfPasswordPrompts=0");
 
 	/* only root is supported... */
@@ -851,7 +819,8 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	port = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_PORT);
 	add_ssh_arg (args, "-p");
 	if (port && strlen (port)) {
-		if (!extract_int (port, &tmp_int, 1, 65535)) {
+		/* Range validation is done in dialog... */
+		if (!get_ssh_arg_int (port, &tmp_int)) {
 			g_set_error (error,
 			             NM_VPN_PLUGIN_ERROR,
 			             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
@@ -864,13 +833,14 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		// TODO doesn't quit nicely
 	} else {
 		/* Default to SSH port 22 */
-		add_ssh_arg (args, "22");
+		add_ssh_arg (args, (gpointer) g_strdup_printf("%d", (guint32) NM_SSH_DEFAULT_PORT));
 	}
 
 	/* TUN MTU size */
 	mtu = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_TUNNEL_MTU);
 	if (mtu && strlen (mtu)) {
-		if (!extract_int (mtu, &tmp_int, 1, 9000)) {
+		/* Range validation is done in dialog... */
+		if (!get_ssh_arg_int (mtu, &tmp_int)) {
 			g_set_error (error,
 			             NM_VPN_PLUGIN_ERROR,
 			             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
@@ -882,13 +852,18 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		priv->io_data->mtu = tmp_int;
 	} else {
 		/* Default MTU of 1500 */
-		priv->io_data->mtu = 1500;
+		priv->io_data->mtu = NM_SSH_DEFAULT_MTU;
 	}
+
+	/* Extra SSH options */
+	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_EXTRA_OPTS);
+	add_ssh_arg (args, tmp);
 
 	/* Remote tun device */
 	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_REMOTE_TUN);
 	if (tmp && strlen (tmp)) {
-		if (!extract_int (tmp, &tmp_int, 0, 255)) {
+		/* Range validation is done in dialog... */
+		if (!get_ssh_arg_int (tmp, &tmp_int)) {
 			g_set_error (error,
 			             NM_VPN_PLUGIN_ERROR,
 			             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
@@ -901,7 +876,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		priv->io_data->remote_tun_number = tmp_int;
 	} else {
 		/* Use tun100 by default*/
-		priv->io_data->remote_tun_number = 100;
+		priv->io_data->remote_tun_number = NM_SSH_DEFAULT_REMOTE_TUN;
 	}
 
 	/* Remote IP */

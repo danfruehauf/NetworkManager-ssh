@@ -46,6 +46,11 @@
 #define	NM_SSH_KEY_EXTRA_OPTS "extra-opts"
 #define	NM_SSH_KEY_REMOTE_TUN "remote-tun"
 
+#define	NM_SSH_DEFAULT_PORT 22
+#define	NM_SSH_DEFAULT_MTU 1500
+#define	NM_SSH_DEFAULT_REMOTE_TUN 100
+#define	NM_SSH_DEFAULT_EXTRA_OPTS "-o ServerAliveInterval=10 -o TCPKeepAlive=yes"
+
 typedef struct {
 	NMVPNPlugin parent;
 } NMSshPlugin;

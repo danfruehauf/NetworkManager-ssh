@@ -497,6 +497,129 @@ ssh_plugin_ui_widget_interface_init (NMVpnPluginUiWidgetInterface *iface_class)
 	iface_class->update_connection = update_connection;
 }
 
+static gboolean
+export (NMVpnPluginUiInterface *iface,
+        const char *path,
+        NMConnection *connection,
+        GError **error)
+{
+	NMSettingConnection *s_con;
+	NMSettingVPN *s_vpn;
+	FILE *f;
+	const char *value;
+	const char *gateway = NULL;
+	const char *port = NULL;
+	const char *local_ip = NULL;
+	const char *remote_ip = NULL;
+	const char *netmask = NULL;
+	const char *extra_opts = NULL;
+	const char *remote_tun = NULL;
+	const char *mtu = NULL;
+	gboolean success = FALSE;
+
+	s_con = NM_SETTING_CONNECTION (nm_connection_get_setting (connection, NM_TYPE_SETTING_CONNECTION));
+	g_assert (s_con);
+
+	s_vpn = (NMSettingVPN *) nm_connection_get_setting (connection, NM_TYPE_SETTING_VPN);
+
+	f = fopen (path, "w");
+	if (!f) {
+		g_set_error (error, 0, 0, "could not open file for writing");
+		return FALSE;
+	}
+
+	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_REMOTE);
+	if (value && strlen (value))
+		gateway = value;
+	else {
+		g_set_error (error, 0, 0, "connection was incomplete (missing gateway)");
+		goto done;
+	}
+
+	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_REMOTE_IP);
+	if (value && strlen (value))
+		remote_ip = value;
+	else {
+		g_set_error (error, 0, 0, "connection was incomplete (missing remote IP)");
+		goto done;
+	}
+
+	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_LOCAL_IP);
+	if (value && strlen (value))
+		local_ip = value;
+	else {
+		g_set_error (error, 0, 0, "connection was incomplete (missing local IP)");
+		goto done;
+	}
+
+	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_NETMASK);
+	if (value && strlen (value))
+		netmask = value;
+	else {
+		g_set_error (error, 0, 0, "connection was incomplete (missing netmask)");
+		goto done;
+	}
+
+	/* Advanced values start */
+	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_PORT);
+	if (value && strlen (value))
+		port = value;
+	else
+		port = g_strdup_printf("%d", NM_SSH_DEFAULT_PORT);
+
+	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_TUNNEL_MTU);
+	if (value && strlen (value))
+		mtu = value;
+	else
+		mtu = g_strdup_printf("%d", NM_SSH_DEFAULT_MTU);
+
+	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_EXTRA_OPTS);
+	if (value && strlen (value))
+		extra_opts = value;
+	else
+		extra_opts = g_strdup(NM_SSH_DEFAULT_EXTRA_OPTS);
+
+	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_REMOTE_TUN);
+	if (value && strlen (value))
+		remote_tun = value;
+	else
+		remote_tun = g_strdup_printf("%d", NM_SSH_DEFAULT_REMOTE_TUN);
+	/* Advanced values end */
+
+	/* Serialize everything to a file */
+	fprintf (f, "#!/bin/bash\n");
+
+	fprintf (f, "REMOTE=%s\n", gateway);
+
+	fprintf (f, "REMOTE_IP=%s\n", remote_ip);
+
+	fprintf (f, "LOCAL_IP=%s\n", local_ip);
+
+	fprintf (f, "NETMASK=%s\n", netmask);
+
+	fprintf (f, "PORT=%s\n", port);
+
+	fprintf (f, "MTU=%s\n", mtu);
+
+	fprintf (f, "EXTRA_OPTS=%s\n", extra_opts);
+
+	fprintf (f, "REMOTE_TUN=%s\n", remote_tun);
+
+	// TODO shouldn't be remote_tun!
+	fprintf (f, "LOCAL_TUN=%s\n", remote_tun);
+
+	/* The generic lines that will perform the connection */
+	fprintf (f, "\n");
+	fprintf(f, "ssh -f -v -o NumberOfPasswordPrompts=0 $EXTRA_OPTS -w $LOCAL_TUN:$REMOTE_TUN -l root -p $PORT $REMOTE \"ifconfig tun$REMOTE_TUN $REMOTE_IP netmask $NETMASK pointopoint $LOCAL_IP\" && \\\n");
+	fprintf(f, "ifconfig tun$LOCAL_TUN $LOCAL_IP netmask $NETMASK pointopoint $REMOTE_IP\n");
+
+	success = TRUE;
+
+done:
+	fclose (f);
+	return success;
+}
+
 static char *
 get_suggested_name (NMVpnPluginUiInterface *iface, NMConnection *connection)
 {
@@ -517,7 +640,9 @@ get_suggested_name (NMVpnPluginUiInterface *iface, NMConnection *connection)
 static guint32
 get_capabilities (NMVpnPluginUiInterface *iface)
 {
-	return (NM_VPN_PLUGIN_UI_CAPABILITY_IMPORT | NM_VPN_PLUGIN_UI_CAPABILITY_EXPORT);
+	// TODO implement import :)
+	//return (NM_VPN_PLUGIN_UI_CAPABILITY_IMPORT | NM_VPN_PLUGIN_UI_CAPABILITY_EXPORT);
+	return (NM_VPN_PLUGIN_UI_CAPABILITY_EXPORT);
 }
 
 static NMVpnPluginUiWidgetInterface *
@@ -577,9 +702,11 @@ ssh_plugin_ui_interface_init (NMVpnPluginUiInterface *iface_class)
 	/* interface implementation */
 	iface_class->ui_factory = ui_factory;
 	iface_class->get_capabilities = get_capabilities;
+	// TODO implement
+	//iface_class->import_from_file = import;
+	iface_class->export_to_file = export;
 	iface_class->get_suggested_name = get_suggested_name;
 }
-
 
 G_MODULE_EXPORT NMVpnPluginUiInterface *
 nm_vpn_plugin_ui_factory (GError **error)
