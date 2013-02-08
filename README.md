@@ -29,7 +29,10 @@ In order to open a tunnel OpenSSH VPN, all that you have to do is run:
 	REMOTE_TUN=100
 	LOCAL_TUN=100
 
-	ssh -f -v -o NumberOfPasswordPrompts=0 $EXTRA_OPTS -w $LOCAL_TUN:$REMOTE_TUN -l root -p $PORT $REMOTE "ifconfig tun$REMOTE_TUN $REMOTE_IP netmask $NETMASK pointopoint $LOCAL_IP" && \
+	ssh -f -v -o NumberOfPasswordPrompts=0 $EXTRA_OPTS \
+		-w $LOCAL_TUN:$REMOTE_TUN \
+		-l root -p $PORT $REMOTE \
+		"ifconfig tun$REMOTE_TUN $REMOTE_IP netmask $NETMASK pointopoint $LOCAL_IP" && \
 	ifconfig tun$LOCAL_TUN $LOCAL_IP netmask $NETMASK pointopoint $REMOTE_IP
 
 That's actually an export file of a working SSH VPN configuration I have from NetworkManager.
