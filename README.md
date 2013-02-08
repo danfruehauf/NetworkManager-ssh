@@ -58,7 +58,7 @@ I promise to fix DEBs ASAP.
 ## Running
 Please edit <i>/etc/dbus-1/system.d/org.freedesktop.NetworkManager.conf</i> and add the line:
 
-	&lt;allow send_destination="org.freedesktop.NetworkManager.ssh"/>
+	<allow send_destination="org.freedesktop.NetworkManager.ssh"/>
 
 Make sure your target host is known in <i>/root/.ssh/known_hosts</i>
 
