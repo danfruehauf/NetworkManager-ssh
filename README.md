@@ -25,7 +25,7 @@ In order to open a tunnel OpenSSH VPN, all that you have to do is run:
 	NETMASK=255.255.255.252
 	PORT=22
 	MTU=1500
-	EXTRA_OPTS=-o ServerAliveInterval=10 -o TCPKeepAlive=yes
+	EXTRA_OPTS='-o ServerAliveInterval=10 -o TCPKeepAlive=yes'
 	REMOTE_TUN=100
 	LOCAL_TUN=100
 
