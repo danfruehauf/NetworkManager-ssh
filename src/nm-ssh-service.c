@@ -317,7 +317,7 @@ static char *
 resolve_hostname (const char *hostname)
 {
 	struct in_addr addr;
-	char *ip;
+	char *ip = NULL;
 	const char *p;
 	gboolean is_name = FALSE;
 
@@ -373,6 +373,7 @@ resolve_hostname (const char *hostname)
 			           __func__, hostname, errno);
 			return NULL;
 		}
+		ip = g_strdup (hostname);
 	}
 
 	return ip;
@@ -436,9 +437,13 @@ send_network_config (NMSshPlugin *plugin)
 	{
 		/* We might have to resolve that */
 		resolved_hostname = resolve_hostname (priv->io_data->remote_gw);
-		val = addr_to_gvalue (resolved_hostname);
-		g_hash_table_insert (config, NM_VPN_PLUGIN_IP4_CONFIG_EXT_GATEWAY, val);
-		g_free (resolved_hostname);
+		if (resolved_hostname != NULL) {
+			val = addr_to_gvalue (resolved_hostname);
+			g_hash_table_insert (config, NM_VPN_PLUGIN_IP4_CONFIG_EXT_GATEWAY, val);
+			g_free (resolved_hostname);
+		} else {
+			g_warning ("Could not resolve remote_gw.");
+		}
 	}
 	else
 	{
