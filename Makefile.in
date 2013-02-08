@@ -908,6 +908,16 @@ uninstall-am: uninstall-dbusserviceDATA uninstall-nmvpnserviceDATA
 nm-ssh-service.name: $(srcdir)/nm-ssh-service.name.in
 	sed -e 's|[@]LIBEXECDIR[@]|$(libexecdir)|g' $< >$@
 
+rpm: dist-xz
+	rpm_source_dir=$(shell rpm --eval '%{_sourcedir}') && \
+	mv $(distdir).tar.xz "$$rpm_source_dir"
+	rpmbuild -bb $(PACKAGE).spec
+
+deb: dist-xz
+# TODO IMPLEMENT
+
+.PHONY: rpm deb
+
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

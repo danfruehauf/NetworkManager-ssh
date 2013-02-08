@@ -44,3 +44,13 @@ CLEANFILES = $(nmvpnservice_DATA) $(desktop_DATA) *~
 DISTCLEANFILES = intltool-extract intltool-merge intltool-update
 
 ACLOCAL_AMFLAGS = -I m4
+
+rpm: dist-xz
+	rpm_source_dir=$(shell rpm --eval '%{_sourcedir}') && \
+	mv $(distdir).tar.xz "$$rpm_source_dir"
+	rpmbuild -bb $(PACKAGE).spec
+
+deb: dist-xz
+# TODO IMPLEMENT
+
+.PHONY: rpm deb
