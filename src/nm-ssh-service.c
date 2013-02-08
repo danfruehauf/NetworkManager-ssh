@@ -106,15 +106,16 @@ typedef struct {
 } ValidProperty;
 
 static ValidProperty valid_properties[] = {
+	/* TRUE/FALSE will dictate whether it is an address (X.X.X.X) or not */
 	{ NM_SSH_KEY_REMOTE,               G_TYPE_STRING, 0, 0, FALSE },
 	{ NM_SSH_KEY_LOCAL_IP,             G_TYPE_STRING, 0, 0, TRUE },
 	{ NM_SSH_KEY_REMOTE_IP,            G_TYPE_STRING, 0, 0, TRUE },
 	{ NM_SSH_KEY_NETMASK,              G_TYPE_STRING, 0, 0, TRUE },
 	{ NM_SSH_KEY_PORT,                 G_TYPE_INT, 1, 65535, FALSE },
-	{ NM_SSH_KEY_TUNNEL_MTU,           G_TYPE_INT, 0, G_MAXINT, FALSE },
-	{ NM_SSH_KEY_EXTRA_OPTS,           G_TYPE_STRING, 0, 0, TRUE },
-	{ NM_SSH_KEY_REMOTE_TUN,           G_TYPE_STRING, 0, 0, TRUE },
-	{ NULL,                                G_TYPE_NONE, FALSE }
+	{ NM_SSH_KEY_TUNNEL_MTU,           G_TYPE_INT, 1, 9000, FALSE },
+	{ NM_SSH_KEY_EXTRA_OPTS,           G_TYPE_STRING, 0, 0, FALSE },
+	{ NM_SSH_KEY_REMOTE_TUN,           G_TYPE_INT, 0, 255, FALSE },
+	{ NULL,                            G_TYPE_NONE, FALSE }
 };
 
 static gboolean
@@ -364,6 +365,7 @@ send_network_config (NMSshPlugin *plugin)
 	if (priv->io_data->remote_gw != NULL)
 	{
 		val = addr_to_gvalue (priv->io_data->remote_gw);
+		// TODO add resolving here
 		g_hash_table_insert (config, NM_VPN_PLUGIN_IP4_CONFIG_EXT_GATEWAY, val);
 	}
 	else
@@ -620,6 +622,25 @@ add_ssh_arg (GPtrArray *args, const char *arg)
 	g_ptr_array_add (args, (gpointer) g_strdup (arg));
 }
 
+static void
+add_ssh_extra_opts (GPtrArray *args, const char *extra_opts)
+{
+	gchar      **extra_opts_split;
+	gchar      **iter;
+
+	/* Needs to separate arguements nicely */
+	extra_opts_split = g_strsplit (extra_opts, " ", 256);
+	iter = extra_opts_split;
+
+	/* Ensure it's a valid DNS name or IP address */
+	while (*iter) {
+		g_message("%s", *iter);
+		add_ssh_arg (args, *iter);
+		iter++;
+	}
+	g_strfreev (extra_opts_split);
+}
+
 static gboolean
 get_ssh_arg_int (const char *arg, long int *retval)
 {
@@ -722,7 +743,8 @@ probe_ssh_agent_socket (const char *username, GError **error, char **env_ssh_soc
 		   user that was passed to the function */
 		if (G_FILE_TYPE_DIRECTORY == g_file_info_get_file_type (info) &&
 			name != NULL && g_str_has_prefix(name, "ssh-") &&
-			owner != NULL && strcmp(owner, username) == 0) {
+				(strcmp (username, "") == 0 ||
+				(owner != NULL && strcmp(owner, username) == 0)) ) {
 
 			/* Alright, lets get the socket file for this directory */
 			ssh_dir_path = g_strconcat(SSH_AGENT_PARENT_DIR, "/", name, NULL);
@@ -778,10 +800,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	args = g_ptr_array_new ();
 	add_ssh_arg (args, ssh_binary);
 
-	/* We'll need this when sending ip4 config data */
-	// TODO TODO resolve remote
-	priv->io_data->local_tun_number = -1;
-	// TODO hardcoded
+	/* We can use only root on remote machine... */
 	priv->io_data->username = g_strdup("root");
 
 	/* Get a local tun */
@@ -802,6 +821,16 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	/* only root is supported... */
 	add_ssh_arg (args, "-l"); add_ssh_arg (args, priv->io_data->username);
 
+	/* Extra SSH options */
+	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_EXTRA_OPTS);
+	if (tmp && strlen (tmp)) {
+		add_ssh_extra_opts (args, tmp);
+	} else {
+		/* Add default extra options */
+		add_ssh_extra_opts (args, NM_SSH_DEFAULT_EXTRA_OPTS);
+	}
+
+	/* Remote */
 	remote = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_REMOTE);
 	if (!(remote && strlen (remote))) {
 		g_set_error (error,
@@ -854,10 +883,6 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		/* Default MTU of 1500 */
 		priv->io_data->mtu = NM_SSH_DEFAULT_MTU;
 	}
-
-	/* Extra SSH options */
-	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_EXTRA_OPTS);
-	add_ssh_arg (args, tmp);
 
 	/* Remote tun device */
 	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_REMOTE_TUN);
@@ -949,8 +974,8 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	g_ptr_array_add (args, NULL);
 
 	/* Set SSH_AUTH_SOCK from ssh-agent */
-	/* TODO DAN HARDCODED!!! */
-	if (!probe_ssh_agent_socket("dan", error, &envp[0])) {
+	// TODO find username running nm-applet
+	if (!probe_ssh_agent_socket("", error, &envp[0])) {
 		free_ssh_args (args);
 		return FALSE;
 	}
@@ -1062,6 +1087,7 @@ real_need_secrets (NMVPNPlugin *plugin,
 		return FALSE;
 	}
 
+// TODO
 /*	connection_type = check_need_secrets (s_vpn, &need_secrets);
 	if (!connection_type) {
 		g_set_error (error,
@@ -1208,7 +1234,7 @@ main (int argc, char *argv[])
 	g_option_context_add_main_entries (opt_ctx, options, NULL);
 
 	g_option_context_set_summary (opt_ctx,
-		_("nm-vpnc-service provides integrated SSH capability to NetworkManager."));
+		_("nm-ssh-service provides integrated SSH capability to NetworkManager."));
 
 	g_option_context_parse (opt_ctx, &argc, &argv, NULL);
 	g_option_context_free (opt_ctx);

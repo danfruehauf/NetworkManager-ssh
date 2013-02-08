@@ -74,8 +74,7 @@ am__installdirs = "$(DESTDIR)$(plugindir)" "$(DESTDIR)$(uidir)"
 LTLIBRARIES = $(plugin_LTLIBRARIES)
 am__DEPENDENCIES_1 =
 libnm_ssh_properties_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1) \
-	$(top_builddir)/common/libnm-ssh-common.la
+	$(am__DEPENDENCIES_1)
 am_libnm_ssh_properties_la_OBJECTS =  \
 	libnm_ssh_properties_la-nm-ssh.lo \
 	libnm_ssh_properties_la-auth-helpers.lo
@@ -321,8 +320,7 @@ libnm_ssh_properties_la_CFLAGS = \
 
 libnm_ssh_properties_la_LIBADD = \
         $(GTK_LIBS) \
-        $(NM_LIBS) \
-        $(top_builddir)/common/libnm-ssh-common.la
+        $(NM_LIBS)
 
 libnm_ssh_properties_la_LDFLAGS = \
         -avoid-version

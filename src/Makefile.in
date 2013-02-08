@@ -54,8 +54,7 @@ PROGRAMS = $(libexec_PROGRAMS)
 am_nm_ssh_service_OBJECTS = nm-ssh-service.$(OBJEXT)
 nm_ssh_service_OBJECTS = $(am_nm_ssh_service_OBJECTS)
 am__DEPENDENCIES_1 =
-nm_ssh_service_DEPENDENCIES = $(am__DEPENDENCIES_1) \
-	$(top_builddir)/common/libnm-ssh-common.la
+nm_ssh_service_DEPENDENCIES = $(am__DEPENDENCIES_1)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -247,8 +246,7 @@ nm_ssh_service_SOURCES = \
 
 nm_ssh_service_LDADD = \
 	$(NM_LIBS) \
-	$(GIO_LIBS) \
-        $(top_builddir)/common/libnm-ssh-common.la
+	$(GIO_LIBS)
 
 CLEANFILES = *~
 all: all-am
