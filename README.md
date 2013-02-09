@@ -101,3 +101,17 @@ If the destination host is not in your <i>known_hosts</i> file, things will also
 
 	-o CheckHostIP=no
 
+## Screenshots
+
+Choosing a connection type:
+
+<img src="https://raw.github.com/danfruehauf/NetworkManager-ssh/master/images/ConnectionType.png">
+
+Main dialog:
+
+<img src="https://raw.github.com/danfruehauf/NetworkManager-ssh/master/images/MainDialog.png">
+
+Advanced dialog:
+
+<img src="https://raw.github.com/danfruehauf/NetworkManager-ssh/master/images/AdvancedDialog.png">
+
