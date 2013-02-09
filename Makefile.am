@@ -37,8 +37,7 @@ EXTRA_DIST = nm-ssh-service.name.in \
              $(iconfile) \
              intltool-extract.in  \
              intltool-merge.in    \
-             intltool-update.in \
-             nm-test-helpers.h
+             intltool-update.in
 
 CLEANFILES = $(nmvpnservice_DATA) $(desktop_DATA) *~
 DISTCLEANFILES = intltool-extract intltool-merge intltool-update
