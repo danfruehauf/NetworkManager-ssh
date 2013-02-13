@@ -69,11 +69,11 @@ On Fedora things should be simple, after you clone the repository:
 Enjoy your new RPM.
 
 ### Ubuntu/Debian
-On Debian work is still in progress, so you should perhaps go with the traditional:
+Building a .deb should be straight forward with (Tested on Ubuntu 12.10):
 
-	./configure && make && make install
+	./configure && make deb
 
-I promise to fix DEBs ASAP.
+Enjoy your new .deb.
 
 ## Running
 Please edit <i>/etc/dbus-1/system.d/org.freedesktop.NetworkManager.conf</i> and add the line:
