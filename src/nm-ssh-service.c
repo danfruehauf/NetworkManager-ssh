@@ -549,11 +549,11 @@ nm_ssh_stdout_cb (GIOChannel *source, GIOCondition condition, gpointer user_data
 	if (g_str_has_prefix(str, "debug1: Requesting tun unit")) {
 		sscanf(str, "debug1: Requesting tun unit %d", &io_data->remote_tun_number);
 		g_message("Remote tun: %d", io_data->remote_tun_number);
-		g_message(str);
+		g_message("%s", str);
 	} else if (g_str_has_prefix (str, "debug1: sys_tun_open:")) {
 		sscanf(str, "debug1: sys_tun_open: tun%d", &io_data->local_tun_number);
 		g_message("Local tun: %d", io_data->local_tun_number);
-		g_message(str);
+		g_message("%s", str);
 		/* Starting timer here for getting local interface up... */
 		nm_ssh_schedule_ifconfig_timer ((NMSshPlugin*)plugin);
 	} else if (g_str_has_prefix (str, "Tunnel device open failed.")) {
@@ -571,7 +571,7 @@ nm_ssh_stdout_cb (GIOChannel *source, GIOCondition condition, gpointer user_data
 	}
 	// TODO PROBE FOR PASSWORD PROMPT HERE
 
-	g_message(str);
+	g_message("%s", str);
 
 	g_free(str);
 	return TRUE;
