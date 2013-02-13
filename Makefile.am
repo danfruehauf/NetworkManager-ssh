@@ -50,6 +50,8 @@ rpm: dist-xz
 	rpmbuild -bb $(PACKAGE).spec
 
 deb: dist-xz
-# TODO IMPLEMENT
+	deb_src_filename=$(PACKAGE:NetworkManager%=network-manager%)_$(VERSION).orig.tar.xz && \
+	mv $(distdir).tar.xz ../"$$deb_src_filename" && \
+	dpkg-buildpackage -B -nc
 
 .PHONY: rpm deb

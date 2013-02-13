@@ -1,0 +1,3 @@
+usr/lib/NetworkManager/*.so*
+usr/share/gnome-vpn-properties
+usr/share/locale

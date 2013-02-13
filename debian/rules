@@ -1,0 +1,16 @@
+#!/usr/bin/make -f
+
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+	dh_auto_configure -- \
+		--libexecdir=/usr/lib/NetworkManager \
+		--disable-static \
+		--with-gtkver=3
+
+override_dh_makeshlibs:
+	dh_makeshlibs -X/usr/lib/NetworkManager/

@@ -1,0 +1,2 @@
+# Debian patches for network-manager-ssh
+auth_dialog_libexecdir.patch

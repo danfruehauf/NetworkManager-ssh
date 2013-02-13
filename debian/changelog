@@ -1,0 +1,6 @@
+network-manager-ssh (0.0.1-0ubuntu2) quantal; urgency=low
+
+  * Initial release
+
+ -- Dan Fruehauf <malkodan@gmail.com>  Wed, 13 Feb 2013 14:25:07 +1000
+

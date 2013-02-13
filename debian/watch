@@ -1,0 +1,2 @@
+version=3
+http://download.gnome.org/sources/NetworkManager-ssh/([\d\.]+)/NetworkManager-ssh-(.*)\.tar\.xz
