@@ -35,8 +35,6 @@ Description: network management framework (SSH plugin core)
 Package: network-manager-ssh-gnome
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, network-manager-ssh (= ${binary:Version})
-Replaces: network-manager-ssh (<< 0.8.999-1ubuntu1)
-Breaks: network-manager-ssh (<< 0.8.999-1ubuntu1)
 Description: network management framework (SSH plugin GNOME GUI)
  NetworkManager is a system network service that manages your network devices
  and connections, attempting to keep active network connectivity when
