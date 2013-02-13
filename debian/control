@@ -21,7 +21,7 @@ Homepage: http://www.gnome.org/projects/NetworkManager/
 
 Package: network-manager-ssh
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, ssh
+Depends: ${shlibs:Depends}, ${misc:Depends}, openssh-client
 Recommends: network-manager-ssh-gnome | plasma-widget-networkmanagement
 Description: network management framework (SSH plugin core)
  NetworkManager is a system network service that manages your network devices
