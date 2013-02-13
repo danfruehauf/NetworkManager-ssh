@@ -914,6 +914,8 @@ rpm: dist-xz
 
 deb: dist-xz
 	deb_src_filename=$(PACKAGE:NetworkManager%=network-manager%)_$(VERSION).orig.tar.xz && \
+	rm -rf debian/files debian/*.log debian/*.substvars \
+		debian/network-manager-ssh-gnome/ debian/network-manager-ssh/ debian/tmp/ && \
 	mv $(distdir).tar.xz ../"$$deb_src_filename" && \
 	dpkg-buildpackage -B -nc
 
