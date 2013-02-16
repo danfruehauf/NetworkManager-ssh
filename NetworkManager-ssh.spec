@@ -80,6 +80,7 @@ fi
 %{_sysconfdir}/dbus-1/system.d/nm-ssh-service.conf
 %{_sysconfdir}/NetworkManager/VPN/nm-ssh-service.name
 %{_libexecdir}/nm-ssh-service
+%{_libexecdir}/nm-ssh-auth-dialog
 %{_datadir}/gnome-vpn-properties/ssh/nm-ssh-dialog.ui
 %dir %{_datadir}/gnome-vpn-properties/ssh
 

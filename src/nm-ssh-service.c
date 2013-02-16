@@ -63,7 +63,6 @@ static GMainLoop *loop = NULL;
 
 // TODO hardcoded
 #define SSH_AGENT_PARENT_DIR		"/tmp"
-#define SSH_AGENT_SOCKET_ENV_VAR	"SSH_AUTH_SOCK"
 
 G_DEFINE_TYPE (NMSshPlugin, nm_ssh_plugin, NM_TYPE_VPN_PLUGIN)
 
@@ -735,113 +734,6 @@ get_ssh_arg_int (const char *arg, long int *retval)
 	return TRUE;
 }
 
-static char *
-get_ssh_agent_socket (const char *directory, GError **error)
-{
-	/* Search a /tmp/ssh- for the agent socket and returns it */
-	GFileEnumerator *enumerator;
-	GFile           *ssh_dir;
-	GFileInfo       *info;
-	const char      *name;
-	char            *ssh_socket = NULL;
-
-	ssh_dir = g_file_new_for_path(directory);
-	enumerator = g_file_enumerate_children (ssh_dir, NULL, 0, NULL, error);
-	if (enumerator == NULL)
-	{
-		return FALSE;
-	}
-
-	/* Iterate on files in /tmp/ssh-XXXXXXXXXX directory */
-	while ((info = g_file_enumerator_next_file (enumerator,
-		NULL, error)) != NULL &&
-		ssh_socket == NULL)
-	{
-		name = g_file_info_get_name (info);
-		if (debug && name) {
-			g_message ("Searching ssh-agent socket in name: '%s'\n", name);
-		}
-
-		/* Basically we want to find a ssh-agent associated with the given
-		   user that was passed to the function */
-		if (G_FILE_TYPE_SPECIAL == g_file_info_get_file_type (info) &&
-			NULL != name && g_str_has_prefix(name, "agent.")) {
-			/* Alright, lets get the socket file for this directory */
-			ssh_socket = g_strconcat(SSH_AGENT_SOCKET_ENV_VAR, "=", directory, "/", name, NULL);
-		}
-		g_object_unref (info);
-	}
-	g_file_enumerator_close (enumerator, NULL, NULL);
-
-	/* Return a copy of the ssh_socket variable if successful */
-	if (ssh_socket)
-		return g_strdup(ssh_socket);
-
-	return NULL;
-}
-
-static gboolean
-probe_ssh_agent_socket (const char *username, GError **error, char **env_ssh_sock)
-{
-	GFileEnumerator *enumerator;
-	GFile           *ssh_agent_parent_dir;
-	GFileInfo       *info;
-	char            *ssh_dir_path;
-	const char      *name;
-	const char      *owner;
-
-	/* iterate over /tmp/ssh-* directories */
-	ssh_agent_parent_dir = g_file_new_for_path(SSH_AGENT_PARENT_DIR);
-	enumerator = g_file_enumerate_children (ssh_agent_parent_dir, "standard::*,owner::user", 0, NULL, error);
-
-	if (enumerator == NULL)
-	{
-		/* Handle error */
-		g_warning("Error getting ssh-agent socket.");
-		return FALSE;
-	}
-
-	/* Reset is just in case because it's the loop condition */
-	*env_ssh_sock = NULL;
-
-	/* Iterate on parent directory where ssh-agent will open sockets */
-	while ((info = g_file_enumerator_next_file (enumerator,
-		NULL, error)) != NULL &&
-		*env_ssh_sock == NULL)
-	{
-		name = g_file_info_get_name (info);
-		owner = g_file_info_get_attribute_string (info, G_FILE_ATTRIBUTE_OWNER_USER);
-
-		if (debug && name) {
-			g_message ("Searching ssh-agent socket directory: '%s'\n", name);
-		}
-
-		/* Basically we want to find a ssh-agent associated with the given
-		   user that was passed to the function */
-		if (G_FILE_TYPE_DIRECTORY == g_file_info_get_file_type (info) &&
-			name != NULL && g_str_has_prefix (name, "ssh-") &&
-				(g_strcmp0 (username, "") == 0 ||
-				(owner != NULL && g_strcmp0 (owner, username) == 0)) ) {
-
-			/* Alright, lets get the socket file for this directory */
-			ssh_dir_path = g_strconcat(SSH_AGENT_PARENT_DIR, "/", name, NULL);
-			*env_ssh_sock = get_ssh_agent_socket(ssh_dir_path, error);
-			free(ssh_dir_path);
-
-			if (debug && *env_ssh_sock)
-				g_message("Found ssh-agent socket at: '%s'", *env_ssh_sock);
-		}
-		g_object_unref (info);
-	}
-	g_file_enumerator_close (enumerator, NULL, NULL);
-
-	/* Return TRUE if we've found something... */
-	if (*env_ssh_sock)
-		return TRUE;
-
-	return FALSE;
-}
-
 static gboolean
 nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
                                  NMSettingVPN *s_vpn,
@@ -1050,9 +942,20 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	/* Wrap it up */
 	g_ptr_array_add (args, NULL);
 
-	/* Set SSH_AUTH_SOCK from ssh-agent */
-	// TODO find username running nm-applet
-	if (!probe_ssh_agent_socket("", error, &envp[0])) {
+	/* Set SSH_AUTH_SOCK from ssh-agent
+	 * Passes as a secret key from the user's context
+	 * using auth-dialog */
+	tmp = nm_setting_vpn_get_secret (s_vpn, NM_SSH_KEY_SSH_AUTH_SOCK);
+	if (tmp && strlen(tmp)) {
+		envp[0] = (gpointer) g_strdup_printf ("%s=%s", SSH_AGENT_SOCKET_ENV_VAR, tmp);
+	} else {
+		/* No SSH_AUTH_SOCK passed from user context */
+		g_set_error (error,
+		             NM_VPN_PLUGIN_ERROR,
+		             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
+		             "%s",
+					// TODO Edit translation
+		             _("Missing required SSH_AUTH_SOCK."));
 		free_ssh_args (args);
 		return FALSE;
 	}
@@ -1107,6 +1010,30 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 }
 
 static gboolean
+validate_ssh_agent_socket(const char* ssh_agent_socket, GError **error)
+{
+	GFile           *gfile = NULL;
+	GFileInfo       *info = NULL;
+	if (debug)
+		g_message ("Inspecing ssh agent socket at: '%s'\n", ssh_agent_socket);
+
+	if (!g_file_test (ssh_agent_socket, G_FILE_TEST_EXISTS))
+		return FALSE;
+
+	gfile = g_file_new_for_path(ssh_agent_socket);
+	if (!gfile)
+		return FALSE;
+
+	info = g_file_query_info (gfile, "standard::*,owner::user", 0, NULL, error);
+	if (info && G_FILE_TYPE_SPECIAL == g_file_info_get_file_type (info)) {
+		g_message ("Found ssh agent socket at: '%s'\n", ssh_agent_socket);
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
+static gboolean
 real_connect (NMVPNPlugin   *plugin,
               NMConnection  *connection,
               GError       **error)
@@ -1145,6 +1072,7 @@ real_need_secrets (NMVPNPlugin *plugin,
 {
 	NMSettingVPN *s_vpn;
 	gboolean need_secrets = FALSE;
+	const char *ssh_agent_socket = NULL;
 
 	g_return_val_if_fail (NM_IS_VPN_PLUGIN (plugin), FALSE);
 	g_return_val_if_fail (NM_IS_CONNECTION (connection), FALSE);
@@ -1164,16 +1092,15 @@ real_need_secrets (NMVPNPlugin *plugin,
 		return FALSE;
 	}
 
-// TODO
-/*	connection_type = check_need_secrets (s_vpn, &need_secrets);
-	if (!connection_type) {
-		g_set_error (error,
-		             NM_VPN_PLUGIN_ERROR,
-		             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
-		             "%s",
-		             _("Invalid connection type."));
-		return FALSE;
-	}*/
+	/* If we don't have our SSH_AUTH_SOCK set, we need it
+	 * SSH_AUTH_SOCK is passed as a secret only because it has to come
+     * from a user's context and this plugin will run as root... */
+	ssh_agent_socket = nm_setting_vpn_get_secret (s_vpn, NM_SSH_KEY_SSH_AUTH_SOCK);
+	if (ssh_agent_socket && validate_ssh_agent_socket (ssh_agent_socket, error)) {
+		need_secrets = FALSE;
+	} else {
+		need_secrets = TRUE;
+	}
 
 	if (need_secrets)
 		*setting_name = NM_SETTING_VPN_SETTING_NAME;

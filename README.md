@@ -99,7 +99,7 @@ It is very much a limitation and I'm looking for a more "elegant" way around it
 ### Known Hosts
 If the destination host is not in your <i>known_hosts</i> file, things will also not work, unless you add in the extra options box:
 
-	-o CheckHostIP=no
+	-o StrictHostKeyChecking=no
 
 ## Screenshots
 

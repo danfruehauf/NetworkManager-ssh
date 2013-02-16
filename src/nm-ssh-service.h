@@ -37,6 +37,8 @@
 #define NM_DBUS_INTERFACE_SSH  "org.freedesktop.NetworkManager.ssh"
 #define NM_DBUS_PATH_SSH       "/org/freedesktop/NetworkManager/ssh"
 
+#define SSH_AGENT_SOCKET_ENV_VAR	"SSH_AUTH_SOCK"
+
 #define NM_SSH_KEY_REMOTE "remote"
 #define NM_SSH_KEY_REMOTE_IP "remote-ip"
 #define NM_SSH_KEY_LOCAL_IP "local-ip"
@@ -45,6 +47,7 @@
 #define NM_SSH_KEY_TUNNEL_MTU "tunnel-mtu"
 #define	NM_SSH_KEY_EXTRA_OPTS "extra-opts"
 #define	NM_SSH_KEY_REMOTE_TUN "remote-tun"
+#define	NM_SSH_KEY_SSH_AUTH_SOCK "ssh-auth-sock"
 
 #define	NM_SSH_DEFAULT_PORT 22
 #define	NM_SSH_DEFAULT_MTU 1500
