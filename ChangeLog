@@ -1,3 +1,7 @@
+2013-02-12  Dan Fruehauf <malkodan@gmail.com>
+
+	* greatly improved ssh-agent integration
+
 2013-02-08  Dan Fruehauf <malkodan@gmail.com>
 
 	* initial version taken from nm-openvpn by Dan Williams

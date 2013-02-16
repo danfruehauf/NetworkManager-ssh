@@ -1,3 +1,9 @@
+network-manager-ssh (0.0.2-0ubuntu2) quantal; urgency=low
+
+  * greatly improved ssh-agent integration
+
+ -- Dan Fruehauf <malkodan@gmail.com>  Sun, 16 Feb 2013 01:43:07 +1000
+
 network-manager-ssh (0.0.1-0ubuntu2) quantal; urgency=low
 
   * Initial release

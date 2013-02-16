@@ -5,12 +5,12 @@
 %define shared_mime_version 0.16-3
 
 %define snapshot %{nil}
-%define realversion 0.0.1
+%define realversion 0.0.2
 
 Summary: NetworkManager VPN plugin for SSH
 Name: NetworkManager-ssh
 Epoch:   1
-Version: 0.0.1
+Version: 0.0.2
 Release: 1%{snapshot}%{?dist}
 License: GPLv2+
 URL: https://github.com/danfruehauf/NetworkManager-ssh

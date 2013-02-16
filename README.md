@@ -89,12 +89,18 @@ If all went right, you should have a new VPN of type <i>SSH</i> when creating a 
 ### Authentication Types
 Right now only ssh-agent authentication is supported, so you need to:
 
-	eval `ssh-agent`
-	ssh-add
+You will need ssh-agent running before you start NetworkManager-ssh.
 
-NetworkManager-ssh probes for your ssh-agent (actualy at the moment any ssh-agent) and make the VPN connection authenticate with it.
+How do you know if you have ssh-agent running? Simply run:
 
-It is very much a limitation and I'm looking for a more "elegant" way around it
+	$ env | grep SSH
+	SSH_AGENT_PID=16152
+	SSH_AUTH_SOCK=/tmp/ssh-mGTf3Q1L2oPf/agent.16151
+	SSH_ASKPASS=/usr/libexec/openssh/gnome-ssh-askpass
+
+You should see something similar to that.
+
+NetworkManager-ssh probes for ssh-agent that is attached to your session and authenticates with it.
 
 ### Known Hosts
 If the destination host is not in your <i>known_hosts</i> file, things will also not work, unless you add in the extra options box:
