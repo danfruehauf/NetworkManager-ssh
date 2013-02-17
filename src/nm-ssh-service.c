@@ -61,9 +61,6 @@
 static gboolean debug = FALSE;
 static GMainLoop *loop = NULL;
 
-// TODO hardcoded
-#define SSH_AGENT_PARENT_DIR		"/tmp"
-
 G_DEFINE_TYPE (NMSshPlugin, nm_ssh_plugin, NM_TYPE_VPN_PLUGIN)
 
 #define NM_SSH_PLUGIN_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), NM_TYPE_SSH_PLUGIN, NMSshPluginPrivate))

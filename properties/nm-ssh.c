@@ -365,10 +365,6 @@ update_connection (NMVpnPluginUiWidgetInterface *iface,
 	if (str && strlen (str))
 		nm_setting_vpn_add_data_item (s_vpn, NM_SSH_KEY_NETMASK, str);
 
-	/* Dummy SSH_AUTH_SOCK, will be updated after the first time
-	 * auth-dialog is run */
-	nm_setting_vpn_add_secret(s_vpn, NM_SSH_KEY_SSH_AUTH_SOCK, "");
-
 	if (priv->advanced)
 		g_hash_table_foreach (priv->advanced, hash_copy_advanced, s_vpn);
 
