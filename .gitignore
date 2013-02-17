@@ -17,3 +17,5 @@
 *.app
 
 autom4te.cache/
+configure
+Makefile.in
