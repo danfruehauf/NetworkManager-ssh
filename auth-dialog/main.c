@@ -62,6 +62,8 @@ main (int argc, char *argv[])
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
+	gtk_init (&argc, &argv);
+
 	context = g_option_context_new ("- ssh auth dialog");
 	g_option_context_add_main_entries (context, entries, GETTEXT_PACKAGE);
 	g_option_context_parse (context, &argc, &argv, NULL);
@@ -88,7 +90,16 @@ main (int argc, char *argv[])
 		printf ("%s\n%s\n", NM_SSH_KEY_SSH_AUTH_SOCK, ssh_agent_sock);
 		printf ("\n\n");
 	} else {
-		// TODO add dialog box here
+		GtkWidget *dialog;
+		dialog = gtk_message_dialog_new(NULL,
+			GTK_DIALOG_MODAL,
+			GTK_MESSAGE_WARNING,
+			GTK_BUTTONS_OK,
+			_("Couldn't find '%s' environment variable.\n\nIs ssh-agent running?"), SSH_AGENT_SOCKET_ENV_VAR);
+		gtk_window_set_title(GTK_WINDOW(dialog), "Warning");
+		gtk_dialog_run(GTK_DIALOG(dialog));
+		gtk_widget_destroy(dialog);
+	
 		return 1;
 	}
 
