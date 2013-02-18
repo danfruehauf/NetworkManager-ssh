@@ -64,14 +64,14 @@ On the server, you'll need to enable in <i>/etc/ssh/sshd_config</i>:
 ### Fedora/CentOS
 On Fedora things should be simple, after you clone the repository:
 
-	autoreconf && ./configure && make rpm
+	autoreconf -fvi && ./configure && make rpm
 
 Enjoy your new RPM.
 
 ### Ubuntu/Debian
 Building a .deb should be straight forward with (Tested on Ubuntu 12.10):
 
-	autoreconf && ./configure && make deb
+	autoreconf -fvi && ./configure && make deb
 
 Enjoy your new .deb.
 
