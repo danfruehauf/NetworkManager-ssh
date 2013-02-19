@@ -642,6 +642,8 @@ ssh_watch_cb (GPid pid, gint status, gpointer user_data)
 			}
 		}
 	}
+	g_source_remove(priv->io_data->socket_channel_stdout_eventid);
+	close (g_io_channel_unix_get_fd(priv->io_data->ssh_stdout_channel));
 
 	/* Try to get the last bits of data from ssh */
 	if (priv->io_data && priv->io_data->ssh_stderr_channel) {
@@ -655,6 +657,8 @@ ssh_watch_cb (GPid pid, gint status, gpointer user_data)
 			}
 		}
 	}
+	g_source_remove(priv->io_data->socket_channel_stderr_eventid);
+	close (g_io_channel_unix_get_fd(priv->io_data->ssh_stderr_channel));
 
 	if (!good_exit)
 		nm_vpn_plugin_failure (plugin, failure);
@@ -1032,7 +1036,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 
 	/* Set io watches on stdout and stderr */
 	/* stdout */
-	priv->io_data->socket_channel_stderr_eventid = g_io_add_watch (
+	priv->io_data->socket_channel_stdout_eventid = g_io_add_watch (
 		priv->io_data->ssh_stdout_channel,
    		G_IO_IN,
 		nm_ssh_stdout_cb,
