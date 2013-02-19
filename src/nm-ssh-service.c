@@ -46,6 +46,7 @@
 #include <netdb.h>
 #include <ctype.h>
 #include <errno.h>
+#include <pwd.h>
 
 #include <NetworkManager.h>
 #include <NetworkManagerVPN.h>
@@ -731,6 +732,38 @@ get_ssh_arg_int (const char *arg, long int *retval)
 	return TRUE;
 }
 
+static char*
+get_known_hosts_file(const char *username,
+	const char* ssh_agent_socket)
+{
+	struct stat info;
+	struct passwd *pw = NULL;
+	char *ssh_known_hosts = NULL;
+	
+	/* Probe by passed username */
+	if (username) {
+		pw = getpwnam(username);
+	/* Probe by passed ssh-agent socket ownership */
+	} else if (ssh_agent_socket) {
+		if (0 == stat(ssh_agent_socket, &info)) {
+			pw = getpwuid(info.st_uid);
+		} else {
+			g_warning("Error getting ssh-agent socket ownership: %d", errno);
+		}
+	}
+
+	// TODO check if the file exists
+	if (pw) {
+		ssh_known_hosts = g_strdup_printf("%s/%s", pw->pw_dir, SSH_KNOWN_HOSTS);
+		if (0 != stat(ssh_known_hosts, &info)) {
+			g_warning("No known_hosts at '%s': %d.", ssh_known_hosts, errno);
+			g_free(ssh_known_hosts);
+		}
+	}
+
+	return ssh_known_hosts;
+}
+
 static gboolean
 nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
                                  NMSettingVPN *s_vpn,
@@ -739,7 +772,8 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 {
 	NMSshPluginPrivate *priv = NM_SSH_PLUGIN_GET_PRIVATE (plugin);
 	const char *ssh_binary, *tmp;
-	const char *remote, *port, *mtu;
+	const char *remote, *port, *mtu, *ssh_agent_socket;
+	char *known_hosts_file;
 	char *tmp_arg;
 	char *envp[16];
 	long int tmp_int;
@@ -786,6 +820,40 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 
 	/* only root is supported... */
 	add_ssh_arg (args, "-l"); add_ssh_arg (args, priv->io_data->username);
+
+	/* Set SSH_AUTH_SOCK from ssh-agent
+	 * Passes as a secret key from the user's context
+	 * using auth-dialog */
+	ssh_agent_socket = nm_setting_vpn_get_secret (s_vpn, NM_SSH_KEY_SSH_AUTH_SOCK);
+	if (ssh_agent_socket && strlen(ssh_agent_socket)) {
+		envp[0] = (gpointer) g_strdup_printf ("%s=%s", SSH_AGENT_SOCKET_ENV_VAR, ssh_agent_socket);
+	} else {
+		/* No SSH_AUTH_SOCK passed from user context */
+		g_set_error (error,
+		             NM_VPN_PLUGIN_ERROR,
+		             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
+		             "%s",
+					// TODO Edit translation
+		             _("Missing required SSH_AUTH_SOCK."));
+		free_ssh_args (args);
+		return FALSE;
+	}
+	envp[1] = NULL;
+
+	/* We have SSH_AUTH_SOCK, we'll assume it's owned by the user
+	 * that we should use its .ssh/known_hosts file
+	 * So we'll probe the user owning SSH_AUTH_SOCK and then use
+	 * -o UserKnownHostsFile=$HOME/.ssh/known_hosts */
+	known_hosts_file = get_known_hosts_file(default_username, ssh_agent_socket);
+	if (!(known_hosts_file && strlen (known_hosts_file))) {
+		g_warning("Using root's .ssh/known_hosts");
+	} else {
+		if (debug)
+			g_message("Using known_hosts at: '%s'", known_hosts_file);
+		add_ssh_arg (args, "-o");
+		add_ssh_arg (args, g_strdup_printf("UserKnownHostsFile=%s", known_hosts_file) );
+		g_free(known_hosts_file);
+	}
 
 	/* Extra SSH options */
 	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_EXTRA_OPTS);
@@ -938,25 +1006,6 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 
 	/* Wrap it up */
 	g_ptr_array_add (args, NULL);
-
-	/* Set SSH_AUTH_SOCK from ssh-agent
-	 * Passes as a secret key from the user's context
-	 * using auth-dialog */
-	tmp = nm_setting_vpn_get_secret (s_vpn, NM_SSH_KEY_SSH_AUTH_SOCK);
-	if (tmp && strlen(tmp)) {
-		envp[0] = (gpointer) g_strdup_printf ("%s=%s", SSH_AGENT_SOCKET_ENV_VAR, tmp);
-	} else {
-		/* No SSH_AUTH_SOCK passed from user context */
-		g_set_error (error,
-		             NM_VPN_PLUGIN_ERROR,
-		             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
-		             "%s",
-					// TODO Edit translation
-		             _("Missing required SSH_AUTH_SOCK."));
-		free_ssh_args (args);
-		return FALSE;
-	}
-	envp[1] = NULL;
 
 	if (debug)
 		g_message ("Using ssh-agent socket: '%s'", envp[0]);
