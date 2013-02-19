@@ -16,22 +16,10 @@
 *.out
 *.app
 
+*.gmo
+
 autom4te.cache/
 Makefile
 Makefile.in
-
-aclocal.m4
-compile
-config.guess
-config.h
-config.log
-config.status
-config.sub
-configure
-depcomp
-install-sh
-libtool
-ltmain.sh
-missing
-nm-ssh-service.name
-stamp-h1
+POTFILES
+stamp-it

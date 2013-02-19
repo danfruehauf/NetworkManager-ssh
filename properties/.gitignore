@@ -16,4 +16,10 @@
 *.out
 *.app
 
+Makefile
 Makefile.in
+.deps
+.libs
+libnm-ssh-properties.la
+libnm_ssh_properties_la-auth-helpers.lo
+libnm_ssh_properties_la-nm-ssh.lo
