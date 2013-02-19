@@ -126,8 +126,16 @@ case $with_tests in
         ;;
 esac
 
+dnl
+dnl Constants
 dnl ifconfig should usually be at /sbin/ifconfig
 AC_DEFINE(IFCONFIG, "/sbin/ifconfig", ifconfig)
+
+dnl ssh-agent SSH_AUTH_SOCK variable
+AC_DEFINE(SSH_AUTH_SOCK, "SSH_AUTH_SOCK", SSH_AUTH_SOCK)
+
+dnl known_hosts default path in home directory
+AC_DEFINE(SSH_KNOWN_HOSTS_PATH, ".ssh/known_hosts", SSH_KNOWN_HOSTS_PATH)
 
 dnl
 dnl Distribution version string

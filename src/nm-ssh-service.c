@@ -756,7 +756,7 @@ get_known_hosts_file(const char *username,
 
 	// TODO check if the file exists
 	if (pw) {
-		ssh_known_hosts = g_strdup_printf("%s/%s", pw->pw_dir, SSH_KNOWN_HOSTS);
+		ssh_known_hosts = g_strdup_printf("%s/%s", pw->pw_dir, SSH_KNOWN_HOSTS_PATH);
 		if (0 != stat(ssh_known_hosts, &info)) {
 			g_warning("No known_hosts at '%s': %d.", ssh_known_hosts, errno);
 			g_free(ssh_known_hosts);
@@ -828,7 +828,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	 * using auth-dialog */
 	ssh_agent_socket = nm_setting_vpn_get_secret (s_vpn, NM_SSH_KEY_SSH_AUTH_SOCK);
 	if (ssh_agent_socket && strlen(ssh_agent_socket)) {
-		envp[0] = (gpointer) g_strdup_printf ("%s=%s", SSH_AGENT_SOCKET_ENV_VAR, ssh_agent_socket);
+		envp[0] = (gpointer) g_strdup_printf ("%s=%s", SSH_AUTH_SOCK, ssh_agent_socket);
 	} else {
 		/* No SSH_AUTH_SOCK passed from user context */
 		g_set_error (error,

@@ -85,7 +85,7 @@ main (int argc, char *argv[])
 		return 1;
 	}
 
-	ssh_agent_sock = getenv (SSH_AGENT_SOCKET_ENV_VAR);
+	ssh_agent_sock = getenv (SSH_AUTH_SOCK);
 	if (ssh_agent_sock && strlen (ssh_agent_sock)) {
 		printf ("%s\n%s\n", NM_SSH_KEY_SSH_AUTH_SOCK, ssh_agent_sock);
 		printf ("\n\n");
@@ -95,7 +95,7 @@ main (int argc, char *argv[])
 			GTK_DIALOG_MODAL,
 			GTK_MESSAGE_WARNING,
 			GTK_BUTTONS_OK,
-			_("Couldn't find '%s' environment variable.\n\nIs ssh-agent running?"), SSH_AGENT_SOCKET_ENV_VAR);
+			_("Couldn't find '%s' environment variable.\n\nIs ssh-agent running?"), SSH_AUTH_SOCK);
 		gtk_window_set_title(GTK_WINDOW(dialog), "Warning");
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);

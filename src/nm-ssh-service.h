@@ -37,9 +37,6 @@
 #define NM_DBUS_INTERFACE_SSH  "org.freedesktop.NetworkManager.ssh"
 #define NM_DBUS_PATH_SSH       "/org/freedesktop/NetworkManager/ssh"
 
-#define SSH_AGENT_SOCKET_ENV_VAR	"SSH_AUTH_SOCK"
-#define SSH_KNOWN_HOSTS	".ssh/known_hosts"
-
 #define NM_SSH_KEY_REMOTE "remote"
 #define NM_SSH_KEY_REMOTE_IP "remote-ip"
 #define NM_SSH_KEY_LOCAL_IP "local-ip"

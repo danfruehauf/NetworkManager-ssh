@@ -109,6 +109,12 @@
 /* Define to the version of this package. */
 #undef PACKAGE_VERSION
 
+/* SSH_AUTH_SOCK */
+#undef SSH_AUTH_SOCK
+
+/* SSH_KNOWN_HOSTS_PATH */
+#undef SSH_KNOWN_HOSTS_PATH
+
 /* Define to 1 if you have the ANSI C header files. */
 #undef STDC_HEADERS
 
