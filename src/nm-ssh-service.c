@@ -488,14 +488,16 @@ nm_ssh_local_tun_up_cb (gpointer data)
 
 	/* format the ifconfig command */
 	ifconfig_cmd = (gpointer) g_strdup_printf (
-		"/sbin/ifconfig tun%d %s netmask %s pointopoint %s mtu %d",
+		"%s tun%d %s netmask %s pointopoint %s mtu %d",
+		IFCONFIG,
 		io_data->local_tun_number,
 		io_data->local_addr,
 		io_data->netmask,
 		io_data->remote_addr,
 		priv->io_data->mtu);
 
-	g_message ("Running: '%s'", ifconfig_cmd);
+	if (debug)
+		g_message ("Running: '%s'", ifconfig_cmd);
 
 	if (system(ifconfig_cmd) != 0 &&
 		priv->connect_count <= 30)
@@ -582,7 +584,7 @@ nm_ssh_get_free_tun_device (void)
 
 	for (tun_device = 0; tun_device <= 255; tun_device++)
 	{
-		system_cmd = (gpointer) g_strdup_printf ("/sbin/ifconfig tun%d", tun_device);
+		system_cmd = (gpointer) g_strdup_printf ("%s tun%d &> /dev/null", IFCONFIG, tun_device);
 		if (system(system_cmd) != 0)
 		{
 			g_free(system_cmd);
@@ -995,7 +997,8 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 
 	/* Command line to run on remote machine */
 	tmp_arg = (gpointer) g_strdup_printf (
-		"/sbin/ifconfig tun%d inet %s netmask %s pointopoint %s mtu %d",
+		"%s tun%d inet %s netmask %s pointopoint %s mtu %d",
+		IFCONFIG,
 		priv->io_data->remote_tun_number,
 		priv->io_data->remote_addr,
 		priv->io_data->netmask,

@@ -126,6 +126,9 @@ case $with_tests in
         ;;
 esac
 
+dnl ifconfig should usually be at /sbin/ifconfig
+AC_DEFINE(IFCONFIG, "/sbin/ifconfig", ifconfig)
+
 dnl
 dnl Distribution version string
 dnl
