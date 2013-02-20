@@ -584,7 +584,7 @@ nm_ssh_get_free_tun_device (void)
 
 	for (tun_device = 0; tun_device <= 255; tun_device++)
 	{
-		system_cmd = (gpointer) g_strdup_printf ("%s tun%d &> /dev/null", IFCONFIG, tun_device);
+		system_cmd = (gpointer) g_strdup_printf ("%s tun%d >& /dev/null", IFCONFIG, tun_device);
 		if (system(system_cmd) != 0)
 		{
 			g_free(system_cmd);
