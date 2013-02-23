@@ -1,10 +1,23 @@
 #!/usr/bin/make -f
 
+GIT_URL = git://github.com/danfruehauf/NetworkManager-ssh.git
+GIT_BRANCH := "master"
+GIT_BRANCH_NAME := network-manager-ssh
+
+ifneq (,$(LOCAL_BRANCH))
+LOCAL_REAL_BRANCH = $(realpath $(LOCAL_BRANCH))
+endif
+
+DEB_SOURCE := $(shell dpkg-parsechangelog | grep Source: | sed -e 's/Source: //')
+DEB_VERSION := $(shell dpkg-parsechangelog | grep Version: | sed -e 's/Version: //')
+DEB_UPSTREAM_VERSION := $(shell echo $(DEB_VERSION) | sed -e 's/-[^-]*$$//')
+DEB_MAJOR_VERSION := $(shell echo $(DEB_UPSTREAM_VERSION) | sed -e 's/git.*//')
+
 DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/buildflags.mk
 
 %:
-	dh $@
+	dh $@ --with autoreconf
 
 override_dh_auto_configure:
 	dh_auto_configure -- \
@@ -14,3 +27,61 @@ override_dh_auto_configure:
 
 override_dh_makeshlibs:
 	dh_makeshlibs -X/usr/lib/NetworkManager/
+
+override_dh_auto_clean:
+	rm -f po/*.gmo
+#	echo "# empty file" > aclocal.m4
+
+override_dh_autoreconf:
+	intltoolize -f -c
+	dh_autoreconf
+
+# stuff for get-orig-source / git snapshot handling
+
+GET_SOURCE = \
+	set -e; \
+	tmpdir=`mktemp -d -t`; \
+	cd $$tmpdir; \
+		echo "cloning upstream repository ..."; \
+		git clone $(if $(LOCAL_BRANCH),$(call LOCAL_REAL_BRANCH)/$(GIT_BRANCH_NAME),$(GIT_URL)) $(GIT_BRANCH_NAME); \
+		echo "getting specific upstream revision/tag: $(1)"; \
+		cd `ls | head -n 1`; git checkout -b orig $(1); \
+		commit_id=`git log -n1 --abbrev-commit | grep '^commit ' | sed -e 's/commit //' | sed -e 's/\.\.\.$$//'`; \
+		raw=`date --utc --date="$$(git log --pretty=fuller -n1 --date=rfc | grep CommitDate: | sed -e 's/CommitDate:[^0-9]*//')" "+%Y%m%dt%H%M%S"`; \
+		if echo $(1) | grep -q -c "orig" || echo $(DEB_VERSION) | grep -q -c "git"; \
+		then \
+			upstream_version=$(DEB_MAJOR_VERSION)git.$$raw.$$commit_id; \
+		else \
+			upstream_version=$(DEB_UPSTREAM_VERSION); \
+		fi; \
+		cd ..; tar --exclude=.git -czf $(CURDIR)/$(DEB_SOURCE)_$$upstream_version.orig.tar.gz `ls | head -n 1`; \
+		cd $(CURDIR); rm -rf $$tmpdir; 
+
+get-current-source:: $(if $(LOCAL_BRANCH),update-local-branch)
+	set -e; if echo $(DEB_VERSION) | grep -q -c "git"; \
+	then \
+		git_version=`echo $(DEB_VERSION) | sed -e 's/^.*git\.*\([0-9t]*\)\.\(.*\)-.*$$/\2/g'`; \
+	elif echo $(DEB_VERSION) | grep -q -c "rc1"; \
+	then \
+		git_version="0.0.2"; \
+	else \
+		git_version=$(DEB_UPSTREAM_VERSION); \
+	fi; \
+	$(call GET_SOURCE, $$git_version, "current")
+
+get-orig-source:: $(if $(LOCAL_BRANCH),update-local-branch)
+	$(call GET_SOURCE, $(GIT_BRANCH), "orig")
+
+update-local-branch::
+	@echo "updating local branch ($(LOCAL_BRANCH))"
+	@set -e; if ! test -d $(LOCAL_BRANCH); then mkdir -p $(LOCAL_BRANCH); fi
+	@set -e; if ! test -d $(LOCAL_BRANCH)/$(GIT_BRANCH_NAME); then git clone $(GIT_URL) $(LOCAL_BRANCH)/$(GIT_BRANCH_NAME); fi
+	@set -e; cd $(LOCAL_BRANCH)/$(GIT_BRANCH_NAME); git pull -f
+	@echo "updated local branch ($(LOCAL_BRANCH))"
+
+get-snapshot-info:: $(if $(LOCAL_BRANCH),update-local-branch)
+	@set -e; \
+	git_version=`echo $(DEB_VERSION) | sed -e 's/^.*git\.*\([0-9t]*\)\.\(.*\)-.*$$/\2/g'`; \
+	cd $(LOCAL_BRANCH)/$(GIT_BRANCH_NAME); \
+	raw=`date --utc --date="$$(git log --pretty=fuller -n1 --date=rfc $$git_version | grep CommitDate: | sed -e 's/CommitDate:[^0-9]*//')" "+%Y-%m-%d %H:%M:%S (GMT)"`; \
+	git log -n1 $$git_version --format="%n%s%n%n  * upstream snapshot $$raw%n    + %H%n";

@@ -6,11 +6,12 @@ XSBC-Original-Maintainer: Dan Fruehauf <malkodan@gmail.com>
 Uploaders: Dan Fruehauf <malkodan@gmail.com>
 Build-Depends:
  debhelper (>= 8),
+ dh-autoreconf,
  dpkg-dev (>= 1.16.1~),
- network-manager-dev (>= 0.9.6),
- libnm-util-dev (>= 0.9.6),
- libnm-glib-dev (>= 0.9.6),
- libnm-glib-vpn-dev (>= 0.9.6),
+ network-manager-dev (>= 0.9.4),
+ libnm-util-dev (>= 0.9.4),
+ libnm-glib-dev (>= 0.9.4),
+ libnm-glib-vpn-dev (>= 0.9.4),
  intltool,
  libdbus-glib-1-dev (>= 0.74),
  libgnome-keyring-dev,
