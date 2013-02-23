@@ -245,26 +245,17 @@ static void
 send_ip4_config (DBusGConnection *connection, GHashTable *config)
 {
 	DBusGProxy *proxy;
-	GError *err = NULL;
 
 	proxy = dbus_g_proxy_new_for_name (connection,
 								NM_DBUS_SERVICE_SSH,
 								NM_VPN_DBUS_PLUGIN_PATH,
 								NM_VPN_DBUS_PLUGIN_INTERFACE);
 
-	// TODO Do I really need a reply here?
-	// Seems to work also without...
-	//dbus_g_proxy_call (proxy, "SetIp4Config", &err,
 	dbus_g_proxy_call_no_reply (proxy, "SetIp4Config",
 				    dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE),
 				    config,
 				    G_TYPE_INVALID,
 				    G_TYPE_INVALID);
-
-	if (err) {
-		g_warning ("Could not send failure information: %s", err->message);
-		g_error_free (err);
-	}
 
 	g_object_unref (proxy);
 }
@@ -409,7 +400,6 @@ send_network_config (NMSshPlugin *plugin)
 		g_message ("Netmask: '%s'", priv->io_data->netmask);
 	}
 
-	// TODO handle errors better
 	/* Retrieve local address */
 	if (priv->io_data->local_addr != NULL)
 	{
@@ -550,16 +540,27 @@ nm_ssh_stdout_cb (GIOChannel *source, GIOCondition condition, gpointer user_data
 	/* Probe for the remote interface number */
 	if (g_str_has_prefix(str, "debug1: Requesting tun unit")) {
 	} else if (g_str_has_prefix(str, "debug1: Requesting tun unit")) {
+		/* This message denotes the tun/tap device opening on the remote host */
 	} else if (g_str_has_prefix (str, "debug1: sys_tun_open:")) {
-		/* Starting timer here for getting local interface up... */
-		nm_ssh_schedule_ifconfig_timer ((NMSshPlugin*)plugin);
+		/* This message denotes the tun/tap device opening on the local host
+		 * Starting timer here for getting local interface up... */
 	} else if (g_str_has_prefix (str, "Tunnel device open failed.")) {
-		/* Opening of tun device failed... :( */
+		/* Opening of local tun device failed... :( */
 		g_warning("Tunnel device open failed.");
 		nm_vpn_plugin_set_state (plugin, NM_VPN_SERVICE_STATE_STOPPED);
-		// TODO use a proper regexp
-		// TODO it comes neither on STDOUT nor STDERR WTF?!
-		// TODO interaction is done after SSH opens a TTY, not good for us...
+	} else if (g_str_has_prefix (str, "debug1: Sending command:")) {
+		/* If we got to sending the command, it means that things are
+		 * established, we should start the timer to get the local
+		 * interface up... */
+		if (NM_VPN_SERVICE_STATE_STOPPED != nm_vpn_plugin_get_state (plugin))
+			nm_ssh_schedule_ifconfig_timer ((NMSshPlugin*)plugin);
+		else if(debug)
+			g_message("Not starting local timer because plugin is in STOPPED state");
+	} else if (g_str_has_prefix (str, "debug1: Remote: Server has rejected tunnel device forwarding")) {
+		/* Opening of local tun device failed... :( */
+		g_warning("Tunnel device open failed on remote server.");
+		g_warning("Make sure you have privileges to open tun/tap devices and that your SSH server is configured with 'PermitTunnel=yes'");
+		nm_vpn_plugin_set_state (plugin, NM_VPN_SERVICE_STATE_STOPPED);
 	} else if (strncmp (str, "The authenticity of host", 24) == 0) {
 		/* User will have to accept this new host with its fingerprint */
 		g_warning("It is not a known host, continue connecting?");
