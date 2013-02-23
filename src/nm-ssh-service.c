@@ -482,7 +482,7 @@ nm_ssh_local_device_up_cb (gpointer data)
 
 	/* format the ifconfig command */
 	ifconfig_cmd = (gpointer) g_strdup_printf (
-		"%s %s%d %s netmask %s pointopoint %s mtu %d",
+		"%s %s%d %s netmask %s pointopoint %s mtu %d up",
 		IFCONFIG,
 		io_data->dev_type,
 		io_data->local_dev_number,
@@ -1016,7 +1016,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 
 	/* Command line to run on remote machine */
 	tmp_arg = (gpointer) g_strdup_printf (
-		"%s %s%d inet %s netmask %s pointopoint %s mtu %d",
+		"%s %s%d inet %s netmask %s pointopoint %s mtu %d up",
 		IFCONFIG,
 		priv->io_data->dev_type,
 		priv->io_data->remote_dev_number,

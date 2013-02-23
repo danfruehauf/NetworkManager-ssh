@@ -607,36 +607,27 @@ export (NMVpnPluginUiInterface *iface,
 
 	/* Serialize everything to a file */
 	fprintf (f, "#!/bin/bash\n");
-
 	fprintf (f, "REMOTE=%s\n", gateway);
-
 	fprintf (f, "REMOTE_USERNAME=%s\n", remote_username);
-
 	fprintf (f, "REMOTE_IP=%s\n", remote_ip);
-
 	fprintf (f, "LOCAL_IP=%s\n", local_ip);
-
 	fprintf (f, "NETMASK=%s\n", netmask);
-
 	fprintf (f, "PORT=%s\n", port);
-
 	fprintf (f, "MTU=%s\n", mtu);
-
 	fprintf (f, "EXTRA_OPTS='%s'\n", extra_opts);
-
 	fprintf (f, "REMOTE_DEV=%s\n", remote_dev);
 
 	/* Assign tun/tap */
 	fprintf (f, "DEV_TYPE=%s\n", device_type);
-	fprintf (f, "TUNNEL_TYPE=%s\n", tunnel_type);
+	fprintf (f, "TUNNEL_TYPE=%s\n\n", tunnel_type);
 
-	// TODO shouldn't be remote_dev!
-	fprintf (f, "LOCAL_DEV=%s\n", remote_dev);
+	/* Add a little of bash script to probe for a free tun/tap device */
+	fprintf (f, "for i in `seq 0 255`; do ! ifconfig $DEV_TYPE$i >& /dev/null && LOCAL_DEV=$i && break; done");
 
 	/* The generic lines that will perform the connection */
 	fprintf (f, "\n");
-	fprintf(f, "ssh -f -v -o Tunnel=$TUNNEL_TYPE -o NumberOfPasswordPrompts=0 $EXTRA_OPTS -w $LOCAL_DEV:$REMOTE_DEV -l $REMOTE_USERNAME -p $PORT $REMOTE \"ifconfig $DEV_TYPE$REMOTE_DEV $REMOTE_IP netmask $NETMASK pointopoint $LOCAL_IP\" && \\\n");
-	fprintf(f, "ifconfig $DEV_TYPE$LOCAL_DEV $LOCAL_IP netmask $NETMASK pointopoint $REMOTE_IP\n");
+	fprintf(f, "ssh -f -v -o Tunnel=$TUNNEL_TYPE -o NumberOfPasswordPrompts=0 $EXTRA_OPTS -w $LOCAL_DEV:$REMOTE_DEV -l $REMOTE_USERNAME -p $PORT $REMOTE \"%s $DEV_TYPE$REMOTE_DEV $REMOTE_IP netmask $NETMASK pointopoint $LOCAL_IP up\" && \\\n", IFCONFIG);
+	fprintf(f, "%s $DEV_TYPE$LOCAL_DEV $LOCAL_IP netmask $NETMASK pointopoint $REMOTE_IP up\n", IFCONFIG);
 
 	success = TRUE;
 
