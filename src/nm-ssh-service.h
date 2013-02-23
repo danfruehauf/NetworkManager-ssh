@@ -47,11 +47,13 @@
 #define	NM_SSH_KEY_REMOTE_DEV "remote-dev"
 #define	NM_SSH_KEY_SSH_AUTH_SOCK "ssh-auth-sock"
 #define	NM_SSH_KEY_TAP_DEV "tap-dev"
+#define	NM_SSH_KEY_REMOTE_USERNAME "remote-username"
 
 #define	NM_SSH_DEFAULT_PORT 22
 #define	NM_SSH_DEFAULT_MTU 1500
 #define	NM_SSH_DEFAULT_REMOTE_DEV 100
 #define	NM_SSH_DEFAULT_EXTRA_OPTS "-o ServerAliveInterval=10 -o TCPKeepAlive=yes"
+#define	NM_SSH_DEFAULT_REMOTE_USERNAME "root"
 
 typedef struct {
 	NMVPNPlugin parent;

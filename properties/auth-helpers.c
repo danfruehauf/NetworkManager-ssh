@@ -46,6 +46,7 @@ static const char *advanced_keys[] = {
 	NM_SSH_KEY_EXTRA_OPTS,
 	NM_SSH_KEY_REMOTE_DEV,
 	NM_SSH_KEY_TAP_DEV,
+	NM_SSH_KEY_REMOTE_USERNAME,
 	NULL
 };
 
@@ -115,6 +116,30 @@ remote_dev_toggled_cb (GtkWidget *check, gpointer user_data)
 	GtkWidget *widget;
 
 	widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_dev_spinbutton"));
+	gtk_widget_set_sensitive (widget, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (check)));
+}
+
+static void
+remote_username_toggled_cb (GtkWidget *check, gpointer user_data)
+{
+	GtkBuilder *builder = (GtkBuilder *) user_data;
+	GtkWidget *widget;
+
+	/* Add a warning if not using root */
+	if (gtk_toggle_button_get_active  (GTK_TOGGLE_BUTTON (check) )) {
+		GtkWidget *dialog;
+		dialog = gtk_message_dialog_new(
+			GTK_WINDOW (gtk_builder_get_object (builder, "ssh-advanced-dialog")),
+			GTK_DIALOG_MODAL,
+			GTK_MESSAGE_WARNING,
+			GTK_BUTTONS_OK,
+			_("You have chosen not to use 'root' as the remote username.\n\nPlease make sure the user you specify is allowed to open tun/tap devices on the remote host."));
+		gtk_window_set_title(GTK_WINDOW(dialog), "Warning");
+		gtk_dialog_run(GTK_DIALOG(dialog));
+		gtk_widget_destroy(dialog);
+	}
+
+	widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_username_entry"));
 	gtk_widget_set_sensitive (widget, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (check)));
 }
 
@@ -248,6 +273,25 @@ advanced_dialog_new (GHashTable *hash)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), TRUE);
 	}
 
+	widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_username_checkbutton"));
+	g_assert (widget);
+	g_signal_connect (G_OBJECT (widget), "toggled", G_CALLBACK (remote_username_toggled_cb), builder);
+
+	value = g_hash_table_lookup (hash, NM_SSH_KEY_REMOTE_USERNAME);
+	if (value && strlen (value)) {
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), TRUE);
+
+		widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_username_entry"));
+		gtk_entry_set_text (GTK_ENTRY (widget), value);
+		gtk_widget_set_sensitive (widget, TRUE);
+	} else {
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), FALSE);
+
+		widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_username_entry"));
+		gtk_entry_set_text (GTK_ENTRY (widget), NM_SSH_DEFAULT_REMOTE_USERNAME);
+		gtk_widget_set_sensitive (widget, FALSE);
+	}
+
 out:
 	g_free (ui_file);
 	return dialog;
@@ -308,6 +352,15 @@ advanced_dialog_new_hash_from_dialog (GtkWidget *dialog, GError **error)
 	widget = GTK_WIDGET (gtk_builder_get_object (builder, "tap_checkbutton"));
 	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
 		g_hash_table_insert (hash, g_strdup (NM_SSH_KEY_TAP_DEV), g_strdup ("yes"));
+
+	widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_username_checkbutton"));
+	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget))) {
+		const gchar *remote_username;
+
+		widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_username_entry"));
+		remote_username = gtk_entry_get_text (GTK_ENTRY (widget));
+		g_hash_table_insert (hash, g_strdup (NM_SSH_KEY_REMOTE_USERNAME), g_strdup(remote_username));
+	}
 
 	return hash;
 }

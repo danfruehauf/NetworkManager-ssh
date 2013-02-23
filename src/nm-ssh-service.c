@@ -116,6 +116,7 @@ static ValidProperty valid_properties[] = {
 	{ NM_SSH_KEY_EXTRA_OPTS,           G_TYPE_STRING, 0, 0, FALSE },
 	{ NM_SSH_KEY_REMOTE_DEV,           G_TYPE_INT, 0, 255, FALSE },
 	{ NM_SSH_KEY_TAP_DEV,              G_TYPE_BOOLEAN, 0, 0, FALSE },
+	{ NM_SSH_KEY_REMOTE_USERNAME,      G_TYPE_STRING, 0, 0, FALSE },
 	{ NULL,                            G_TYPE_NONE, FALSE }
 };
 
@@ -805,9 +806,6 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	args = g_ptr_array_new ();
 	add_ssh_arg (args, ssh_binary);
 
-	/* We can use only root on remote machine... */
-	priv->io_data->username = g_strdup("root");
-
 	/* Get a local tun/tap */
 	priv->io_data->local_dev_number = nm_ssh_get_free_device();
 	if (priv->io_data->local_dev_number == -1)
@@ -822,9 +820,6 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 
 	/* No password prompts, only key authentication supported... */
 	add_ssh_arg (args, "-o"); add_ssh_arg (args, "NumberOfPasswordPrompts=0");
-
-	/* only root is supported... */
-	add_ssh_arg (args, "-l"); add_ssh_arg (args, priv->io_data->username);
 
 	/* Set SSH_AUTH_SOCK from ssh-agent
 	 * Passes as a secret key from the user's context
@@ -1007,6 +1002,15 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	add_ssh_arg (args, "-w"); add_ssh_arg (args, tmp_arg);
 	g_free(tmp_arg);
 
+	/* Remote username, should usually be root */
+	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_REMOTE_USERNAME);
+	if (tmp && strlen (tmp)) {
+		priv->io_data->username = g_strdup(tmp);
+	} else {
+		/* Add default username - root */
+		priv->io_data->username = g_strdup(NM_SSH_DEFAULT_REMOTE_USERNAME);
+	}
+	add_ssh_arg (args, "-l"); add_ssh_arg (args, priv->io_data->username);
 
 	/* connect to remote */
 	add_ssh_arg (args, priv->io_data->remote_gw);

@@ -515,6 +515,7 @@ export (NMVpnPluginUiInterface *iface,
 	const char *extra_opts = NULL;
 	const char *remote_dev = NULL;
 	const char *mtu = NULL;
+	const char *remote_username = NULL;
 	char *device_type = NULL;
 	char *tunnel_type = NULL;
 	gboolean success = FALSE;
@@ -587,6 +588,12 @@ export (NMVpnPluginUiInterface *iface,
 	else
 		remote_dev = g_strdup_printf("%d", NM_SSH_DEFAULT_REMOTE_DEV);
 
+	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_REMOTE_USERNAME);
+	if (value && strlen (value))
+		remote_username = value;
+	else
+		remote_username = g_strdup(NM_SSH_DEFAULT_REMOTE_USERNAME);
+
 	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_TAP_DEV);
 	if (value && !strcmp (value, "yes")) {
 		device_type = g_strdup("tap");
@@ -602,6 +609,8 @@ export (NMVpnPluginUiInterface *iface,
 	fprintf (f, "#!/bin/bash\n");
 
 	fprintf (f, "REMOTE=%s\n", gateway);
+
+	fprintf (f, "REMOTE_USERNAME=%s\n", remote_username);
 
 	fprintf (f, "REMOTE_IP=%s\n", remote_ip);
 
@@ -626,7 +635,7 @@ export (NMVpnPluginUiInterface *iface,
 
 	/* The generic lines that will perform the connection */
 	fprintf (f, "\n");
-	fprintf(f, "ssh -f -v -o Tunnel=$TUNNEL_TYPE -o NumberOfPasswordPrompts=0 $EXTRA_OPTS -w $LOCAL_DEV:$REMOTE_DEV -l root -p $PORT $REMOTE \"ifconfig $DEV_TYPE$REMOTE_DEV $REMOTE_IP netmask $NETMASK pointopoint $LOCAL_IP\" && \\\n");
+	fprintf(f, "ssh -f -v -o Tunnel=$TUNNEL_TYPE -o NumberOfPasswordPrompts=0 $EXTRA_OPTS -w $LOCAL_DEV:$REMOTE_DEV -l $REMOTE_USERNAME -p $PORT $REMOTE \"ifconfig $DEV_TYPE$REMOTE_DEV $REMOTE_IP netmask $NETMASK pointopoint $LOCAL_IP\" && \\\n");
 	fprintf(f, "ifconfig $DEV_TYPE$LOCAL_DEV $LOCAL_IP netmask $NETMASK pointopoint $REMOTE_IP\n");
 
 	success = TRUE;
