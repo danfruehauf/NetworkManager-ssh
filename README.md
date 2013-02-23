@@ -22,6 +22,10 @@ In order to open a tunnel OpenSSH VPN, all that you have to do is run:
 	# This is the WAN IP/hostname of the remote machine
 	REMOTE=EDIT_ME
 
+	# Remote username will usually be root, or any other privileged user
+	# who can open tun/tap devices on the remote host
+	REMOTE_USERNAME=root
+
 	# Remote IP in the tunnel
 	REMOTE_IP=192.168.0.1
 
@@ -40,25 +44,26 @@ In order to open a tunnel OpenSSH VPN, all that you have to do is run:
 	# Extra SSH options, these would give us some nice keep alive
 	EXTRA_OPTS='-o ServerAliveInterval=10 -o TCPKeepAlive=yes'
 
-	# Remote tunnel device (tun100)
-	REMOTE_TUN=100
+	# Remote tunnel device (tun100/tap100)
+	REMOTE_DEV=100
+	DEV_TYPE=tun
+	# TUNNEL_TYPE is 'point-to-point' for tun and 'ethernet' for tap
+	TUNNEL_TYPE=point-to-point
 
-	# Local tunnel device (tun100)
-	LOCAL_TUN=100
+	# Local tunnel is calculated depending on what devices are free
+	# The following loop iterates from 0 to 255 and finds a free
+	# tun/tap device
+	for i in `seq 0 255`; do ! ifconfig $DEV_TYPE$i >& /dev/null && LOCAL_DEV=$i && break; done
 
-	ssh -f -v -o NumberOfPasswordPrompts=0 $EXTRA_OPTS \
-		-w $LOCAL_TUN:$REMOTE_TUN \
-		-l root -p $PORT $REMOTE \
-		"ifconfig tun$REMOTE_TUN $REMOTE_IP netmask $NETMASK pointopoint $LOCAL_IP" && \
-	ifconfig tun$LOCAL_TUN $LOCAL_IP netmask $NETMASK pointopoint $REMOTE_IP
+	ssh -f -v -o Tunnel=$TUNNEL_TYPE -o NumberOfPasswordPrompts=0 $EXTRA_OPTS \
+		-w $LOCAL_DEV:$REMOTE_DEV \
+		-l $REMOTE_USERNAME -p $PORT $REMOTE \
+		"/sbin/ifconfig $DEV_TYPE$REMOTE_DEV $REMOTE_IP netmask $NETMASK pointopoint $LOCAL_IP up" && \
+	/sbin/ifconfig $DEV_TYPE$LOCAL_DEV $LOCAL_IP netmask $NETMASK pointopoint $REMOTE_IP up
 
-That's actually an export file of a working SSH VPN configuration I have from NetworkManager.
+That's actually an edited export file of a working SSH VPN configuration I have from NetworkManager.
 
 This will create a tunnel of 192.168.0.1<->192.168.0.2 on tun100 on both machines. If forwarding is enabled on that SSH server, you'll get pass-through internet easy.
-
-On the server, you'll need to enable in <i>/etc/ssh/sshd_config</i>:
-
-	PermitTunnel=yes
 
 ## Compiling
 ### Fedora/CentOS
@@ -84,14 +89,40 @@ Make sure your target host is known in <i>/root/.ssh/known_hosts</i>
 
 If all went right, you should have a new VPN of type <i>SSH</i> when creating a new VPN.
 
+## Server side configuration
+Even though this is a bit off-topic, I've decided to cover it anyway.
+
+On the server, you'll need to enable in <i>/etc/ssh/sshd_config</i>:
+
+	PermitTunnel=yes
+
+In terms of firewall configuration, I recommend looking at the "standard" way of editing firewall rules on your distribution.
+These however, should work on most GNU/Linux distributions.
+
+Tun devices:
+
+	-I FORWARD -i tun+ -j ACCEPT
+	-I FORWARD -o tun+ -j ACCEPT
+	-I INPUT -i tun+ -j ACCEPT
+	-I POSTROUTING -i tun+ -o EXTERNAL_INTERFACE -j MASQUERADE
+
+Tap devices:
+
+	-I FORWARD -i tap+ -j ACCEPT
+	-I FORWARD -o tap+ -j ACCEPT
+	-I INPUT -i tap+ -j ACCEPT
+	-I POSTROUTING -i tap+ -o EXTERNAL_INTERFACE -j MASQUERADE
+
+Please use these firewall rules as a reference only.
+
 ## Limitations
 
 ### Authentication Types
-Right now only ssh-agent authentication is supported, so you need to:
+Right now only <i>ssh-agent</i> authentication is supported, so you need to:
 
-You will need ssh-agent running before you start NetworkManager-ssh.
+You will need <i>ssh-agent</i> running before you start NetworkManager-ssh.
 
-How do you know if you have ssh-agent running? Simply run:
+How do you know if you have <i>ssh-agent</i> running? Simply run:
 
 	$ env | grep SSH
 	SSH_AGENT_PID=16152
@@ -100,12 +131,17 @@ How do you know if you have ssh-agent running? Simply run:
 
 You should see something similar to that.
 
-NetworkManager-ssh probes for ssh-agent that is attached to your session and authenticates with it.
+NetworkManager-ssh probes for the <i>ssh-agent</i> that is attached to your session and authenticates with its socket.
 
 ### Known Hosts
-If the destination host is not in your <i>known_hosts</i> file, things will also not work, unless you add in the extra options box:
+If the destination host is not in your <i>known_hosts</i> file, things will not work, unless you add in the extra options box:
 
 	-o StrictHostKeyChecking=no
+
+### People I'd like to thank
+
+ * Thomas Young - First user!
+ * Whoopie - For nice debian support and testing
 
 ## Screenshots
 
