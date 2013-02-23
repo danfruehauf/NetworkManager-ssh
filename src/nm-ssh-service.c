@@ -576,12 +576,10 @@ nm_ssh_stdout_cb (GIOChannel *source, GIOCondition condition, gpointer user_data
 }
 
 static gint
-nm_ssh_get_free_device (void)
+nm_ssh_get_free_device (const char *device_type)
 {
 	gint device;
 	char *system_cmd;
-	// TODO PASS DEVICE TYPE
-	const char *device_type = "tun";
 
 	for (device = 0; device <= 255; device++)
 	{
@@ -807,15 +805,6 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	args = g_ptr_array_new ();
 	add_ssh_arg (args, ssh_binary);
 
-	/* Get a local tun/tap */
-	priv->io_data->local_dev_number = nm_ssh_get_free_device();
-	if (priv->io_data->local_dev_number == -1)
-	{
-		g_warning("Could not assign a free tun/tap device.");
-		nm_vpn_plugin_set_state ((NMVPNPlugin*)plugin, NM_VPN_SERVICE_STATE_STOPPED);
-		return FALSE;
-	}
-
 	/* Set verbose mode, we'll parse the arguments */
 	add_ssh_arg (args, "-v");
 
@@ -876,6 +865,15 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		add_ssh_arg (args, "Tunnel=point-to-point");
 		g_strlcpy ((gchar *) &priv->io_data->dev_type, "tun", 4);
 		//priv->io_data->dev_type = strdup ("tun");
+	}
+
+	/* Get a local tun/tap */
+	priv->io_data->local_dev_number = nm_ssh_get_free_device(priv->io_data->dev_type);
+	if (priv->io_data->local_dev_number == -1)
+	{
+		g_warning("Could not assign a free tun/tap device.");
+		nm_vpn_plugin_set_state ((NMVPNPlugin*)plugin, NM_VPN_SERVICE_STATE_STOPPED);
+		return FALSE;
 	}
 
 	/* Remote */
