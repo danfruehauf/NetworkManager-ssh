@@ -44,7 +44,8 @@ static const char *advanced_keys[] = {
 	NM_SSH_KEY_PORT,
 	NM_SSH_KEY_TUNNEL_MTU,
 	NM_SSH_KEY_EXTRA_OPTS,
-	NM_SSH_KEY_REMOTE_TUN,
+	NM_SSH_KEY_REMOTE_DEV,
+	NM_SSH_KEY_TAP_DEV,
 	NULL
 };
 
@@ -108,12 +109,12 @@ extra_opts_toggled_cb (GtkWidget *check, gpointer user_data)
 }
 
 static void
-remote_tun_toggled_cb (GtkWidget *check, gpointer user_data)
+remote_dev_toggled_cb (GtkWidget *check, gpointer user_data)
 {
 	GtkBuilder *builder = (GtkBuilder *) user_data;
 	GtkWidget *widget;
 
-	widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_tun_spinbutton"));
+	widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_dev_spinbutton"));
 	gtk_widget_set_sensitive (widget, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (check)));
 }
 
@@ -218,27 +219,33 @@ advanced_dialog_new (GHashTable *hash)
 		gtk_widget_set_sensitive (widget, FALSE);
 	}
 
-	widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_tun_checkbutton"));
+	widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_dev_checkbutton"));
 	g_assert (widget);
-	g_signal_connect (G_OBJECT (widget), "toggled", G_CALLBACK (remote_tun_toggled_cb), builder);
+	g_signal_connect (G_OBJECT (widget), "toggled", G_CALLBACK (remote_dev_toggled_cb), builder);
 
-	value = g_hash_table_lookup (hash, NM_SSH_KEY_REMOTE_TUN);
+	value = g_hash_table_lookup (hash, NM_SSH_KEY_REMOTE_DEV);
 	if (value && strlen (value)) {
 		errno = 0;
 		tmp = strtol (value, NULL, 10);
 		if (errno == 0 && tmp > 0 && tmp < 256) {
 			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), TRUE);
 
-			widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_tun_spinbutton"));
+			widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_dev_spinbutton"));
 			gtk_spin_button_set_value (GTK_SPIN_BUTTON (widget), (gdouble) tmp);
 		}
 		gtk_widget_set_sensitive (widget, TRUE);
 	} else {
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), FALSE);
 
-		widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_tun_spinbutton"));
-		gtk_spin_button_set_value (GTK_SPIN_BUTTON (widget), (gdouble) NM_SSH_DEFAULT_REMOTE_TUN);
+		widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_dev_spinbutton"));
+		gtk_spin_button_set_value (GTK_SPIN_BUTTON (widget), (gdouble) NM_SSH_DEFAULT_REMOTE_DEV);
 		gtk_widget_set_sensitive (widget, FALSE);
+	}
+
+	value = g_hash_table_lookup (hash, NM_SSH_KEY_TAP_DEV);
+	if (value && !strcmp (value, "yes")) {
+		widget = GTK_WIDGET (gtk_builder_get_object (builder, "tap_checkbutton"));
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), TRUE);
 	}
 
 out:
@@ -289,14 +296,18 @@ advanced_dialog_new_hash_from_dialog (GtkWidget *dialog, GError **error)
 		g_hash_table_insert (hash, g_strdup (NM_SSH_KEY_EXTRA_OPTS), g_strdup(extra_options));
 	}
 
-	widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_tun_checkbutton"));
+	widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_dev_checkbutton"));
 	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget))) {
-		int remote_tun;
+		int remote_dev;
 
-		widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_tun_spinbutton"));
-		remote_tun = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (widget));
-		g_hash_table_insert (hash, g_strdup (NM_SSH_KEY_REMOTE_TUN), g_strdup_printf ("%d", remote_tun));
+		widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_dev_spinbutton"));
+		remote_dev = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (widget));
+		g_hash_table_insert (hash, g_strdup (NM_SSH_KEY_REMOTE_DEV), g_strdup_printf ("%d", remote_dev));
 	}
+
+	widget = GTK_WIDGET (gtk_builder_get_object (builder, "tap_checkbutton"));
+	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
+		g_hash_table_insert (hash, g_strdup (NM_SSH_KEY_TAP_DEV), g_strdup ("yes"));
 
 	return hash;
 }

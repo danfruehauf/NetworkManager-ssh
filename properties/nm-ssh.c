@@ -513,7 +513,7 @@ export (NMVpnPluginUiInterface *iface,
 	const char *remote_ip = NULL;
 	const char *netmask = NULL;
 	const char *extra_opts = NULL;
-	const char *remote_tun = NULL;
+	const char *remote_dev = NULL;
 	const char *mtu = NULL;
 	gboolean success = FALSE;
 
@@ -579,11 +579,11 @@ export (NMVpnPluginUiInterface *iface,
 	else
 		extra_opts = g_strdup(NM_SSH_DEFAULT_EXTRA_OPTS);
 
-	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_REMOTE_TUN);
+	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_REMOTE_DEV);
 	if (value && strlen (value))
-		remote_tun = value;
+		remote_dev = value;
 	else
-		remote_tun = g_strdup_printf("%d", NM_SSH_DEFAULT_REMOTE_TUN);
+		remote_dev = g_strdup_printf("%d", NM_SSH_DEFAULT_REMOTE_DEV);
 	/* Advanced values end */
 
 	/* Serialize everything to a file */
@@ -603,15 +603,19 @@ export (NMVpnPluginUiInterface *iface,
 
 	fprintf (f, "EXTRA_OPTS='%s'\n", extra_opts);
 
-	fprintf (f, "REMOTE_TUN=%s\n", remote_tun);
+	fprintf (f, "REMOTE_DEV=%s\n", remote_dev);
 
-	// TODO shouldn't be remote_tun!
-	fprintf (f, "LOCAL_TUN=%s\n", remote_tun);
+	// TODO assign dev/tap
+	fprintf (f, "DEV_TYPE=%s\n", "tun");
+	// TODO add '-o Tunnel='
+
+	// TODO shouldn't be remote_dev!
+	fprintf (f, "LOCAL_DEV=%s\n", remote_dev);
 
 	/* The generic lines that will perform the connection */
 	fprintf (f, "\n");
-	fprintf(f, "ssh -f -v -o NumberOfPasswordPrompts=0 $EXTRA_OPTS -w $LOCAL_TUN:$REMOTE_TUN -l root -p $PORT $REMOTE \"ifconfig tun$REMOTE_TUN $REMOTE_IP netmask $NETMASK pointopoint $LOCAL_IP\" && \\\n");
-	fprintf(f, "ifconfig tun$LOCAL_TUN $LOCAL_IP netmask $NETMASK pointopoint $REMOTE_IP\n");
+	fprintf(f, "ssh -f -v -o Tunnel=$DEV_TYPE -o NumberOfPasswordPrompts=0 $EXTRA_OPTS -w $LOCAL_DEV:$REMOTE_DEV -l root -p $PORT $REMOTE \"ifconfig $DEV_TYPE$REMOTE_DEV $REMOTE_IP netmask $NETMASK pointopoint $LOCAL_IP\" && \\\n");
+	fprintf(f, "ifconfig $DEV_TYPE$LOCAL_TUN $LOCAL_IP netmask $NETMASK pointopoint $REMOTE_IP\n");
 
 	success = TRUE;
 

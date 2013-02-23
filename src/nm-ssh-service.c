@@ -82,9 +82,11 @@ typedef struct {
 	guint socket_channel_stdout_eventid;
 	guint socket_channel_stderr_eventid;
 
-	/* hold local and remote tun numbers */
-	gint remote_tun_number;
-	gint local_tun_number;
+	/* hold local and remote tun/tap numbers
+	 * dev_type can be only "tap" or "tun" */
+	gchar dev_type[4];
+	gint remote_dev_number;
+	gint local_dev_number;
 	guint mtu;
 } NMSshPluginIOData;
 
@@ -112,7 +114,8 @@ static ValidProperty valid_properties[] = {
 	{ NM_SSH_KEY_PORT,                 G_TYPE_INT, 1, 65535, FALSE },
 	{ NM_SSH_KEY_TUNNEL_MTU,           G_TYPE_INT, 1, 9000, FALSE },
 	{ NM_SSH_KEY_EXTRA_OPTS,           G_TYPE_STRING, 0, 0, FALSE },
-	{ NM_SSH_KEY_REMOTE_TUN,           G_TYPE_INT, 0, 255, FALSE },
+	{ NM_SSH_KEY_REMOTE_DEV,           G_TYPE_INT, 0, 255, FALSE },
+	{ NM_SSH_KEY_TAP_DEV,              G_TYPE_BOOLEAN, 0, 0, FALSE },
 	{ NULL,                            G_TYPE_NONE, FALSE }
 };
 
@@ -385,7 +388,7 @@ send_network_config (NMSshPlugin *plugin)
 	GHashTable      *config;
 	GValue          *val;
 	GError          *err = NULL;
-	char            *tun_device;
+	char            *device;
 	char            *resolved_hostname;
 
 	connection = dbus_g_bus_get (DBUS_BUS_SYSTEM, &err);
@@ -398,7 +401,7 @@ send_network_config (NMSshPlugin *plugin)
 	config = g_hash_table_new (g_str_hash, g_str_equal);
 
 	if (debug) {
-		g_message ("Local TUN device: 'tun%d'", priv->io_data->local_tun_number);
+		g_message ("Local device: '%s%d'", priv->io_data->dev_type, priv->io_data->local_dev_number);
 		g_message ("Remote gateway: '%s'", priv->io_data->remote_gw);
 		g_message ("Remote IP: '%s'", priv->io_data->remote_addr);
 		g_message ("Local IP: '%s'", priv->io_data->local_addr);
@@ -447,18 +450,18 @@ send_network_config (NMSshPlugin *plugin)
 		g_warning ("remote_gw unset.");
 	}
 
-	/* Retrieve tun interface */
-	if (priv->io_data->local_tun_number != -1)
+	/* Retrieve tun/tap interface */
+	if (priv->io_data->local_dev_number != -1)
 	{
-		tun_device =
-			(gpointer) g_strdup_printf ("tun%d", priv->io_data->local_tun_number);
-		val = str_to_gvalue (tun_device, FALSE);
-		g_free(tun_device);
+		device =
+			(gpointer) g_strdup_printf ("%s%d", priv->io_data->dev_type, priv->io_data->local_dev_number);
+		val = str_to_gvalue (device, FALSE);
+		g_free(device);
 		g_hash_table_insert (config, NM_VPN_PLUGIN_IP4_CONFIG_TUNDEV, val);
 	}
 	else
 	{
-		g_warning ("local_tun_interface unset.");
+		g_warning ("local_dev_number unset.");
 	}
 
 	/* Netmask */
@@ -477,7 +480,7 @@ send_network_config (NMSshPlugin *plugin)
 }
 
 static gboolean
-nm_ssh_local_tun_up_cb (gpointer data)
+nm_ssh_local_device_up_cb (gpointer data)
 {
 	NMSshPlugin *plugin = NM_SSH_PLUGIN (data);
 	NMSshPluginPrivate *priv = NM_SSH_PLUGIN_GET_PRIVATE (plugin);
@@ -488,9 +491,10 @@ nm_ssh_local_tun_up_cb (gpointer data)
 
 	/* format the ifconfig command */
 	ifconfig_cmd = (gpointer) g_strdup_printf (
-		"%s tun%d %s netmask %s pointopoint %s mtu %d",
+		"%s %s%d %s netmask %s pointopoint %s mtu %d",
 		IFCONFIG,
-		io_data->local_tun_number,
+		io_data->dev_type,
+		io_data->local_dev_number,
 		io_data->local_addr,
 		io_data->netmask,
 		io_data->remote_addr,
@@ -507,7 +511,7 @@ nm_ssh_local_tun_up_cb (gpointer data)
 	}
 	g_free(ifconfig_cmd);
 
-	g_message ("Interface tun%d configured.", io_data->local_tun_number);
+	g_message ("Interface %s%d configured.", io_data->dev_type, io_data->local_dev_number);
 
 	priv->connect_timer = 0;
 	send_network_config(plugin);
@@ -522,14 +526,13 @@ nm_ssh_schedule_ifconfig_timer (NMSshPlugin *plugin)
 	NMSshPluginPrivate *priv = NM_SSH_PLUGIN_GET_PRIVATE (plugin);
 
 	if (priv->connect_timer == 0)
-		priv->connect_timer = g_timeout_add (1000, nm_ssh_local_tun_up_cb, plugin);
+		priv->connect_timer = g_timeout_add (1000, nm_ssh_local_device_up_cb, plugin);
 }
 
 static gboolean
 nm_ssh_stdout_cb (GIOChannel *source, GIOCondition condition, gpointer user_data)
 {
 	NMVPNPlugin *plugin = NM_VPN_PLUGIN (user_data);
-	NMSshPluginIOData *io_data = NM_SSH_PLUGIN_GET_PRIVATE (plugin)->io_data;
 	char *str = NULL;
 
 	if (!(condition & G_IO_IN))
@@ -543,16 +546,10 @@ nm_ssh_stdout_cb (GIOChannel *source, GIOCondition condition, gpointer user_data
 		return TRUE;
 	}
 
-	/* Probe for remote tun number */
-	// TODO rather ugly and hardcoded
+	/* Probe for the remote interface number */
 	if (g_str_has_prefix(str, "debug1: Requesting tun unit")) {
-		sscanf(str, "debug1: Requesting tun unit %d", &io_data->remote_tun_number);
-		g_message("Remote tun: %d", io_data->remote_tun_number);
-		g_message("%s", str);
+	} else if (g_str_has_prefix(str, "debug1: Requesting tun unit")) {
 	} else if (g_str_has_prefix (str, "debug1: sys_tun_open:")) {
-		sscanf(str, "debug1: sys_tun_open: tun%d", &io_data->local_tun_number);
-		g_message("Local tun: %d", io_data->local_tun_number);
-		g_message("%s", str);
 		/* Starting timer here for getting local interface up... */
 		nm_ssh_schedule_ifconfig_timer ((NMSshPlugin*)plugin);
 	} else if (g_str_has_prefix (str, "Tunnel device open failed.")) {
@@ -577,18 +574,20 @@ nm_ssh_stdout_cb (GIOChannel *source, GIOCondition condition, gpointer user_data
 }
 
 static gint
-nm_ssh_get_free_tun_device (void)
+nm_ssh_get_free_device (void)
 {
-	gint tun_device;
+	gint device;
 	char *system_cmd;
+	// TODO PASS DEVICE TYPE
+	const char *device_type = "tun";
 
-	for (tun_device = 0; tun_device <= 255; tun_device++)
+	for (device = 0; device <= 255; device++)
 	{
-		system_cmd = (gpointer) g_strdup_printf ("%s tun%d >& /dev/null", IFCONFIG, tun_device);
+		system_cmd = (gpointer) g_strdup_printf ("%s %s%d >& /dev/null", IFCONFIG, device_type, device);
 		if (system(system_cmd) != 0)
 		{
 			g_free(system_cmd);
-			return tun_device;
+			return device;
 		}
 		g_free(system_cmd);
 	}
@@ -809,11 +808,11 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	/* We can use only root on remote machine... */
 	priv->io_data->username = g_strdup("root");
 
-	/* Get a local tun */
-	priv->io_data->local_tun_number = nm_ssh_get_free_tun_device();
-	if (priv->io_data->local_tun_number == -1)
+	/* Get a local tun/tap */
+	priv->io_data->local_dev_number = nm_ssh_get_free_device();
+	if (priv->io_data->local_dev_number == -1)
 	{
-		g_warning("Could not assign a free tun device.");
+		g_warning("Could not assign a free tun/tap device.");
 		nm_vpn_plugin_set_state ((NMVPNPlugin*)plugin, NM_VPN_SERVICE_STATE_STOPPED);
 		return FALSE;
 	}
@@ -870,6 +869,19 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		add_ssh_extra_opts (args, NM_SSH_DEFAULT_EXTRA_OPTS);
 	}
 
+    /* Device, either tun or tap */
+	add_ssh_arg (args, "-o");
+	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_TAP_DEV);
+	if (tmp && !strcmp (tmp, "yes")) {
+		add_ssh_arg (args, "Tunnel=ethernet");
+		g_strlcpy ((gchar *) &priv->io_data->dev_type, "tap", 4);
+		//priv->io_data->dev_type = strdup ("tap");
+	} else {
+		add_ssh_arg (args, "Tunnel=point-to-point");
+		g_strlcpy ((gchar *) &priv->io_data->dev_type, "tun", 4);
+		//priv->io_data->dev_type = strdup ("tun");
+	}
+
 	/* Remote */
 	remote = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_REMOTE);
 	if (!(remote && strlen (remote))) {
@@ -924,24 +936,24 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		priv->io_data->mtu = NM_SSH_DEFAULT_MTU;
 	}
 
-	/* Remote tun device */
-	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_REMOTE_TUN);
+	/* Remote device */
+	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_REMOTE_DEV);
 	if (tmp && strlen (tmp)) {
 		/* Range validation is done in dialog... */
 		if (!get_ssh_arg_int (tmp, &tmp_int)) {
 			g_set_error (error,
 			             NM_VPN_PLUGIN_ERROR,
 			             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
-			             _("Invalid TUN device number '%s'."),
+			             _("Invalid TUN/TAP device number '%s'."),
 			             tmp);
 						// TODO translation
 			free_ssh_args (args);
 			return FALSE;
 		}
-		priv->io_data->remote_tun_number = tmp_int;
+		priv->io_data->remote_dev_number = tmp_int;
 	} else {
-		/* Use tun100 by default*/
-		priv->io_data->remote_tun_number = NM_SSH_DEFAULT_REMOTE_TUN;
+		/* Use tun100/tap100 by default */
+		priv->io_data->remote_dev_number = NM_SSH_DEFAULT_REMOTE_DEV;
 	}
 
 	/* Remote IP */
@@ -989,9 +1001,9 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	}
 	priv->io_data->netmask = g_strdup(tmp);
 
-	/* The -w option, provide a remote and local tun device */
+	/* The -w option, provide a remote and local tun/tap device */
 	tmp_arg = (gpointer) g_strdup_printf (
-			"%d:%d", priv->io_data->local_tun_number, priv->io_data->remote_tun_number);
+			"%d:%d", priv->io_data->local_dev_number, priv->io_data->remote_dev_number);
 	add_ssh_arg (args, "-w"); add_ssh_arg (args, tmp_arg);
 	g_free(tmp_arg);
 
@@ -1001,9 +1013,10 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 
 	/* Command line to run on remote machine */
 	tmp_arg = (gpointer) g_strdup_printf (
-		"%s tun%d inet %s netmask %s pointopoint %s mtu %d",
+		"%s %s%d inet %s netmask %s pointopoint %s mtu %d",
 		IFCONFIG,
-		priv->io_data->remote_tun_number,
+		priv->io_data->dev_type,
+		priv->io_data->remote_dev_number,
 		priv->io_data->remote_addr,
 		priv->io_data->netmask,
 		priv->io_data->local_addr,
