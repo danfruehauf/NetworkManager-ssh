@@ -85,9 +85,8 @@ fi
 %dir %{_datadir}/gnome-vpn-properties/ssh
 
 %changelog
-* Fri Feb 08 2013 Dan Fruehauf - 1:0.0.1.0-1
-- Initial version taken from nm-ssh by Dan Williams
-
 * Mon Feb 25 2013 Dan Fruehauf - 1:0.0.3.0-1
 - ipv6 support
 
+* Fri Feb 08 2013 Dan Fruehauf - 1:0.0.1.0-1
+- Initial version taken from nm-ssh by Dan Williams
