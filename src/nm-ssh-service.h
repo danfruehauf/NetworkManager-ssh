@@ -48,6 +48,10 @@
 #define	NM_SSH_KEY_SSH_AUTH_SOCK "ssh-auth-sock"
 #define	NM_SSH_KEY_TAP_DEV "tap-dev"
 #define	NM_SSH_KEY_REMOTE_USERNAME "remote-username"
+#define	NM_SSH_KEY_IP_6 "ip-6"
+#define	NM_SSH_KEY_REMOTE_IP_6 "remote-ip-6"
+#define	NM_SSH_KEY_LOCAL_IP_6 "local-ip-6"
+#define	NM_SSH_KEY_NETMASK_6 "netmask-6"
 
 #define	NM_SSH_DEFAULT_PORT 22
 #define	NM_SSH_DEFAULT_MTU 1500

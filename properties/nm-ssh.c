@@ -241,6 +241,22 @@ advanced_button_clicked_cb (GtkWidget *button, gpointer user_data)
 	gtk_widget_show_all (dialog);
 }
 
+static void
+ipv6_toggled_cb (GtkWidget *check, gpointer user_data)
+{
+	GtkBuilder *builder = (GtkBuilder *) user_data;
+	GtkWidget *widget;
+
+	widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_ip_6_entry"));
+	gtk_widget_set_sensitive (widget, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (check)));
+
+	widget = GTK_WIDGET (gtk_builder_get_object (builder, "local_ip_6_entry"));
+	gtk_widget_set_sensitive (widget, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (check)));
+
+	widget = GTK_WIDGET (gtk_builder_get_object (builder, "netmask_6_entry"));
+	gtk_widget_set_sensitive (widget, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (check)));
+}
+
 static gboolean
 init_plugin_ui (SshPluginUiWidget *self, NMConnection *connection, GError **error)
 {
@@ -297,6 +313,54 @@ init_plugin_ui (SshPluginUiWidget *self, NMConnection *connection, GError **erro
 	}
 	g_signal_connect (G_OBJECT (widget), "changed", G_CALLBACK (stuff_changed_cb), self);
 
+	/* Remote IP IPv6 */
+	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "remote_ip_6_entry"));
+	g_return_val_if_fail (widget != NULL, FALSE);
+	gtk_size_group_add_widget (priv->group, widget);
+	if (s_vpn) {
+		value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_REMOTE_IP_6);
+		if (value)
+			gtk_entry_set_text (GTK_ENTRY (widget), value);
+	}
+	g_signal_connect (G_OBJECT (widget), "changed", G_CALLBACK (stuff_changed_cb), self);
+
+	/* Local IP IPv6 */
+	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "local_ip_6_entry"));
+	g_return_val_if_fail (widget != NULL, FALSE);
+	gtk_size_group_add_widget (priv->group, widget);
+	if (s_vpn) {
+		value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_LOCAL_IP_6);
+		if (value)
+			gtk_entry_set_text (GTK_ENTRY (widget), value);
+	}
+	g_signal_connect (G_OBJECT (widget), "changed", G_CALLBACK (stuff_changed_cb), self);
+
+	/* Prefix IPv6 */
+	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "netmask_6_entry"));
+	g_return_val_if_fail (widget != NULL, FALSE);
+	gtk_size_group_add_widget (priv->group, widget);
+	if (s_vpn) {
+		value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_NETMASK_6);
+		if (value)
+			gtk_entry_set_text (GTK_ENTRY (widget), value);
+	}
+	g_signal_connect (G_OBJECT (widget), "changed", G_CALLBACK (stuff_changed_cb), self);
+
+	/* IPv6 options */
+	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "ipv6_checkbutton"));
+	g_assert (widget);
+	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_IP_6);
+	if (value && !strcmp(value, "yes")) {
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), TRUE);
+	} else {
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), FALSE);
+	}
+	/* Call the callback to show/hide IPv6 options */
+	ipv6_toggled_cb (widget, priv->builder);
+	g_signal_connect (G_OBJECT (widget), "toggled", G_CALLBACK (ipv6_toggled_cb), priv->builder);
+	g_signal_connect (G_OBJECT (widget), "toggled", G_CALLBACK (stuff_changed_cb), self);
+
+	/* Advanced button */
 	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "advanced_button"));
 	g_signal_connect (G_OBJECT (widget), "clicked", G_CALLBACK (advanced_button_clicked_cb), self);
 
@@ -364,6 +428,30 @@ update_connection (NMVpnPluginUiWidgetInterface *iface,
 	str = gtk_entry_get_text (GTK_ENTRY (widget));
 	if (str && strlen (str))
 		nm_setting_vpn_add_data_item (s_vpn, NM_SSH_KEY_NETMASK, str);
+
+	/* IPv6 enabled */
+	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "ipv6_checkbutton"));
+	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget))) {
+		nm_setting_vpn_add_data_item (s_vpn, NM_SSH_KEY_IP_6, "yes");
+
+		/* Remote IP IPv6 */
+		widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "remote_ip_6_entry"));
+		str = gtk_entry_get_text (GTK_ENTRY (widget));
+		if (str && strlen (str))
+			nm_setting_vpn_add_data_item (s_vpn, NM_SSH_KEY_REMOTE_IP_6, str);
+
+		/* Local IP IPv6 */
+		widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "local_ip_6_entry"));
+		str = gtk_entry_get_text (GTK_ENTRY (widget));
+		if (str && strlen (str))
+			nm_setting_vpn_add_data_item (s_vpn, NM_SSH_KEY_LOCAL_IP_6, str);
+
+		/* Prefix IPv6 */
+		widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "netmask_6_entry"));
+		str = gtk_entry_get_text (GTK_ENTRY (widget));
+		if (str && strlen (str))
+			nm_setting_vpn_add_data_item (s_vpn, NM_SSH_KEY_NETMASK_6, str);
+	}
 
 	if (priv->advanced)
 		g_hash_table_foreach (priv->advanced, hash_copy_advanced, s_vpn);
@@ -512,12 +600,18 @@ export (NMVpnPluginUiInterface *iface,
 	const char *local_ip = NULL;
 	const char *remote_ip = NULL;
 	const char *netmask = NULL;
+	const char *local_ip_6 = NULL;
+	const char *remote_ip_6 = NULL;
+	const char *netmask_6 = NULL;
 	const char *extra_opts = NULL;
 	const char *remote_dev = NULL;
 	const char *mtu = NULL;
 	const char *remote_username = NULL;
 	char *device_type = NULL;
 	char *tunnel_type = NULL;
+	char *ifconfig_cmd_local_6 = NULL;
+	char *ifconfig_cmd_remote_6 = NULL;
+	gboolean ipv6 = FALSE;
 	gboolean success = FALSE;
 
 	s_con = NM_SETTING_CONNECTION (nm_connection_get_setting (connection, NM_TYPE_SETTING_CONNECTION));
@@ -603,6 +697,42 @@ export (NMVpnPluginUiInterface *iface,
 		tunnel_type = g_strdup("point-to-point");
 	}
 
+	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_IP_6);
+	if (value && !strcmp (value, "yes")) {
+		ipv6 = TRUE;
+
+		value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_REMOTE_IP_6);
+		if (value && strlen (value))
+			remote_ip_6 = value;
+		else {
+			g_set_error (error, 0, 0, "connection was incomplete (missing IPv6 remote IP)");
+			goto done;
+		}
+	
+		value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_LOCAL_IP_6);
+		if (value && strlen (value))
+			local_ip_6 = value;
+		else {
+			g_set_error (error, 0, 0, "connection was incomplete (missing IPv6 local IP)");
+			goto done;
+		}
+
+		value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_NETMASK_6);
+		if (value && strlen (value))
+			netmask_6 = value;
+		else {
+			g_set_error (error, 0, 0, "connection was incomplete (missing IPv6 netmask)");
+			goto done;
+		}
+
+		ifconfig_cmd_local_6 = g_strdup_printf("%s $DEV_TYPE$LOCAL_DEV add $LOCAL_IP_6/$NETMASK_6", IFCONFIG);
+		ifconfig_cmd_remote_6 = g_strdup_printf("%s $DEV_TYPE$REMOTE_DEV add $REMOTE_IP_6/$NETMASK_6", IFCONFIG);
+	} else {
+		ipv6 = FALSE;
+		ifconfig_cmd_local_6 = g_strdup("");
+		ifconfig_cmd_remote_6 = g_strdup("");
+	}
+
 	/* Advanced values end */
 
 	/* Serialize everything to a file */
@@ -612,6 +742,12 @@ export (NMVpnPluginUiInterface *iface,
 	fprintf (f, "REMOTE_IP=%s\n", remote_ip);
 	fprintf (f, "LOCAL_IP=%s\n", local_ip);
 	fprintf (f, "NETMASK=%s\n", netmask);
+	if (ipv6) {
+		fprintf (f, "IP_6=%s\n", "yes");
+		fprintf (f, "REMOTE_IP_6=%s\n", remote_ip_6);
+		fprintf (f, "LOCAL_IP_6=%s\n", local_ip_6);
+		fprintf (f, "NETMASK_6=%s\n", netmask_6);
+	}
 	fprintf (f, "PORT=%s\n", port);
 	fprintf (f, "MTU=%s\n", mtu);
 	fprintf (f, "EXTRA_OPTS='%s'\n", extra_opts);
@@ -622,12 +758,12 @@ export (NMVpnPluginUiInterface *iface,
 	fprintf (f, "TUNNEL_TYPE=%s\n\n", tunnel_type);
 
 	/* Add a little of bash script to probe for a free tun/tap device */
-	fprintf (f, "for i in `seq 0 255`; do ! ifconfig $DEV_TYPE$i >& /dev/null && LOCAL_DEV=$i && break; done");
+	fprintf (f, "for i in `seq 0 255`; do ! %s $DEV_TYPE$i >& /dev/null && LOCAL_DEV=$i && break; done", IFCONFIG);
 
 	/* The generic lines that will perform the connection */
 	fprintf (f, "\n");
-	fprintf(f, "ssh -f -v -o Tunnel=$TUNNEL_TYPE -o NumberOfPasswordPrompts=0 $EXTRA_OPTS -w $LOCAL_DEV:$REMOTE_DEV -l $REMOTE_USERNAME -p $PORT $REMOTE \"%s $DEV_TYPE$REMOTE_DEV $REMOTE_IP netmask $NETMASK pointopoint $LOCAL_IP up\" && \\\n", IFCONFIG);
-	fprintf(f, "%s $DEV_TYPE$LOCAL_DEV $LOCAL_IP netmask $NETMASK pointopoint $REMOTE_IP up\n", IFCONFIG);
+	fprintf(f, "ssh -f -v -o Tunnel=$TUNNEL_TYPE -o NumberOfPasswordPrompts=0 $EXTRA_OPTS -w $LOCAL_DEV:$REMOTE_DEV -l $REMOTE_USERNAME -p $PORT $REMOTE \"%s $DEV_TYPE$REMOTE_DEV $REMOTE_IP netmask $NETMASK pointopoint $LOCAL_IP; %s\" && \\\n", IFCONFIG, ifconfig_cmd_remote_6);
+	fprintf(f, "%s $DEV_TYPE$LOCAL_DEV $LOCAL_IP netmask $NETMASK pointopoint $REMOTE_IP; %s\n", IFCONFIG, ifconfig_cmd_local_6);
 
 	success = TRUE;
 

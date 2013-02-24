@@ -70,10 +70,17 @@ typedef struct {
 	char *username;
 	char *password;
 
+	/* IPv4 variables */
 	char *remote_gw;
 	char *local_addr;
 	char *remote_addr;
 	char *netmask;
+
+	/* IPv6 variables */
+	gboolean ipv6;
+	char *local_addr_6;
+	char *remote_addr_6;
+	char *netmask_6;
 
 	/* fds for handling input/output of the SSH process */
 	GIOChannel *ssh_stdin_channel;
@@ -117,6 +124,11 @@ static ValidProperty valid_properties[] = {
 	{ NM_SSH_KEY_REMOTE_DEV,           G_TYPE_INT, 0, 255, FALSE },
 	{ NM_SSH_KEY_TAP_DEV,              G_TYPE_BOOLEAN, 0, 0, FALSE },
 	{ NM_SSH_KEY_REMOTE_USERNAME,      G_TYPE_STRING, 0, 0, FALSE },
+	/* FIXME should fix host validation for IPv6 addresses */
+	{ NM_SSH_KEY_IP_6,                 G_TYPE_BOOLEAN, 0, 0, FALSE },
+	{ NM_SSH_KEY_REMOTE_IP_6,          G_TYPE_STRING, 0, 0, FALSE },
+	{ NM_SSH_KEY_LOCAL_IP_6,           G_TYPE_STRING, 0, 0, FALSE },
+	{ NM_SSH_KEY_NETMASK_6,            G_TYPE_STRING, 0, 0, FALSE },
 	{ NULL,                            G_TYPE_NONE, FALSE }
 };
 
@@ -241,23 +253,30 @@ nm_ssh_properties_validate (NMSettingVPN *s_vpn, GError **error)
 	return TRUE;
 }
 
-static void
-send_ip4_config (DBusGConnection *connection, GHashTable *config)
+static GValue *
+uint_to_gvalue (guint32 num)
 {
-	DBusGProxy *proxy;
+	GValue *val;
 
-	proxy = dbus_g_proxy_new_for_name (connection,
-								NM_DBUS_SERVICE_SSH,
-								NM_VPN_DBUS_PLUGIN_PATH,
-								NM_VPN_DBUS_PLUGIN_INTERFACE);
+	if (num == 0)
+		return NULL;
 
-	dbus_g_proxy_call_no_reply (proxy, "SetIp4Config",
-				    dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE),
-				    config,
-				    G_TYPE_INVALID,
-				    G_TYPE_INVALID);
+	val = g_slice_new0 (GValue);
+	g_value_init (val, G_TYPE_UINT);
+	g_value_set_uint (val, num);
 
-	g_object_unref (proxy);
+	return val;
+}
+
+static GValue *
+bool_to_gvalue (gboolean b)
+{
+	GValue *val;
+
+	val = g_slice_new0 (GValue);
+	g_value_init (val, G_TYPE_BOOLEAN);
+	g_value_set_boolean (val, b);
+	return val;
 }
 
 static GValue *
@@ -304,6 +323,29 @@ addr_to_gvalue (const char *str)
 
 	return val;
 }
+
+static GValue *
+addr6_to_gvalue (const char *str)
+{
+	struct in6_addr temp_addr;
+	GValue *val;
+	GByteArray *ba;
+
+	/* Empty */
+	if (!str || strlen (str) < 1)
+		return NULL;
+
+	if (inet_pton (AF_INET6, str, &temp_addr) <= 0)
+		return NULL;
+
+	val = g_slice_new0 (GValue);
+	g_value_init (val, DBUS_TYPE_G_UCHAR_ARRAY);
+	ba = g_byte_array_new ();
+	g_byte_array_append (ba, (guint8 *) &temp_addr, sizeof (temp_addr));
+	g_value_take_boxed (val, ba);
+	return val;
+}
+
 
 static char *
 resolve_hostname (const char *hostname)
@@ -375,13 +417,14 @@ static gboolean
 send_network_config (NMSshPlugin *plugin)
 {
 	NMSshPluginPrivate *priv = NM_SSH_PLUGIN_GET_PRIVATE (plugin);
-
-	DBusGConnection *connection;
-	GHashTable      *config;
-	GValue          *val;
-	GError          *err = NULL;
-	char            *device;
-	char            *resolved_hostname;
+	NMSshPluginIOData  *io_data = priv->io_data;
+	DBusGConnection    *connection;
+	DBusGProxy         *proxy;
+	GHashTable         *config, *ip4config, *ip6config;
+	GValue             *val;
+	GError             *err = NULL;
+	char               *device;
+	char               *resolved_hostname;
 
 	connection = dbus_g_bus_get (DBUS_BUS_SYSTEM, &err);
 	if (!connection) {
@@ -391,82 +434,172 @@ send_network_config (NMSshPlugin *plugin)
 	}
 
 	config = g_hash_table_new (g_str_hash, g_str_equal);
+	ip4config = g_hash_table_new (g_str_hash, g_str_equal);
+	ip6config = g_hash_table_new (g_str_hash, g_str_equal);
 
 	if (debug) {
-		g_message ("Local device: '%s%d'", priv->io_data->dev_type, priv->io_data->local_dev_number);
-		g_message ("Remote gateway: '%s'", priv->io_data->remote_gw);
-		g_message ("Remote IP: '%s'", priv->io_data->remote_addr);
-		g_message ("Local IP: '%s'", priv->io_data->local_addr);
-		g_message ("Netmask: '%s'", priv->io_data->netmask);
+		g_message ("Local device: '%s%d'", io_data->dev_type, io_data->local_dev_number);
+		g_message ("Remote gateway: '%s'", io_data->remote_gw);
+		g_message ("Remote IP: '%s'", io_data->remote_addr);
+		g_message ("Local IP: '%s'", io_data->local_addr);
+		g_message ("Netmask: '%s'", io_data->netmask);
+		if (io_data->ipv6) {
+			g_message ("IPv6 Remote IP: '%s'", io_data->remote_addr_6);
+			g_message ("IPv6 Local IP: '%s'", io_data->local_addr_6);
+			g_message ("IPv6 Prefix: '%s'", io_data->netmask_6);
+		}
 	}
 
-	/* Retrieve local address */
-	if (priv->io_data->local_addr != NULL)
-	{
-		val = addr_to_gvalue (priv->io_data->local_addr);
-		g_hash_table_insert (config, NM_VPN_PLUGIN_IP4_CONFIG_ADDRESS, val);
-	}
-	else
-	{
-		g_warning ("local_addr unset.");
-	}
+	/* General non IPv4 or IPv6 values (remote_gw, device, mtu) */
 
-	/* Retrieve remote address */
-	if (priv->io_data->remote_addr != NULL)
-	{
-		val = addr_to_gvalue (priv->io_data->remote_addr);
-		g_hash_table_insert (config, NM_VPN_PLUGIN_IP4_CONFIG_INT_GATEWAY, val);
-		g_hash_table_insert (config, NM_VPN_PLUGIN_IP4_CONFIG_PTP, val);
-	}
-	else
-	{
-		g_warning ("remote_addr unset.");
-	}
-
-	/* Retrieve remote gw address */
-	if (priv->io_data->remote_gw != NULL)
+	/* remote_gw */
+	if (io_data->remote_gw)
 	{
 		/* We might have to resolve that */
-		resolved_hostname = resolve_hostname (priv->io_data->remote_gw);
-		if (resolved_hostname != NULL) {
+		resolved_hostname = resolve_hostname (io_data->remote_gw);
+		if (resolved_hostname) {
 			val = addr_to_gvalue (resolved_hostname);
-			g_hash_table_insert (config, NM_VPN_PLUGIN_IP4_CONFIG_EXT_GATEWAY, val);
+			g_hash_table_insert (config, NM_VPN_PLUGIN_CONFIG_EXT_GATEWAY, val);
 			g_free (resolved_hostname);
 		} else {
 			g_warning ("Could not resolve remote_gw.");
 		}
 	}
 	else
-	{
 		g_warning ("remote_gw unset.");
-	}
 
-	/* Retrieve tun/tap interface */
-	if (priv->io_data->local_dev_number != -1)
+	/* device */
+	if (io_data->local_dev_number != -1)
 	{
 		device =
-			(gpointer) g_strdup_printf ("%s%d", priv->io_data->dev_type, priv->io_data->local_dev_number);
+			(gpointer) g_strdup_printf ("%s%d", io_data->dev_type, io_data->local_dev_number);
 		val = str_to_gvalue (device, FALSE);
 		g_free(device);
-		g_hash_table_insert (config, NM_VPN_PLUGIN_IP4_CONFIG_TUNDEV, val);
+		g_hash_table_insert (config, NM_VPN_PLUGIN_CONFIG_TUNDEV, val);
 	}
 	else
-	{
 		g_warning ("local_dev_number unset.");
-	}
 
-	/* Netmask */
-	if (priv->io_data->netmask != NULL && g_str_has_prefix (priv->io_data->netmask, "255.")) {
-		guint32 addr;
-		val = addr_to_gvalue(priv->io_data->netmask);
-		addr = g_value_get_uint (val);
-		g_value_set_uint (val, nm_utils_ip4_netmask_to_prefix (addr));
-		g_hash_table_insert (config, NM_VPN_PLUGIN_IP4_CONFIG_PREFIX, val);
-	} else {
+	/* mtu */
+	if (io_data->mtu > 0)
+	{
+		val = str_to_gvalue (g_strdup_printf("%d", io_data->mtu), FALSE);
+		g_hash_table_insert (config, NM_VPN_PLUGIN_CONFIG_MTU, val);
+	}
+	else
+		g_warning ("local_dev_number unset.");
+
+	/* End General non IPv4 or IPv6 values */
+
+	/* ---------------------------------------------------- */
+
+	/* IPv4 specific (local_addr, remote_addr, netmask) */
+	g_hash_table_insert (config, NM_VPN_PLUGIN_CONFIG_HAS_IP4, bool_to_gvalue (TRUE));
+
+	/* local_address */
+	if (io_data->local_addr)
+	{
+		val = addr_to_gvalue (io_data->local_addr);
+		g_hash_table_insert (ip4config, NM_VPN_PLUGIN_IP4_CONFIG_ADDRESS, val);
+	}
+	else
+		g_warning ("local_addr unset.");
+
+	/* remote_addr */
+	if (io_data->remote_addr)
+	{
+		val = addr_to_gvalue (io_data->remote_addr);
+		g_hash_table_insert (ip4config, NM_VPN_PLUGIN_IP4_CONFIG_INT_GATEWAY, val);
+		g_hash_table_insert (ip4config, NM_VPN_PLUGIN_IP4_CONFIG_PTP, val);
+	}
+	else
+		g_warning ("remote_addr unset.");
+
+	/* netmask */
+	if (io_data->netmask && g_str_has_prefix (io_data->netmask, "255.")) {
+			guint32 addr;
+			val = addr_to_gvalue(io_data->netmask);
+			addr = g_value_get_uint (val);
+			g_value_set_uint (val, nm_utils_ip4_netmask_to_prefix (addr));
+			g_hash_table_insert (ip4config, NM_VPN_PLUGIN_IP4_CONFIG_PREFIX, val);
+	} else
 		g_warning ("netmask unset.");
+
+
+	/* End IPv4 specific (local_addr, remote_addr, netmask) */
+
+	/* ---------------------------------------------------- */
+
+	/* IPv6 specific (local_addr_6, remote_addr_6, netmask_6) */
+	if (io_data->ipv6) {
+		g_hash_table_insert (config, NM_VPN_PLUGIN_CONFIG_HAS_IP6, bool_to_gvalue (TRUE));
+
+		/* local_addr_6 */
+		if (io_data->local_addr_6)
+		{
+			val = addr6_to_gvalue (io_data->local_addr_6);
+			g_hash_table_insert (ip6config, NM_VPN_PLUGIN_IP6_CONFIG_ADDRESS, val);
+		}
+		else
+			g_warning ("local_addr_6 unset.");
+	
+		/* remote_addr_6 */
+		if (io_data->remote_addr_6)
+		{
+			val = addr6_to_gvalue (io_data->remote_addr_6);
+			g_hash_table_insert (ip6config, NM_VPN_PLUGIN_IP6_CONFIG_INT_GATEWAY, val);
+			g_hash_table_insert (ip6config, NM_VPN_PLUGIN_IP6_CONFIG_PTP, val);
+		}
+		else
+			g_warning ("remote_addr_6 unset.");
+	
+		/* netmask_6 */
+		if (io_data->netmask_6) {
+			val = uint_to_gvalue (strtol (io_data->netmask_6, NULL, 10));
+			g_hash_table_insert (ip6config, NM_VPN_PLUGIN_IP6_CONFIG_PREFIX, val);
+		} else
+			g_warning ("netmask_6 unset.");
+	}
+	
+	/* End IPv6 specific (local_addr_6, remote_addr_6, netmask_6) */
+
+	/* ---------------------------------------------------- */
+
+	proxy = dbus_g_proxy_new_for_name (
+		connection,
+		NM_DBUS_SERVICE_SSH,
+		NM_VPN_DBUS_PLUGIN_PATH,
+		NM_VPN_DBUS_PLUGIN_INTERFACE);
+
+	/* Send general config */
+	dbus_g_proxy_call_no_reply (
+		proxy, "SetConfig",
+		dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE),
+		config,
+		G_TYPE_INVALID,
+		G_TYPE_INVALID);
+
+
+	/* Send IPv4 config */
+	dbus_g_proxy_call_no_reply (
+		proxy, "SetIp4Config",
+		dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE),
+		ip4config,
+		G_TYPE_INVALID,
+		G_TYPE_INVALID);
+
+	/* Send IPv6 config */
+	if (io_data->ipv6) {
+		dbus_g_proxy_call_no_reply (
+			proxy, "SetIp6Config",
+			dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE),
+			ip6config,
+			G_TYPE_INVALID,
+			G_TYPE_INVALID);
 	}
 
-	send_ip4_config (connection, config);
+	g_object_unref (proxy);
+
 	return TRUE;
 }
 
@@ -476,12 +609,12 @@ nm_ssh_local_device_up_cb (gpointer data)
 	NMSshPlugin *plugin = NM_SSH_PLUGIN (data);
 	NMSshPluginPrivate *priv = NM_SSH_PLUGIN_GET_PRIVATE (plugin);
 	NMSshPluginIOData *io_data = priv->io_data;
-	char *ifconfig_cmd;
+	char *ifconfig_cmd_4, *ifconfig_cmd_6;
 
 	priv->connect_count++;
 
-	/* format the ifconfig command */
-	ifconfig_cmd = (gpointer) g_strdup_printf (
+	/* IPv4 ifconfig command */
+	ifconfig_cmd_4 = (gpointer) g_strdup_printf (
 		"%s %s%d %s netmask %s pointopoint %s mtu %d up",
 		IFCONFIG,
 		io_data->dev_type,
@@ -491,22 +624,42 @@ nm_ssh_local_device_up_cb (gpointer data)
 		io_data->remote_addr,
 		priv->io_data->mtu);
 
-	if (debug)
-		g_message ("Running: '%s'", ifconfig_cmd);
+	/* IPv6 ifconfig command */
+	if (io_data->ipv6) {
+		ifconfig_cmd_6 = (gpointer) g_strdup_printf (
+			"%s %s%d add %s/%s",
+			IFCONFIG,
+			io_data->dev_type,
+			io_data->local_dev_number,
+			io_data->local_addr_6,
+			io_data->netmask_6);
+	} else {
+		/* No IPv6, we'll just have a null command */
+		ifconfig_cmd_6 = g_strdup("");
+	}
 
-	if (system(ifconfig_cmd) != 0 &&
+	if (debug) {
+		g_message ("IPv4 ifconfig: '%s'", ifconfig_cmd_4);
+		g_message ("IPv6 ifconfig: '%s'", ifconfig_cmd_6);
+	}
+
+	if ((system(ifconfig_cmd_4) != 0 || system(ifconfig_cmd_6) != 0 ) &&
 		priv->connect_count <= 30)
 	{
-		g_free(ifconfig_cmd);
+		/* We failed, but we'll try again soon... */
+		g_free(ifconfig_cmd_4);
+		g_free(ifconfig_cmd_6);
 		return TRUE;
 	}
-	g_free(ifconfig_cmd);
+	g_free(ifconfig_cmd_4);
+	g_free(ifconfig_cmd_6);
 
 	g_message ("Interface %s%d configured.", io_data->dev_type, io_data->local_dev_number);
 
 	priv->connect_timer = 0;
 	send_network_config(plugin);
-	// Return false so we don't get called again
+
+	/* Return false so we don't get called again */
 	return FALSE;
 }
 
@@ -607,14 +760,14 @@ ssh_watch_cb (GPid pid, gint status, gpointer user_data)
 		error = WEXITSTATUS (status);
 		if (error != 0)
 			g_warning ("ssh exited with error code %d", error);
-    }
+	}
 	else if (WIFSTOPPED (status))
 		g_warning ("ssh stopped unexpectedly with signal %d", WSTOPSIG (status));
 	else if (WIFSIGNALED (status))
 		g_warning ("ssh died with signal %d", WTERMSIG (status));
 	else
 		g_warning ("ssh died from an unknown cause");
-  
+
 	/* Reap child if needed. */
 	waitpid (priv->pid, NULL, WNOHANG);
 	priv->pid = 0;
@@ -757,7 +910,7 @@ get_known_hosts_file(const char *username,
 		}
 	}
 
-	// TODO check if the file exists
+	/* FIXME Check if provided SSH_KNOWN_HOSTS_PATH really exists */
 	if (pw) {
 		ssh_known_hosts = g_strdup_printf("%s/%s", pw->pw_dir, SSH_KNOWN_HOSTS_PATH);
 		if (0 != stat(ssh_known_hosts, &info)) {
@@ -771,15 +924,16 @@ get_known_hosts_file(const char *username,
 
 static gboolean
 nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
-                                 NMSettingVPN *s_vpn,
-                                 const char *default_username,
-                                 GError **error)
+	NMSettingVPN *s_vpn,
+	const char *default_username,
+	GError **error)
 {
 	NMSshPluginPrivate *priv = NM_SSH_PLUGIN_GET_PRIVATE (plugin);
 	const char *ssh_binary, *tmp;
 	const char *remote, *port, *mtu, *ssh_agent_socket;
 	char *known_hosts_file;
 	char *tmp_arg;
+	char *ifconfig_cmd_4, *ifconfig_cmd_6;
 	char *envp[16];
 	long int tmp_int;
 	GPtrArray *args;
@@ -801,7 +955,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 
 	/* Allocate io_data structure */
 	priv->io_data = g_malloc0 (sizeof (NMSshPluginIOData));
-  
+
 	args = g_ptr_array_new ();
 	add_ssh_arg (args, ssh_binary);
 
@@ -854,17 +1008,15 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		add_ssh_extra_opts (args, NM_SSH_DEFAULT_EXTRA_OPTS);
 	}
 
-    /* Device, either tun or tap */
+	/* Device, either tun or tap */
 	add_ssh_arg (args, "-o");
 	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_TAP_DEV);
 	if (tmp && !strcmp (tmp, "yes")) {
 		add_ssh_arg (args, "Tunnel=ethernet");
 		g_strlcpy ((gchar *) &priv->io_data->dev_type, "tap", 4);
-		//priv->io_data->dev_type = strdup ("tap");
 	} else {
 		add_ssh_arg (args, "Tunnel=point-to-point");
 		g_strlcpy ((gchar *) &priv->io_data->dev_type, "tun", 4);
-		//priv->io_data->dev_type = strdup ("tun");
 	}
 
 	/* Get a local tun/tap */
@@ -983,6 +1135,8 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	/* Netmask */
 	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_NETMASK);
 	if (!tmp) {
+		priv->io_data->netmask = g_strdup(tmp);
+
 		/* Insufficient data (FIXME: this should really be detected when validating the properties */
 		g_set_error (error,
 		             NM_VPN_PLUGIN_ERROR,
@@ -994,6 +1148,65 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		return FALSE;
 	}
 	priv->io_data->netmask = g_strdup(tmp);
+
+	/* IPv6 enabled? */
+	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_IP_6);
+	if (tmp && !strcmp (tmp, "yes")) {
+		/* IPv6 is enabled */
+		priv->io_data->ipv6 = TRUE;
+		
+		/* Remote IP IPv6 */
+		tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_REMOTE_IP_6);
+		if (!tmp) {
+			/* Insufficient data (FIXME: this should really be detected when validating the properties */
+			g_set_error (error,
+			             NM_VPN_PLUGIN_ERROR,
+			             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
+			             "%s",
+						// TODO Edit translation
+			             _("Missing required IPv6 remote IP address."));
+			free_ssh_args (args);
+			return FALSE;
+		}
+		priv->io_data->remote_addr_6 = g_strdup(tmp);
+	
+		/* Local IP IPv6 */
+		tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_LOCAL_IP_6);
+		if (!tmp) {
+			/* Insufficient data (FIXME: this should really be detected when validating the properties */
+			g_set_error (error,
+			             NM_VPN_PLUGIN_ERROR,
+			             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
+			             "%s",
+						// TODO Edit translation
+			             _("Missing required IPv6 local IP address."));
+			free_ssh_args (args);
+			return FALSE;
+		}
+		priv->io_data->local_addr_6 = g_strdup(tmp);
+	
+		/* Prefix IPv6 */
+		tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_NETMASK_6);
+		if (!tmp) {
+			/* Insufficient data (FIXME: this should really be detected when validating the properties */
+			g_set_error (error,
+			             NM_VPN_PLUGIN_ERROR,
+			             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
+			             "%s",
+						// TODO Edit translation
+			             _("Missing required IPv6 netmask."));
+			free_ssh_args (args);
+			return FALSE;
+		}
+		priv->io_data->netmask_6 = g_strdup(tmp);
+	} else {
+		/* Set the values so they are not NULL */
+		priv->io_data->ipv6 = FALSE;
+		priv->io_data->remote_addr_6 = g_strdup("");
+		priv->io_data->local_addr_6 = g_strdup("");
+		priv->io_data->netmask_6 = g_strdup("");
+	}
+
 
 	/* The -w option, provide a remote and local tun/tap device */
 	tmp_arg = (gpointer) g_strdup_printf (
@@ -1015,8 +1228,8 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	add_ssh_arg (args, priv->io_data->remote_gw);
 
 	/* Command line to run on remote machine */
-	tmp_arg = (gpointer) g_strdup_printf (
-		"%s %s%d inet %s netmask %s pointopoint %s mtu %d up",
+	ifconfig_cmd_4 = (gpointer) g_strdup_printf (
+		"%s %s%d inet %s netmask %s pointopoint %s mtu %d",
 		IFCONFIG,
 		priv->io_data->dev_type,
 		priv->io_data->remote_dev_number,
@@ -1024,7 +1237,24 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		priv->io_data->netmask,
 		priv->io_data->local_addr,
 		priv->io_data->mtu);
+
+	/* IPv6 ifconfig command to run on remote machine */
+	if (priv->io_data->ipv6) {
+		ifconfig_cmd_6 = (gpointer) g_strdup_printf (
+			"%s %s%d add %s/%s",
+			IFCONFIG,
+			priv->io_data->dev_type,
+			priv->io_data->remote_dev_number,
+			priv->io_data->remote_addr_6,
+			priv->io_data->netmask_6);
+	} else {
+		ifconfig_cmd_6 = g_strdup("");
+	}
+	/* Concatenate ifconfig_cmd_4 and ifconfig_cmd_6 to one command */
+	tmp_arg = g_strconcat(ifconfig_cmd_4, "; ", ifconfig_cmd_6, NULL);
 	add_ssh_arg (args, tmp_arg);
+	g_free(ifconfig_cmd_4);
+	g_free(ifconfig_cmd_6);
 	g_free(tmp_arg);
 
 	/* Wrap it up */
@@ -1054,13 +1284,13 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	/* stdout */
 	priv->io_data->socket_channel_stdout_eventid = g_io_add_watch (
 		priv->io_data->ssh_stdout_channel,
-   		G_IO_IN,
+		G_IO_IN,
 		nm_ssh_stdout_cb,
 		plugin);
 	/* stderr */
 	priv->io_data->socket_channel_stderr_eventid = g_io_add_watch (
 		priv->io_data->ssh_stderr_channel,
-   		G_IO_IN,
+		G_IO_IN,
 		nm_ssh_stdout_cb,
 		plugin);
 
@@ -1104,8 +1334,8 @@ validate_ssh_agent_socket(const char* ssh_agent_socket, GError **error)
 
 static gboolean
 real_connect (NMVPNPlugin   *plugin,
-              NMConnection  *connection,
-              GError       **error)
+	NMConnection  *connection,
+	GError       **error)
 {
 	NMSettingVPN *s_vpn;
 	const char *user_name;
@@ -1135,9 +1365,9 @@ real_connect (NMVPNPlugin   *plugin,
 
 static gboolean
 real_need_secrets (NMVPNPlugin *plugin,
-                   NMConnection *connection,
-                   char **setting_name,
-                   GError **error)
+	NMConnection *connection,
+	char **setting_name,
+	GError **error)
 {
 	NMSettingVPN *s_vpn;
 	gboolean need_secrets = FALSE;
@@ -1163,7 +1393,7 @@ real_need_secrets (NMVPNPlugin *plugin,
 
 	/* If we don't have our SSH_AUTH_SOCK set, we need it
 	 * SSH_AUTH_SOCK is passed as a secret only because it has to come
-     * from a user's context and this plugin will run as root... */
+	 * from a user's context and this plugin will run as root... */
 	ssh_agent_socket = nm_setting_vpn_get_secret (s_vpn, NM_SSH_KEY_SSH_AUTH_SOCK);
 	if (ssh_agent_socket && validate_ssh_agent_socket (ssh_agent_socket, error)) {
 		need_secrets = FALSE;
@@ -1228,8 +1458,8 @@ nm_ssh_plugin_class_init (NMSshPluginClass *plugin_class)
 
 static void
 plugin_state_changed (NMSshPlugin *plugin,
-                      NMVPNServiceState state,
-                      gpointer user_data)
+	NMVPNServiceState state,
+	gpointer user_data)
 {
 	switch (state) {
 	case NM_VPN_SERVICE_STATE_UNKNOWN:
