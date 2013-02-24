@@ -4,6 +4,6 @@ service=org.freedesktop.NetworkManager.ssh
 program=@LIBEXECDIR@/nm-ssh-service
 
 [GNOME]
-auth-dialog=@LIBEXECDIR@/nm-ssh-auth-dialog
+auth-dialog=nm-ssh-auth-dialog
 properties=libnm-ssh-properties
 
