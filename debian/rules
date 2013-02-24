@@ -63,7 +63,7 @@ get-current-source:: $(if $(LOCAL_BRANCH),update-local-branch)
 		git_version=`echo $(DEB_VERSION) | sed -e 's/^.*git\.*\([0-9t]*\)\.\(.*\)-.*$$/\2/g'`; \
 	elif echo $(DEB_VERSION) | grep -q -c "rc1"; \
 	then \
-		git_version="0.0.2"; \
+		git_version="0.0.3"; \
 	else \
 		git_version=$(DEB_UPSTREAM_VERSION); \
 	fi; \
