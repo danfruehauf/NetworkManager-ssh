@@ -138,7 +138,7 @@ If the destination host is not in your <i>known_hosts</i> file, things will not 
 
 	-o StrictHostKeyChecking=no
 
-### People I'd like to thank
+## People I'd like to thank
 
  * Thomas Young - First user!
  * Whoopie - For nice debian support and testing
