@@ -252,7 +252,7 @@ advanced_dialog_new (GHashTable *hash)
 	if (value && strlen (value)) {
 		errno = 0;
 		tmp = strtol (value, NULL, 10);
-		if (errno == 0 && tmp > 0 && tmp < 256) {
+		if (errno == 0 && tmp >= 0 && tmp < 256) {
 			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), TRUE);
 
 			widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_dev_spinbutton"));
