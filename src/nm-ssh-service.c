@@ -728,7 +728,7 @@ nm_ssh_stdout_cb (GIOChannel *source, GIOCondition condition, gpointer user_data
 		nm_vpn_plugin_set_state (plugin, NM_VPN_SERVICE_STATE_STOPPED);
 	} else if (g_str_has_prefix (str, "debug1: Remote: Failed to open the tunnel device.")) {
 		/* Opening of remote tun device failed... device busy? */
-		g_warning("Tunnel device open failed on remote server.", str);
+		g_warning("Tunnel device open failed on remote server.");
 		g_warning("Is this device free on the remote host?");
 		nm_vpn_plugin_set_state (plugin, NM_VPN_SERVICE_STATE_STOPPED);
 	} else if (strncmp (str, "The authenticity of host", 24) == 0) {
