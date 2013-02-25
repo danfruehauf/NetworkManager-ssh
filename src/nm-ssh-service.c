@@ -253,6 +253,7 @@ nm_ssh_properties_validate (NMSettingVPN *s_vpn, GError **error)
 	return TRUE;
 }
 
+#if defined(IPV6)
 static GValue *
 uint_to_gvalue (guint32 num)
 {
@@ -278,6 +279,30 @@ bool_to_gvalue (gboolean b)
 	g_value_set_boolean (val, b);
 	return val;
 }
+
+static GValue *
+addr6_to_gvalue (const char *str)
+{
+	struct in6_addr temp_addr;
+	GValue *val;
+	GByteArray *ba;
+
+	/* Empty */
+	if (!str || strlen (str) < 1)
+		return NULL;
+
+	if (inet_pton (AF_INET6, str, &temp_addr) <= 0)
+		return NULL;
+
+	val = g_slice_new0 (GValue);
+	g_value_init (val, DBUS_TYPE_G_UCHAR_ARRAY);
+	ba = g_byte_array_new ();
+	g_byte_array_append (ba, (guint8 *) &temp_addr, sizeof (temp_addr));
+	g_value_take_boxed (val, ba);
+	return val;
+}
+
+#endif
 
 static GValue *
 str_to_gvalue (const char *str, gboolean try_convert)
@@ -323,29 +348,6 @@ addr_to_gvalue (const char *str)
 
 	return val;
 }
-
-static GValue *
-addr6_to_gvalue (const char *str)
-{
-	struct in6_addr temp_addr;
-	GValue *val;
-	GByteArray *ba;
-
-	/* Empty */
-	if (!str || strlen (str) < 1)
-		return NULL;
-
-	if (inet_pton (AF_INET6, str, &temp_addr) <= 0)
-		return NULL;
-
-	val = g_slice_new0 (GValue);
-	g_value_init (val, DBUS_TYPE_G_UCHAR_ARRAY);
-	ba = g_byte_array_new ();
-	g_byte_array_append (ba, (guint8 *) &temp_addr, sizeof (temp_addr));
-	g_value_take_boxed (val, ba);
-	return val;
-}
-
 
 static char *
 resolve_hostname (const char *hostname)
@@ -434,8 +436,14 @@ send_network_config (NMSshPlugin *plugin)
 	}
 
 	config = g_hash_table_new (g_str_hash, g_str_equal);
-	ip4config = g_hash_table_new (g_str_hash, g_str_equal);
 	ip6config = g_hash_table_new (g_str_hash, g_str_equal);
+	/* If IPV6 is not supported, all settings have to go via the
+	 * SetIp4Config command */
+#if defined(IPV6)
+	ip4config = g_hash_table_new (g_str_hash, g_str_equal);
+#else
+	ip4config = config;
+#endif
 
 	if (debug) {
 		g_message ("Local device: '%s%d'", io_data->dev_type, io_data->local_dev_number);
@@ -494,7 +502,9 @@ send_network_config (NMSshPlugin *plugin)
 	/* ---------------------------------------------------- */
 
 	/* IPv4 specific (local_addr, remote_addr, netmask) */
+#if defined(IPV6)
 	g_hash_table_insert (config, NM_VPN_PLUGIN_CONFIG_HAS_IP4, bool_to_gvalue (TRUE));
+#endif
 
 	/* local_address */
 	if (io_data->local_addr)
@@ -524,7 +534,6 @@ send_network_config (NMSshPlugin *plugin)
 			g_hash_table_insert (ip4config, NM_VPN_PLUGIN_IP4_CONFIG_PREFIX, val);
 	} else
 		g_warning ("netmask unset.");
-
 
 	/* End IPv4 specific (local_addr, remote_addr, netmask) */
 
@@ -573,6 +582,7 @@ send_network_config (NMSshPlugin *plugin)
 		NM_VPN_DBUS_PLUGIN_PATH,
 		NM_VPN_DBUS_PLUGIN_INTERFACE);
 
+#if defined(IPV6)
 	/* Send general config */
 	dbus_g_proxy_call_no_reply (
 		proxy, "SetConfig",
@@ -581,16 +591,6 @@ send_network_config (NMSshPlugin *plugin)
 		G_TYPE_INVALID,
 		G_TYPE_INVALID);
 
-
-	/* Send IPv4 config */
-	dbus_g_proxy_call_no_reply (
-		proxy, "SetIp4Config",
-		dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE),
-		ip4config,
-		G_TYPE_INVALID,
-		G_TYPE_INVALID);
-
-#if defined(IPV6)
 	/* Send IPv6 config */
 	if (io_data->ipv6) {
 		dbus_g_proxy_call_no_reply (
@@ -601,6 +601,14 @@ send_network_config (NMSshPlugin *plugin)
 			G_TYPE_INVALID);
 	}
 #endif
+	/* Send IPv4 config */
+	dbus_g_proxy_call_no_reply (
+		proxy, "SetIp4Config",
+		dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE),
+		ip4config,
+		G_TYPE_INVALID,
+		G_TYPE_INVALID);
+
 
 	g_object_unref (proxy);
 
