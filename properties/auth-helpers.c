@@ -129,7 +129,7 @@ remote_username_toggled_cb (GtkWidget *check, gpointer user_data)
 	if (gtk_toggle_button_get_active  (GTK_TOGGLE_BUTTON (check) )) {
 		GtkWidget *dialog;
 		dialog = gtk_message_dialog_new(
-			GTK_WINDOW (gtk_builder_get_object (builder, "ssh-advanced-dialog")),
+			GTK_WINDOW (gtk_builder_get_object (builder, "ssh_advanced_dialog")),
 			GTK_DIALOG_MODAL,
 			GTK_MESSAGE_WARNING,
 			GTK_BUTTONS_OK,
@@ -168,7 +168,7 @@ advanced_dialog_new (GHashTable *hash)
 		goto out;
 	}
 
-	dialog = GTK_WIDGET (gtk_builder_get_object (builder, "ssh-advanced-dialog"));
+	dialog = GTK_WIDGET (gtk_builder_get_object (builder, "ssh_advanced_dialog"));
 	if (!dialog) {
 		g_object_unref (G_OBJECT (builder));
 		goto out;

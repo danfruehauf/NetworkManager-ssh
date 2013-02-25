@@ -519,7 +519,7 @@ nm_vpn_plugin_ui_widget_interface_new (NMConnection *connection, GError **error)
 
 	g_free (ui_file);
 
-	priv->widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "ssh-vbox"));
+	priv->widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "ssh_main_vbox"));
 	if (!priv->widget) {
 		g_set_error (error, SSH_PLUGIN_UI_ERROR, 0, "could not load UI widget");
 		g_object_unref (object);
