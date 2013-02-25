@@ -335,7 +335,7 @@ init_plugin_ui (SshPluginUiWidget *self, NMConnection *connection, GError **erro
 	}
 	g_signal_connect (G_OBJECT (widget), "changed", G_CALLBACK (stuff_changed_cb), self);
 
-	/* Prefix IPv6 */
+	/* Netmask IPv6 */
 	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "netmask_6_entry"));
 	g_return_val_if_fail (widget != NULL, FALSE);
 	gtk_size_group_add_widget (priv->group, widget);
@@ -359,6 +359,16 @@ init_plugin_ui (SshPluginUiWidget *self, NMConnection *connection, GError **erro
 	ipv6_toggled_cb (widget, priv->builder);
 	g_signal_connect (G_OBJECT (widget), "toggled", G_CALLBACK (ipv6_toggled_cb), priv->builder);
 	g_signal_connect (G_OBJECT (widget), "toggled", G_CALLBACK (stuff_changed_cb), self);
+
+	/* If IPV6 is defined, we'll show the whole IPV6 alignment shenanigans */
+#if defined(IPV6)
+	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "ipv6_label"));
+	g_assert (widget);
+	gtk_widget_show (widget);
+	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "ipv6_alignment"));
+	g_assert (widget);
+	gtk_widget_show (widget);
+#endif
 
 	/* Advanced button */
 	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "advanced_button"));

@@ -528,6 +528,7 @@ send_network_config (NMSshPlugin *plugin)
 
 	/* End IPv4 specific (local_addr, remote_addr, netmask) */
 
+#if defined(IPV6)
 	/* ---------------------------------------------------- */
 
 	/* IPv6 specific (local_addr_6, remote_addr_6, netmask_6) */
@@ -562,6 +563,7 @@ send_network_config (NMSshPlugin *plugin)
 	}
 	
 	/* End IPv6 specific (local_addr_6, remote_addr_6, netmask_6) */
+#endif
 
 	/* ---------------------------------------------------- */
 
@@ -588,6 +590,7 @@ send_network_config (NMSshPlugin *plugin)
 		G_TYPE_INVALID,
 		G_TYPE_INVALID);
 
+#if defined(IPV6)
 	/* Send IPv6 config */
 	if (io_data->ipv6) {
 		dbus_g_proxy_call_no_reply (
@@ -597,6 +600,7 @@ send_network_config (NMSshPlugin *plugin)
 			G_TYPE_INVALID,
 			G_TYPE_INVALID);
 	}
+#endif
 
 	g_object_unref (proxy);
 

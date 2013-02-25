@@ -59,6 +59,20 @@
 #define	NM_SSH_DEFAULT_EXTRA_OPTS "-o ServerAliveInterval=10 -o TCPKeepAlive=yes"
 #define	NM_SSH_DEFAULT_REMOTE_USERNAME "root"
 
+/* Backward compatibility with NetworkManager < 0.9.6 when no IPv6 is supported */
+#if !defined(NM_VPN_PLUGIN_CONFIG_EXT_GATEWAY)
+#	define NM_VPN_PLUGIN_CONFIG_EXT_GATEWAY NM_VPN_PLUGIN_IP4_CONFIG_EXT_GATEWAY
+#endif
+
+#if !defined(NM_VPN_PLUGIN_CONFIG_TUNDEV)
+#	define NM_VPN_PLUGIN_CONFIG_TUNDEV NM_VPN_PLUGIN_IP4_CONFIG_TUNDEV
+#endif
+
+#if !defined(NM_VPN_PLUGIN_CONFIG_MTU)
+#	define NM_VPN_PLUGIN_CONFIG_MTU NM_VPN_PLUGIN_IP4_CONFIG_MTU
+#endif
+/* End backward compatibility */
+
 typedef struct {
 	NMVPNPlugin parent;
 } NMSshPlugin;

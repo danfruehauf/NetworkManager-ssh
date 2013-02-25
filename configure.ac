@@ -50,6 +50,9 @@ dnl
 AC_ARG_WITH(gnome, AS_HELP_STRING([--without-gnome], [Build NetworkManager-ssh without GNOME support, e.g. vpn service only]))
 AM_CONDITIONAL(WITH_GNOME, test x"$with_gnome" != xno)
 
+AC_ARG_WITH(ipv6, AS_HELP_STRING([--without-ipv6], [Build NetworkManager-ssh without IPv6 support]))
+AM_CONDITIONAL(WITH_IPV6, test x"$with_ipv6" != xno)
+
 GETTEXT_PACKAGE=NetworkManager-ssh
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [Gettext package])
@@ -108,6 +111,10 @@ if test x"$with_gnome" != xno; then
 		DISABLE_DEPRECATED=""
 	fi
 	AC_SUBST(DISABLE_DEPRECATED)
+fi
+
+if test x"$with_ipv6" != xno; then
+	AC_DEFINE(IPV6, "yes", ipv6 support)
 fi
 
 NM_COMPILER_WARNINGS
