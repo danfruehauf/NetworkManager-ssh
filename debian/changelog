@@ -1,3 +1,9 @@
+network-manager-ssh (0.0.3-0ubuntu2) precise; urgency=low
+
+  * ipv6 support
+
+ -- Dan Fruehauf <malkodan@gmail.com>  Mon, 25 Feb 2013 00:34:10 +1000
+
 network-manager-ssh (0.0.2+git.20130220t093016.011a210-0ubuntu1~precise1) precise; urgency=low
 
   * upstream snapshot 2013-02-20 09:30:16 (GMT)
