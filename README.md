@@ -89,6 +89,19 @@ Make sure your target host is known in <i>/root/.ssh/known_hosts</i>
 
 If all went right, you should have a new VPN of type <i>SSH</i> when creating a new VPN.
 
+### Debugging
+When things go wrong and you can't really figure out what's happening, you can run the SSH VPN plugin in debug mode.
+
+As <b>root</b> run (on Fedora/RHEL/CentOS):
+
+	/usr/libexec/nm-ssh-service --debug
+
+On Debian/Ubuntu:
+
+	/usr/lib/NetworkManager/nm-ssh-service --debug
+
+You may see the full output of what's going on...
+
 ## Server side configuration
 Even though this is a bit off-topic, I've decided to cover it anyway.
 
