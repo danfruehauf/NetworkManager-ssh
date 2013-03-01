@@ -84,5 +84,22 @@ struct _SshPluginUiWidgetClass {
 
 GType ssh_plugin_ui_widget_get_type (void);
 
+/* Export/Import key dictionary */
+#define	REMOTE_KEY "REMOTE"
+#define	REMOTE_USERNAME_KEY "REMOTE_USERNAME"
+#define	REMOTE_IP_KEY "REMOTE_IP"
+#define	LOCAL_IP_KEY "LOCAL_IP"
+#define	NETMASK_KEY "NETMASK"
+#define	IP_6_KEY "IP_6"
+#define	REMOTE_IP_6_KEY "REMOTE_IP_6"
+#define	LOCAL_IP_6_KEY "LOCAL_IP_6"
+#define	NETMASK_6_KEY "NETMASK_6"
+#define	PORT_KEY "PORT"
+#define	MTU_KEY "MTU"
+#define	EXTRA_OPTS_KEY "EXTRA_OPTS"
+#define	REMOTE_DEV_KEY "REMOTE_DEV"
+#define	DEV_TYPE_KEY "DEV_TYPE"
+#define	TUNNEL_TYPE_KEY "TUNNEL_TYPE"
+
 #endif	/* _NM_SSH_H_ */
 

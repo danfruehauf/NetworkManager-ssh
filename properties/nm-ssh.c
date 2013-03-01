@@ -50,6 +50,41 @@
 #define SSH_PLUGIN_DESC    _("Compatible with the SSH server.")
 #define SSH_PLUGIN_SERVICE NM_DBUS_SERVICE_SSH 
 
+#define PARSE_IMPORT_KEY(IMPORT_KEY, NM_SSH_KEY, ITEMS, VPN_CONN) \
+if (!strncmp (ITEMS[0], IMPORT_KEY, strlen (ITEMS[0]))) { \
+	nm_setting_vpn_add_data_item (VPN_CONN, NM_SSH_KEY, ITEMS[1]); \
+	g_free(ITEMS); \
+	continue; \
+}
+
+#define PARSE_IMPORT_KEY_BOOL(IMPORT_KEY, NM_SSH_KEY, ITEMS, VPN_CONN, VALUE) \
+if (!strncmp (ITEMS[0], IMPORT_KEY, strlen (ITEMS[0]))) { \
+	if (!strncmp(ITEMS[1], VALUE, strlen(ITEMS[1]))) { \
+		g_message("%s=%s", NM_SSH_KEY, ITEMS[1]); \
+		nm_setting_vpn_add_data_item (VPN_CONN, NM_SSH_KEY, "yes"); \
+	} \
+	g_free (ITEMS); \
+	continue; \
+}
+
+#define PARSE_IMPORT_KEY_WITH_DEFAULT_VALUE_STR(IMPORT_KEY, NM_SSH_KEY, ITEMS, VPN_CONN, DEFAULT_VALUE) \
+if (!strncmp (ITEMS[0], IMPORT_KEY, strlen (ITEMS[0]))) { \
+	if (strncmp(ITEMS[1], DEFAULT_VALUE, strlen(ITEMS[1]))) \
+		nm_setting_vpn_add_data_item (VPN_CONN, NM_SSH_KEY, ITEMS[1]); \
+	g_free (ITEMS); \
+	continue; \
+}
+
+#define PARSE_IMPORT_KEY_WITH_DEFAULT_VALUE_INT(IMPORT_KEY, NM_SSH_KEY, ITEMS, VPN_CONN, DEFAULT_VALUE) \
+if (!strncmp (ITEMS[0], IMPORT_KEY, strlen (ITEMS[0]))) { \
+	char *tmp = g_strdup_printf("%d", DEFAULT_VALUE); \
+	if (strncmp(ITEMS[1], tmp, strlen(ITEMS[1]))) \
+		nm_setting_vpn_add_data_item (VPN_CONN, NM_SSH_KEY, ITEMS[1]); \
+	g_free (ITEMS); \
+	g_free (tmp); \
+	continue; \
+}
+
 
 /************** plugin class **************/
 
@@ -595,6 +630,608 @@ ssh_plugin_ui_widget_interface_init (NMVpnPluginUiWidgetInterface *iface_class)
 	iface_class->update_connection = update_connection;
 }
 
+static NMConnection *
+import (NMVpnPluginUiInterface *iface, const char *path, GError **error)
+{
+	NMConnection *connection = NULL;
+	NMSettingConnection *s_con;
+	NMSettingVPN *s_vpn;
+	char *contents = NULL;
+	char **lines = NULL;
+	char *ext;
+	char **line;
+
+	ext = strrchr (path, '.');
+	if (!ext) {
+		g_set_error (error,
+		             SSH_PLUGIN_UI_ERROR,
+		             SSH_PLUGIN_UI_ERROR_FILE_NOT_SSH,
+		             "unknown OpenVPN file extension, should be .sh");
+		goto out;
+	}
+
+	if (strcmp (ext, ".sh")) {
+		g_set_error (error,
+		             SSH_PLUGIN_UI_ERROR,
+		             SSH_PLUGIN_UI_ERROR_FILE_NOT_SSH,
+		             "unknown SSH file extension, should be .sh");
+		goto out;
+	}
+
+	if (!g_file_get_contents (path, &contents, NULL, error))
+		return NULL;
+
+	if (!g_utf8_validate (contents, -1, NULL)) {
+		char *tmp;
+		GError *conv_error = NULL;
+
+		tmp = g_locale_to_utf8 (contents, -1, NULL, NULL, &conv_error);
+		if (conv_error) {
+			/* ignore the error, we tried at least. */
+			g_error_free (conv_error);
+			g_free (tmp);
+		} else {
+			g_assert (tmp);
+			g_free (contents);
+			contents = tmp;  /* update contents with the UTF-8 safe text */
+		}
+	}
+
+	lines = g_strsplit_set (contents, "\r\n", 0);
+	if (g_strv_length (lines) <= 1) {
+		g_set_error (error,
+		             SSH_PLUGIN_UI_ERROR,
+		             SSH_PLUGIN_UI_ERROR_FILE_NOT_READABLE,
+		             "not a valid OpenVPN configuration file");
+		goto out;
+	}
+
+	connection = nm_connection_new ();
+	s_con = NM_SETTING_CONNECTION (nm_setting_connection_new ());
+	nm_connection_add_setting (connection, NM_SETTING (s_con));
+
+	s_vpn = NM_SETTING_VPN (nm_setting_vpn_new ());
+
+	g_object_set (s_vpn, NM_SETTING_VPN_SERVICE_TYPE, NM_DBUS_SERVICE_SSH, NULL);
+
+	for (line = lines; *line; line++) {
+		char *comment;
+		char **items = NULL;
+
+		if ((comment = strchr (*line, '#')))
+			*comment = '\0';
+		if ((comment = strchr (*line, ';')))
+			*comment = '\0';
+		if (!strlen (*line))
+			continue;
+
+		items = g_strsplit_set (*line, "=", 0);
+		if (!items) {
+			continue;
+		} else {
+			/* Uncomment if you'd like to debug parsing of items */
+			/* g_message("%s = %s", items[0], items[1]); */
+		}
+
+		/* the PARSE_IMPORT_KEY will save heaps of lines of code, it's
+ 		 * on the top of the file if you're looking for it */
+		PARSE_IMPORT_KEY (REMOTE_KEY, NM_SSH_KEY_REMOTE, items, s_vpn)
+		PARSE_IMPORT_KEY_WITH_DEFAULT_VALUE_STR (REMOTE_USERNAME_KEY, NM_SSH_KEY_REMOTE_USERNAME, items, s_vpn,NM_SSH_DEFAULT_REMOTE_USERNAME);
+		PARSE_IMPORT_KEY (REMOTE_IP_KEY, NM_SSH_KEY_REMOTE_IP, items, s_vpn)
+		PARSE_IMPORT_KEY (LOCAL_IP_KEY, NM_SSH_KEY_LOCAL_IP, items, s_vpn)
+		PARSE_IMPORT_KEY (NETMASK_KEY, NM_SSH_KEY_NETMASK, items, s_vpn)
+		PARSE_IMPORT_KEY (IP_6_KEY, NM_SSH_KEY_IP_6, items, s_vpn)
+		PARSE_IMPORT_KEY (REMOTE_IP_6_KEY, NM_SSH_KEY_REMOTE_IP_6, items, s_vpn)
+		PARSE_IMPORT_KEY (LOCAL_IP_6_KEY, NM_SSH_KEY_LOCAL_IP_6, items, s_vpn)
+		PARSE_IMPORT_KEY (NETMASK_6_KEY, NM_SSH_KEY_NETMASK_6, items, s_vpn)
+		PARSE_IMPORT_KEY_WITH_DEFAULT_VALUE_INT (PORT_KEY, NM_SSH_KEY_PORT, items, s_vpn, NM_SSH_DEFAULT_PORT)
+		PARSE_IMPORT_KEY_WITH_DEFAULT_VALUE_INT (MTU_KEY, NM_SSH_KEY_TUNNEL_MTU, items, s_vpn, NM_SSH_DEFAULT_MTU)
+		PARSE_IMPORT_KEY_WITH_DEFAULT_VALUE_INT (REMOTE_DEV_KEY, NM_SSH_KEY_REMOTE_DEV, items, s_vpn, NM_SSH_DEFAULT_REMOTE_DEV)
+		PARSE_IMPORT_KEY_BOOL (DEV_TYPE_KEY, NM_SSH_KEY_TAP_DEV, items, s_vpn, "tap")
+
+		/* Some extra care required with extra_opts as we need to:
+		 * 1. Use the whole line (might contain = chars in it)
+		 * 2. Strip the single/double quotes */
+		if (!strncmp (items[0], EXTRA_OPTS_KEY, strlen (items[0]))) {
+			gchar *parsed_extra_opts;
+			gchar *unquoted_extra_opts;
+			/* Read the whole line, witout the EXTRA_OPTS= part */
+			parsed_extra_opts = g_strdup(*line + strlen(EXTRA_OPTS_KEY) + 1);
+
+			/* Check if string is quoted */
+			if ( (parsed_extra_opts[0] == '"' && parsed_extra_opts[strlen(parsed_extra_opts)-1] == '"') ||
+				/* String is quoted (would usually be), lets strip the quotes */
+				(parsed_extra_opts[0] == '\'' && parsed_extra_opts[strlen(parsed_extra_opts)-1] == '\'') ) {
+				/* Unquote string */
+				parsed_extra_opts[strlen(parsed_extra_opts)-1] = '\0';
+				unquoted_extra_opts = parsed_extra_opts + 1;
+			}
+			/* After all this effort, try to compare to the default value */
+			if (strncmp(unquoted_extra_opts, NM_SSH_DEFAULT_EXTRA_OPTS, strlen(unquoted_extra_opts)))
+				nm_setting_vpn_add_data_item (s_vpn, NM_SSH_KEY_EXTRA_OPTS, unquoted_extra_opts);
+			g_free (items);
+			g_free (parsed_extra_opts);
+			continue;
+		}
+	}
+
+	if (connection)
+		nm_connection_add_setting (connection, NM_SETTING (s_vpn));
+	else if (s_vpn)
+		g_object_unref (s_vpn);
+
+out:
+	if (lines)
+		g_strfreev (lines);
+	g_free (contents);
+	return connection;
+}
+
+#if 0
+NMConnection *
+do_import (const char *path, char **lines, GError **error)
+{
+	NMConnection *connection = NULL;
+	NMSettingConnection *s_con;
+	NMSettingVPN *s_vpn;
+	char *last_dot;
+	char **line;
+	gboolean have_client = FALSE, have_remote = FALSE;
+	gboolean have_pass = FALSE, have_sk = FALSE;
+	const char *ctype = NULL;
+	char *basename;
+	char *default_path, *tmp, *tmp2;
+	gboolean http_proxy = FALSE, socks_proxy = FALSE, proxy_set = FALSE;
+	int nitems;
+
+	connection = nm_connection_new ();
+	s_con = NM_SETTING_CONNECTION (nm_setting_connection_new ());
+	nm_connection_add_setting (connection, NM_SETTING (s_con));
+
+	s_vpn = NM_SETTING_VPN (nm_setting_vpn_new ());
+
+	g_object_set (s_vpn, NM_SETTING_VPN_SERVICE_TYPE, NM_DBUS_SERVICE_OPENVPN, NULL);
+	
+	/* Get the default path for ca, cert, key file, these files maybe
+	 * in same path with the configuration file */
+	if (g_path_is_absolute (path))
+		default_path = g_path_get_dirname (path);
+	else {
+		tmp = g_get_current_dir ();
+		tmp2 = g_path_get_dirname (path);
+		default_path = g_build_filename (tmp, tmp2, NULL);
+		g_free (tmp);
+		g_free (tmp2);
+	}
+
+	basename = g_path_get_basename (path);
+	last_dot = strrchr (basename, '.');
+	if (last_dot)
+		*last_dot = '\0';
+	g_object_set (s_con, NM_SETTING_CONNECTION_ID, basename, NULL);
+	g_free (basename);
+
+	for (line = lines; *line; line++) {
+		char *comment, **items = NULL, *leftover = NULL;
+
+		if ((comment = strchr (*line, '#')))
+			*comment = '\0';
+		if ((comment = strchr (*line, ';')))
+			*comment = '\0';
+		if (!strlen (*line))
+			continue;
+
+		if (   !strncmp (*line, CLIENT_TAG, strlen (CLIENT_TAG))
+		    || !strncmp (*line, TLS_CLIENT_TAG, strlen (TLS_CLIENT_TAG))) {
+			have_client = TRUE;
+			continue;
+		}
+
+		if (!strncmp (*line, DEV_TAG, strlen (DEV_TAG))) {
+			items = get_args (*line + strlen (DEV_TAG), &nitems);
+			if (nitems == 1) {
+				if (g_str_has_prefix (items[0], "tun")) {
+					/* ignore; default is tun */
+				} else if (g_str_has_prefix (items[0], "tap"))
+					nm_setting_vpn_add_data_item (s_vpn, NM_OPENVPN_KEY_TAP_DEV, "yes");
+				else
+					g_warning ("%s: unknown %s option '%s'", __func__, DEV_TAG, *line);
+			} else
+				g_warning ("%s: invalid number of arguments in option '%s'", __func__, *line);
+
+			g_strfreev (items);
+			continue;
+		}
+
+		if (!strncmp (*line, PROTO_TAG, strlen (PROTO_TAG))) {
+			items = get_args (*line + strlen (PROTO_TAG), &nitems);
+			if (nitems == 1) {
+				/* Valid parameters are "udp", "tcp-client" and "tcp-server".
+				 * 'tcp' isn't technically valid, but it used to be accepted so
+				 * we'll handle it here anyway.
+				 */
+				if (!strcmp (items[0], "udp")) {
+					/* ignore; udp is default */
+				} else if (   !strcmp (items[0], "tcp-client")
+				           || !strcmp (items[0], "tcp-server")
+				           || !strcmp (items[0], "tcp")) {
+					nm_setting_vpn_add_data_item (s_vpn, NM_OPENVPN_KEY_PROTO_TCP, "yes");
+				} else
+					g_warning ("%s: unknown %s option '%s'", __func__, PROTO_TAG, *line);
+			} else
+				g_warning ("%s: invalid number of arguments in option '%s'", __func__, *line);
+
+			g_strfreev (items);
+			continue;
+		}
+
+		if (!strncmp (*line, MSSFIX_TAG, strlen (MSSFIX_TAG))) {
+			nm_setting_vpn_add_data_item (s_vpn, NM_OPENVPN_KEY_MSSFIX, "yes");
+			continue;
+		}
+
+		if (!strncmp (*line, TUNMTU_TAG, strlen (TUNMTU_TAG))) {
+			items = get_args (*line + strlen (TUNMTU_TAG), &nitems);
+			if (nitems == 1) {
+				glong secs;
+
+				errno = 0;
+				secs = strtol (items[0], NULL, 10);
+				if ((errno == 0) && (secs >= 0) && (secs < 0xffff)) {
+					tmp = g_strdup_printf ("%d", (guint32) secs);
+					nm_setting_vpn_add_data_item (s_vpn, NM_OPENVPN_KEY_TUNNEL_MTU, tmp);
+					g_free (tmp);
+				} else
+					g_warning ("%s: invalid size in option '%s'", __func__, *line);
+			} else
+				g_warning ("%s: invalid number of arguments in option '%s'", __func__, *line);
+
+			g_strfreev (items);
+			continue;
+		}
+
+		if (!strncmp (*line, FRAGMENT_TAG, strlen (FRAGMENT_TAG))) {
+			items = get_args (*line + strlen (FRAGMENT_TAG), &nitems);
+
+			if (nitems == 1) {
+				glong secs;
+
+				errno = 0;
+				secs = strtol (items[0], NULL, 10);
+				if ((errno == 0) && (secs >= 0) && (secs < 0xffff)) {
+					tmp = g_strdup_printf ("%d", (guint32) secs);
+					nm_setting_vpn_add_data_item (s_vpn, NM_OPENVPN_KEY_FRAGMENT_SIZE, tmp);
+					g_free (tmp);
+				} else
+					g_warning ("%s: invalid size in option '%s'", __func__, *line);
+			} else
+				g_warning ("%s: invalid number of arguments in option '%s'", __func__, *line);
+
+			g_strfreev (items);
+			continue;
+		}
+
+		if (!strncmp (*line, COMP_TAG, strlen (COMP_TAG))) {
+			nm_setting_vpn_add_data_item (s_vpn, NM_OPENVPN_KEY_COMP_LZO, "yes");
+			continue;
+		}
+
+		if (!strncmp (*line, RENEG_SEC_TAG, strlen (RENEG_SEC_TAG))) {
+			items = get_args (*line + strlen (RENEG_SEC_TAG), &nitems);
+
+			if (nitems == 1) {
+				glong secs;
+
+				errno = 0;
+				secs = strtol (items[0], NULL, 10);
+				if ((errno == 0) && (secs >= 0) && (secs <= 604800)) {
+					tmp = g_strdup_printf ("%d", (guint32) secs);
+					nm_setting_vpn_add_data_item (s_vpn, NM_OPENVPN_KEY_RENEG_SECONDS, tmp);
+					g_free (tmp);
+				} else
+					g_warning ("%s: invalid time length in option '%s'", __func__, *line);
+			}
+			g_strfreev (items);
+			continue;
+		}
+
+		if (   !strncmp (*line, HTTP_PROXY_RETRY_TAG, strlen (HTTP_PROXY_RETRY_TAG))
+		    || !strncmp (*line, SOCKS_PROXY_RETRY_TAG, strlen (SOCKS_PROXY_RETRY_TAG))) {
+			nm_setting_vpn_add_data_item (s_vpn,
+			                              g_strdup (NM_OPENVPN_KEY_PROXY_RETRY),
+			                              g_strdup ("yes"));
+			continue;
+		}
+
+		http_proxy = g_str_has_prefix (*line, HTTP_PROXY_TAG);
+		socks_proxy = g_str_has_prefix (*line, SOCKS_PROXY_TAG);
+		if ((http_proxy || socks_proxy) && !proxy_set) {
+			gboolean success = FALSE;
+			const char *proxy_type = NULL;
+
+			if (http_proxy) {
+				items = get_args (*line + strlen (HTTP_PROXY_TAG), &nitems);
+				proxy_type = "http";
+			} else if (socks_proxy) {
+				items = get_args (*line + strlen (SOCKS_PROXY_TAG), &nitems);
+				proxy_type = "socks";
+			}
+
+			if (nitems >= 2) {
+				glong port;
+				char *s_port = NULL;
+				char *user = NULL, *pass = NULL;
+
+				success = TRUE;
+				if (http_proxy && nitems >= 3)
+					success = parse_http_proxy_auth (path, items[2], &user, &pass);
+
+				if (success) {
+					success = FALSE;
+					errno = 0;
+					port = strtol (items[1], NULL, 10);
+					if ((errno == 0) && (port > 0) && (port < 65536)) {
+						s_port = g_strdup_printf ("%d", (guint32) port);
+						success = TRUE;
+					}
+				}
+
+				if (success && proxy_type) {
+					nm_setting_vpn_add_data_item (s_vpn, NM_OPENVPN_KEY_PROXY_TYPE, proxy_type);
+
+					nm_setting_vpn_add_data_item (s_vpn, NM_OPENVPN_KEY_PROXY_SERVER, items[0]);
+					nm_setting_vpn_add_data_item (s_vpn, NM_OPENVPN_KEY_PROXY_PORT, s_port);
+					if (user)
+						nm_setting_vpn_add_data_item (s_vpn, NM_OPENVPN_KEY_HTTP_PROXY_USERNAME, user);
+					if (pass) {
+						nm_setting_vpn_add_secret (s_vpn, NM_OPENVPN_KEY_HTTP_PROXY_PASSWORD, pass);
+						nm_setting_set_secret_flags (NM_SETTING (s_vpn),
+						                             NM_OPENVPN_KEY_HTTP_PROXY_PASSWORD,
+						                             NM_SETTING_SECRET_FLAG_AGENT_OWNED,
+						                             NULL);
+					}
+					proxy_set = TRUE;
+				}
+				g_free (s_port);
+				g_free (user);
+				g_free (pass);
+			}
+
+			if (!success)
+				g_warning ("%s: invalid proxy option '%s'", __func__, *line);
+
+			g_strfreev (items);
+			continue;
+		}
+
+		if (!strncmp (*line, REMOTE_TAG, strlen (REMOTE_TAG))) {
+			items = get_args (*line + strlen (REMOTE_TAG), &nitems);
+			if (nitems >= 1 && nitems <= 3) {
+				const char *prev = nm_setting_vpn_get_data_item (s_vpn, NM_OPENVPN_KEY_REMOTE);
+				char *new_remote = g_strdup_printf ("%s%s%s", prev ? prev : "", prev ? ", " : "", items[0]);
+				nm_setting_vpn_add_data_item (s_vpn, NM_OPENVPN_KEY_REMOTE, new_remote);
+				g_free (new_remote);
+				have_remote = TRUE;
+
+				if (nitems >= 2) {
+					tmp = parse_port (items[1], *line);
+					if (tmp) {
+						nm_setting_vpn_add_data_item (s_vpn, NM_OPENVPN_KEY_PORT, tmp);
+						g_free (tmp);
+
+						if (nitems == 3) {
+							 /* TODO */
+						}
+					}
+				}
+			} else
+				g_warning ("%s: invalid number of arguments in option '%s'", __func__, *line);
+
+			g_strfreev (items);
+			continue;
+		}
+
+		if (   !strncmp (*line, PORT_TAG, strlen (PORT_TAG))
+		    || !strncmp (*line, RPORT_TAG, strlen (RPORT_TAG))) {
+			/* Port specified in 'remote' always takes precedence */
+			if (nm_setting_vpn_get_data_item (s_vpn, NM_OPENVPN_KEY_PORT))
+				continue;
+
+			if (!strncmp (*line, PORT_TAG, strlen (PORT_TAG)))
+				items = get_args (*line + strlen (PORT_TAG), &nitems);
+			else if (!strncmp (*line, RPORT_TAG, strlen (RPORT_TAG)))
+				items = get_args (*line + strlen (RPORT_TAG), &nitems);
+			else
+				g_assert_not_reached ();
+
+			if (nitems == 1) {
+				tmp = parse_port (items[0], *line);
+				if (tmp) {
+					nm_setting_vpn_add_data_item (s_vpn, NM_OPENVPN_KEY_PORT, tmp);
+					g_free (tmp);
+				}
+			} else
+				g_warning ("%s: invalid number of arguments in option '%s'", __func__, *line);
+
+			g_strfreev (items);
+			continue;
+		}
+
+		if ( handle_path_item (*line, PKCS12_TAG, NM_OPENVPN_KEY_CA, s_vpn, default_path, NULL) &&
+		     handle_path_item (*line, PKCS12_TAG, NM_OPENVPN_KEY_CERT, s_vpn, default_path, NULL) &&
+		     handle_path_item (*line, PKCS12_TAG, NM_OPENVPN_KEY_KEY, s_vpn, default_path, NULL))
+			continue;
+
+		if (handle_path_item (*line, CA_TAG, NM_OPENVPN_KEY_CA, s_vpn, default_path, NULL))
+			continue;
+
+		if (handle_path_item (*line, CERT_TAG, NM_OPENVPN_KEY_CERT, s_vpn, default_path, NULL))
+			continue;
+
+		if (handle_path_item (*line, KEY_TAG, NM_OPENVPN_KEY_KEY, s_vpn, default_path, NULL))
+			continue;
+
+		if (handle_path_item (*line, SECRET_TAG, NM_OPENVPN_KEY_STATIC_KEY,
+		                      s_vpn, default_path, &leftover)) {
+			handle_direction ("secret",
+			                  NM_OPENVPN_KEY_STATIC_KEY_DIRECTION,
+			                  leftover,
+			                  s_vpn);
+			g_free (leftover);
+			have_sk = TRUE;
+			continue;
+		}
+
+		if (handle_path_item (*line, TLS_AUTH_TAG, NM_OPENVPN_KEY_TA,
+		                      s_vpn, default_path, &leftover)) {
+			handle_direction ("tls-auth",
+			                  NM_OPENVPN_KEY_TA_DIR,
+			                  leftover,
+			                  s_vpn);
+			g_free (leftover);
+			continue;
+		}
+
+		if (!strncmp (*line, CIPHER_TAG, strlen (CIPHER_TAG))) {
+			items = get_args (*line + strlen (CIPHER_TAG), &nitems);
+			if (nitems == 1)
+				nm_setting_vpn_add_data_item (s_vpn, NM_OPENVPN_KEY_CIPHER, items[0]);
+			else
+				g_warning ("%s: invalid number of arguments in option '%s'", __func__, *line);
+
+			g_strfreev (items);
+			continue;
+		}
+
+		if (!strncmp (*line, TLS_REMOTE_TAG, strlen (TLS_REMOTE_TAG))) {
+			char *unquoted = unquote (*line + strlen (TLS_REMOTE_TAG), NULL);
+
+			if (unquoted) {
+				nm_setting_vpn_add_data_item (s_vpn, NM_OPENVPN_KEY_TLS_REMOTE, unquoted);
+				g_free (unquoted);
+			} else
+				g_warning ("%s: unknown %s option '%s'", __func__, TLS_REMOTE_TAG, *line);
+
+			continue;
+		}
+
+		if (!strncmp (*line, REMOTE_CERT_TLS_TAG, strlen (REMOTE_CERT_TLS_TAG))) {
+			items = get_args (*line + strlen (REMOTE_CERT_TLS_TAG), &nitems);
+			if (nitems == 1) {
+				if (   !strcmp (items[0], NM_OPENVPN_REM_CERT_TLS_CLIENT)
+				    || !strcmp (items[0], NM_OPENVPN_REM_CERT_TLS_SERVER)) {
+					nm_setting_vpn_add_data_item (s_vpn, NM_OPENVPN_KEY_REMOTE_CERT_TLS, items[0]);
+				} else
+					g_warning ("%s: unknown %s option '%s'", __func__, REMOTE_CERT_TLS_TAG, *line);
+			}
+
+			g_strfreev (items);
+			continue;
+		}
+
+		if (!strncmp (*line, IFCONFIG_TAG, strlen (IFCONFIG_TAG))) {
+			items = get_args (*line + strlen (IFCONFIG_TAG), &nitems);
+			if (nitems == 2) {
+				nm_setting_vpn_add_data_item (s_vpn, NM_OPENVPN_KEY_LOCAL_IP, items[0]);
+				nm_setting_vpn_add_data_item (s_vpn, NM_OPENVPN_KEY_REMOTE_IP, items[1]);
+			} else
+				g_warning ("%s: invalid number of arguments in option '%s'", __func__, *line);
+
+			g_strfreev (items);
+			continue;
+		}
+
+		if (!strncmp (*line, AUTH_USER_PASS_TAG, strlen (AUTH_USER_PASS_TAG))) {
+			have_pass = TRUE;
+			continue;
+		}
+
+		if (!strncmp (*line, AUTH_TAG, strlen (AUTH_TAG))) {
+			items = get_args (*line + strlen (AUTH_TAG), &nitems);
+			if (nitems == 1)
+				nm_setting_vpn_add_data_item (s_vpn, NM_OPENVPN_KEY_AUTH, items[0]);
+			else
+				g_warning ("%s: invalid number of arguments in option '%s'", __func__, *line);
+			g_strfreev (items);
+			continue;
+		}
+	}
+
+	if (!have_client && !have_sk) {
+		g_set_error (error,
+		             OPENVPN_PLUGIN_UI_ERROR,
+		             OPENVPN_PLUGIN_UI_ERROR_FILE_NOT_OPENVPN,
+		             "The file to import wasn't a valid OpenVPN client configuration.");
+		g_object_unref (connection);
+		connection = NULL;
+	} else if (!have_remote) {
+		g_set_error (error,
+		             OPENVPN_PLUGIN_UI_ERROR,
+		             OPENVPN_PLUGIN_UI_ERROR_FILE_NOT_OPENVPN,
+		             "The file to import wasn't a valid OpenVPN configure (no remote).");
+		g_object_unref (connection);
+		connection = NULL;
+	} else {
+		gboolean have_certs = FALSE, have_ca = FALSE;
+
+		if (nm_setting_vpn_get_data_item (s_vpn, NM_OPENVPN_KEY_CA))
+			have_ca = TRUE;
+
+		if (   have_ca
+		    && nm_setting_vpn_get_data_item (s_vpn, NM_OPENVPN_KEY_CERT)
+		    && nm_setting_vpn_get_data_item (s_vpn, NM_OPENVPN_KEY_KEY))
+			have_certs = TRUE;
+
+		/* Determine connection type */
+		if (have_pass) {
+			if (have_certs)
+				ctype = NM_OPENVPN_CONTYPE_PASSWORD_TLS;
+			else if (have_ca)
+				ctype = NM_OPENVPN_CONTYPE_PASSWORD;
+		} else if (have_certs) {
+			ctype = NM_OPENVPN_CONTYPE_TLS;
+		} else if (have_sk)
+			ctype = NM_OPENVPN_CONTYPE_STATIC_KEY;
+
+		if (!ctype)
+			ctype = NM_OPENVPN_CONTYPE_TLS;
+
+		nm_setting_vpn_add_data_item (s_vpn, NM_OPENVPN_KEY_CONNECTION_TYPE, ctype);
+
+		/* Default secret flags to be agent-owned */
+		if (have_pass) {
+			nm_setting_set_secret_flags (NM_SETTING (s_vpn),
+			                             NM_OPENVPN_KEY_PASSWORD,
+			                             NM_SETTING_SECRET_FLAG_AGENT_OWNED,
+			                             NULL);
+		}
+		if (have_certs) {
+			const char *key_path;
+
+			key_path = nm_setting_vpn_get_data_item (s_vpn, NM_OPENVPN_KEY_KEY);
+			if (key_path && is_encrypted (key_path)) {
+				/* If there should be a private key password, default it to
+				 * being agent-owned.
+				 */
+				nm_setting_set_secret_flags (NM_SETTING (s_vpn),
+				                             NM_OPENVPN_KEY_CERTPASS,
+				                             NM_SETTING_SECRET_FLAG_AGENT_OWNED,
+				                             NULL);
+			}
+		}
+	}
+
+	g_free (default_path);
+
+	if (connection)
+		nm_connection_add_setting (connection, NM_SETTING (s_vpn));
+	else if (s_vpn)
+		g_object_unref (s_vpn);
+
+	return connection;
+}
+#endif
+
 static gboolean
 export (NMVpnPluginUiInterface *iface,
         const char *path,
@@ -747,25 +1384,25 @@ export (NMVpnPluginUiInterface *iface,
 
 	/* Serialize everything to a file */
 	fprintf (f, "#!/bin/bash\n");
-	fprintf (f, "REMOTE=%s\n", gateway);
-	fprintf (f, "REMOTE_USERNAME=%s\n", remote_username);
-	fprintf (f, "REMOTE_IP=%s\n", remote_ip);
-	fprintf (f, "LOCAL_IP=%s\n", local_ip);
-	fprintf (f, "NETMASK=%s\n", netmask);
+	fprintf (f, "%s=%s\n", REMOTE_KEY, gateway);
+	fprintf (f, "%s=%s\n", REMOTE_USERNAME_KEY, remote_username);
+	fprintf (f, "%s=%s\n", REMOTE_IP_KEY, remote_ip);
+	fprintf (f, "%s=%s\n", LOCAL_IP_KEY, local_ip);
+	fprintf (f, "%s=%s\n", NETMASK_KEY, netmask);
 	if (ipv6) {
-		fprintf (f, "IP_6=%s\n", "yes");
-		fprintf (f, "REMOTE_IP_6=%s\n", remote_ip_6);
-		fprintf (f, "LOCAL_IP_6=%s\n", local_ip_6);
-		fprintf (f, "NETMASK_6=%s\n", netmask_6);
+		fprintf (f, "%s=%s\n", IP_6_KEY, "yes");
+		fprintf (f, "%s=%s\n", REMOTE_IP_6_KEY, remote_ip_6);
+		fprintf (f, "%s=%s\n", LOCAL_IP_6_KEY, local_ip_6);
+		fprintf (f, "%s=%s\n", NETMASK_6_KEY, netmask_6);
 	}
-	fprintf (f, "PORT=%s\n", port);
-	fprintf (f, "MTU=%s\n", mtu);
-	fprintf (f, "EXTRA_OPTS='%s'\n", extra_opts);
-	fprintf (f, "REMOTE_DEV=%s\n", remote_dev);
+	fprintf (f, "%s=%s\n", PORT_KEY, port);
+	fprintf (f, "%s=%s\n", MTU_KEY, mtu);
+	fprintf (f, "%s='%s'\n", EXTRA_OPTS_KEY, extra_opts);
+	fprintf (f, "%s=%s\n", REMOTE_DEV_KEY, remote_dev);
 
 	/* Assign tun/tap */
-	fprintf (f, "DEV_TYPE=%s\n", device_type);
-	fprintf (f, "TUNNEL_TYPE=%s\n\n", tunnel_type);
+	fprintf (f, "%s=%s\n", DEV_TYPE_KEY, device_type);
+	fprintf (f, "%s=%s\n\n", TUNNEL_TYPE_KEY, tunnel_type);
 
 	/* Add a little of bash script to probe for a free tun/tap device */
 	fprintf (f, "for i in `seq 0 255`; do ! %s $DEV_TYPE$i >& /dev/null && LOCAL_DEV=$i && break; done", IFCONFIG);
@@ -796,15 +1433,13 @@ get_suggested_name (NMVpnPluginUiInterface *iface, NMConnection *connection)
 	id = nm_setting_connection_get_id (s_con);
 	g_return_val_if_fail (id != NULL, NULL);
 
-	return g_strdup_printf ("%s (ssh).conf", id);
+	return g_strdup_printf ("%s (ssh).sh", id);
 }
 
 static guint32
 get_capabilities (NMVpnPluginUiInterface *iface)
 {
-	// TODO implement import :)
-	//return (NM_VPN_PLUGIN_UI_CAPABILITY_IMPORT | NM_VPN_PLUGIN_UI_CAPABILITY_EXPORT);
-	return (NM_VPN_PLUGIN_UI_CAPABILITY_EXPORT);
+	return (NM_VPN_PLUGIN_UI_CAPABILITY_IMPORT | NM_VPN_PLUGIN_UI_CAPABILITY_EXPORT);
 }
 
 static NMVpnPluginUiWidgetInterface *
@@ -864,8 +1499,7 @@ ssh_plugin_ui_interface_init (NMVpnPluginUiInterface *iface_class)
 	/* interface implementation */
 	iface_class->ui_factory = ui_factory;
 	iface_class->get_capabilities = get_capabilities;
-	// TODO implement
-	//iface_class->import_from_file = import;
+	iface_class->import_from_file = import;
 	iface_class->export_to_file = export;
 	iface_class->get_suggested_name = get_suggested_name;
 }
