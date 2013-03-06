@@ -733,8 +733,8 @@ import (NMVpnPluginUiInterface *iface, const char *path, GError **error)
 		 * 1. Use the whole line (might contain = chars in it)
 		 * 2. Strip the single/double quotes */
 		if (!strncmp (items[0], EXTRA_OPTS_KEY, strlen (items[0]))) {
-			gchar *parsed_extra_opts;
-			gchar *unquoted_extra_opts;
+			gchar *parsed_extra_opts = NULL;
+			gchar *unquoted_extra_opts = NULL;
 			/* Read the whole line, witout the EXTRA_OPTS= part */
 			parsed_extra_opts = g_strdup(*line + strlen(EXTRA_OPTS_KEY) + 1);
 
