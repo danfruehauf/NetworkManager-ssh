@@ -15,56 +15,6 @@ SSH VPN can be used just anywhere!
 ## So what does it do?
 Basically NetworkManager-ssh integrates OpenSSH tunnel capabilities with NetworkManager and provides you with the easiest of all VPNs, as OpenSSH lives on almost any *nix machine today.
 
-## How does it work? SSH? VPN?
-In order to open a tunnel OpenSSH VPN, all that you have to do is run:
-
-	#!/bin/bash
-	# This is the WAN IP/hostname of the remote machine
-	REMOTE=EDIT_ME
-
-	# Remote username will usually be root, or any other privileged user
-	# who can open tun/tap devices on the remote host
-	REMOTE_USERNAME=root
-
-	# Remote IP in the tunnel
-	REMOTE_IP=192.168.0.1
-
-	# Local IP in the tunnel
-	LOCAL_IP=192.168.0.2
-
-	# Netmask to set (on both sides)
-	NETMASK=255.255.255.252
-
-	# SSH port to use
-	PORT=22
-
-	# MTU for tunnel
-	MTU=1500
-
-	# Extra SSH options, these would give us some nice keep alive
-	EXTRA_OPTS='-o ServerAliveInterval=10 -o TCPKeepAlive=yes'
-
-	# Remote tunnel device (tun100/tap100)
-	REMOTE_DEV=100
-	DEV_TYPE=tun
-	# TUNNEL_TYPE is 'point-to-point' for tun and 'ethernet' for tap
-	TUNNEL_TYPE=point-to-point
-
-	# Local tunnel is calculated depending on what devices are free
-	# The following loop iterates from 0 to 255 and finds a free
-	# tun/tap device
-	for i in `seq 0 255`; do ! ifconfig $DEV_TYPE$i >& /dev/null && LOCAL_DEV=$i && break; done
-
-	ssh -f -v -o Tunnel=$TUNNEL_TYPE -o NumberOfPasswordPrompts=0 $EXTRA_OPTS \
-		-w $LOCAL_DEV:$REMOTE_DEV \
-		-l $REMOTE_USERNAME -p $PORT $REMOTE \
-		"/sbin/ifconfig $DEV_TYPE$REMOTE_DEV $REMOTE_IP netmask $NETMASK pointopoint $LOCAL_IP up" && \
-	/sbin/ifconfig $DEV_TYPE$LOCAL_DEV $LOCAL_IP netmask $NETMASK pointopoint $REMOTE_IP up
-
-That's actually an edited export file of a working SSH VPN configuration I have from NetworkManager.
-
-This will create a tunnel of 192.168.0.1<->192.168.0.2 on tun100 on both machines. If forwarding is enabled on that SSH server, you'll get pass-through internet easy.
-
 ## Compiling
 ### Fedora/CentOS
 On Fedora things should be simple, after you clone the repository:
@@ -151,10 +101,61 @@ If the destination host is not in your <i>known_hosts</i> file, things will not 
 
 	-o StrictHostKeyChecking=no
 
+## Behind the scenes - how does it actually work??
+In order to open a tunnel OpenSSH VPN, all that you have to do is run:
+
+	#!/bin/bash
+	# This is the WAN IP/hostname of the remote machine
+	REMOTE=EDIT_ME
+
+	# Remote username will usually be root, or any other privileged user
+	# who can open tun/tap devices on the remote host
+	REMOTE_USERNAME=root
+
+	# Remote IP in the tunnel
+	REMOTE_IP=192.168.0.1
+
+	# Local IP in the tunnel
+	LOCAL_IP=192.168.0.2
+
+	# Netmask to set (on both sides)
+	NETMASK=255.255.255.252
+
+	# SSH port to use
+	PORT=22
+
+	# MTU for tunnel
+	MTU=1500
+
+	# Extra SSH options, these would give us some nice keep alive
+	EXTRA_OPTS='-o ServerAliveInterval=10 -o TCPKeepAlive=yes'
+
+	# Remote tunnel device (tun100/tap100)
+	REMOTE_DEV=100
+	DEV_TYPE=tun
+	# TUNNEL_TYPE is 'point-to-point' for tun and 'ethernet' for tap
+	TUNNEL_TYPE=point-to-point
+
+	# Local tunnel is calculated depending on what devices are free
+	# The following loop iterates from 0 to 255 and finds a free
+	# tun/tap device
+	for i in `seq 0 255`; do ! ifconfig $DEV_TYPE$i >& /dev/null && LOCAL_DEV=$i && break; done
+
+	ssh -f -v -o Tunnel=$TUNNEL_TYPE -o NumberOfPasswordPrompts=0 $EXTRA_OPTS \
+		-w $LOCAL_DEV:$REMOTE_DEV \
+		-l $REMOTE_USERNAME -p $PORT $REMOTE \
+		"/sbin/ifconfig $DEV_TYPE$REMOTE_DEV $REMOTE_IP netmask $NETMASK pointopoint $LOCAL_IP up" && \
+	/sbin/ifconfig $DEV_TYPE$LOCAL_DEV $LOCAL_IP netmask $NETMASK pointopoint $REMOTE_IP up
+
+That's actually an edited export file of a working SSH VPN configuration I have from NetworkManager.
+
+This will create a tunnel of 192.168.0.1<->192.168.0.2 on tun100 on both machines. If forwarding is enabled on that SSH server, you'll get pass-through internet easy.
+
 ## People I'd like to thank
 
  * Thomas Young - First user!
  * Whoopie - For nice debian support and testing
+ * Oren Held - Invaluable feedback and testing
 
 ## Screenshots
 
