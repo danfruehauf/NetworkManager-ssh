@@ -39,6 +39,30 @@
 
 #include "src/nm-ssh-service.h"
 
+static void wait_for_quit (void)
+{
+	GString *str;
+	char c;
+	ssize_t n;
+	time_t start;
+
+	str = g_string_sized_new (10);
+	start = time (NULL);
+	do {
+		errno = 0;
+		n = read (0, &c, 1);
+		if (n == 0 || (n < 0 && errno == EAGAIN))
+			g_usleep (G_USEC_PER_SEC / 10);
+		else if (n == 1) {
+			g_string_append_c (str, c);
+			if (strstr (str->str, "QUIT") || (str->len > 10))
+				break;
+		} else
+			break;
+	} while (time (NULL) < start + 20);
+	g_string_free (str, TRUE);
+}
+
 int 
 main (int argc, char *argv[])
 {
@@ -105,6 +129,8 @@ main (int argc, char *argv[])
 
 	/* flush everything */
 	fflush (stdout);
+
+	wait_for_quit ();
 
 	return 0;
 }
