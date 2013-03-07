@@ -72,14 +72,6 @@ PKG_CHECK_MODULES(GIO, gio-unix-2.0)
 AC_SUBST(GIO_CFLAGS)
 AC_SUBST(GIO_LIBS)
 
-PKG_CHECK_MODULES(NM,
-	NetworkManager >= 0.8.998
-	libnm-util >= 0.8.998
-	libnm-glib >= 0.8.998
-	libnm-glib-vpn >= 0.8.998)
-AC_SUBST(NM_CFLAGS)
-AC_SUBST(NM_LIBS)
-
 if test x"$with_gnome" != xno; then
 	AC_ARG_WITH([gtkver], AS_HELP_STRING([--with-gtkver], [The major version of GTK+ to build with]),
 	            with_gtkver="$withval",with_gtkver=0)
@@ -114,8 +106,22 @@ if test x"$with_gnome" != xno; then
 fi
 
 if test x"$with_ipv6" != xno; then
+	dnl We need at least NetworkManager 0.9.6 for ipv6 support
+	PKG_CHECK_MODULES(NM,
+		NetworkManager >= 0.9.6
+		libnm-util >= 0.9.6
+		libnm-glib >= 0.9.6
+		libnm-glib-vpn >= 0.9.6, [], AC_MSG_ERROR([NetworkManager >= 0.9.6 required for IPv6 support. Try with '--without-ipv6']))
 	AC_DEFINE(IPV6, "yes", ipv6 support)
+else
+	PKG_CHECK_MODULES(NM,
+		NetworkManager >= 0.8.998
+		libnm-util >= 0.8.998
+		libnm-glib >= 0.8.998
+		libnm-glib-vpn >= 0.8.998)
 fi
+AC_SUBST(NM_CFLAGS)
+AC_SUBST(NM_LIBS)
 
 NM_COMPILER_WARNINGS
 
