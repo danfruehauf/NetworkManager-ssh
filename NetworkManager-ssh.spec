@@ -4,18 +4,18 @@
 %define openssh_version     6.1
 %define shared_mime_version 0.16-3
 
-%define snapshot %{nil}
-%define realversion 0.0.3
+%define snapshot ___snapshot___
+%define realversion ___version___
 
 Summary: NetworkManager VPN plugin for SSH
 Name: NetworkManager-ssh
 Epoch:   1
-Version: 0.0.3
+Version: ___version___
 Release: 1%{snapshot}%{?dist}
 License: GPLv2+
 URL: https://github.com/danfruehauf/NetworkManager-ssh
 Group: System Environment/Base
-Source: %{name}-%{realversion}%{snapshot}.tar.xz
+Source: %{name}-%{realversion}.tar.xz
 
 BuildRequires: gtk3-devel                 >= %{gtk2_version}
 BuildRequires: dbus-devel                 >= %{dbus_version}
@@ -85,8 +85,3 @@ fi
 %dir %{_datadir}/gnome-vpn-properties/ssh
 
 %changelog
-* Mon Feb 25 2013 Dan Fruehauf - 1:0.0.3.0-1
-- ipv6 support
-
-* Fri Feb 08 2013 Dan Fruehauf - 1:0.0.1.0-1
-- Initial version taken from nm-ssh by Dan Williams
