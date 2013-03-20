@@ -53,7 +53,7 @@ rpm: dist-xz
 	mv $(distdir).tar.xz "$$rpm_source_dir" && \
 	sed -e 's/___version___/$(VERSION)/g' -e "s/___snapshot___/$$snapshot_tag$$dirty/g" $(PACKAGE).spec > $$rpm_spec_dir/$(PACKAGE).spec && \
 	git log --format="* %cd %aN%n- (%h) %s%d%n" --date=local | sed -r 's/[0-9]+:[0-9]+:[0-9]+ //' >> $$rpm_spec_dir/$(PACKAGE).spec && \
-	rpmbuild -bb $$rpm_spec_dir/$(PACKAGE).spec
+	rpmbuild -ba $$rpm_spec_dir/$(PACKAGE).spec
 
 deb: dist-xz
 	deb_src_filename=$(PACKAGE:NetworkManager%=network-manager%)_$(VERSION).orig.tar.xz && \
