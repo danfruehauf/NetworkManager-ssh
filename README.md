@@ -50,7 +50,7 @@ On Debian/Ubuntu:
 
 	/usr/lib/NetworkManager/nm-ssh-service --debug
 
-You may see the full output of what's going on...
+Invoke the connection via the NetworkManager icon in your taskbar and you should see the full output of what's going on...
 
 ## Server side configuration
 Even though this is a bit off-topic, I've decided to cover it anyway.
@@ -67,16 +67,18 @@ Tun devices:
 	-I FORWARD -i tun+ -j ACCEPT
 	-I FORWARD -o tun+ -j ACCEPT
 	-I INPUT -i tun+ -j ACCEPT
-	-I POSTROUTING -i tun+ -o EXTERNAL_INTERFACE -j MASQUERADE
+	-I POSTROUTING -o EXTERNAL_INTERFACE -j MASQUERADE
 
 Tap devices:
 
 	-I FORWARD -i tap+ -j ACCEPT
 	-I FORWARD -o tap+ -j ACCEPT
 	-I INPUT -i tap+ -j ACCEPT
-	-I POSTROUTING -i tap+ -o EXTERNAL_INTERFACE -j MASQUERADE
+	-I POSTROUTING -o EXTERNAL_INTERFACE -j MASQUERADE
 
 Please use these firewall rules as a reference only.
+
+Don't forget to replace <b>EXTERNAL_INTERFACE</b> with your WAN interface (eth0, ppp0, etc).
 
 ## Limitations
 
