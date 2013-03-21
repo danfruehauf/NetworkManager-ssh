@@ -48,10 +48,11 @@ rpm: dist-xz
 	@set -e; \
 	rpm_source_dir=$(shell rpm --eval '%{_sourcedir}') && \
 	rpm_spec_dir=$(shell rpm --eval '%{_specdir}') && \
-	snapshot_tag=$(shell echo .`date --utc "+%Y%m%d"`git`git log -n1 --format="%H" | cut -c1-7`) && \
-	dirty_tag=$(shell git status -s | grep -q '^ M' && echo ".dirty") && \
-	mv $(distdir).tar.xz "$$rpm_source_dir" && \
-	sed -e 's/___version___/$(VERSION)/g' -e "s/___snapshot___/$$snapshot_tag$$dirty/g" $(PACKAGE).spec > $$rpm_spec_dir/$(PACKAGE).spec && \
+	commit_tag=$(shell git log -n1 --format="%H") && \
+	shortcommit_tag=$(shell git log -n1 --format="%H" | cut -c1-7) && \
+	shortcommit_tag2=$(shell echo .`date --utc "+%Y%m%d"`git`git log -n1 --format="%H" | cut -c1-7`) && \
+	mv $(distdir).tar.xz "$$rpm_source_dir"/$(PACKAGE)-$(VERSION)-"$$shortcommit_tag".tar.xz && \
+	sed -e 's/___version___/$(VERSION)/g' -e "s/___commit___/$$commit_tag/g" $(PACKAGE).spec > $$rpm_spec_dir/$(PACKAGE).spec && \
 	git log --format="* %cd %aN%n- (%h) %s%d%n" --date=local | sed -r 's/[0-9]+:[0-9]+:[0-9]+ //' >> $$rpm_spec_dir/$(PACKAGE).spec && \
 	rpmbuild -ba $$rpm_spec_dir/$(PACKAGE).spec
 

@@ -1,40 +1,30 @@
-%define nm_version          1:0.9.2
-%define dbus_version        1.1
-%define gtk2_version        3.0.1
-%define openssh_version     6.1
-%define shared_mime_version 0.16-3
-
-%define snapshot ___snapshot___
-%define realversion ___version___
+%global commit ___commit___
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
+%global checkout %(date --utc "+%Y%m%d")
 
 Summary: NetworkManager VPN plugin for SSH
 Name: NetworkManager-ssh
-Epoch:   1
 Version: ___version___
-Release: 1%{snapshot}%{?dist}
+Release: pre1.%{checkout}git%{shortcommit}%{?dist}
 License: GPLv2+
 URL: https://github.com/danfruehauf/NetworkManager-ssh
 Group: System Environment/Base
-Source: %{name}-%{realversion}.tar.xz
+Source0: https://github.com/danfruehauf/NetworkManager-ssh/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.xz
 
-BuildRequires: gtk3-devel                 >= %{gtk2_version}
-BuildRequires: dbus-devel                 >= %{dbus_version}
-BuildRequires: NetworkManager-devel       >= %{nm_version}
-BuildRequires: NetworkManager-glib-devel  >= %{nm_version}
+BuildRequires: gtk3-devel
+BuildRequires: dbus-devel
+BuildRequires: NetworkManager-devel
+BuildRequires: NetworkManager-glib-devel
 BuildRequires: glib2-devel
-%if 0%{?fedora} > 16
 BuildRequires: libgnome-keyring-devel
-%else
-BuildRequires: gnome-keyring-devel
-%endif
 BuildRequires: libtool intltool gettext
 Requires(post): %{_bindir}/update-desktop-database
 Requires(postun): %{_bindir}/update-desktop-database
-Requires: gtk3             >= %{gtk2_version}
-Requires: dbus             >= %{dbus_version}
-Requires: NetworkManager   >= %{nm_version}
-Requires: openssh          >= %{openssh_version}
-Requires: shared-mime-info >= %{shared_mime_version}
+Requires: gtk3
+Requires: dbus
+Requires: NetworkManager
+Requires: openssh
+Requires: shared-mime-info
 Requires: gnome-keyring
 
 %description
@@ -42,7 +32,7 @@ This package contains software for integrating VPN capabilites with
 the OpenSSH server with NetworkManager and the GNOME desktop.
 
 %prep
-%setup -q -n %{name}-%{realversion}
+%setup -q -n %{name}-%{version}
 
 %build
 if [ ! -f configure ]; then
@@ -52,7 +42,7 @@ fi
 make %{?_smp_mflags}
 
 %install
-make install DESTDIR=%{buildroot} INSTALL="%{__install} -p"
+make DESTDIR=%{buildroot} INSTALL="install -p" CP="cp -p" install
 
 rm -f %{buildroot}%{_libdir}/NetworkManager/lib*.la
 
@@ -73,9 +63,8 @@ if [ -x /usr/bin/gtk-update-icon-cache ]; then
 fi
 
 %files -f %{name}.lang
-%defattr(-, root, root)
 
-%doc AUTHORS ChangeLog README
+%doc COPYING AUTHORS README
 %{_libdir}/NetworkManager/lib*.so*
 %{_sysconfdir}/dbus-1/system.d/nm-ssh-service.conf
 %{_sysconfdir}/NetworkManager/VPN/nm-ssh-service.name
