@@ -1,15 +1,15 @@
 %global commit ___commit___
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global checkout %(date --utc "+%Y%m%d")
+%global checkout ___checkout___%{shortcommit}
 
 Summary: NetworkManager VPN plugin for SSH
 Name: NetworkManager-ssh
 Version: ___version___
-Release: pre1.%{checkout}git%{shortcommit}%{?dist}
+Release: 2.%{checkout}%{?dist}
 License: GPLv2+
 URL: https://github.com/danfruehauf/NetworkManager-ssh
 Group: System Environment/Base
-Source0: https://github.com/danfruehauf/NetworkManager-ssh/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.xz
+Source0: https://github.com/danfruehauf/NetworkManager-ssh/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
 
 BuildRequires: gtk3-devel
 BuildRequires: dbus-devel
@@ -48,23 +48,9 @@ rm -f %{buildroot}%{_libdir}/NetworkManager/lib*.la
 
 %find_lang %{name}
 
-%post
-/usr/bin/update-desktop-database > /dev/null
-touch --no-create %{_datadir}/icons/hicolor
-if [ -x /usr/bin/gtk-update-icon-cache ]; then
-      /usr/bin/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor || :
-fi
-
-%postun
-/usr/bin/update-desktop-database > /dev/null
-touch --no-create %{_datadir}/icons/hicolor
-if [ -x /usr/bin/gtk-update-icon-cache ]; then
-      /usr/bin/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor || :
-fi
-
 %files -f %{name}.lang
 
-%doc COPYING AUTHORS README
+%doc COPYING AUTHORS README ChangeLog
 %{_libdir}/NetworkManager/lib*.so*
 %{_sysconfdir}/dbus-1/system.d/nm-ssh-service.conf
 %{_sysconfdir}/NetworkManager/VPN/nm-ssh-service.name
@@ -74,3 +60,8 @@ fi
 %dir %{_datadir}/gnome-vpn-properties/ssh
 
 %changelog
+* Fri Mar 22 2013 Dan Fruehauf  <malkodan@gmail.com> - 0.0.3-2
+- Changes to conform with Fedora packaging standards
+
+* Wed Mar 20 2013 Dan Fruehauf  <malkodan@gmail.com> - 0.0.3-1
+- Initial spec release

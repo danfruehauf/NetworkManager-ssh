@@ -1,8 +1,300 @@
-2013-02-12  Dan Fruehauf <malkodan@gmail.com>
+* Fri Mar 22 2013 Dan Fruehauf
+- (36fdd55) ingore config.h.in~ (HEAD, master)
 
-	* greatly improved ssh-agent integration
+* Thu Mar 21 2013 Dan Fruehauf
+- (cf6c00f) changes to conform with Fedora packaging guidelines (origin/master, origin/HEAD)
 
-2013-02-08  Dan Fruehauf <malkodan@gmail.com>
+* Wed Mar 20 2013 Dan Fruehauf
+- (ccfc811) updated README.md
 
-	* initial version taken from nm-openvpn by Dan Williams
+* Wed Mar 20 2013 Dan Fruehauf
+- (e99a854) changed -bb to -ba in Makefile.am, to build also a source RPM
+
+* Fri Mar 15 2013 Dan Fruehauf
+- (6467963) greatly improved rpm building:  * using a proper changelog extracted from git  * including a git revision tag and date  * adding a dirty tag for local modifications  * using a dynamic version in spec
+
+* Thu Mar 7 2013 Dan Fruehauf
+- (6503b7e) not building with ipv6 if no NetworkManager >= 0.9.6 found, also suggesting user to run with '--without-ipv6'
+
+* Wed Mar 6 2013 Dan Fruehauf
+- (2238d45) Merge branch 'master' of github.com:danfruehauf/NetworkManager-ssh
+
+* Wed Mar 6 2013 Dan Fruehauf
+- (5cfce45) Moved the 'How does it work?' section to the end as it might confuses users
+
+* Wed Mar 6 2013 Dan Fruehauf
+- (6c7f468) waiting for QUIT signal, as specified by this bug for the openconnect plugin: https://bugzilla.gnome.org/show_bug.cgi?id=674991 - thanks for Oren Held for pointing that out
+
+* Mon Mar 4 2013 Dan Fruehauf
+- (7ed31a7) Fixes warning on debian, thanks to Whoopie
+
+* Fri Mar 1 2013 Dan Fruehauf
+- (4569aac) update README.md with debugging information
+
+* Fri Mar 1 2013 Dan Fruehauf
+- (a813a7c) added import support
+
+* Mon Feb 25 2013 Dan Fruehauf
+- (28fc866) updated screenshots
+
+* Mon Feb 25 2013 Dan Fruehauf
+- (b07cab1) updated screenshots
+
+* Mon Feb 25 2013 Dan Fruehauf
+- (3f7f43a) fixed build, stupid mistake
+
+* Mon Feb 25 2013 Dan Fruehauf
+- (dcde283) added better handling of errors - canceling ifconfig timer if ssh has quitted
+
+* Mon Feb 25 2013 Dan Fruehauf
+- (ce6c4c1) allowing to use also tap0/tun0
+
+* Mon Feb 25 2013 Dan Fruehauf
+- (41ffe16) fixed ipv6 support when running with --without-ipv6
+
+* Mon Feb 25 2013 Dan Fruehauf
+- (351368f) refactored ui file
+
+* Mon Feb 25 2013 Dan Fruehauf
+- (d3d652f) Merge branch 'master' of github.com:danfruehauf/NetworkManager-ssh
+
+* Mon Feb 25 2013 Dan Fruehauf
+- (8d53f80) ipv6 support optional
+
+* Mon Feb 25 2013 Dan Fruehauf
+- (4be9c54) fixed changelogs
+
+* Mon Feb 25 2013 Dan Fruehauf
+- (5d403e4) Merge branch 'master' of github.com:danfruehauf/NetworkManager-ssh
+
+* Mon Feb 25 2013 Dan Fruehauf
+- (b4733f2) incremented version to 0.0.3
+
+* Mon Feb 25 2013 Dan Fruehauf
+- (45f2e5b) added ipv6 support
+
+* Sun Feb 24 2013 Dan Fruehauf
+- (1dc1873) slight fix to README.md
+
+* Sun Feb 24 2013 Dan Fruehauf
+- (e8396f4) applied Whoopie's patch for all, not just debian
+
+* Sun Feb 24 2013 Dan Fruehauf
+- (9ed57cd) reversed Whoopie's libexec patch
+
+* Sun Feb 24 2013 Dan Fruehauf
+- (bb9d011) updated README.md
+
+* Sat Feb 23 2013 Dan Fruehauf
+- (13276e1) improved exporting
+
+* Sat Feb 23 2013 Dan Fruehauf
+- (b679426) nm_ssh_get_free_device now looking properly for a free tun/tap device
+
+* Sat Feb 23 2013 Dan Fruehauf
+- (0faf649) improved error handling from the SSH process, removed some TODOs as well
+
+* Sat Feb 23 2013 Dan Fruehauf
+- (3e9dfed) added option to specify username (although would most likely be root)
+
+* Sat Feb 23 2013 Dan Fruehauf
+- (3fe1e00) fixed LIBEXECDIR in nm-ssh-service.name.in, thanks to Whoopie
+
+* Sat Feb 23 2013 Dan Fruehauf
+- (1a8b359) added export functionality for tap devices
+
+* Sat Feb 23 2013 Dan Fruehauf
+- (5892292) added tap support
+
+* Sat Feb 23 2013 Dan Fruehauf
+- (e439814) fixed POTFILES.in, thanks to Whoopie
+
+* Sat Feb 23 2013 Dan Fruehauf
+- (aab4a37) improved debian build with git versioning, thanks to Whoopie
+
+* Wed Feb 20 2013 Dan Fruehauf
+- (011a210) fixed system command when probing for tun devices
+
+* Tue Feb 19 2013 Dan Fruehauf
+- (bd4202f) removing fds after ssh process exits, solves the problem of 100% cpu after process exits
+
+* Tue Feb 19 2013 Dan Fruehauf
+- (7ba8924)  * config variable for SSH_AUTH_SOCK  * config variable for SSH_KNOWN_HOSTS_PATH
+
+* Tue Feb 19 2013 Dan Fruehauf
+- (ee12daa)  * supressing error when probing tun devices  * ifconfig is now a constant
+
+* Tue Feb 19 2013 Dan Fruehauf
+- (9375210) using user's known_hosts file instead of root's
+
+* Tue Feb 19 2013 Dan Fruehauf
+- (817184d) added proper ignores
+
+* Tue Feb 19 2013 Dan Fruehauf
+- (efbe6aa) added warning dialog if ssh-agent is not running
+
+* Mon Feb 18 2013 Dan Fruehauf
+- (3a1ebe9) such mess with autoconf, added m4 again with compiler_warnings.m4
+
+* Mon Feb 18 2013 Dan Fruehauf
+- (7df0d99) removed even more autoconf files
+
+* Mon Feb 18 2013 Dan Fruehauf
+- (37df930) added back Makefile.in.in in po/
+
+* Mon Feb 18 2013 Dan Fruehauf
+- (c6802d4) fixed autoreconf stuff
+
+* Sun Feb 17 2013 Dan Fruehauf
+- (5998e75) updated README.md with running autoreconf
+
+* Sun Feb 17 2013 Dan Fruehauf
+- (5112a18) removed also configure
+
+* Sun Feb 17 2013 Dan Fruehauf
+- (9b8304c) even more cleaning of autoconf
+
+* Sun Feb 17 2013 Dan Fruehauf
+- (98c465f) added ignores
+
+* Sun Feb 17 2013 Dan Fruehauf
+- (9307420) removed redundant constant and reverted change of password saving in config
+
+* Sun Feb 17 2013 Dan Fruehauf
+- (9c3711a) removed more autoconf unneeded files
+
+* Sun Feb 17 2013 Dan Fruehauf
+- (19bd109) 0.0.2 - improved ssh-agent integration
+
+* Sun Feb 17 2013 Dan Fruehauf
+- (6130714) added gitignore
+
+* Sun Feb 17 2013 Dan Fruehauf
+- (e627ba9) removed autoconf redundant stuff
+
+* Sun Feb 17 2013 root
+- (b04ecb9) greatly improved the integration with ssh-agent
+
+* Wed Feb 13 2013 Dan Fruehauf
+- (6fd6bb4) updated README.md for deb building
+
+* Wed Feb 13 2013 Dan Fruehauf
+- (303f182) fixed deps for ubuntu package
+
+* Wed Feb 13 2013 Dan Fruehauf
+- (cb142e9) fixed ubuntu package building
+
+* Wed Feb 13 2013 Dan Fruehauf
+- (0294354) fixed deps for ubuntu package
+
+* Wed Feb 13 2013 Dan Fruehauf
+- (0ddfaa0) updated ubuntu packaging
+
+* Wed Feb 13 2013 Dan Fruehauf
+- (c2f3c76) added ubuntu package building
+
+* Wed Feb 13 2013 Dan Fruehauf
+- (57c6345) removed files in POTFILES.in
+
+* Wed Feb 13 2013 Dan Fruehauf
+- (14aee09) minor changes to enable compilation on debian
+
+* Sat Feb 9 2013 Dan Fruehauf
+- (1001eb3) got rid of some more unused files
+
+* Sat Feb 9 2013 Dan Fruehauf
+- (b2e6f48) mistake in ChangeLog
+
+* Sat Feb 9 2013 Dan Fruehauf
+- (e5ee901) Added screenshots
+
+* Sat Feb 9 2013 Dan Fruehauf
+- (eab0202) removed 'show passwords' checkbox
+
+* Fri Feb 8 2013 Dan Fruehauf
+- (c95215d) README.md updated
+
+* Fri Feb 8 2013 Dan Fruehauf
+- (9fd048e) updated ChangeLog with correct date
+
+* Fri Feb 8 2013 Dan Fruehauf
+- (d890178) fixed export of EXTRA_OPTS
+
+* Fri Feb 8 2013 Dan Fruehauf
+- (80dc7a6) README.md updated
+
+* Fri Feb 8 2013 Dan Fruehauf
+- (8cd1018) README.md updated
+
+* Fri Feb 8 2013 Dan Fruehauf
+- (94a31ca) README.md updated
+
+* Fri Feb 8 2013 Dan Fruehauf
+- (55df8cd) README.md updated
+
+* Fri Feb 8 2013 Dan Fruehauf
+- (e9c0850) README.md updated
+
+* Fri Feb 8 2013 Dan Fruehauf
+- (cf82af6) updated README.md
+
+* Fri Feb 8 2013 Dan Fruehauf
+- (dbd6df8) added rpm target to Makefile.am
+
+* Fri Feb 8 2013 Dan Fruehauf
+- (62e8def) more cleanups to building mechanism
+
+* Fri Feb 8 2013 Dan Fruehauf
+- (91cd028) changed README and spec to conform with github
+
+* Fri Feb 8 2013 Dan Fruehauf
+- (2dc862c) Initial first commit
+
+* Fri Feb 8 2013 Dan Fruehauf
+- (446bd32) Initial commit
+
+* Fri Feb 8 2013 Dan Fruehauf
+- (16355cc) added spec for fedora/redhat
+
+* Fri Feb 8 2013 Dan Fruehauf
+- (50c9904) fixed resolving function
+
+* Fri Feb 8 2013 Dan Fruehauf
+- (49e2b61) added resolving and some more cleanups
+
+* Fri Feb 8 2013 Dan Fruehauf
+- (eafedd6) removed common directory and fixed parsing of extra_ops
+
+* Fri Feb 8 2013 Dan Fruehauf
+- (f25525b) more cleanups, most of the stuff is in configuration
+
+* Fri Feb 8 2013 Dan Fruehauf
+- (227348f) using remote tun number from configuration
+
+* Fri Feb 8 2013 Dan Fruehauf
+- (b9529b0) got rid of common directory
+
+* Fri Feb 8 2013 Dan Fruehauf
+- (3142b9e) heaps more changes, things are actually working now
+
+* Fri Feb 8 2013 Dan Fruehauf
+- (6fdffb0) more cleanups and GUI starts to look much better
+
+* Wed Feb 6 2013 Dan Fruehauf
+- (9fd3ef1)  * modified AUTHORS  * changed get_ssh_agent_socket to static
+
+* Wed Feb 6 2013 Dan Fruehauf
+- (fabeac2)  * fixed makefiles with gio-unix  * fixed copyright
+
+* Wed Feb 6 2013 Dan Fruehauf
+- (dc429de) modified configure.ac
+
+* Wed Feb 6 2013 Dan Fruehauf
+- (0ff6a77) probing ssh-agent socket
+
+* Tue Feb 5 2013 Dan Fruehauf
+- (d9f2d75) cleanups, removed nm-ssh-service-ssh-helper
+
+* Mon Feb 4 2013 Dan Fruehauf
+- (1984e3d) nm-ssh: first commit imported from nm-openvpn
 

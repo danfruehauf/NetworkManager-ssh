@@ -44,19 +44,22 @@ DISTCLEANFILES = intltool-extract intltool-merge intltool-update
 
 ACLOCAL_AMFLAGS = -I m4
 
-rpm: dist-xz
+ChangeLog:
+	git log --format="* %cd %aN%n- (%h) %s%d%n" --date=local | sed -r 's/[0-9]+:[0-9]+:[0-9]+ //' >> ChangeLog
+
+rpm: ChangeLog dist-gzip
 	@set -e; \
 	rpm_source_dir=$(shell rpm --eval '%{_sourcedir}') && \
 	rpm_spec_dir=$(shell rpm --eval '%{_specdir}') && \
 	commit_tag=$(shell git log -n1 --format="%H") && \
 	shortcommit_tag=$(shell git log -n1 --format="%H" | cut -c1-7) && \
 	shortcommit_tag2=$(shell echo .`date --utc "+%Y%m%d"`git`git log -n1 --format="%H" | cut -c1-7`) && \
-	mv $(distdir).tar.xz "$$rpm_source_dir"/$(PACKAGE)-$(VERSION)-"$$shortcommit_tag".tar.xz && \
-	sed -e 's/___version___/$(VERSION)/g' -e "s/___commit___/$$commit_tag/g" $(PACKAGE).spec > $$rpm_spec_dir/$(PACKAGE).spec && \
-	git log --format="* %cd %aN%n- (%h) %s%d%n" --date=local | sed -r 's/[0-9]+:[0-9]+:[0-9]+ //' >> $$rpm_spec_dir/$(PACKAGE).spec && \
+	checkout_date=$(shell date --utc "+%Y%m%d"git) && \
+	mv $(distdir).tar.gz "$$rpm_source_dir"/$(PACKAGE)-$(VERSION)-"$$shortcommit_tag".tar.gz && \
+	sed -e 's/___version___/$(VERSION)/g' -e "s/___commit___/$$commit_tag/g" -e "s/___checkout___/$$checkout_date/g" $(PACKAGE).spec > $$rpm_spec_dir/$(PACKAGE).spec && \
 	rpmbuild -ba $$rpm_spec_dir/$(PACKAGE).spec
 
-deb: dist-xz
+deb: ChangeLog dist-xz
 	deb_src_filename=$(PACKAGE:NetworkManager%=network-manager%)_$(VERSION).orig.tar.xz && \
 	rm -rf debian/files debian/*.log debian/*.substvars \
 		debian/network-manager-ssh-gnome/ debian/network-manager-ssh/ debian/tmp/ && \
