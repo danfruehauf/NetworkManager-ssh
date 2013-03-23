@@ -59,6 +59,10 @@ On the server, you'll need to enable in <i>/etc/ssh/sshd_config</i>:
 
 	PermitTunnel=yes
 
+Enable kernel packet forwarding:
+
+	echo 1 > /proc/sys/net/ipv4/ip_forward
+
 In terms of firewall configuration, I recommend looking at the "standard" way of editing firewall rules on your distribution.
 These however, should work on most GNU/Linux distributions.
 
