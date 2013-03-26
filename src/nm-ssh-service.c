@@ -393,7 +393,6 @@ resolve_hostname (const char *hostname)
 			    && (rp->ai_addrlen == sizeof (struct sockaddr_in))) {
 				struct sockaddr_in *inptr = (struct sockaddr_in *) rp->ai_addr;
 
-				//memcpy (&ip, &(inptr->sin_addr), sizeof (struct in_addr));
 				ip = g_strdup(inet_ntoa (inptr->sin_addr));
 				if (debug)
 					g_message("Resolved gateway '%s'->'%s'", hostname, ip);
@@ -734,10 +733,8 @@ nm_ssh_stdout_cb (GIOChannel *source, GIOCondition condition, gpointer user_data
 	} else if (strncmp (str, "The authenticity of host", 24) == 0) {
 		/* User will have to accept this new host with its fingerprint */
 		g_warning("It is not a known host, continue connecting?");
-		// TODO PROMPT FOR USER!!
-		//nm_vpn_plugin_set_state (plugin, NM_VPN_SERVICE_STATE_STOPPED);
+		nm_vpn_plugin_set_state (plugin, NM_VPN_SERVICE_STATE_STOPPED);
 	}
-	// TODO PROBE FOR PASSWORD PROMPT HERE
 
 	g_message("%s", str);
 
@@ -971,7 +968,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
 		             "%s",
 		             _("Could not find the ssh binary."));
-					// TODO translation
+					/* FIXME translation */
 		return FALSE;
 	}
 
@@ -999,7 +996,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		             NM_VPN_PLUGIN_ERROR,
 		             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
 		             "%s",
-					// TODO Edit translation
+					/* FIXME translation */
 		             _("Missing required SSH_AUTH_SOCK."));
 		free_ssh_args (args);
 		return FALSE;
@@ -1057,7 +1054,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		             NM_VPN_PLUGIN_ERROR,
 		             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
 		             _("Please set remote address."));
-					// TODO add translation
+					/* FIXME translation */
 		free_ssh_args (args);
 		return FALSE;
 	} else {
@@ -1079,7 +1076,6 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 			return FALSE;
 		}
 		add_ssh_arg (args, (gpointer) g_strdup_printf ("%d", (guint32) tmp_int));
-		// TODO doesn't quit nicely
 	} else {
 		/* Default to SSH port 22 */
 		add_ssh_arg (args, (gpointer) g_strdup_printf("%d", (guint32) NM_SSH_DEFAULT_PORT));
@@ -1114,7 +1110,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 			             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
 			             _("Invalid TUN/TAP device number '%s'."),
 			             tmp);
-						// TODO translation
+						/* FIXME translation */
 			free_ssh_args (args);
 			return FALSE;
 		}
@@ -1132,7 +1128,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		             NM_VPN_PLUGIN_ERROR,
 		             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
 		             "%s",
-					// TODO Edit translation
+					/* FIXME translation */
 		             _("Missing required remote IP address."));
 		free_ssh_args (args);
 		return FALSE;
@@ -1147,7 +1143,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		             NM_VPN_PLUGIN_ERROR,
 		             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
 		             "%s",
-					// TODO Edit translation
+					/* FIXME translation */
 		             _("Missing required local IP address."));
 		free_ssh_args (args);
 		return FALSE;
@@ -1164,7 +1160,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		             NM_VPN_PLUGIN_ERROR,
 		             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
 		             "%s",
-					// TODO Edit translation
+					/* FIXME translation */
 		             _("Missing required netmask."));
 		free_ssh_args (args);
 		return FALSE;
@@ -1185,7 +1181,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 			             NM_VPN_PLUGIN_ERROR,
 			             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
 			             "%s",
-						// TODO Edit translation
+						/* FIXME translation */
 			             _("Missing required IPv6 remote IP address."));
 			free_ssh_args (args);
 			return FALSE;
@@ -1200,7 +1196,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 			             NM_VPN_PLUGIN_ERROR,
 			             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
 			             "%s",
-						// TODO Edit translation
+						/* FIXME translation */
 			             _("Missing required IPv6 local IP address."));
 			free_ssh_args (args);
 			return FALSE;
@@ -1215,7 +1211,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 			             NM_VPN_PLUGIN_ERROR,
 			             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
 			             "%s",
-						// TODO Edit translation
+						/* FIXME translation */
 			             _("Missing required IPv6 netmask."));
 			free_ssh_args (args);
 			return FALSE;
