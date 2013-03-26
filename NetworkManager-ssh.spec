@@ -59,6 +59,9 @@ rm -f %{buildroot}%{_libdir}/NetworkManager/lib*.la
 %dir %{_datadir}/gnome-vpn-properties/ssh
 
 %changelog
+* Tue Mar 26 2013 Dan Fruehauf <malkodan@gmail.com> - 0.0.3-0.3.20130326git7549f1db1b
+- More changes to conform with Fedora packaging standards
+
 * Fri Mar 22 2013 Dan Fruehauf <malkodan@gmail.com> - 0.0.3-0.2.20130322git8767415
 - Changes to conform with Fedora packaging standards
 
