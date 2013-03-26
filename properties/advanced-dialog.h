@@ -31,20 +31,6 @@
 
 typedef void (*ChangedCallback) (GtkWidget *widget, gpointer user_data);
 
-void tls_pw_init_auth_widget (GtkBuilder *builder,
-                              GtkSizeGroup *group,
-                              NMSettingVPN *s_vpn,
-                              const char *contype,
-                              const char *prefix,
-                              ChangedCallback changed_cb,
-                              gpointer user_data);
-
-void sk_init_auth_widget (GtkBuilder *builder,
-                          GtkSizeGroup *group,
-                          NMSettingVPN *s_vpn,
-                          ChangedCallback changed_cb,
-                          gpointer user_data);
-
 GtkWidget *advanced_dialog_new (GHashTable *hash);
 
 GHashTable *advanced_dialog_new_hash_from_connection (NMConnection *connection, GError **error);

@@ -6,8 +6,8 @@ plugin_LTLIBRARIES = libnm-ssh-properties.la
 libnm_ssh_properties_la_SOURCES = \
 	nm-ssh.c \
 	nm-ssh.h \
-	auth-helpers.c \
-	auth-helpers.h
+	advanced-dialog.c \
+	advanced-dialog.h
 
 uidir = $(datadir)/gnome-vpn-properties/ssh
 ui_DATA = nm-ssh-dialog.ui

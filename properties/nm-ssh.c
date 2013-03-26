@@ -44,7 +44,7 @@
 
 #include "src/nm-ssh-service.h"
 #include "nm-ssh.h"
-#include "auth-helpers.h"
+#include "advanced-dialog.h"
 
 #define SSH_PLUGIN_NAME    _("SSH")
 #define SSH_PLUGIN_DESC    _("Compatible with the SSH server.")

@@ -36,7 +36,7 @@
 #include <nm-setting-connection.h>
 #include <nm-setting-8021x.h>
 
-#include "auth-helpers.h"
+#include "advanced-dialog.h"
 #include "nm-ssh.h"
 #include "src/nm-ssh-service.h"
 
