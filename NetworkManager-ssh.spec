@@ -5,12 +5,13 @@
 Summary: NetworkManager VPN plugin for SSH
 Name: NetworkManager-ssh
 Version: ___version___
-Release: 2.%{checkout}%{?dist}
+Release: 0.3.%{checkout}%{?dist}
 License: GPLv2+
 URL: https://github.com/danfruehauf/NetworkManager-ssh
 Group: System Environment/Base
 Source0: https://github.com/danfruehauf/NetworkManager-ssh/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
 
+BuildRequires: autoconf
 BuildRequires: gtk3-devel
 BuildRequires: dbus-devel
 BuildRequires: NetworkManager-devel
@@ -18,8 +19,6 @@ BuildRequires: NetworkManager-glib-devel
 BuildRequires: glib2-devel
 BuildRequires: libgnome-keyring-devel
 BuildRequires: libtool intltool gettext
-Requires(post): %{_bindir}/update-desktop-database
-Requires(postun): %{_bindir}/update-desktop-database
 Requires: gtk3
 Requires: dbus
 Requires: NetworkManager
@@ -32,11 +31,11 @@ This package contains software for integrating VPN capabilites with
 the OpenSSH server with NetworkManager and the GNOME desktop.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q -n %{name}-%{commit}
 
 %build
 if [ ! -f configure ]; then
-  ./autogen.sh
+  autoreconf -fvi
 fi
 %configure --disable-static --disable-dependency-tracking --enable-more-warnings=yes --with-gtkver=3
 make %{?_smp_mflags}
@@ -60,8 +59,8 @@ rm -f %{buildroot}%{_libdir}/NetworkManager/lib*.la
 %dir %{_datadir}/gnome-vpn-properties/ssh
 
 %changelog
-* Fri Mar 22 2013 Dan Fruehauf  <malkodan@gmail.com> - 0.0.3-2
+* Fri Mar 22 2013 Dan Fruehauf <malkodan@gmail.com> - 0.0.3-0.2.20130322git8767415
 - Changes to conform with Fedora packaging standards
 
-* Wed Mar 20 2013 Dan Fruehauf  <malkodan@gmail.com> - 0.0.3-1
+* Wed Mar 20 2013 Dan Fruehauf <malkodan@gmail.com> - 0.0.3-0.1.20130320gitcf6c00f
 - Initial spec release
