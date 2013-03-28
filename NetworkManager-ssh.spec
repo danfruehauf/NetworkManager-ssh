@@ -64,7 +64,7 @@ rm -f %{buildroot}%{_libdir}/NetworkManager/lib*.la
 %{_datadir}/gnome-vpn-properties/ssh/nm-ssh-dialog.ui
 
 %changelog
-* Thu Mar 28 2013 Dan Fruehauf <malkodan@gmail.com> - 0.0.3-0.4.20130328git541b7d1
+* Thu Mar 28 2013 Dan Fruehauf <malkodan@gmail.com> - 0.0.3-0.4.%{checkout}
 - Fixed more issues in spec to conform with Fedora Packaging standards
 
 * Tue Mar 26 2013 Dan Fruehauf <malkodan@gmail.com> - 0.0.3-0.3.20130326git7549f1d
