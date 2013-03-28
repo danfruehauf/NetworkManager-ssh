@@ -25,9 +25,14 @@ Requires: NetworkManager
 Requires: openssh
 Requires: shared-mime-info
 Requires: gnome-keyring
+%if 0%{?fedora} > 17
+Requires: nm-connection-editor
+%else
+Requires: NetworkManager-gnome
+%endif
 
 %description
-This package contains software for integrating VPN capabilites with
+This package contains software for integrating VPN capabilities with
 the OpenSSH server with NetworkManager and the GNOME desktop.
 
 %prep
@@ -51,15 +56,15 @@ rm -f %{buildroot}%{_libdir}/NetworkManager/lib*.la
 
 %doc COPYING AUTHORS README ChangeLog
 %{_libdir}/NetworkManager/lib*.so*
-%{_sysconfdir}/dbus-1/system.d/nm-ssh-service.conf
-%{_sysconfdir}/NetworkManager/VPN/nm-ssh-service.name
+%config(noreplace) %{_sysconfdir}/dbus-1/system.d/nm-ssh-service.conf
+%config(noreplace) %{_sysconfdir}/NetworkManager/VPN/nm-ssh-service.name
 %{_libexecdir}/nm-ssh-service
 %{_libexecdir}/nm-ssh-auth-dialog
-%{_datadir}/gnome-vpn-properties/ssh/nm-ssh-dialog.ui
 %dir %{_datadir}/gnome-vpn-properties/ssh
+%{_datadir}/gnome-vpn-properties/ssh/nm-ssh-dialog.ui
 
 %changelog
-* Tue Mar 26 2013 Dan Fruehauf <malkodan@gmail.com> - 0.0.3-0.3.20130326git7549f1db1b
+* Tue Mar 26 2013 Dan Fruehauf <malkodan@gmail.com> - 0.0.3-0.3.20130326git7549f1d
 - More changes to conform with Fedora packaging standards
 
 * Fri Mar 22 2013 Dan Fruehauf <malkodan@gmail.com> - 0.0.3-0.2.20130322git8767415
