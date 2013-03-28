@@ -1545,7 +1545,9 @@ main (int argc, char *argv[])
 		{NULL}
 	};
 
+#if !GLIB_CHECK_VERSION (2, 35, 3)
 	g_type_init ();
+#endif
 
 	/* Parse options */
 	opt_ctx = g_option_context_new ("");
