@@ -68,17 +68,17 @@ These however, should work on most GNU/Linux distributions.
 
 Tun devices:
 
-	-I FORWARD -i tun+ -j ACCEPT
-	-I FORWARD -o tun+ -j ACCEPT
-	-I INPUT -i tun+ -j ACCEPT
-	-I POSTROUTING -o EXTERNAL_INTERFACE -j MASQUERADE
+	iptables -I FORWARD -i tun+ -j ACCEPT
+	iptables -I FORWARD -o tun+ -j ACCEPT
+	iptables -I INPUT -i tun+ -j ACCEPT
+	iptables -t nat -I POSTROUTING -o EXTERNAL_INTERFACE -j MASQUERADE
 
 Tap devices:
 
-	-I FORWARD -i tap+ -j ACCEPT
-	-I FORWARD -o tap+ -j ACCEPT
-	-I INPUT -i tap+ -j ACCEPT
-	-I POSTROUTING -o EXTERNAL_INTERFACE -j MASQUERADE
+	iptables -I FORWARD -i tap+ -j ACCEPT
+	iptables -I FORWARD -o tap+ -j ACCEPT
+	iptables -I INPUT -i tap+ -j ACCEPT
+	iptables -t nat -I POSTROUTING -o EXTERNAL_INTERFACE -j MASQUERADE
 
 Please use these firewall rules as a reference only.
 
