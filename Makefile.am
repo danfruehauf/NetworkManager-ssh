@@ -44,33 +44,39 @@ DISTCLEANFILES = intltool-extract intltool-merge intltool-update
 
 ACLOCAL_AMFLAGS = -I m4
 
+RPM_SOURCE_DIR = $(shell rpm --eval '%{_sourcedir}')
+RPM_SPEC_DIR = $(shell rpm --eval '%{_specdir}')
+PREPARE_SPEC = \
+	commit=$(shell git log -n1 --format="%H") && \
+	shortcommit=$(shell git log -n1 --format="%H" | cut -c1-7) && \
+	checkout=$(shell date --utc "+%Y%m%d"git) && \
+	changelog_date="$(shell date --utc "+%a %b %d %Y")" && \
+	sed -i \
+		-e "s/___version___/$(VERSION)/g" \
+		-e "s/___commit___/$$commit/g" \
+		-e "s/___checkout___/$$checkout/g" \
+		-e "s/___changelog_date___/$$changelog_date/g" \
+		-e "s/___shortcommit___/$$shortcommit/g" \
+		-e "s/%setup -q -n %{name}-%{commit}/%setup -q -n %{name}-%{version}/g" \
+		$(1)
+
 ChangeLog:
 	git log --format="* %cd %aN%n- (%h) %s%d%n" --date=local | sed -r 's/[0-9]+:[0-9]+:[0-9]+ //' >> ChangeLog
 
 rpm: ChangeLog dist-gzip
 	@set -e; \
-	rpm_source_dir=$(shell rpm --eval '%{_sourcedir}') && \
-	rpm_spec_dir=$(shell rpm --eval '%{_specdir}') && \
-	commit_tag=$(shell git log -n1 --format="%H") && \
-	shortcommit_tag=$(shell git log -n1 --format="%H" | cut -c1-7) && \
-	shortcommit_tag2=$(shell echo .`date --utc "+%Y%m%d"`git`git log -n1 --format="%H" | cut -c1-7`) && \
-	checkout_date=$(shell date --utc "+%Y%m%d"git) && \
-	mv $(distdir).tar.gz "$$rpm_source_dir"/$(PACKAGE)-$(VERSION)-"$$shortcommit_tag".tar.gz && \
-	sed -e 's/___version___/$(VERSION)/g' -e "s/___commit___/$$commit_tag/g" -e "s/___checkout___/$$checkout_date/g"  -e "s/%setup -q -n %{name}-%{commit}/%setup -q -n %{name}-%{version}/g" $(PACKAGE).spec > $$rpm_spec_dir/$(PACKAGE).spec && \
-	rpmbuild -ba $$rpm_spec_dir/$(PACKAGE).spec
+	mv $(distdir).tar.gz $(RPM_SOURCE_DIR)/$(PACKAGE)-$(VERSION)-"$$shortcommit".tar.gz && \
+	cp $(PACKAGE).spec $(RPM_SPEC_DIR)/$(PACKAGE).spec && \
+	sed -i -e "s/%setup -q -n %{name}-%{commit}/%setup -q -n %{name}-%{version}/g" $(RPM_SPEC_DIR)/$(PACKAGE).spec && \
+	$(call PREPARE_SPEC, "$(RPM_SPEC_DIR)/$(PACKAGE).spec") && \
+	rpmbuild -ba $(RPM_SPEC_DIR)/$(PACKAGE).spec
 
 git-rpm: ChangeLog
 	@set -e; \
-	rpm_source_dir=$(shell rpm --eval '%{_sourcedir}') && \
-	rpm_spec_dir=$(shell rpm --eval '%{_specdir}') && \
-	commit_tag=$(shell git log -n1 --format="%H") && \
-	shortcommit_tag=$(shell git log -n1 --format="%H" | cut -c1-7) && \
-	shortcommit_tag2=$(shell echo .`date --utc "+%Y%m%d"`git`git log -n1 --format="%H" | cut -c1-7`) && \
-	checkout_date=$(shell date --utc "+%Y%m%d"git) && \
-	cd $$rpm_source_dir && wget -c https://github.com/danfruehauf/NetworkManager-ssh/archive/$$commit_tag/NetworkManager-ssh-$(VERSION)-$$shortcommit_tag.tar.gz && \
-	cd $$rpm_spec_dir && wget -c https://raw.github.com/danfruehauf/NetworkManager-ssh/$$commit_tag/NetworkManager-ssh.spec && \
-	sed -i -e 's/___version___/$(VERSION)/g' -e "s/___commit___/$$commit_tag/g" -e "s/___checkout___/$$checkout_date/g" $$rpm_spec_dir/$(PACKAGE).spec && \
-	rpmbuild -ba $$rpm_spec_dir/$(PACKAGE).spec
+	wget -P $(RPM_SOURCE_DIR) -c https://github.com/danfruehauf/NetworkManager-ssh/archive/$$commit/NetworkManager-ssh-$(VERSION)-$$shortcommit.tar.gz && \
+	wget -P $(RPM_SPEC_DIR) -c https://raw.github.com/danfruehauf/NetworkManager-ssh/$$commit/NetworkManager-ssh.spec && \
+	$(call PREPARE_SPEC, "$(RPM_SPEC_DIR)/$(PACKAGE).spec") && \
+	rpmbuild -ba $(RPM_SPEC_DIR)/$(PACKAGE).spec
 
 deb: ChangeLog dist-xz
 	deb_src_filename=$(PACKAGE:NetworkManager%=network-manager%)_$(VERSION).orig.tar.xz && \
