@@ -51,8 +51,8 @@ PREPARE_SPEC = \
 	spec_file=`echo $(1)`; \
 	commit=`echo $(2)`; \
 	shortcommit=`echo $(3)`; \
-	checkout=$(shell date --utc "+%Y%m%d"git); \
-	changelog_date="$(shell date --utc "+%a %b %d %Y")"; \
+	checkout=`date --utc "+%Y%m%d"git`; \
+	changelog_date=`date --utc "+%a %b %d %Y"`; \
 	sed -i \
 		-e "s/___version___/$(VERSION)/g" \
 		-e "s/___commit___/$$commit/g" \
@@ -61,13 +61,22 @@ PREPARE_SPEC = \
 		-e "s/___changelog_date___/$$changelog_date/g" \
 		$$spec_file
 
+RPMBUILD_AND_VERIFY = \
+	set -e; \
+	spec_file=`echo $(1)`; \
+	tmp_build_log=`mktemp`; \
+	rpmbuild -ba $(RPM_SPEC_DIR)/$(PACKAGE).spec | tee $$tmp_build_log; \
+	rpms_to_verify=`grep '^Wrote:' $$tmp_build_log | cut -d: -f2 | xargs`; \
+	rm -f $$tmp_build_log; \
+	rpmlint -iv $$rpms_to_verify
+
 changelog:
 	git log --format="* %cd %aN%n- (%h) %s%d%n" --date=local | sed -r 's/[0-9]+:[0-9]+:[0-9]+ //' > ChangeLog
 
 rpm: changelog dist-gzip
 	@set -e; \
-	commit=$(shell git log -n1 --format="%H"); \
-	shortcommit=$(shell git log -n1 --format="%h"); \
+	commit=`git log -n1 --format="%H"`; \
+	shortcommit=`git log -n1 --format="%h"`; \
 	mv $(distdir).tar.gz $(RPM_SOURCE_DIR)/$(PACKAGE)-$(VERSION)-$$shortcommit.tar.gz; \
 	cp $(PACKAGE).spec $(RPM_SPEC_DIR)/$(PACKAGE).spec; \
 	sed -i -e "s/%setup -q -n %{name}-%{commit}/%setup -q -n %{name}-%{version}/g" $(RPM_SPEC_DIR)/$(PACKAGE).spec; \
@@ -76,14 +85,14 @@ rpm: changelog dist-gzip
 
 git-rpm: changelog
 	@set -e; \
-	commit=$(shell git log -n1 --format="%H"); \
-	shortcommit=$(shell git log -n1 --format="%h"); \
+	commit=`git log -n1 --format="%H"`; \
+	shortcommit=`git log -n1 --format="%h"`; \
 	wget -P $(RPM_SOURCE_DIR) \
 		-c https://github.com/danfruehauf/NetworkManager-ssh/archive/$$commit/NetworkManager-ssh-$(VERSION)-$$shortcommit.tar.gz; \
 	wget -P $(RPM_SPEC_DIR) \
 		-c https://raw.github.com/danfruehauf/NetworkManager-ssh/$$commit/NetworkManager-ssh.spec; \
 	$(call PREPARE_SPEC, "$(RPM_SPEC_DIR)/$(PACKAGE).spec", $$commit, $$shortcommit); \
-	rpmbuild -ba $(RPM_SPEC_DIR)/$(PACKAGE).spec
+	$(call RPMBUILD_AND_VERIFY, "$(RPM_SPEC_DIR)/$(PACKAGE).spec")
 
 deb: changelog dist-xz
 	@set -e; \
