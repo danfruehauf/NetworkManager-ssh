@@ -61,10 +61,10 @@ PREPARE_SPEC = \
 		-e "s/___changelog_date___/$$changelog_date/g" \
 		$$spec_file
 
-ChangeLog:
-	git log --format="* %cd %aN%n- (%h) %s%d%n" --date=local | sed -r 's/[0-9]+:[0-9]+:[0-9]+ //' >> ChangeLog
+changelog:
+	git log --format="* %cd %aN%n- (%h) %s%d%n" --date=local | sed -r 's/[0-9]+:[0-9]+:[0-9]+ //' > ChangeLog
 
-rpm: ChangeLog dist-gzip
+rpm: changelog dist-gzip
 	@set -e; \
 	commit=$(shell git log -n1 --format="%H"); \
 	shortcommit=$(shell git log -n1 --format="%h"); \
@@ -74,7 +74,7 @@ rpm: ChangeLog dist-gzip
 	$(call PREPARE_SPEC, "$(RPM_SPEC_DIR)/$(PACKAGE).spec", $$commit, $$shortcommit); \
 	rpmbuild -ba $(RPM_SPEC_DIR)/$(PACKAGE).spec
 
-git-rpm: ChangeLog
+git-rpm: changelog
 	@set -e; \
 	commit=$(shell git log -n1 --format="%H"); \
 	shortcommit=$(shell git log -n1 --format="%h"); \
@@ -85,7 +85,7 @@ git-rpm: ChangeLog
 	$(call PREPARE_SPEC, "$(RPM_SPEC_DIR)/$(PACKAGE).spec", $$commit, $$shortcommit); \
 	rpmbuild -ba $(RPM_SPEC_DIR)/$(PACKAGE).spec
 
-deb: ChangeLog dist-xz
+deb: changelog dist-xz
 	@set -e; \
 	deb_src_filename=$(PACKAGE:NetworkManager%=network-manager%)_$(VERSION).orig.tar.xz; \
 	rm -rf debian/files debian/*.log debian/*.substvars \
@@ -93,4 +93,4 @@ deb: ChangeLog dist-xz
 	mv $(distdir).tar.xz ../"$$deb_src_filename"; \
 	dpkg-buildpackage -B -nc
 
-.PHONY: rpm deb
+.PHONY: rpm deb changelog
