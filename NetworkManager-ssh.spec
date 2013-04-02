@@ -5,7 +5,7 @@
 Summary: NetworkManager VPN plugin for SSH
 Name: NetworkManager-ssh
 Version: ___version___
-Release: 0.5.%{checkout}%{?dist}
+Release: 0.6.%{checkout}%{?dist}
 License: GPLv2+
 URL: https://github.com/danfruehauf/NetworkManager-ssh
 Group: System Environment/Base
@@ -22,7 +22,7 @@ BuildRequires: libtool intltool gettext
 Requires: gtk3
 Requires: dbus
 Requires: NetworkManager
-Requires: openssh
+Requires: openssh-clients
 Requires: shared-mime-info
 Requires: gnome-keyring
 %if 0%{?fedora} > 17
@@ -30,6 +30,10 @@ Requires: nm-connection-editor
 %else
 Requires: NetworkManager-gnome
 %endif
+
+%global _privatelibs libnm-ssh-properties[.]so.*
+%global __provides_exclude ^(%{_privatelibs})$
+%global __requires_exclude ^(%{_privatelibs})$
 
 %description
 This package contains software for integrating VPN capabilities with
@@ -64,7 +68,11 @@ rm -f %{buildroot}%{_libdir}/NetworkManager/lib*.la
 %{_datadir}/gnome-vpn-properties/ssh/nm-ssh-dialog.ui
 
 %changelog
-* ___changelog_date___ Dan Fruehauf <malkodan@gmail.com> - 0.0.3-0.5.___checkout______shortcommit___
+* ___changelog_date___ Dan Fruehauf <malkodan@gmail.com> - 0.0.3-0.6.___checkout______shortcommit___
+- Fixed dependencies (openssh-clients
+- Added private libs
+
+* Sat Mar 30 2013 Dan Fruehauf <malkodan@gmail.com> - 0.0.3-0.5.20130330git9afb20
 - Removed macros from changelog
 
 * Thu Mar 28 2013 Dan Fruehauf <malkodan@gmail.com> - 0.0.3-0.4.20130328gita2add30
