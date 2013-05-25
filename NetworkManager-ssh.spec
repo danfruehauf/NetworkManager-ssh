@@ -2,14 +2,14 @@
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 %global checkout ___checkout___%{shortcommit}
 
-Summary: NetworkManager VPN plugin for SSH
-Name: NetworkManager-ssh
-Version: ___version___
-Release: 0.7.%{checkout}%{?dist}
-License: GPLv2+
-URL: https://github.com/danfruehauf/NetworkManager-ssh
-Group: System Environment/Base
-Source0: https://github.com/danfruehauf/NetworkManager-ssh/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
+Summary:   NetworkManager VPN plugin for SSH
+Name:      NetworkManager-ssh
+Version:   ___version___
+Release:   0.7.%{checkout}%{?dist}
+License:   GPLv2+
+URL:       https://github.com/danfruehauf/NetworkManager-ssh
+Group:     System Environment/Base
+Source0:   https://github.com/danfruehauf/NetworkManager-ssh/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
 
 BuildRequires: autoconf
 BuildRequires: gtk3-devel
@@ -25,11 +25,6 @@ Requires: NetworkManager
 Requires: openssh-clients
 Requires: shared-mime-info
 Requires: gnome-keyring
-%if 0%{?fedora} > 17
-Requires: nm-connection-editor
-%else
-Requires: NetworkManager-gnome
-%endif
 
 %global _privatelibs libnm-ssh-properties[.]so.*
 %global __provides_exclude ^(%{_privatelibs})$
@@ -41,12 +36,13 @@ the OpenSSH server with NetworkManager.
 
 %package -n NetworkManager-ssh-gnome
 Summary: NetworkManager VPN plugin for SSH - GNOME files
-Version: ___version___
-Release: 0.7.%{checkout}%{?dist}
-License: GPLv2+
-URL: https://github.com/danfruehauf/NetworkManager-ssh
 Group: System Environment/Base
-Requires: NetworkManager-ssh = ___version___
+Requires: NetworkManager-ssh = %{version}-%{release}
+%if 0%{?fedora} > 17
+Requires: nm-connection-editor
+%else
+Requires: NetworkManager-gnome
+%endif
 
 %description -n NetworkManager-ssh-gnome
 This package contains software for integrating VPN capabilities with
