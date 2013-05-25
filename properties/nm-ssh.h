@@ -99,6 +99,7 @@ GType ssh_plugin_ui_widget_get_type (void);
 #define	EXTRA_OPTS_KEY "EXTRA_OPTS"
 #define	REMOTE_DEV_KEY "REMOTE_DEV"
 #define	DEV_TYPE_KEY "DEV_TYPE"
+#define	NO_DEFAULT_ROUTE_KEY "NO_DEFAULT_ROUTE"
 #define	TUNNEL_TYPE_KEY "TUNNEL_TYPE"
 
 #endif	/* _NM_SSH_H_ */

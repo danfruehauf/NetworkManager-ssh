@@ -47,6 +47,7 @@ static const char *advanced_keys[] = {
 	NM_SSH_KEY_REMOTE_DEV,
 	NM_SSH_KEY_TAP_DEV,
 	NM_SSH_KEY_REMOTE_USERNAME,
+	NM_SSH_KEY_NO_DEFAULT_ROUTE,
 	NULL
 };
 
@@ -273,6 +274,12 @@ advanced_dialog_new (GHashTable *hash)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), TRUE);
 	}
 
+	value = g_hash_table_lookup (hash, NM_SSH_KEY_NO_DEFAULT_ROUTE);
+	if (value && !strcmp (value, "yes")) {
+		widget = GTK_WIDGET (gtk_builder_get_object (builder, "no_default_route_checkbutton"));
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), TRUE);
+	}
+
 	widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_username_checkbutton"));
 	g_assert (widget);
 	g_signal_connect (G_OBJECT (widget), "toggled", G_CALLBACK (remote_username_toggled_cb), builder);
@@ -352,6 +359,10 @@ advanced_dialog_new_hash_from_dialog (GtkWidget *dialog, GError **error)
 	widget = GTK_WIDGET (gtk_builder_get_object (builder, "tap_checkbutton"));
 	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
 		g_hash_table_insert (hash, g_strdup (NM_SSH_KEY_TAP_DEV), g_strdup ("yes"));
+
+	widget = GTK_WIDGET (gtk_builder_get_object (builder, "no_default_route_checkbutton"));
+	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
+		g_hash_table_insert (hash, g_strdup (NM_SSH_KEY_NO_DEFAULT_ROUTE), g_strdup ("yes"));
 
 	widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_username_checkbutton"));
 	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget))) {
