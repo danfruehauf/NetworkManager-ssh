@@ -85,12 +85,12 @@ Please use these firewall rules as a reference only.
 Don't forget to replace <b>EXTERNAL_INTERFACE</b> with your WAN interface (eth0, ppp0, etc).
 
 ## Port Binding
-If you're only after port binding (-L or -R with SSH), you can still use NetworkManager-ssh to perform that, although 2 limitations still exist:
+If you're only after port binding (-L or -R with SSH), you can still use NetworkManager-ssh to perform that, although two limitations still exist:
 
  * You will still have a full open tunnel to the destination machine
  * NetworkManager allows to open only one VPN connection at a time, so it means one port bind at any given time
 
-So this is how it's done, in the <i>Advanced Dialog<i> tick <b>Extra SSH options</b> and add your line, something in the form of:
+So this is how it's done, in the <i>Advanced Dialog</i> tick <b>Extra SSH options</b> and add your line, something in the form of:
 
 	-L 3306:localhost:3306
 
