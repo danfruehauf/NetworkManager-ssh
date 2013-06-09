@@ -84,6 +84,16 @@ struct _SshPluginUiWidgetClass {
 
 GType ssh_plugin_ui_widget_get_type (void);
 
+typedef void (*ChangedCallback) (GtkWidget *widget, gpointer user_data);
+
+void init_auth_widget (GtkBuilder *builder,
+                       GtkSizeGroup *group,
+                       NMSettingVPN *s_vpn,
+                       const char *contype,
+                       const char *prefix,
+                       ChangedCallback changed_cb,
+                       gpointer user_data);
+
 /* Export/Import key dictionary */
 #define	REMOTE_KEY "REMOTE"
 #define	REMOTE_USERNAME_KEY "REMOTE_USERNAME"

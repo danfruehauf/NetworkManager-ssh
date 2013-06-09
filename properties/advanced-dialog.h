@@ -29,8 +29,6 @@
 #include <nm-connection.h>
 #include <nm-setting-vpn.h>
 
-typedef void (*ChangedCallback) (GtkWidget *widget, gpointer user_data);
-
 GtkWidget *advanced_dialog_new (GHashTable *hash);
 
 GHashTable *advanced_dialog_new_hash_from_connection (NMConnection *connection, GError **error);
