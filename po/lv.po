@@ -9,12 +9,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: NetworkManager SSH plugin\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug."
-"cgi?product=NetworkManager&keywords=I18N+L10N&component=VPN: ssh\n"
-"POT-Creation-Date: 2011-03-29 21:58+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-06-09 18:57+1000\n"
 "PO-Revision-Date: 2011-03-31 02:43+0300\n"
 "Last-Translator: Rūdofls Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
+"Language: lv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -23,357 +23,129 @@ msgstr ""
 "X-Poedit-Country: LATVIA\n"
 "X-Generator: Lokalize 1.1\n"
 
-#: ../auth-dialog/gnome-two-password-dialog.c:130
-msgid "_Password:"
-msgstr "_Parole:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:131
-msgid "_Secondary Password:"
-msgstr "_Sekundārā parole:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:248
-msgid "_Username:"
-msgstr "_Lietotājvārds:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:250
-msgid "_Domain:"
-msgstr "_Domēns:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:348
-msgid "Connect _anonymously"
-msgstr "Savienoties _anonīmi"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:353
-msgid "Connect as _user:"
-msgstr "Savienoties kā _lietotājam:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:458
-msgid "_Remember password for this session"
-msgstr "Atce_rēties paroli šai sesijai"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:460
-msgid "_Save password in keyring"
-msgstr "_Saglabāt paroli saišķī"
-
-#: ../auth-dialog/main.c:89
+#: ../auth-dialog/main.c:122
 #, c-format
-msgid "You need to authenticate to access the Virtual Private Network '%s'."
-msgstr "Jums jāautentificējas, lai lietotu virtuālo privāto tīklu '%s'."
+msgid ""
+"Couldn't find '%s' environment variable.\n"
+"\n"
+"Is ssh-agent running?"
+msgstr ""
 
-#: ../auth-dialog/main.c:90
-msgid "Authenticate VPN"
-msgstr "Autentificēt VPN"
+#: ../properties/advanced-dialog.c:137
+msgid ""
+"You have chosen not to use 'root' as the remote username.\n"
+"\n"
+"Please make sure the user you specify is allowed to open tun/tap devices on "
+"the remote host."
+msgstr ""
 
-#: ../auth-dialog/main.c:111
-msgid "Certificate pass_word:"
-msgstr "Sertifikāta _parole:"
-
-#: ../auth-dialog/main.c:125
-msgid "Certificate password:"
-msgstr "Sertifikāta parole:"
-
-#: ../properties/auth-helpers.c:202
-msgid "Choose a Certificate Authority certificate..."
-msgstr "Izvēlieties sertificēšanas institūcijas (CA) sertifikātu..."
-
-#: ../properties/auth-helpers.c:221
-msgid "Choose your personal certificate..."
-msgstr "Izvēlieties savu personīgo sertifikātu..."
-
-#: ../properties/auth-helpers.c:239
-msgid "Choose your private key..."
-msgstr "Izvēlieties savu privāto atslēgu..."
-
-#: ../properties/auth-helpers.c:297
-msgid "Choose an SSH static key..."
-msgstr "Izvēlieties SSH statisko atslēgu..."
-
-#: ../properties/auth-helpers.c:321 ../properties/auth-helpers.c:1104
-#: ../properties/auth-helpers.c:1494
-msgid "None"
-msgstr "Nav"
-
-#: ../properties/auth-helpers.c:801
-msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
-msgstr "PEM vai PKCS#12 sertifikāti (*.pem, *.crt, *.key, *.cer, *.p12)"
-
-#: ../properties/auth-helpers.c:802
-msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
-msgstr "PEM sertifikāti (*.pem, *.crt, *.key, *.cer)"
-
-#: ../properties/auth-helpers.c:862
-msgid "SSH Static Keys (*.key)"
-msgstr "SSH statiskās atslēgas (*.key)"
-
-#: ../properties/auth-helpers.c:1021 ../properties/auth-helpers.c:1096
-msgid "Default"
-msgstr "Noklusētais"
-
-#: ../properties/auth-helpers.c:1106
-msgid "MD-5"
-msgstr "MD-5"
-
-#: ../properties/auth-helpers.c:1108
-msgid "SHA-1"
-msgstr "SHA-1"
-
-#: ../properties/auth-helpers.c:1110
-msgid "SHA-224"
-msgstr "SHA-224"
-
-#: ../properties/auth-helpers.c:1112
-msgid "SHA-256"
-msgstr "SHA-256"
-
-#: ../properties/auth-helpers.c:1114
-msgid "SHA-384"
-msgstr "SHA-384"
-
-#: ../properties/auth-helpers.c:1116
-msgid "SHA-512"
-msgstr "SHA-512"
-
-#: ../properties/auth-helpers.c:1118
-msgid "RIPEMD-160"
-msgstr "RIPEMD-160"
-
-#: ../properties/auth-helpers.c:1293 ../properties/nm-ssh-dialog.ui.h:16
-msgid "Not required"
-msgstr "Nav nepieciešams"
-
-#: ../properties/auth-helpers.c:1295
-msgid "HTTP"
-msgstr "HTTP"
-
-#: ../properties/auth-helpers.c:1297
-msgid "SOCKS"
-msgstr "SOCKS"
-
-#: ../properties/nm-ssh.c:53
+#: ../properties/nm-ssh.c:49
 msgid "SSH"
 msgstr "SSH"
 
-#: ../properties/nm-ssh.c:54
+#: ../properties/nm-ssh.c:50
 msgid "Compatible with the SSH server."
 msgstr "Savietojams ar SSH serveri."
-
-#: ../properties/nm-ssh.c:322
-msgid "Certificates (TLS)"
-msgstr "Sertifikāti (TLS)"
-
-#: ../properties/nm-ssh.c:336
-msgid "Password"
-msgstr "Parole"
-
-#: ../properties/nm-ssh.c:353
-msgid "Password with Certificates (TLS)"
-msgstr "Parole ar sertifikātu (TLS)"
-
-#: ../properties/nm-ssh.c:365
-msgid "Static Key"
-msgstr "Statiskā atslēga"
 
 #: ../properties/nm-ssh-dialog.ui.h:1
 msgid " "
 msgstr " "
 
 #: ../properties/nm-ssh-dialog.ui.h:2
-msgid "<b>Authentication</b>"
-msgstr "<b>Autentifikācija</b>"
+msgid "Not required"
+msgstr "Nav nepieciešams"
 
 #: ../properties/nm-ssh-dialog.ui.h:3
-msgid "<b>General</b>"
-msgstr "<b>Vispārējs</b>"
+msgid "SSH Advanced Options"
+msgstr "SSH paplašinātās opcijas"
 
 #: ../properties/nm-ssh-dialog.ui.h:4
-msgid ""
-"<i>Connect only to servers whose certificate matches the given subject.\n"
-"Example: /CN=myvpn.company.com</i>"
-msgstr ""
-"<i>Savienoties tikai ar serveriem, kuru sertifikāts atbilst dotajam "
-"subjektam.\n"
-"Piemēram: /CN=myvpn.company.com</i>"
+#, fuzzy
+msgid "Use custom gateway port:"
+msgstr "Izmantot pielāgotu vārtejas p_ortu: "
+
+#: ../properties/nm-ssh-dialog.ui.h:5
+#, fuzzy
+msgid "Use custom tunnel Maximum Transmission Unit (MTU):"
+msgstr "Izmantot pielāgotu _tuneļa maksimālo pārraides bloku (MTU):"
 
 #: ../properties/nm-ssh-dialog.ui.h:6
-msgid ""
-"<i>If key direction is used, it must be the opposite of that used on the VPN "
-"peer.  For example, if the peer uses '1', this connection must use '0'.  If "
-"you are unsure what value to use, contact your system administrator.</i>"
+msgid "Extra SSH options:"
 msgstr ""
-"<i>Ja tiek izmantota virziena atslēga, tai ir jābūt pretējai, nekā otram "
-"dalībniekam VPN. Piemēram, ja dalībnieks izmanto '1', tad šim savienojumam "
-"jāizmanto '0'. Ja nezināt, kādu vērtību izmantot, sazinieties ar sistēmas "
-"administratoru.</i>"
 
 #: ../properties/nm-ssh-dialog.ui.h:7
-msgid ""
-"<i>Select this option if your organization requires the use of a proxy "
-"server to access the Internet.</i>"
+msgid "Remote device number:"
 msgstr ""
-"<i>Izvēlieties šo opciju, ja jūsu organizācija izmanto starpnieka serveri, "
-"lai piekļūtu Internetam.</i>"
 
 #: ../properties/nm-ssh-dialog.ui.h:8
-msgid "Ad_vanced..."
-msgstr "_Paplašināts"
+#, fuzzy
+msgid "Use a TAP device"
+msgstr "Lietot TA_P iekārtu"
 
 #: ../properties/nm-ssh-dialog.ui.h:9
-msgid "CA Certificate:"
-msgstr "CA Sertifikāts:"
+#, fuzzy
+msgid "Remote username:"
+msgstr "Starpnieka lietotājvārds:"
 
 #: ../properties/nm-ssh-dialog.ui.h:10
-msgid "Cipher:"
-msgstr "Šifrs:"
+msgid "Do not replace default route"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:11
 msgid "General"
 msgstr "Vispārējs"
 
 #: ../properties/nm-ssh-dialog.ui.h:12
-msgid "HMAC Authentication:"
-msgstr "HMAC autentifikācija:"
+msgid "<b>General</b>"
+msgstr "<b>Vispārējs</b>"
 
 #: ../properties/nm-ssh-dialog.ui.h:13
-msgid "Key Direction:"
-msgstr "Atslēgas virziens:"
+#, fuzzy
+msgid "Gateway:"
+msgstr "_Vārteja:"
 
 #: ../properties/nm-ssh-dialog.ui.h:14
-msgid "Key File:"
-msgstr "Atslēgas fails:"
+msgid "<b>Network Settings</b>"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:15
+msgid "Remote IP Address:"
+msgstr "Attālinātā IP adrese:"
+
+#: ../properties/nm-ssh-dialog.ui.h:16
 msgid "Local IP Address:"
 msgstr "Lokālā IP adrese:"
 
 #: ../properties/nm-ssh-dialog.ui.h:17
-msgid "SSH Advanced Options"
-msgstr "SSH paplašinātās opcijas"
+msgid "Netmask:"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:18
-msgid "Password:"
-msgstr "Parole:"
+msgid "<b>IPv6 Network Settings</b>"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:19
-#| msgid "Port:  %s"
-msgid "Port:"
-msgstr "Ports:"
+msgid "Use IPv6"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:20
-msgid "Private Key Password:"
-msgstr "Privātās atslēgas parole:"
-
-#: ../properties/nm-ssh-dialog.ui.h:21
-msgid "Private Key:"
-msgstr "Privātā atslēga:"
-
-#: ../properties/nm-ssh-dialog.ui.h:22
-msgid "Proxies"
-msgstr "Starpnieki"
-
-#: ../properties/nm-ssh-dialog.ui.h:23
-#| msgid "Password:"
-msgid "Proxy Password:"
-msgstr "Starpnieka parole:"
-
-#: ../properties/nm-ssh-dialog.ui.h:24
-#| msgid "Type:"
-msgid "Proxy Type:"
-msgstr "Starpnieka tips:"
-
-#: ../properties/nm-ssh-dialog.ui.h:25
-#| msgid "Username:"
-msgid "Proxy Username:"
-msgstr "Starpnieka lietotājvārds:"
-
-#: ../properties/nm-ssh-dialog.ui.h:26
-msgid "Remote IP Address:"
+#, fuzzy
+msgid "Remote IP Address (IPv6):"
 msgstr "Attālinātā IP adrese:"
 
-#: ../properties/nm-ssh-dialog.ui.h:27
-msgid "Restrict tunnel TCP Maximum Segment Size (MSS)"
-msgstr "Ierobežot tuneļa TCP maksimālo segmenta izmēru (MSS)"
+#: ../properties/nm-ssh-dialog.ui.h:21
+#, fuzzy
+msgid "Local IP Address (IPv6):"
+msgstr "Lokālā IP adrese:"
 
-#: ../properties/nm-ssh-dialog.ui.h:28
-msgid "Retry indefinitely when errors occur"
-msgstr "Mēģināt atkal nebeidzami ilgi, ja gadās kļūda"
+#: ../properties/nm-ssh-dialog.ui.h:22
+msgid "Prefix (IPv6):"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.ui.h:29
-msgid "Security"
-msgstr "Drošība"
-
-#: ../properties/nm-ssh-dialog.ui.h:30
-#| msgid "Remote IP Address:"
-msgid "Server Address:"
-msgstr "Servera adrese:"
-
-#: ../properties/nm-ssh-dialog.ui.h:31
-#| msgid "Show passwords"
-msgid "Show password"
-msgstr "Rādīt paroli"
-
-#: ../properties/nm-ssh-dialog.ui.h:32
-msgid "Show passwords"
-msgstr "Rādīt paroles"
-
-#: ../properties/nm-ssh-dialog.ui.h:33
-msgid "Static Key:"
-msgstr "Statiskās atslēgas:"
-
-#: ../properties/nm-ssh-dialog.ui.h:34
-msgid "Subject Match:"
-msgstr "Subjekta atbilstība:"
-
-#: ../properties/nm-ssh-dialog.ui.h:35
-msgid "TLS Authentication"
-msgstr "TLS autentifikācija"
-
-#: ../properties/nm-ssh-dialog.ui.h:36
-msgid "Type:"
-msgstr "Tips:"
-
-#: ../properties/nm-ssh-dialog.ui.h:37
-msgid "Use L_ZO data compression"
-msgstr "Lietot L_ZO datu kompresiju"
-
-#: ../properties/nm-ssh-dialog.ui.h:38
-msgid "Use a TA_P device"
-msgstr "Lietot TA_P iekārtu"
-
-#: ../properties/nm-ssh-dialog.ui.h:39
-msgid "Use a _TCP connection"
-msgstr "Lietot _TCP savienojumu"
-
-#: ../properties/nm-ssh-dialog.ui.h:40
-msgid "Use additional TLS authentication"
-msgstr "Lietot papildus TLS autentifikāciju"
-
-#: ../properties/nm-ssh-dialog.ui.h:41
-msgid "Use custom UDP _fragment size:"
-msgstr "Lietot pielāgotu UDP _fragmenta izmēru:"
-
-#: ../properties/nm-ssh-dialog.ui.h:42
-msgid "Use custom _renegotiation interval:"
-msgstr "Izmantot pielāgotu atkā_rtotās vienošanās intervālu:"
-
-#: ../properties/nm-ssh-dialog.ui.h:43
-msgid "Use custom _tunnel Maximum Transmission Unit (MTU):"
-msgstr "Izmantot pielāgotu _tuneļa maksimālo pārraides bloku (MTU):"
-
-#: ../properties/nm-ssh-dialog.ui.h:44
-msgid "Use custom gateway p_ort:"
-msgstr "Izmantot pielāgotu vārtejas p_ortu: "
-
-#: ../properties/nm-ssh-dialog.ui.h:45
-msgid "User Certificate:"
-msgstr "Lietotāja sertifikāts:"
-
-#: ../properties/nm-ssh-dialog.ui.h:46
-msgid "User name:"
-msgstr "Lietotājvārds:"
-
-#: ../properties/nm-ssh-dialog.ui.h:47
-msgid "_Gateway:"
-msgstr "_Vārteja:"
+#: ../properties/nm-ssh-dialog.ui.h:23
+#, fuzzy
+msgid "Advanced..."
+msgstr "_Paplašināts"
 
 #: ../src/nm-ssh-service.c:192
 #, c-format
@@ -401,70 +173,73 @@ msgid "property '%s' invalid or not supported"
 msgstr "īpašība '%s' nederīga vai nav atbalstīta"
 
 #: ../src/nm-ssh-service.c:249
-#| msgid "SSH Configuration"
 msgid "No VPN configuration options."
 msgstr "Nav VPN konfigurācijas opciju."
 
-#: ../src/nm-ssh-service.c:272
-msgid "No VPN secrets!"
-msgstr "Nav VPN noslēpumu!"
-
-#: ../src/nm-ssh-service.c:741
+#: ../src/nm-ssh-service.c:984
 msgid "Could not find the ssh binary."
 msgstr "Nevarēja atrast ssh bināro failu."
 
-#: ../src/nm-ssh-service.c:752
-msgid "Invalid HMAC auth."
-msgstr "Nederīgs HMAC auth."
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1024
+msgid "Missing required SSH_AUTH_SOCK."
+msgstr ""
 
-#: ../src/nm-ssh-service.c:764 ../src/nm-ssh-service.c:1160
-#: ../src/nm-ssh-service.c:1230
-#| msgid "Co_nnection type:"
-msgid "Invalid connection type."
-msgstr "Nederīgs savienojuma tips."
-
-#: ../src/nm-ssh-service.c:799
+#: ../src/nm-ssh-service.c:1080
 #, c-format
-msgid "Invalid proxy type '%s'."
-msgstr "Nederīgs starpnieka tips '%s'."
+msgid "Please set remote address."
+msgstr ""
 
-#: ../src/nm-ssh-service.c:835
+#: ../src/nm-ssh-service.c:1097
 #, c-format
 msgid "Invalid port number '%s'."
 msgstr "Nederīgs porta numurs '%s'."
 
-#: ../src/nm-ssh-service.c:885
-#, c-format
-msgid "Invalid reneg seconds '%s'."
-msgstr "Nederīgas reneg sekundes '%s'."
-
-#: ../src/nm-ssh-service.c:909
+#: ../src/nm-ssh-service.c:1116
 #, c-format
 msgid "Invalid TUN MTU size '%s'."
 msgstr "Nederīgs TUN MTU izmērs '%s'."
 
-#: ../src/nm-ssh-service.c:924
-#, c-format
-msgid "Invalid fragment size '%s'."
-msgstr "Nederīgs fragmenta izmērs '%s'."
+#: ../src/nm-ssh-service.c:1135
+#, fuzzy, c-format
+msgid "Invalid TUN/TAP device number '%s'."
+msgstr "Nederīgs porta numurs '%s'."
 
-#: ../src/nm-ssh-service.c:992
-msgid "Missing required local IP address for static key mode."
-msgstr "Trūkst vajadzīgā lokālā IP adrese statiskās atslēgas režīmam."
-
-#: ../src/nm-ssh-service.c:1005
-msgid "Missing required remote IP address for static key mode."
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1156
+#, fuzzy
+msgid "Missing required remote IP address."
 msgstr "Trūkst vajadzīgā attālinātā IP adrese statiskās atslēgas režīmam."
 
-#: ../src/nm-ssh-service.c:1030
-#, c-format
-#| msgid "Co_nnection type:"
-msgid "Unknown connection type '%s'."
-msgstr "Nezināms savienojuma tips '%s'."
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1171
+#, fuzzy
+msgid "Missing required local IP address."
+msgstr "Trūkst vajadzīgā lokālā IP adrese statiskās atslēgas režīmam."
 
-#: ../src/nm-ssh-service.c:1149 ../src/nm-ssh-service.c:1220
-#| msgid ""
-#| "The VPN login failed because the VPN configuration options were invalid."
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1188
+msgid "Missing required netmask."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1209
+#, fuzzy
+msgid "Missing required IPv6 remote IP address."
+msgstr "Trūkst vajadzīgā attālinātā IP adrese statiskās atslēgas režīmam."
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1224
+#, fuzzy
+msgid "Missing required IPv6 local IP address."
+msgstr "Trūkst vajadzīgā lokālā IP adrese statiskās atslēgas režīmam."
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1239
+msgid "Missing required IPv6 netmask."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1391 ../src/nm-ssh-service.c:1432
 msgid ""
 "Could not process the request because the VPN connection settings were "
 "invalid."
@@ -472,22 +247,267 @@ msgstr ""
 "Neizdevās apstrādāt pieprasījumu, jo VPN savienojuma iestatījumi bija "
 "nederīgi."
 
-#: ../src/nm-ssh-service.c:1174
-msgid "Could not process the request because no username was provided."
-msgstr "Neizdevās apstrādāt pieprasījumu, jo netika dots lietotāja vārds."
-
-#: ../src/nm-ssh-service.c:1364
+#: ../src/nm-ssh-service.c:1567
 msgid "Don't quit when VPN connection terminates"
 msgstr "Neiziet, kad tiek pārtraukts VPN savienojums"
 
-#: ../src/nm-ssh-service.c:1365
+#: ../src/nm-ssh-service.c:1568
 msgid "Enable verbose debug logging (may expose passwords)"
 msgstr "Aktivēt detalizētu atkļūdošanas reģistrēšanu (var atklāt paroles)"
 
-#: ../src/nm-ssh-service.c:1379
-msgid ""
-"nm-vpnc-service provides integrated SSH capability to NetworkManager."
+#: ../src/nm-ssh-service.c:1584
+#, fuzzy
+msgid "nm-ssh-service provides integrated SSH capability to NetworkManager."
 msgstr "nm-vpnc-service nodrošina NetworkManager integrētu SSH iespēju."
+
+#~ msgid "_Password:"
+#~ msgstr "_Parole:"
+
+#~ msgid "_Secondary Password:"
+#~ msgstr "_Sekundārā parole:"
+
+#~ msgid "_Username:"
+#~ msgstr "_Lietotājvārds:"
+
+#~ msgid "_Domain:"
+#~ msgstr "_Domēns:"
+
+#~ msgid "Connect _anonymously"
+#~ msgstr "Savienoties _anonīmi"
+
+#~ msgid "Connect as _user:"
+#~ msgstr "Savienoties kā _lietotājam:"
+
+#~ msgid "_Remember password for this session"
+#~ msgstr "Atce_rēties paroli šai sesijai"
+
+#~ msgid "_Save password in keyring"
+#~ msgstr "_Saglabāt paroli saišķī"
+
+#~ msgid "You need to authenticate to access the Virtual Private Network '%s'."
+#~ msgstr "Jums jāautentificējas, lai lietotu virtuālo privāto tīklu '%s'."
+
+#~ msgid "Authenticate VPN"
+#~ msgstr "Autentificēt VPN"
+
+#~ msgid "Certificate pass_word:"
+#~ msgstr "Sertifikāta _parole:"
+
+#~ msgid "Certificate password:"
+#~ msgstr "Sertifikāta parole:"
+
+#~ msgid "Choose a Certificate Authority certificate..."
+#~ msgstr "Izvēlieties sertificēšanas institūcijas (CA) sertifikātu..."
+
+#~ msgid "Choose your personal certificate..."
+#~ msgstr "Izvēlieties savu personīgo sertifikātu..."
+
+#~ msgid "Choose your private key..."
+#~ msgstr "Izvēlieties savu privāto atslēgu..."
+
+#~ msgid "Choose an SSH static key..."
+#~ msgstr "Izvēlieties SSH statisko atslēgu..."
+
+#~ msgid "None"
+#~ msgstr "Nav"
+
+#~ msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
+#~ msgstr "PEM vai PKCS#12 sertifikāti (*.pem, *.crt, *.key, *.cer, *.p12)"
+
+#~ msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
+#~ msgstr "PEM sertifikāti (*.pem, *.crt, *.key, *.cer)"
+
+#~ msgid "SSH Static Keys (*.key)"
+#~ msgstr "SSH statiskās atslēgas (*.key)"
+
+#~ msgid "Default"
+#~ msgstr "Noklusētais"
+
+#~ msgid "MD-5"
+#~ msgstr "MD-5"
+
+#~ msgid "SHA-1"
+#~ msgstr "SHA-1"
+
+#~ msgid "SHA-224"
+#~ msgstr "SHA-224"
+
+#~ msgid "SHA-256"
+#~ msgstr "SHA-256"
+
+#~ msgid "SHA-384"
+#~ msgstr "SHA-384"
+
+#~ msgid "SHA-512"
+#~ msgstr "SHA-512"
+
+#~ msgid "RIPEMD-160"
+#~ msgstr "RIPEMD-160"
+
+#~ msgid "HTTP"
+#~ msgstr "HTTP"
+
+#~ msgid "SOCKS"
+#~ msgstr "SOCKS"
+
+#~ msgid "Certificates (TLS)"
+#~ msgstr "Sertifikāti (TLS)"
+
+#~ msgid "Password"
+#~ msgstr "Parole"
+
+#~ msgid "Password with Certificates (TLS)"
+#~ msgstr "Parole ar sertifikātu (TLS)"
+
+#~ msgid "Static Key"
+#~ msgstr "Statiskā atslēga"
+
+#~ msgid "<b>Authentication</b>"
+#~ msgstr "<b>Autentifikācija</b>"
+
+#~ msgid ""
+#~ "<i>Connect only to servers whose certificate matches the given subject.\n"
+#~ "Example: /CN=myvpn.company.com</i>"
+#~ msgstr ""
+#~ "<i>Savienoties tikai ar serveriem, kuru sertifikāts atbilst dotajam "
+#~ "subjektam.\n"
+#~ "Piemēram: /CN=myvpn.company.com</i>"
+
+#~ msgid ""
+#~ "<i>If key direction is used, it must be the opposite of that used on the "
+#~ "VPN peer.  For example, if the peer uses '1', this connection must use "
+#~ "'0'.  If you are unsure what value to use, contact your system "
+#~ "administrator.</i>"
+#~ msgstr ""
+#~ "<i>Ja tiek izmantota virziena atslēga, tai ir jābūt pretējai, nekā otram "
+#~ "dalībniekam VPN. Piemēram, ja dalībnieks izmanto '1', tad šim "
+#~ "savienojumam jāizmanto '0'. Ja nezināt, kādu vērtību izmantot, "
+#~ "sazinieties ar sistēmas administratoru.</i>"
+
+#~ msgid ""
+#~ "<i>Select this option if your organization requires the use of a proxy "
+#~ "server to access the Internet.</i>"
+#~ msgstr ""
+#~ "<i>Izvēlieties šo opciju, ja jūsu organizācija izmanto starpnieka "
+#~ "serveri, lai piekļūtu Internetam.</i>"
+
+#~ msgid "CA Certificate:"
+#~ msgstr "CA Sertifikāts:"
+
+#~ msgid "Cipher:"
+#~ msgstr "Šifrs:"
+
+#~ msgid "HMAC Authentication:"
+#~ msgstr "HMAC autentifikācija:"
+
+#~ msgid "Key Direction:"
+#~ msgstr "Atslēgas virziens:"
+
+#~ msgid "Key File:"
+#~ msgstr "Atslēgas fails:"
+
+#~ msgid "Password:"
+#~ msgstr "Parole:"
+
+#~| msgid "Port:  %s"
+#~ msgid "Port:"
+#~ msgstr "Ports:"
+
+#~ msgid "Private Key Password:"
+#~ msgstr "Privātās atslēgas parole:"
+
+#~ msgid "Private Key:"
+#~ msgstr "Privātā atslēga:"
+
+#~ msgid "Proxies"
+#~ msgstr "Starpnieki"
+
+#~| msgid "Password:"
+#~ msgid "Proxy Password:"
+#~ msgstr "Starpnieka parole:"
+
+#~| msgid "Type:"
+#~ msgid "Proxy Type:"
+#~ msgstr "Starpnieka tips:"
+
+#~ msgid "Restrict tunnel TCP Maximum Segment Size (MSS)"
+#~ msgstr "Ierobežot tuneļa TCP maksimālo segmenta izmēru (MSS)"
+
+#~ msgid "Retry indefinitely when errors occur"
+#~ msgstr "Mēģināt atkal nebeidzami ilgi, ja gadās kļūda"
+
+#~ msgid "Security"
+#~ msgstr "Drošība"
+
+#~| msgid "Remote IP Address:"
+#~ msgid "Server Address:"
+#~ msgstr "Servera adrese:"
+
+#~| msgid "Show passwords"
+#~ msgid "Show password"
+#~ msgstr "Rādīt paroli"
+
+#~ msgid "Show passwords"
+#~ msgstr "Rādīt paroles"
+
+#~ msgid "Static Key:"
+#~ msgstr "Statiskās atslēgas:"
+
+#~ msgid "Subject Match:"
+#~ msgstr "Subjekta atbilstība:"
+
+#~ msgid "TLS Authentication"
+#~ msgstr "TLS autentifikācija"
+
+#~ msgid "Type:"
+#~ msgstr "Tips:"
+
+#~ msgid "Use L_ZO data compression"
+#~ msgstr "Lietot L_ZO datu kompresiju"
+
+#~ msgid "Use a _TCP connection"
+#~ msgstr "Lietot _TCP savienojumu"
+
+#~ msgid "Use additional TLS authentication"
+#~ msgstr "Lietot papildus TLS autentifikāciju"
+
+#~ msgid "Use custom UDP _fragment size:"
+#~ msgstr "Lietot pielāgotu UDP _fragmenta izmēru:"
+
+#~ msgid "Use custom _renegotiation interval:"
+#~ msgstr "Izmantot pielāgotu atkā_rtotās vienošanās intervālu:"
+
+#~ msgid "User Certificate:"
+#~ msgstr "Lietotāja sertifikāts:"
+
+#~ msgid "User name:"
+#~ msgstr "Lietotājvārds:"
+
+#~ msgid "No VPN secrets!"
+#~ msgstr "Nav VPN noslēpumu!"
+
+#~ msgid "Invalid HMAC auth."
+#~ msgstr "Nederīgs HMAC auth."
+
+#~| msgid "Co_nnection type:"
+#~ msgid "Invalid connection type."
+#~ msgstr "Nederīgs savienojuma tips."
+
+#~ msgid "Invalid proxy type '%s'."
+#~ msgstr "Nederīgs starpnieka tips '%s'."
+
+#~ msgid "Invalid reneg seconds '%s'."
+#~ msgstr "Nederīgas reneg sekundes '%s'."
+
+#~ msgid "Invalid fragment size '%s'."
+#~ msgstr "Nederīgs fragmenta izmērs '%s'."
+
+#~| msgid "Co_nnection type:"
+#~ msgid "Unknown connection type '%s'."
+#~ msgstr "Nezināms savienojuma tips '%s'."
+
+#~ msgid "Could not process the request because no username was provided."
+#~ msgstr "Neizdevās apstrādāt pieprasījumu, jo netika dots lietotāja vārds."
 
 #~ msgid "The following SSH connection will be created:"
 #~ msgstr "Tiks izveidots SSH savienojums:"
@@ -636,8 +656,8 @@ msgstr "nm-vpnc-service nodrošina NetworkManager integrētu SSH iespēju."
 #~ "informāciju. Paroli šeit neievadiet, tā tiks pieprasīta savienojoties."
 
 #~ msgid ""
-#~ "Please note that the file you import is not an SSH configuration "
-#~ "file. Ask your administrator for the file."
+#~ "Please note that the file you import is not an SSH configuration file. "
+#~ "Ask your administrator for the file."
 #~ msgstr ""
 #~ "Ņemiet vērā, ka importējamā datne nav SSH konfigurācijas datne. "
 #~ "Konfigurācijas datni jautājiet sistēmas administratoram."

@@ -9,10 +9,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Project\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-31 10:41+0100\n"
+"POT-Creation-Date: 2013-06-09 18:57+1000\n"
 "PO-Revision-Date: 2007-12-26 09:06+0100\n"
 "Last-Translator: Djihed Afifi <djihed@gmail.com>\n"
 "Language-Team: Arabic <doc@arabeyes.org>\n"
+"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -21,244 +22,328 @@ msgstr ""
 "X-Poedit-Language: Arabic\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: ../auth-dialog/gnome-two-password-dialog.c:145
-msgid "_Password:"
-msgstr "_كلمة السر:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:146
-msgid "_Secondary Password:"
-msgstr "كلمة سر _ثانوية:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:263
-msgid "_Username:"
-msgstr "ا_سم المستخدم:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:265
-msgid "_Domain:"
-msgstr "ال_نطاق:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:357
-msgid "Connect _anonymously"
-msgstr "اتّصل كم_جهول"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:362
-msgid "Connect as _user:"
-msgstr "اتصل _كمستخدم:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:471
-msgid "_Remember password for this session"
-msgstr "_تذكّر كلمة السر لهذه الجلسة"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:473
-msgid "_Save password in keyring"
-msgstr "ا_حفظ كلمة السر في حلقة المفاتيح"
-
-#: ../auth-dialog/main.c:187
+#: ../auth-dialog/main.c:122
 #, c-format
-msgid "You need to authenticate to access the Virtual Private Network '%s'."
-msgstr "تحتاج إلى التوثيق لتَنفُذ إلى الشبكة الخاصة التخيلية '%s'."
-
-#: ../auth-dialog/main.c:188
-msgid "Authenticate VPN"
-msgstr "وثِّق VPN"
-
-#: ../auth-dialog/main.c:201
-msgid "Certificate pass_word:"
-msgstr "كلمة سر ال_شهادة:"
-
-#: ../auth-dialog/main.c:216
-msgid "Certificate password:"
-msgstr "كلمة سر الشهادة:"
-
-#: ../properties/auth-helpers.c:68
-msgid "Choose a Certificate Authority certificate..."
+msgid ""
+"Couldn't find '%s' environment variable.\n"
+"\n"
+"Is ssh-agent running?"
 msgstr ""
 
-#: ../properties/auth-helpers.c:87
-msgid "Choose your personal certificate..."
+#: ../properties/advanced-dialog.c:137
+msgid ""
+"You have chosen not to use 'root' as the remote username.\n"
+"\n"
+"Please make sure the user you specify is allowed to open tun/tap devices on "
+"the remote host."
 msgstr ""
 
-#: ../properties/auth-helpers.c:105
-msgid "Choose your private key..."
-msgstr ""
-
-#: ../properties/auth-helpers.c:158
-msgid "Choose an SSH static key..."
-msgstr ""
-
-#: ../properties/auth-helpers.c:176 ../properties/auth-helpers.c:886
-#, fuzzy
-msgid "None"
-msgstr "لا"
-
-#: ../properties/auth-helpers.c:519
-msgid "PEM certificates (*.pem, *.crt, *.key)"
-msgstr ""
-
-#: ../properties/auth-helpers.c:579
-msgid "SSH Static Keys (*.key)"
-msgstr ""
-
-#: ../properties/auth-helpers.c:711
-#, fuzzy
-msgid "Default"
-msgstr "(افتراضي: 1194)"
-
-#: ../properties/nm-ssh.c:53
+#: ../properties/nm-ssh.c:49
 #, fuzzy
 msgid "SSH"
 msgstr "عميل SSH"
 
-#: ../properties/nm-ssh.c:54
+#: ../properties/nm-ssh.c:50
 msgid "Compatible with the SSH server."
 msgstr ""
 
-#: ../properties/nm-ssh.c:308 ../properties/nm-ssh-dialog.glade.h:7
-#, fuzzy
-msgid "Certificates (TLS)"
-msgstr "ش_هادة:"
-
-#: ../properties/nm-ssh.c:320
-msgid "Password"
-msgstr "كلمة السّر"
-
-#: ../properties/nm-ssh.c:334
-msgid "Password with Certificates (TLS)"
-msgstr ""
-
-#: ../properties/nm-ssh.c:346
-msgid "Static Key"
-msgstr ""
-
-#: ../properties/nm-ssh-dialog.glade.h:1
+#: ../properties/nm-ssh-dialog.ui.h:1
 msgid " "
 msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:2
-#, fuzzy
-msgid "<b>Authentication</b>"
-msgstr "<b>اسم الإتصال</b>"
+#: ../properties/nm-ssh-dialog.ui.h:2
+msgid "Not required"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:3
+#: ../properties/nm-ssh-dialog.ui.h:3
+msgid "SSH Advanced Options"
+msgstr "خيارات SSH متقدمة"
+
+#: ../properties/nm-ssh-dialog.ui.h:4
+#, fuzzy
+msgid "Use custom gateway port:"
+msgstr "منفذ ال_بوّابة:"
+
+#: ../properties/nm-ssh-dialog.ui.h:5
+msgid "Use custom tunnel Maximum Transmission Unit (MTU):"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:6
+msgid "Extra SSH options:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:7
+msgid "Remote device number:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:8
+#, fuzzy
+msgid "Use a TAP device"
+msgstr "ا_ستخدم جهاز TAP"
+
+#: ../properties/nm-ssh-dialog.ui.h:9
+#, fuzzy
+msgid "Remote username:"
+msgstr "اسم المستخدم:"
+
+#: ../properties/nm-ssh-dialog.ui.h:10
+msgid "Do not replace default route"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:11
+msgid "General"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:12
 #, fuzzy
 msgid "<b>General</b>"
 msgstr "<b>مطلوب</b>"
 
-#: ../properties/nm-ssh-dialog.glade.h:4
-msgid ""
-"<i>If key direction is used, it must be the opposite of that used on the VPN "
-"peer.  For example, if the peer uses '1', this connection must use '0'.  If "
-"you are unsure what value to use, contact your system administrator.</i>"
+#: ../properties/nm-ssh-dialog.ui.h:13
+#, fuzzy
+msgid "Gateway:"
+msgstr "منفذ ال_بوّابة:"
+
+#: ../properties/nm-ssh-dialog.ui.h:14
+msgid "<b>Network Settings</b>"
 msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:5
+#: ../properties/nm-ssh-dialog.ui.h:15
 #, fuzzy
-msgid "Ad_vanced..."
+msgid "Remote IP Address:"
+msgstr "IP الآخر:"
+
+#: ../properties/nm-ssh-dialog.ui.h:16
+#, fuzzy
+msgid "Local IP Address:"
+msgstr "IP م_حلّي:  %s"
+
+#: ../properties/nm-ssh-dialog.ui.h:17
+msgid "Netmask:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:18
+msgid "<b>IPv6 Network Settings</b>"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:19
+msgid "Use IPv6"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:20
+msgid "Remote IP Address (IPv6):"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:21
+msgid "Local IP Address (IPv6):"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:22
+msgid "Prefix (IPv6):"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:23
+#, fuzzy
+msgid "Advanced..."
 msgstr "مت_قدم"
 
-#: ../properties/nm-ssh-dialog.glade.h:6
-#, fuzzy
-msgid "CA Certificate:"
-msgstr "ش_هادة:"
-
-#: ../properties/nm-ssh-dialog.glade.h:8
-#, fuzzy
-msgid "Cipher:"
-msgstr "شيفرة:  %s"
-
-#: ../properties/nm-ssh-dialog.glade.h:9
-msgid "General"
+#: ../src/nm-ssh-service.c:192
+#, c-format
+msgid "invalid address '%s'"
 msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:10
-#, fuzzy
-msgid "Key Direction:"
-msgstr "الإتجاه:"
-
-#: ../properties/nm-ssh-dialog.glade.h:11
-msgid "Key File:"
+#: ../src/nm-ssh-service.c:204
+#, c-format
+msgid "invalid integer property '%s' or out of range [%d -> %d]"
 msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:12
-msgid "SSH Advanced Options"
-msgstr "خيارات SSH متقدمة"
-
-#: ../properties/nm-ssh-dialog.glade.h:13
-#, fuzzy
-msgid "Private Key:"
-msgstr "مفتاح مشترَك:"
-
-#: ../properties/nm-ssh-dialog.glade.h:14
-#, fuzzy
-msgid "Static Key:"
-msgstr "مفتاح مشترَك:"
-
-#: ../properties/nm-ssh-dialog.glade.h:15
-msgid "Type:"
+#: ../src/nm-ssh-service.c:214
+#, c-format
+msgid "invalid boolean property '%s' (not yes or no)"
 msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:16
-#, fuzzy
-msgid "Use L_ZO data compression"
-msgstr "استعمل _ضغط LZO"
-
-#: ../properties/nm-ssh-dialog.glade.h:17
-#, fuzzy
-msgid "Use a TA_P device"
-msgstr "ا_ستخدم جهاز TAP"
-
-#: ../properties/nm-ssh-dialog.glade.h:18
-#, fuzzy
-msgid "Use a _TCP connection"
-msgstr "استخدم ات_صال TCP"
-
-#: ../properties/nm-ssh-dialog.glade.h:19
-msgid "Use additional TLS authentication"
+#: ../src/nm-ssh-service.c:221
+#, c-format
+msgid "unhandled property '%s' type %s"
 msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:20
+#: ../src/nm-ssh-service.c:232
+#, c-format
+msgid "property '%s' invalid or not supported"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:249
+msgid "No VPN configuration options."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:984
+msgid "Could not find the ssh binary."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1024
+msgid "Missing required SSH_AUTH_SOCK."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1080
+#, c-format
+msgid "Please set remote address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1097
+#, c-format
+msgid "Invalid port number '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1116
+#, c-format
+msgid "Invalid TUN MTU size '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1135
+#, c-format
+msgid "Invalid TUN/TAP device number '%s'."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1156
+msgid "Missing required remote IP address."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1171
+msgid "Missing required local IP address."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1188
+msgid "Missing required netmask."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1209
+msgid "Missing required IPv6 remote IP address."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1224
+msgid "Missing required IPv6 local IP address."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1239
+msgid "Missing required IPv6 netmask."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1391 ../src/nm-ssh-service.c:1432
 #, fuzzy
-msgid "Use custom gateway p_ort:"
-msgstr "منفذ ال_بوّابة:"
+msgid ""
+"Could not process the request because the VPN connection settings were "
+"invalid."
+msgstr "فشل ولوج VPN لأن خيارات اعدادات VPN غير صالحة."
 
-#: ../properties/nm-ssh-dialog.glade.h:21
+#: ../src/nm-ssh-service.c:1567
+msgid "Don't quit when VPN connection terminates"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1568
+msgid "Enable verbose debug logging (may expose passwords)"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1584
+msgid "nm-ssh-service provides integrated SSH capability to NetworkManager."
+msgstr ""
+
+#~ msgid "_Password:"
+#~ msgstr "_كلمة السر:"
+
+#~ msgid "_Secondary Password:"
+#~ msgstr "كلمة سر _ثانوية:"
+
+#~ msgid "_Username:"
+#~ msgstr "ا_سم المستخدم:"
+
+#~ msgid "_Domain:"
+#~ msgstr "ال_نطاق:"
+
+#~ msgid "Connect _anonymously"
+#~ msgstr "اتّصل كم_جهول"
+
+#~ msgid "Connect as _user:"
+#~ msgstr "اتصل _كمستخدم:"
+
+#~ msgid "_Remember password for this session"
+#~ msgstr "_تذكّر كلمة السر لهذه الجلسة"
+
+#~ msgid "_Save password in keyring"
+#~ msgstr "ا_حفظ كلمة السر في حلقة المفاتيح"
+
+#~ msgid "You need to authenticate to access the Virtual Private Network '%s'."
+#~ msgstr "تحتاج إلى التوثيق لتَنفُذ إلى الشبكة الخاصة التخيلية '%s'."
+
+#~ msgid "Authenticate VPN"
+#~ msgstr "وثِّق VPN"
+
+#~ msgid "Certificate pass_word:"
+#~ msgstr "كلمة سر ال_شهادة:"
+
+#~ msgid "Certificate password:"
+#~ msgstr "كلمة سر الشهادة:"
+
 #, fuzzy
-msgid "User Certificate:"
-msgstr "ش_هادة:"
+#~ msgid "None"
+#~ msgstr "لا"
 
-#: ../properties/nm-ssh-dialog.glade.h:22
 #, fuzzy
-msgid "User name:"
-msgstr "ا_سم المستخدم:"
+#~ msgid "Default"
+#~ msgstr "(افتراضي: 1194)"
 
-#: ../properties/nm-ssh-dialog.glade.h:23
 #, fuzzy
-msgid "_Gateway:"
-msgstr "منفذ ال_بوّابة:"
+#~ msgid "Certificates (TLS)"
+#~ msgstr "ش_هادة:"
 
-#: ../properties/nm-ssh-dialog.glade.h:24
-msgid "gtk-cancel"
-msgstr ""
+#~ msgid "Password"
+#~ msgstr "كلمة السّر"
 
-#: ../properties/nm-ssh-dialog.glade.h:25
-msgid "gtk-ok"
-msgstr ""
+#, fuzzy
+#~ msgid "<b>Authentication</b>"
+#~ msgstr "<b>اسم الإتصال</b>"
 
-#: ../properties/nm-ssh-dialog.glade.h:26
-msgid "page 1"
-msgstr ""
+#, fuzzy
+#~ msgid "CA Certificate:"
+#~ msgstr "ش_هادة:"
 
-#: ../properties/nm-ssh-dialog.glade.h:27
-msgid "page 2"
-msgstr ""
+#, fuzzy
+#~ msgid "Cipher:"
+#~ msgstr "شيفرة:  %s"
 
-#: ../properties/nm-ssh-dialog.glade.h:28
-msgid "page 3"
-msgstr ""
+#, fuzzy
+#~ msgid "Key Direction:"
+#~ msgstr "الإتجاه:"
 
-#: ../properties/nm-ssh-dialog.glade.h:29
-msgid "page 4"
-msgstr ""
+#, fuzzy
+#~ msgid "Private Key:"
+#~ msgstr "مفتاح مشترَك:"
+
+#, fuzzy
+#~ msgid "Static Key:"
+#~ msgstr "مفتاح مشترَك:"
+
+#, fuzzy
+#~ msgid "Use L_ZO data compression"
+#~ msgstr "استعمل _ضغط LZO"
+
+#, fuzzy
+#~ msgid "Use a _TCP connection"
+#~ msgstr "استخدم ات_صال TCP"
+
+#, fuzzy
+#~ msgid "User Certificate:"
+#~ msgstr "ش_هادة:"
+
+#, fuzzy
+#~ msgid "User name:"
+#~ msgstr "ا_سم المستخدم:"
 
 #~ msgid "The following SSH connection will be created:"
 #~ msgstr "ستُنشأ اتصالات SSH التالية:"
@@ -283,9 +368,6 @@ msgstr ""
 
 #~ msgid "Shared Key:  %s"
 #~ msgstr "مفتاح مشترَك: %s"
-
-#~ msgid "Local IP:  %s"
-#~ msgstr "IP م_حلّي:  %s"
 
 #~ msgid "Remote IP:  %s"
 #~ msgstr "IP بعيد:  %s"
@@ -419,11 +501,11 @@ msgstr ""
 #~ "حيث أنك ستسأل عنها عند الإتصال."
 
 #~ msgid ""
-#~ "Please note that the file you import is not an SSH configuration "
-#~ "file. Ask your administrator for the file."
+#~ "Please note that the file you import is not an SSH configuration file. "
+#~ "Ask your administrator for the file."
 #~ msgstr ""
-#~ "من فضلك لا حظ أن الملف الذي استوردته ليس ملف إعدادات SSH. اسأل مدير "
-#~ "نظامك عن الملف."
+#~ "من فضلك لا حظ أن الملف الذي استوردته ليس ملف إعدادات SSH. اسأل مدير نظامك "
+#~ "عن الملف."
 
 #~ msgid "Shared _key:"
 #~ msgstr "مف_تاح مشترَك:"
@@ -463,9 +545,6 @@ msgstr ""
 #~ msgid "_Local IP:"
 #~ msgstr "IP م_حلًي:"
 
-#~ msgid "_Remote IP:"
-#~ msgstr "IP الآخر:"
-
 #~ msgid "_none"
 #~ msgstr "لا _شيء"
 
@@ -491,10 +570,6 @@ msgstr ""
 #~ msgstr "فشل ولوج VPN لأن برنامج VPN لا يمكنه الإتصال بخادم VPN."
 
 #~ msgid ""
-#~ "The VPN login failed because the VPN configuration options were invalid."
-#~ msgstr "فشل ولوج VPN لأن خيارات اعدادات VPN غير صالحة."
-
-#~ msgid ""
 #~ "The VPN login failed because the VPN program received an invalid "
 #~ "configuration from the VPN server."
 #~ msgstr "فشل ولوج VPN لأن برنامج VPN لم يتلقى اعدادات صالحة من خادم VPN."
@@ -504,9 +579,6 @@ msgstr ""
 
 #~ msgid "<b>Connection Information</b>"
 #~ msgstr "<b>معلومات الإتصال</b>"
-
-#~ msgid "Username:"
-#~ msgstr "اسم المستخدم:"
 
 #~ msgid "X.509"
 #~ msgstr "X.509"

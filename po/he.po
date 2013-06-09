@@ -7,10 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NetworkManager-ssh\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-23 12:41+0200\n"
+"POT-Creation-Date: 2013-06-09 18:57+1000\n"
 "PO-Revision-Date: 2011-01-23 12:50+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <sh.yaron@gmail.com>\n"
+"Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,152 +20,224 @@ msgstr ""
 "X-Poedit-Country: ISRAEL\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: ../auth-dialog/gnome-two-password-dialog.c:130
-msgid "_Password:"
-msgstr "_ססמה:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:131
-msgid "_Secondary Password:"
-msgstr "ססמה מ_שנית:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:248
-msgid "_Username:"
-msgstr "ש_ם משתמש:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:250
-msgid "_Domain:"
-msgstr "מ_תחם:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:346
-msgid "Connect _anonymously"
-msgstr "התחברות _אלמונית"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:351
-msgid "Connect as _user:"
-msgstr "התחברות בתו_ר המשתמש:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:456
-msgid "_Remember password for this session"
-msgstr "שמירת הססמה להפ_עלה זו"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:458
-msgid "_Save password in keyring"
-msgstr "שמירת הססמה ב_קבוצת הססמאות"
-
-#: ../auth-dialog/main.c:94
+#: ../auth-dialog/main.c:122
 #, c-format
-msgid "You need to authenticate to access the Virtual Private Network '%s'."
-msgstr "עליך להתאמת כדי לגשת לרשת הווירטואלית הפרטית '%s'."
+msgid ""
+"Couldn't find '%s' environment variable.\n"
+"\n"
+"Is ssh-agent running?"
+msgstr ""
 
-#: ../auth-dialog/main.c:95
-msgid "Authenticate VPN"
-msgstr "אימות מול ה־VPN"
+#: ../properties/advanced-dialog.c:137
+msgid ""
+"You have chosen not to use 'root' as the remote username.\n"
+"\n"
+"Please make sure the user you specify is allowed to open tun/tap devices on "
+"the remote host."
+msgstr ""
 
-#: ../auth-dialog/main.c:116
-msgid "Certificate pass_word:"
-msgstr "ססמת ה_אישור:"
-
-#: ../auth-dialog/main.c:130
-msgid "Certificate password:"
-msgstr "ססמת האישור:"
-
-#: ../properties/auth-helpers.c:207
-msgid "Choose a Certificate Authority certificate..."
-msgstr "נא לבחור אישור של רשות אישורים..."
-
-#: ../properties/auth-helpers.c:226
-msgid "Choose your personal certificate..."
-msgstr "נא לבחור את האישור הפרטי שלך..."
-
-#: ../properties/auth-helpers.c:244
-msgid "Choose your private key..."
-msgstr "נא לבחור את המפתח הפרטי שלך..."
-
-#: ../properties/auth-helpers.c:302
-msgid "Choose an SSH static key..."
-msgstr "נא לבחור במפתח SSH סטטי..."
-
-#: ../properties/auth-helpers.c:326 ../properties/auth-helpers.c:1084
-#: ../properties/auth-helpers.c:1457
-msgid "None"
-msgstr "ללא"
-
-#: ../properties/auth-helpers.c:781
-msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
-msgstr "אישורי PEM או PKCS#12‏ (‎*.pem, *.crt, *.key, *.cer, *.p12)"
-
-#: ../properties/auth-helpers.c:782
-msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
-msgstr "אישורי PEM‏ (‎*.pem, *.crt, *.key, *.cer)"
-
-#: ../properties/auth-helpers.c:842
-msgid "SSH Static Keys (*.key)"
-msgstr "מפתחות SSH סטטיים (‎*.key)"
-
-#: ../properties/auth-helpers.c:1001 ../properties/auth-helpers.c:1076
-msgid "Default"
-msgstr "בררת מחדל"
-
-#: ../properties/auth-helpers.c:1086
-msgid "MD-5"
-msgstr "MD-5"
-
-#: ../properties/auth-helpers.c:1088
-msgid "SHA-1"
-msgstr "SHA-1"
-
-#: ../properties/auth-helpers.c:1090
-msgid "SHA-224"
-msgstr "SHA-224"
-
-#: ../properties/auth-helpers.c:1092
-msgid "SHA-256"
-msgstr "SHA-256"
-
-#: ../properties/auth-helpers.c:1094
-msgid "SHA-384"
-msgstr "SHA-384"
-
-#: ../properties/auth-helpers.c:1096
-msgid "SHA-512"
-msgstr "SHA-512"
-
-#: ../properties/auth-helpers.c:1098
-msgid "RIPEMD-160"
-msgstr "RIPEMD-160"
-
-#: ../properties/auth-helpers.c:1259
-msgid "Not required"
-msgstr "לא נדרש"
-
-#: ../properties/auth-helpers.c:1261
-msgid "HTTP"
-msgstr "HTTP"
-
-#: ../properties/auth-helpers.c:1263
-msgid "SOCKS"
-msgstr "SOCKS"
-
-#: ../properties/nm-ssh.c:52
+#: ../properties/nm-ssh.c:49
 msgid "SSH"
-msgstr "SSH"
+msgstr ""
 
-#: ../properties/nm-ssh.c:53
+#: ../properties/nm-ssh.c:50
 msgid "Compatible with the SSH server."
-msgstr "תואם לשרת ה־SSH."
+msgstr ""
 
-#: ../properties/nm-ssh.c:321
-msgid "Certificates (TLS)"
-msgstr "אישורים (TLS)"
+#: ../properties/nm-ssh-dialog.ui.h:1
+msgid " "
+msgstr ""
 
-#: ../properties/nm-ssh.c:335
-msgid "Password"
-msgstr "ססמה"
+#: ../properties/nm-ssh-dialog.ui.h:2
+msgid "Not required"
+msgstr ""
 
-#: ../properties/nm-ssh.c:352
-msgid "Password with Certificates (TLS)"
-msgstr "ססמה עם אישורים (TLS)"
+#: ../properties/nm-ssh-dialog.ui.h:3
+msgid "SSH Advanced Options"
+msgstr ""
 
-#: ../properties/nm-ssh.c:364
-msgid "Static Key"
-msgstr "מפתח סטטי"
+#: ../properties/nm-ssh-dialog.ui.h:4
+msgid "Use custom gateway port:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:5
+msgid "Use custom tunnel Maximum Transmission Unit (MTU):"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:6
+msgid "Extra SSH options:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:7
+msgid "Remote device number:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:8
+msgid "Use a TAP device"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:9
+msgid "Remote username:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:10
+msgid "Do not replace default route"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:11
+msgid "General"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:12
+msgid "<b>General</b>"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:13
+msgid "Gateway:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:14
+msgid "<b>Network Settings</b>"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:15
+msgid "Remote IP Address:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:16
+msgid "Local IP Address:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:17
+msgid "Netmask:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:18
+msgid "<b>IPv6 Network Settings</b>"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:19
+msgid "Use IPv6"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:20
+msgid "Remote IP Address (IPv6):"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:21
+msgid "Local IP Address (IPv6):"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:22
+msgid "Prefix (IPv6):"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:23
+msgid "Advanced..."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:192
+#, c-format
+msgid "invalid address '%s'"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:204
+#, c-format
+msgid "invalid integer property '%s' or out of range [%d -> %d]"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:214
+#, c-format
+msgid "invalid boolean property '%s' (not yes or no)"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:221
+#, c-format
+msgid "unhandled property '%s' type %s"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:232
+#, c-format
+msgid "property '%s' invalid or not supported"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:249
+msgid "No VPN configuration options."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:984
+msgid "Could not find the ssh binary."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1024
+msgid "Missing required SSH_AUTH_SOCK."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1080
+#, c-format
+msgid "Please set remote address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1097
+#, c-format
+msgid "Invalid port number '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1116
+#, c-format
+msgid "Invalid TUN MTU size '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1135
+#, c-format
+msgid "Invalid TUN/TAP device number '%s'."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1156
+msgid "Missing required remote IP address."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1171
+msgid "Missing required local IP address."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1188
+msgid "Missing required netmask."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1209
+msgid "Missing required IPv6 remote IP address."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1224
+msgid "Missing required IPv6 local IP address."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1239
+msgid "Missing required IPv6 netmask."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1391 ../src/nm-ssh-service.c:1432
+msgid ""
+"Could not process the request because the VPN connection settings were "
+"invalid."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1567
+msgid "Don't quit when VPN connection terminates"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1568
+msgid "Enable verbose debug logging (may expose passwords)"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1584
+msgid "nm-ssh-service provides integrated SSH capability to NetworkManager."
+msgstr ""

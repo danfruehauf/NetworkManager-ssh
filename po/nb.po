@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: network-manager-ssh\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-19 13:25+0200\n"
+"POT-Creation-Date: 2013-06-09 18:57+1000\n"
 "PO-Revision-Date: 2011-07-19 13:27+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian Bokmål <i18n-nb@lister.ping.uio.no>\n"
@@ -16,341 +16,127 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../auth-dialog/vpn-password-dialog.c:95
-msgid "_Password:"
-msgstr "_Passord:"
-
-#: ../auth-dialog/vpn-password-dialog.c:97
-msgid "_Secondary Password:"
-msgstr "_Sekundært passord:"
-
-#: ../auth-dialog/vpn-password-dialog.c:239
-msgid "Sh_ow passwords"
-msgstr "Vis pass_ord"
-
-#: ../auth-dialog/main.c:133
+#: ../auth-dialog/main.c:122
 #, c-format
-msgid "You need to authenticate to access the Virtual Private Network '%s'."
+msgid ""
+"Couldn't find '%s' environment variable.\n"
+"\n"
+"Is ssh-agent running?"
 msgstr ""
-"Du må autentisere deg for å få tilgang til virtuelt privat nettverk «%s»."
 
-#: ../auth-dialog/main.c:134
-msgid "Authenticate VPN"
-msgstr "Autentiser VPN"
+#: ../properties/advanced-dialog.c:137
+msgid ""
+"You have chosen not to use 'root' as the remote username.\n"
+"\n"
+"Please make sure the user you specify is allowed to open tun/tap devices on "
+"the remote host."
+msgstr ""
 
-#: ../auth-dialog/main.c:140
-msgid "Certificate pass_word:"
-msgstr "Pass_ord for sertifikat:"
-
-#: ../auth-dialog/main.c:154
-msgid "Certificate password:"
-msgstr "Passord for sertifikat:"
-
-#: ../properties/auth-helpers.c:148
-msgid "Choose your personal certificate..."
-msgstr "Velg ditt personlige sertifikat …"
-
-#: ../properties/auth-helpers.c:166
-msgid "Choose your private key..."
-msgstr "Velg din private nøkkel …"
-
-#: ../properties/auth-helpers.c:238
-msgid "Saved"
-msgstr "Lagret"
-
-#: ../properties/auth-helpers.c:246
-msgid "Always Ask"
-msgstr "Alltid spør"
-
-#: ../properties/auth-helpers.c:251
-msgid "Not Required"
-msgstr "Ikke nødvendig"
-
-#: ../properties/auth-helpers.c:341
-msgid "Choose a Certificate Authority certificate..."
-msgstr "Velg et sertifikat fra en sertifikatmyndighet …"
-
-#: ../properties/auth-helpers.c:385
-msgid "Choose an SSH static key..."
-msgstr "Velg en statisk nøkkel for SSH …"
-
-#: ../properties/auth-helpers.c:409 ../properties/auth-helpers.c:1169
-#: ../properties/auth-helpers.c:1571
-msgid "None"
-msgstr "Ingen"
-
-#: ../properties/auth-helpers.c:865
-msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
-msgstr "PEM- eller PKCS#12-sertifikater (*.pem, *.crt, *.key, *.cer, *.p12)"
-
-#: ../properties/auth-helpers.c:866
-msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
-msgstr "PEM-sertifikater (*.pem, *.crt, *.key, *.cer)"
-
-#: ../properties/auth-helpers.c:926
-msgid "SSH Static Keys (*.key)"
-msgstr "Statiske nøkler for SSH (*.key)"
-
-#: ../properties/auth-helpers.c:1085 ../properties/auth-helpers.c:1161
-msgid "Default"
-msgstr "Forvalg"
-
-#: ../properties/auth-helpers.c:1171
-msgid "RSA MD-4"
-msgstr "RSA MD-4"
-
-#: ../properties/auth-helpers.c:1173
-msgid "MD-5"
-msgstr "MD-5"
-
-#: ../properties/auth-helpers.c:1175
-msgid "SHA-1"
-msgstr "SHA-1"
-
-#: ../properties/auth-helpers.c:1177
-msgid "SHA-224"
-msgstr "SHA-224"
-
-#: ../properties/auth-helpers.c:1179
-msgid "SHA-256"
-msgstr "SHA-256"
-
-#: ../properties/auth-helpers.c:1181
-msgid "SHA-384"
-msgstr "SHA-384"
-
-#: ../properties/auth-helpers.c:1183
-msgid "SHA-512"
-msgstr "SHA-512"
-
-#: ../properties/auth-helpers.c:1185
-msgid "RIPEMD-160"
-msgstr "RIPEMD-160"
-
-#: ../properties/auth-helpers.c:1360 ../properties/nm-ssh-dialog.ui.h:16
-msgid "Not required"
-msgstr "Ikke nødvendig"
-
-#: ../properties/auth-helpers.c:1362
-msgid "HTTP"
-msgstr "HTTP"
-
-#: ../properties/auth-helpers.c:1364
-msgid "SOCKS"
-msgstr "SOCKS"
-
-#: ../properties/nm-ssh.c:52
+#: ../properties/nm-ssh.c:49
 msgid "SSH"
 msgstr "SSH"
 
-#: ../properties/nm-ssh.c:53
+#: ../properties/nm-ssh.c:50
 msgid "Compatible with the SSH server."
 msgstr "Kompatibel med SSH-tjeneren."
-
-#: ../properties/nm-ssh.c:317
-msgid "Certificates (TLS)"
-msgstr "Sertifikater (TLS)"
-
-#: ../properties/nm-ssh.c:328
-msgid "Password"
-msgstr "Passord:"
-
-#: ../properties/nm-ssh.c:341
-msgid "Password with Certificates (TLS)"
-msgstr "Passord med sertifikater (TLS)"
-
-#: ../properties/nm-ssh.c:353
-msgid "Static Key"
-msgstr "Statisk nøkkel"
 
 #: ../properties/nm-ssh-dialog.ui.h:1
 msgid " "
 msgstr " "
 
 #: ../properties/nm-ssh-dialog.ui.h:2
-msgid "<b>Authentication</b>"
-msgstr "<b>Autentisering</b>"
+msgid "Not required"
+msgstr "Ikke nødvendig"
 
 #: ../properties/nm-ssh-dialog.ui.h:3
-msgid "<b>General</b>"
-msgstr "<b>Generelt</b>"
+msgid "SSH Advanced Options"
+msgstr "Avanserte alternativer for SSH"
 
 #: ../properties/nm-ssh-dialog.ui.h:4
-msgid ""
-"<i>Connect only to servers whose certificate matches the given subject.\n"
-"Example: /CN=myvpn.company.com</i>"
+msgid "Use custom gateway port:"
 msgstr ""
-"<i>Koble kun til tjenere hvis sertifikat passer oppgitt emne.\n"
-"Eksempel: /CN=mittvpn.firma.no</i>"
+
+#: ../properties/nm-ssh-dialog.ui.h:5
+msgid "Use custom tunnel Maximum Transmission Unit (MTU):"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:6
-msgid ""
-"<i>If key direction is used, it must be the opposite of that used on the VPN "
-"peer.  For example, if the peer uses '1', this connection must use '0'.  If "
-"you are unsure what value to use, contact your system administrator.</i>"
+msgid "Extra SSH options:"
 msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:7
-msgid ""
-"<i>Select this option if your organization requires the use of a proxy "
-"server to access the Internet.</i>"
+msgid "Remote device number:"
 msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:8
-msgid "Ad_vanced..."
-msgstr "A_vansert …"
+#, fuzzy
+msgid "Use a TAP device"
+msgstr "Bruk en TA_P-enhet"
 
 #: ../properties/nm-ssh-dialog.ui.h:9
-msgid "CA Certificate:"
-msgstr "CA-sertifikat:"
+#, fuzzy
+msgid "Remote username:"
+msgstr "Brukernavn for proxy:"
 
 #: ../properties/nm-ssh-dialog.ui.h:10
-msgid "Cipher:"
-msgstr "Cipher:"
+msgid "Do not replace default route"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:11
 msgid "General"
 msgstr "Generelt"
 
 #: ../properties/nm-ssh-dialog.ui.h:12
-msgid "HMAC Authentication:"
-msgstr "HMAC-autentisering"
+msgid "<b>General</b>"
+msgstr "<b>Generelt</b>"
 
 #: ../properties/nm-ssh-dialog.ui.h:13
-msgid "Key Direction:"
-msgstr "Nøkkelretning:"
+#, fuzzy
+msgid "Gateway:"
+msgstr "_Portner:"
 
 #: ../properties/nm-ssh-dialog.ui.h:14
-msgid "Key File:"
-msgstr "Nøkkelfil:"
+msgid "<b>Network Settings</b>"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:15
+msgid "Remote IP Address:"
+msgstr "Ekstern IP-adresse:"
+
+#: ../properties/nm-ssh-dialog.ui.h:16
 msgid "Local IP Address:"
 msgstr "Lokal IP-adresse:"
 
 #: ../properties/nm-ssh-dialog.ui.h:17
-msgid "SSH Advanced Options"
-msgstr "Avanserte alternativer for SSH"
+msgid "Netmask:"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:18
-msgid "Password:"
-msgstr "Passord:"
+msgid "<b>IPv6 Network Settings</b>"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:19
-msgid "Port:"
-msgstr "Port:"
+msgid "Use IPv6"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:20
-msgid "Private Key Password:"
-msgstr "Passord for privat nøkkel:"
-
-#: ../properties/nm-ssh-dialog.ui.h:21
-msgid "Private Key:"
-msgstr "Privat nøkkel:"
-
-#: ../properties/nm-ssh-dialog.ui.h:22
-msgid "Proxies"
-msgstr "Proxyer"
-
-#: ../properties/nm-ssh-dialog.ui.h:23
-msgid "Proxy Password:"
-msgstr "Passord for proxy:"
-
-#: ../properties/nm-ssh-dialog.ui.h:24
-msgid "Proxy Type:"
-msgstr "Type proxy:"
-
-#: ../properties/nm-ssh-dialog.ui.h:25
-msgid "Proxy Username:"
-msgstr "Brukernavn for proxy:"
-
-#: ../properties/nm-ssh-dialog.ui.h:26
-msgid "Remote IP Address:"
+#, fuzzy
+msgid "Remote IP Address (IPv6):"
 msgstr "Ekstern IP-adresse:"
 
-#: ../properties/nm-ssh-dialog.ui.h:27
-msgid "Restrict tunnel TCP Maximum Segment Size (MSS)"
+#: ../properties/nm-ssh-dialog.ui.h:21
+#, fuzzy
+msgid "Local IP Address (IPv6):"
+msgstr "Lokal IP-adresse:"
+
+#: ../properties/nm-ssh-dialog.ui.h:22
+msgid "Prefix (IPv6):"
 msgstr ""
 
-#: ../properties/nm-ssh-dialog.ui.h:28
-msgid "Retry indefinitely when errors occur"
-msgstr ""
-
-#: ../properties/nm-ssh-dialog.ui.h:29
-msgid "Security"
-msgstr "Sikkerhet"
-
-#: ../properties/nm-ssh-dialog.ui.h:30
-msgid "Server Address:"
-msgstr "Tjeneradresse:"
-
-#: ../properties/nm-ssh-dialog.ui.h:31
-msgid "Show password"
-msgstr "Vis passord"
-
-#: ../properties/nm-ssh-dialog.ui.h:32
-msgid "Show passwords"
-msgstr "Vis passord"
-
-#: ../properties/nm-ssh-dialog.ui.h:33
-msgid "Static Key:"
-msgstr "Statisk nøkkel:"
-
-#: ../properties/nm-ssh-dialog.ui.h:34
-msgid "Subject Match:"
-msgstr "Emnesøk:"
-
-#: ../properties/nm-ssh-dialog.ui.h:35
-msgid "TLS Authentication"
-msgstr "TLS-autentisering"
-
-#: ../properties/nm-ssh-dialog.ui.h:36
-msgid "Type:"
-msgstr "Type:"
-
-#: ../properties/nm-ssh-dialog.ui.h:37
-msgid "Use L_ZO data compression"
-msgstr "Bruk L_ZO-datakomprimering"
-
-#: ../properties/nm-ssh-dialog.ui.h:38
-msgid "Use a TA_P device"
-msgstr "Bruk en TA_P-enhet"
-
-#: ../properties/nm-ssh-dialog.ui.h:39
-msgid "Use a _TCP connection"
-msgstr "Bruk en _TCP-tilkobling"
-
-#: ../properties/nm-ssh-dialog.ui.h:40
-msgid "Use additional TLS authentication"
-msgstr "Bruk ekstra TLS-autentisering"
-
-#: ../properties/nm-ssh-dialog.ui.h:41
-msgid "Use custom UDP _fragment size:"
-msgstr "Bruk egendefinert _fragmentstørrelse for UDP:"
-
-#: ../properties/nm-ssh-dialog.ui.h:42
-msgid "Use custom _renegotiation interval:"
-msgstr ""
-
-#: ../properties/nm-ssh-dialog.ui.h:43
-msgid "Use custom _tunnel Maximum Transmission Unit (MTU):"
-msgstr ""
-
-#: ../properties/nm-ssh-dialog.ui.h:44
-msgid "Use custom gateway p_ort:"
-msgstr ""
-
-#: ../properties/nm-ssh-dialog.ui.h:45
-msgid "User Certificate:"
-msgstr "Brukersertifikat:"
-
-#: ../properties/nm-ssh-dialog.ui.h:46
-msgid "User name:"
-msgstr "Brukernavn:"
-
-#: ../properties/nm-ssh-dialog.ui.h:47
-msgid "_Gateway:"
-msgstr "_Portner:"
+#: ../properties/nm-ssh-dialog.ui.h:23
+#, fuzzy
+msgid "Advanced..."
+msgstr "A_vansert …"
 
 #: ../src/nm-ssh-service.c:192
 #, c-format
@@ -381,80 +167,282 @@ msgstr ""
 msgid "No VPN configuration options."
 msgstr "Ingen konfigurasjonsalternativer for VPN."
 
-#: ../src/nm-ssh-service.c:272
-msgid "No VPN secrets!"
-msgstr "Ingen VPN-hemmeligheter!"
-
-#: ../src/nm-ssh-service.c:745
+#: ../src/nm-ssh-service.c:984
 msgid "Could not find the ssh binary."
 msgstr ""
 
-#: ../src/nm-ssh-service.c:756
-msgid "Invalid HMAC auth."
-msgstr "Ugyldig HMAC-autentisering."
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1024
+msgid "Missing required SSH_AUTH_SOCK."
+msgstr ""
 
-#: ../src/nm-ssh-service.c:768 ../src/nm-ssh-service.c:1164
-#: ../src/nm-ssh-service.c:1234
-msgid "Invalid connection type."
-msgstr "Ugyldig tilkoblingstype."
-
-#: ../src/nm-ssh-service.c:803
+#: ../src/nm-ssh-service.c:1080
 #, c-format
-msgid "Invalid proxy type '%s'."
-msgstr "Ugyldig proxytype «%s»."
+msgid "Please set remote address."
+msgstr ""
 
-#: ../src/nm-ssh-service.c:839
+#: ../src/nm-ssh-service.c:1097
 #, c-format
 msgid "Invalid port number '%s'."
 msgstr "Ugyldig portnummer «%s»."
 
-#: ../src/nm-ssh-service.c:889
-#, c-format
-msgid "Invalid reneg seconds '%s'."
-msgstr ""
-
-#: ../src/nm-ssh-service.c:913
+#: ../src/nm-ssh-service.c:1116
 #, c-format
 msgid "Invalid TUN MTU size '%s'."
 msgstr ""
 
-#: ../src/nm-ssh-service.c:928
-#, c-format
-msgid "Invalid fragment size '%s'."
+#: ../src/nm-ssh-service.c:1135
+#, fuzzy, c-format
+msgid "Invalid TUN/TAP device number '%s'."
+msgstr "Ugyldig portnummer «%s»."
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1156
+msgid "Missing required remote IP address."
 msgstr ""
 
-#: ../src/nm-ssh-service.c:996
-msgid "Missing required local IP address for static key mode."
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1171
+msgid "Missing required local IP address."
 msgstr ""
 
-#: ../src/nm-ssh-service.c:1009
-msgid "Missing required remote IP address for static key mode."
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1188
+msgid "Missing required netmask."
 msgstr ""
 
-#: ../src/nm-ssh-service.c:1034
-#, c-format
-msgid "Unknown connection type '%s'."
-msgstr "Ukjent tilkoblingstype «%s»."
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1209
+msgid "Missing required IPv6 remote IP address."
+msgstr ""
 
-#: ../src/nm-ssh-service.c:1153 ../src/nm-ssh-service.c:1224
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1224
+msgid "Missing required IPv6 local IP address."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1239
+msgid "Missing required IPv6 netmask."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1391 ../src/nm-ssh-service.c:1432
 msgid ""
 "Could not process the request because the VPN connection settings were "
 "invalid."
 msgstr ""
 
-#: ../src/nm-ssh-service.c:1178
-msgid "Could not process the request because no username was provided."
-msgstr ""
-
-#: ../src/nm-ssh-service.c:1368
+#: ../src/nm-ssh-service.c:1567
 msgid "Don't quit when VPN connection terminates"
 msgstr "Ikke avslutt når VPN-tilkobling termineres"
 
-#: ../src/nm-ssh-service.c:1369
+#: ../src/nm-ssh-service.c:1568
 msgid "Enable verbose debug logging (may expose passwords)"
 msgstr ""
 
-#: ../src/nm-ssh-service.c:1383
-msgid ""
-"nm-vpnc-service provides integrated SSH capability to NetworkManager."
+#: ../src/nm-ssh-service.c:1584
+msgid "nm-ssh-service provides integrated SSH capability to NetworkManager."
 msgstr ""
+
+#~ msgid "_Password:"
+#~ msgstr "_Passord:"
+
+#~ msgid "_Secondary Password:"
+#~ msgstr "_Sekundært passord:"
+
+#~ msgid "Sh_ow passwords"
+#~ msgstr "Vis pass_ord"
+
+#~ msgid "You need to authenticate to access the Virtual Private Network '%s'."
+#~ msgstr ""
+#~ "Du må autentisere deg for å få tilgang til virtuelt privat nettverk «%s»."
+
+#~ msgid "Authenticate VPN"
+#~ msgstr "Autentiser VPN"
+
+#~ msgid "Certificate pass_word:"
+#~ msgstr "Pass_ord for sertifikat:"
+
+#~ msgid "Certificate password:"
+#~ msgstr "Passord for sertifikat:"
+
+#~ msgid "Choose your personal certificate..."
+#~ msgstr "Velg ditt personlige sertifikat …"
+
+#~ msgid "Choose your private key..."
+#~ msgstr "Velg din private nøkkel …"
+
+#~ msgid "Saved"
+#~ msgstr "Lagret"
+
+#~ msgid "Always Ask"
+#~ msgstr "Alltid spør"
+
+#~ msgid "Not Required"
+#~ msgstr "Ikke nødvendig"
+
+#~ msgid "Choose a Certificate Authority certificate..."
+#~ msgstr "Velg et sertifikat fra en sertifikatmyndighet …"
+
+#~ msgid "Choose an SSH static key..."
+#~ msgstr "Velg en statisk nøkkel for SSH …"
+
+#~ msgid "None"
+#~ msgstr "Ingen"
+
+#~ msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
+#~ msgstr "PEM- eller PKCS#12-sertifikater (*.pem, *.crt, *.key, *.cer, *.p12)"
+
+#~ msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
+#~ msgstr "PEM-sertifikater (*.pem, *.crt, *.key, *.cer)"
+
+#~ msgid "SSH Static Keys (*.key)"
+#~ msgstr "Statiske nøkler for SSH (*.key)"
+
+#~ msgid "Default"
+#~ msgstr "Forvalg"
+
+#~ msgid "RSA MD-4"
+#~ msgstr "RSA MD-4"
+
+#~ msgid "MD-5"
+#~ msgstr "MD-5"
+
+#~ msgid "SHA-1"
+#~ msgstr "SHA-1"
+
+#~ msgid "SHA-224"
+#~ msgstr "SHA-224"
+
+#~ msgid "SHA-256"
+#~ msgstr "SHA-256"
+
+#~ msgid "SHA-384"
+#~ msgstr "SHA-384"
+
+#~ msgid "SHA-512"
+#~ msgstr "SHA-512"
+
+#~ msgid "RIPEMD-160"
+#~ msgstr "RIPEMD-160"
+
+#~ msgid "HTTP"
+#~ msgstr "HTTP"
+
+#~ msgid "SOCKS"
+#~ msgstr "SOCKS"
+
+#~ msgid "Certificates (TLS)"
+#~ msgstr "Sertifikater (TLS)"
+
+#~ msgid "Password"
+#~ msgstr "Passord:"
+
+#~ msgid "Password with Certificates (TLS)"
+#~ msgstr "Passord med sertifikater (TLS)"
+
+#~ msgid "Static Key"
+#~ msgstr "Statisk nøkkel"
+
+#~ msgid "<b>Authentication</b>"
+#~ msgstr "<b>Autentisering</b>"
+
+#~ msgid ""
+#~ "<i>Connect only to servers whose certificate matches the given subject.\n"
+#~ "Example: /CN=myvpn.company.com</i>"
+#~ msgstr ""
+#~ "<i>Koble kun til tjenere hvis sertifikat passer oppgitt emne.\n"
+#~ "Eksempel: /CN=mittvpn.firma.no</i>"
+
+#~ msgid "CA Certificate:"
+#~ msgstr "CA-sertifikat:"
+
+#~ msgid "Cipher:"
+#~ msgstr "Cipher:"
+
+#~ msgid "HMAC Authentication:"
+#~ msgstr "HMAC-autentisering"
+
+#~ msgid "Key Direction:"
+#~ msgstr "Nøkkelretning:"
+
+#~ msgid "Key File:"
+#~ msgstr "Nøkkelfil:"
+
+#~ msgid "Password:"
+#~ msgstr "Passord:"
+
+#~ msgid "Port:"
+#~ msgstr "Port:"
+
+#~ msgid "Private Key Password:"
+#~ msgstr "Passord for privat nøkkel:"
+
+#~ msgid "Private Key:"
+#~ msgstr "Privat nøkkel:"
+
+#~ msgid "Proxies"
+#~ msgstr "Proxyer"
+
+#~ msgid "Proxy Password:"
+#~ msgstr "Passord for proxy:"
+
+#~ msgid "Proxy Type:"
+#~ msgstr "Type proxy:"
+
+#~ msgid "Security"
+#~ msgstr "Sikkerhet"
+
+#~ msgid "Server Address:"
+#~ msgstr "Tjeneradresse:"
+
+#~ msgid "Show password"
+#~ msgstr "Vis passord"
+
+#~ msgid "Show passwords"
+#~ msgstr "Vis passord"
+
+#~ msgid "Static Key:"
+#~ msgstr "Statisk nøkkel:"
+
+#~ msgid "Subject Match:"
+#~ msgstr "Emnesøk:"
+
+#~ msgid "TLS Authentication"
+#~ msgstr "TLS-autentisering"
+
+#~ msgid "Type:"
+#~ msgstr "Type:"
+
+#~ msgid "Use L_ZO data compression"
+#~ msgstr "Bruk L_ZO-datakomprimering"
+
+#~ msgid "Use a _TCP connection"
+#~ msgstr "Bruk en _TCP-tilkobling"
+
+#~ msgid "Use additional TLS authentication"
+#~ msgstr "Bruk ekstra TLS-autentisering"
+
+#~ msgid "Use custom UDP _fragment size:"
+#~ msgstr "Bruk egendefinert _fragmentstørrelse for UDP:"
+
+#~ msgid "User Certificate:"
+#~ msgstr "Brukersertifikat:"
+
+#~ msgid "User name:"
+#~ msgstr "Brukernavn:"
+
+#~ msgid "No VPN secrets!"
+#~ msgstr "Ingen VPN-hemmeligheter!"
+
+#~ msgid "Invalid HMAC auth."
+#~ msgstr "Ugyldig HMAC-autentisering."
+
+#~ msgid "Invalid connection type."
+#~ msgstr "Ugyldig tilkoblingstype."
+
+#~ msgid "Invalid proxy type '%s'."
+#~ msgstr "Ugyldig proxytype «%s»."
+
+#~ msgid "Unknown connection type '%s'."
+#~ msgstr "Ukjent tilkoblingstype «%s»."

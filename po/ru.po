@@ -10,353 +10,143 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: network-manager-ssh trunk\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=NetworkManager&keywords=I18N+L10N&component=VPN: ssh\n"
-"POT-Creation-Date: 2011-06-02 18:16+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-06-09 18:57+1000\n"
 "PO-Revision-Date: 2011-06-10 22:00+0300\n"
 "Last-Translator: Yuri Myasoedov <omerta13@yandex.ru>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 1.0\n"
 
-#: ../auth-dialog/gnome-two-password-dialog.c:130
-msgid "_Password:"
-msgstr "_Пароль:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:131
-msgid "_Secondary Password:"
-msgstr "_Вторичный пароль:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:248
-msgid "_Username:"
-msgstr "_Имя пользователя:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:250
-msgid "_Domain:"
-msgstr "_Домен:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:348
-msgid "Connect _anonymously"
-msgstr "Подключаться _анонимно"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:353
-msgid "Connect as _user:"
-msgstr "_Подключаться как пользователь:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:458
-msgid "_Remember password for this session"
-msgstr "_Запомнить пароль для этого сеанса"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:460
-msgid "_Save password in keyring"
-msgstr "_Сохранить пароль на брелоке"
-
-#: ../auth-dialog/main.c:102
+#: ../auth-dialog/main.c:122
 #, c-format
-msgid "You need to authenticate to access the Virtual Private Network '%s'."
-msgstr "Для доступа к виртуальной частной сети «%s» требуется аутентификация."
+msgid ""
+"Couldn't find '%s' environment variable.\n"
+"\n"
+"Is ssh-agent running?"
+msgstr ""
 
-#: ../auth-dialog/main.c:103
-msgid "Authenticate VPN"
-msgstr "Аутентификация VPN"
+#: ../properties/advanced-dialog.c:137
+msgid ""
+"You have chosen not to use 'root' as the remote username.\n"
+"\n"
+"Please make sure the user you specify is allowed to open tun/tap devices on "
+"the remote host."
+msgstr ""
 
-#: ../auth-dialog/main.c:124
-msgid "Certificate pass_word:"
-msgstr "Па_роль к сертификату:"
-
-#: ../auth-dialog/main.c:138
-msgid "Certificate password:"
-msgstr "Пароль к сертификату:"
-
-#: ../properties/auth-helpers.c:202
-msgid "Choose a Certificate Authority certificate..."
-msgstr "Выберите сертификат центра сертификации…"
-
-#: ../properties/auth-helpers.c:221
-msgid "Choose your personal certificate..."
-msgstr "Выберите свой персональный сертификат…"
-
-#: ../properties/auth-helpers.c:239
-msgid "Choose your private key..."
-msgstr "Выберите свой личный ключ…"
-
-#: ../properties/auth-helpers.c:297
-msgid "Choose an SSH static key..."
-msgstr "Выберите статический ключ SSH…"
-
-#: ../properties/auth-helpers.c:321
-#: ../properties/auth-helpers.c:1104
-#: ../properties/auth-helpers.c:1494
-msgid "None"
-msgstr "Нет"
-
-#: ../properties/auth-helpers.c:801
-msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
-msgstr "Сертификаты PEM или PKCS#12 (*.pem, *.crt, *.key, *.cer, *.p12)"
-
-#: ../properties/auth-helpers.c:802
-msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
-msgstr "Сертификаты PEM (*.pem, *.crt, *.key, *.cer)"
-
-#: ../properties/auth-helpers.c:862
-msgid "SSH Static Keys (*.key)"
-msgstr "Статические ключи SSH (*.key)"
-
-#: ../properties/auth-helpers.c:1021
-#: ../properties/auth-helpers.c:1096
-msgid "Default"
-msgstr "По умолчанию"
-
-#: ../properties/auth-helpers.c:1106
-msgid "MD-5"
-msgstr "MD-5"
-
-#: ../properties/auth-helpers.c:1108
-msgid "SHA-1"
-msgstr "SHA-1"
-
-#: ../properties/auth-helpers.c:1110
-msgid "SHA-224"
-msgstr "SHA-224"
-
-#: ../properties/auth-helpers.c:1112
-msgid "SHA-256"
-msgstr "SHA-256"
-
-#: ../properties/auth-helpers.c:1114
-msgid "SHA-384"
-msgstr "SHA-384"
-
-#: ../properties/auth-helpers.c:1116
-msgid "SHA-512"
-msgstr "SHA-512"
-
-#: ../properties/auth-helpers.c:1118
-msgid "RIPEMD-160"
-msgstr "RIPEMD-160"
-
-#: ../properties/auth-helpers.c:1293
-#: ../properties/nm-ssh-dialog.ui.h:16
-msgid "Not required"
-msgstr "Не требуется"
-
-#: ../properties/auth-helpers.c:1295
-msgid "HTTP"
-msgstr "HTTP"
-
-#: ../properties/auth-helpers.c:1297
-msgid "SOCKS"
-msgstr "SOCKS"
-
-#: ../properties/nm-ssh.c:53
+#: ../properties/nm-ssh.c:49
 msgid "SSH"
 msgstr "SSH"
 
-#: ../properties/nm-ssh.c:54
+#: ../properties/nm-ssh.c:50
 msgid "Compatible with the SSH server."
 msgstr "Совместим с сервером SSH."
-
-#: ../properties/nm-ssh.c:323
-msgid "Certificates (TLS)"
-msgstr "Сертификаты (TLS)"
-
-#: ../properties/nm-ssh.c:337
-msgid "Password"
-msgstr "Пароль"
-
-#: ../properties/nm-ssh.c:354
-msgid "Password with Certificates (TLS)"
-msgstr "Пароль с сертификатами (TLS)"
-
-#: ../properties/nm-ssh.c:366
-msgid "Static Key"
-msgstr "Статический ключ"
 
 #: ../properties/nm-ssh-dialog.ui.h:1
 msgid " "
 msgstr " "
 
 #: ../properties/nm-ssh-dialog.ui.h:2
-msgid "<b>Authentication</b>"
-msgstr "<b>Аутентификация</b>"
+msgid "Not required"
+msgstr "Не требуется"
 
 #: ../properties/nm-ssh-dialog.ui.h:3
-msgid "<b>General</b>"
-msgstr "<b>Общие</b>"
+msgid "SSH Advanced Options"
+msgstr "Дополнительные параметры SSH"
 
 #: ../properties/nm-ssh-dialog.ui.h:4
-msgid ""
-"<i>Connect only to servers whose certificate matches the given subject.\n"
-"Example: /CN=myvpn.company.com</i>"
+#, fuzzy
+msgid "Use custom gateway port:"
+msgstr "Использовать другой _порт шлюза:"
+
+#: ../properties/nm-ssh-dialog.ui.h:5
+#, fuzzy
+msgid "Use custom tunnel Maximum Transmission Unit (MTU):"
 msgstr ""
-"<i>Подключаться только к серверам, чьи сертификаты совпадают с заданным объектом.\n"
-"Пример: /CN=myvpn.company.com</i>"
+"Использовать нестандартный максимальный размер элемента передачи (MTU):"
 
 #: ../properties/nm-ssh-dialog.ui.h:6
-msgid "<i>If key direction is used, it must be the opposite of that used on the VPN peer.  For example, if the peer uses '1', this connection must use '0'.  If you are unsure what value to use, contact your system administrator.</i>"
-msgstr "<i>Если используется направление ключа, оно должно быть противоположно направлению, которое использует вторая сторона. Например, если вторая сторона использует «1», это соединение должно использовать «0». Если вы не уверены, какое значение использовать, свяжитесь с системным администратором.</i>"
+msgid "Extra SSH options:"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:7
-msgid "<i>Select this option if your organization requires the use of a proxy server to access the Internet.</i>"
-msgstr "<i>Выберите этот параметр, если в вашей организации требуется использовать прокси-сервер для доступа к Интернет.</i>"
+msgid "Remote device number:"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:8
-msgid "Ad_vanced..."
-msgstr "_Дополнительно…"
+#, fuzzy
+msgid "Use a TAP device"
+msgstr "Использовать устройство TA_P"
 
 #: ../properties/nm-ssh-dialog.ui.h:9
-msgid "CA Certificate:"
-msgstr "Сертификат ЦС:"
+#, fuzzy
+msgid "Remote username:"
+msgstr "Имя пользователя на прокси:"
 
 #: ../properties/nm-ssh-dialog.ui.h:10
-msgid "Cipher:"
-msgstr "Шифр:"
+msgid "Do not replace default route"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:11
 msgid "General"
 msgstr "Общие"
 
 #: ../properties/nm-ssh-dialog.ui.h:12
-msgid "HMAC Authentication:"
-msgstr "Аутентификация HMAC:"
+msgid "<b>General</b>"
+msgstr "<b>Общие</b>"
 
 #: ../properties/nm-ssh-dialog.ui.h:13
-msgid "Key Direction:"
-msgstr "Направление ключа:"
+#, fuzzy
+msgid "Gateway:"
+msgstr "_Шлюз:"
 
 #: ../properties/nm-ssh-dialog.ui.h:14
-msgid "Key File:"
-msgstr "Файл ключа:"
+msgid "<b>Network Settings</b>"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:15
+msgid "Remote IP Address:"
+msgstr "Удалённый IP-адрес:"
+
+#: ../properties/nm-ssh-dialog.ui.h:16
 msgid "Local IP Address:"
 msgstr "Локальный IP-адрес:"
 
 #: ../properties/nm-ssh-dialog.ui.h:17
-msgid "SSH Advanced Options"
-msgstr "Дополнительные параметры SSH"
+msgid "Netmask:"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:18
-msgid "Password:"
-msgstr "Пароль:"
+msgid "<b>IPv6 Network Settings</b>"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:19
-msgid "Port:"
-msgstr "Порт:"
+msgid "Use IPv6"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:20
-msgid "Private Key Password:"
-msgstr "Пароль к личному ключу:"
-
-#: ../properties/nm-ssh-dialog.ui.h:21
-msgid "Private Key:"
-msgstr "Личный ключ:"
-
-#: ../properties/nm-ssh-dialog.ui.h:22
-msgid "Proxies"
-msgstr "Прокси"
-
-#: ../properties/nm-ssh-dialog.ui.h:23
-msgid "Proxy Password:"
-msgstr "Пароль к прокси:"
-
-#: ../properties/nm-ssh-dialog.ui.h:24
-msgid "Proxy Type:"
-msgstr "Тип прокси:"
-
-#: ../properties/nm-ssh-dialog.ui.h:25
-msgid "Proxy Username:"
-msgstr "Имя пользователя на прокси:"
-
-#: ../properties/nm-ssh-dialog.ui.h:26
-msgid "Remote IP Address:"
+#, fuzzy
+msgid "Remote IP Address (IPv6):"
 msgstr "Удалённый IP-адрес:"
 
-#: ../properties/nm-ssh-dialog.ui.h:27
-msgid "Restrict tunnel TCP Maximum Segment Size (MSS)"
-msgstr "Ограничить максимальный размер сегмента TCP (MSS) туннеля"
+#: ../properties/nm-ssh-dialog.ui.h:21
+#, fuzzy
+msgid "Local IP Address (IPv6):"
+msgstr "Локальный IP-адрес:"
 
-#: ../properties/nm-ssh-dialog.ui.h:28
-msgid "Retry indefinitely when errors occur"
-msgstr "Повторять бесконечно при ошибках"
+#: ../properties/nm-ssh-dialog.ui.h:22
+msgid "Prefix (IPv6):"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.ui.h:29
-msgid "Security"
-msgstr "Безопасность"
-
-#: ../properties/nm-ssh-dialog.ui.h:30
-msgid "Server Address:"
-msgstr "Адрес сервера:"
-
-#: ../properties/nm-ssh-dialog.ui.h:31
-msgid "Show password"
-msgstr "Показать пароль"
-
-#: ../properties/nm-ssh-dialog.ui.h:32
-msgid "Show passwords"
-msgstr "Показать пароли"
-
-#: ../properties/nm-ssh-dialog.ui.h:33
-msgid "Static Key:"
-msgstr "Статический ключ:"
-
-#: ../properties/nm-ssh-dialog.ui.h:34
-msgid "Subject Match:"
-msgstr "Объект совпадения:"
-
-#: ../properties/nm-ssh-dialog.ui.h:35
-msgid "TLS Authentication"
-msgstr "Аутентификация TLS"
-
-#: ../properties/nm-ssh-dialog.ui.h:36
-msgid "Type:"
-msgstr "Тип:"
-
-#: ../properties/nm-ssh-dialog.ui.h:37
-msgid "Use L_ZO data compression"
-msgstr "Использовать для данных сжатие L_ZO"
-
-#: ../properties/nm-ssh-dialog.ui.h:38
-msgid "Use a TA_P device"
-msgstr "Использовать устройство TA_P"
-
-#: ../properties/nm-ssh-dialog.ui.h:39
-msgid "Use a _TCP connection"
-msgstr "Использовать соединение _TCP"
-
-#: ../properties/nm-ssh-dialog.ui.h:40
-msgid "Use additional TLS authentication"
-msgstr "Использовать дополнительную аутентификацию TLS"
-
-#: ../properties/nm-ssh-dialog.ui.h:41
-msgid "Use custom UDP _fragment size:"
-msgstr "Использовать нестандартный размер _фрагмента UDP:"
-
-#: ../properties/nm-ssh-dialog.ui.h:42
-msgid "Use custom _renegotiation interval:"
-msgstr "Использовать нестандартный интервал _пересогласования:"
-
-#: ../properties/nm-ssh-dialog.ui.h:43
-msgid "Use custom _tunnel Maximum Transmission Unit (MTU):"
-msgstr "Использовать нестандартный максимальный размер элемента передачи (MTU):"
-
-#: ../properties/nm-ssh-dialog.ui.h:44
-msgid "Use custom gateway p_ort:"
-msgstr "Использовать другой _порт шлюза:"
-
-#: ../properties/nm-ssh-dialog.ui.h:45
-msgid "User Certificate:"
-msgstr "Сертификат пользователя:"
-
-#: ../properties/nm-ssh-dialog.ui.h:46
-msgid "User name:"
-msgstr "Имя пользователя:"
-
-#: ../properties/nm-ssh-dialog.ui.h:47
-msgid "_Gateway:"
-msgstr "_Шлюз:"
+#: ../properties/nm-ssh-dialog.ui.h:23
+#, fuzzy
+msgid "Advanced..."
+msgstr "_Дополнительно…"
 
 #: ../src/nm-ssh-service.c:192
 #, c-format
@@ -366,7 +156,8 @@ msgstr "некорректный адрес «%s»"
 #: ../src/nm-ssh-service.c:204
 #, c-format
 msgid "invalid integer property '%s' or out of range [%d -> %d]"
-msgstr "«%s» некорректно для целочисленного свойства или вне диапазона [%d -> %d]"
+msgstr ""
+"«%s» некорректно для целочисленного свойства или вне диапазона [%d -> %d]"
 
 #: ../src/nm-ssh-service.c:214
 #, c-format
@@ -387,80 +178,333 @@ msgstr "свойство «%s» некорректно или не поддер�
 msgid "No VPN configuration options."
 msgstr "Нет параметров настройки VPN."
 
-#: ../src/nm-ssh-service.c:272
-msgid "No VPN secrets!"
-msgstr "Нет VPN-ключей!"
-
-#: ../src/nm-ssh-service.c:744
+#: ../src/nm-ssh-service.c:984
 msgid "Could not find the ssh binary."
 msgstr "Не удалось найти исполняемый файл ssh."
 
-#: ../src/nm-ssh-service.c:755
-msgid "Invalid HMAC auth."
-msgstr "Некорректная аутентификация HMAC."
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1024
+msgid "Missing required SSH_AUTH_SOCK."
+msgstr ""
 
-#: ../src/nm-ssh-service.c:767
-#: ../src/nm-ssh-service.c:1163
-#: ../src/nm-ssh-service.c:1233
-msgid "Invalid connection type."
-msgstr "Некорректный тип подключения."
-
-#: ../src/nm-ssh-service.c:802
+#: ../src/nm-ssh-service.c:1080
 #, c-format
-msgid "Invalid proxy type '%s'."
-msgstr "Некорректный тип прокси «%s»."
+msgid "Please set remote address."
+msgstr ""
 
-#: ../src/nm-ssh-service.c:838
+#: ../src/nm-ssh-service.c:1097
 #, c-format
 msgid "Invalid port number '%s'."
 msgstr "Некорректный номер порта «%s»."
 
-#: ../src/nm-ssh-service.c:888
-#, c-format
-msgid "Invalid reneg seconds '%s'."
-msgstr "Некорректное число секунд «%s» для пересогласования."
-
-#: ../src/nm-ssh-service.c:912
+#: ../src/nm-ssh-service.c:1116
 #, c-format
 msgid "Invalid TUN MTU size '%s'."
 msgstr "Некорректный размер TUN MTU «%s»."
 
-#: ../src/nm-ssh-service.c:927
-#, c-format
-msgid "Invalid fragment size '%s'."
-msgstr "Некорректный размер фрагмента «%s»."
+#: ../src/nm-ssh-service.c:1135
+#, fuzzy, c-format
+msgid "Invalid TUN/TAP device number '%s'."
+msgstr "Некорректный номер порта «%s»."
 
-#: ../src/nm-ssh-service.c:995
-msgid "Missing required local IP address for static key mode."
-msgstr "Отсутствует необходимый локальный IP-адрес для режима со статическим ключом."
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1156
+#, fuzzy
+msgid "Missing required remote IP address."
+msgstr ""
+"Отсутствует необходимый удалённый IP-адрес для режима со статическим ключом."
 
-#: ../src/nm-ssh-service.c:1008
-msgid "Missing required remote IP address for static key mode."
-msgstr "Отсутствует необходимый удалённый IP-адрес для режима со статическим ключом."
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1171
+#, fuzzy
+msgid "Missing required local IP address."
+msgstr ""
+"Отсутствует необходимый локальный IP-адрес для режима со статическим ключом."
 
-#: ../src/nm-ssh-service.c:1033
-#, c-format
-msgid "Unknown connection type '%s'."
-msgstr "Неизвестный тип подключения «%s»."
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1188
+msgid "Missing required netmask."
+msgstr ""
 
-#: ../src/nm-ssh-service.c:1152
-#: ../src/nm-ssh-service.c:1223
-msgid "Could not process the request because the VPN connection settings were invalid."
-msgstr "Не удалось обработать запрос, так как настройки подключения VPN некорректны."
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1209
+#, fuzzy
+msgid "Missing required IPv6 remote IP address."
+msgstr ""
+"Отсутствует необходимый удалённый IP-адрес для режима со статическим ключом."
 
-#: ../src/nm-ssh-service.c:1177
-msgid "Could not process the request because no username was provided."
-msgstr "Не удалось обработать запрос, так как не указано имя пользователя."
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1224
+#, fuzzy
+msgid "Missing required IPv6 local IP address."
+msgstr ""
+"Отсутствует необходимый локальный IP-адрес для режима со статическим ключом."
 
-#: ../src/nm-ssh-service.c:1367
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1239
+msgid "Missing required IPv6 netmask."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1391 ../src/nm-ssh-service.c:1432
+msgid ""
+"Could not process the request because the VPN connection settings were "
+"invalid."
+msgstr ""
+"Не удалось обработать запрос, так как настройки подключения VPN некорректны."
+
+#: ../src/nm-ssh-service.c:1567
 msgid "Don't quit when VPN connection terminates"
 msgstr "Не завершать работу при отключении VPN"
 
-#: ../src/nm-ssh-service.c:1368
+#: ../src/nm-ssh-service.c:1568
 msgid "Enable verbose debug logging (may expose passwords)"
 msgstr "Включить подробный режим отладки (могут отображаться пароли)"
 
-#: ../src/nm-ssh-service.c:1382
-msgid "nm-vpnc-service provides integrated SSH capability to NetworkManager."
+#: ../src/nm-ssh-service.c:1584
+#, fuzzy
+msgid "nm-ssh-service provides integrated SSH capability to NetworkManager."
 msgstr "nm-vpnc-service позволяет использовать SSH в NetworkManager."
 
+#~ msgid "_Password:"
+#~ msgstr "_Пароль:"
+
+#~ msgid "_Secondary Password:"
+#~ msgstr "_Вторичный пароль:"
+
+#~ msgid "_Username:"
+#~ msgstr "_Имя пользователя:"
+
+#~ msgid "_Domain:"
+#~ msgstr "_Домен:"
+
+#~ msgid "Connect _anonymously"
+#~ msgstr "Подключаться _анонимно"
+
+#~ msgid "Connect as _user:"
+#~ msgstr "_Подключаться как пользователь:"
+
+#~ msgid "_Remember password for this session"
+#~ msgstr "_Запомнить пароль для этого сеанса"
+
+#~ msgid "_Save password in keyring"
+#~ msgstr "_Сохранить пароль на брелоке"
+
+#~ msgid "You need to authenticate to access the Virtual Private Network '%s'."
+#~ msgstr ""
+#~ "Для доступа к виртуальной частной сети «%s» требуется аутентификация."
+
+#~ msgid "Authenticate VPN"
+#~ msgstr "Аутентификация VPN"
+
+#~ msgid "Certificate pass_word:"
+#~ msgstr "Па_роль к сертификату:"
+
+#~ msgid "Certificate password:"
+#~ msgstr "Пароль к сертификату:"
+
+#~ msgid "Choose a Certificate Authority certificate..."
+#~ msgstr "Выберите сертификат центра сертификации…"
+
+#~ msgid "Choose your personal certificate..."
+#~ msgstr "Выберите свой персональный сертификат…"
+
+#~ msgid "Choose your private key..."
+#~ msgstr "Выберите свой личный ключ…"
+
+#~ msgid "Choose an SSH static key..."
+#~ msgstr "Выберите статический ключ SSH…"
+
+#~ msgid "None"
+#~ msgstr "Нет"
+
+#~ msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
+#~ msgstr "Сертификаты PEM или PKCS#12 (*.pem, *.crt, *.key, *.cer, *.p12)"
+
+#~ msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
+#~ msgstr "Сертификаты PEM (*.pem, *.crt, *.key, *.cer)"
+
+#~ msgid "SSH Static Keys (*.key)"
+#~ msgstr "Статические ключи SSH (*.key)"
+
+#~ msgid "Default"
+#~ msgstr "По умолчанию"
+
+#~ msgid "MD-5"
+#~ msgstr "MD-5"
+
+#~ msgid "SHA-1"
+#~ msgstr "SHA-1"
+
+#~ msgid "SHA-224"
+#~ msgstr "SHA-224"
+
+#~ msgid "SHA-256"
+#~ msgstr "SHA-256"
+
+#~ msgid "SHA-384"
+#~ msgstr "SHA-384"
+
+#~ msgid "SHA-512"
+#~ msgstr "SHA-512"
+
+#~ msgid "RIPEMD-160"
+#~ msgstr "RIPEMD-160"
+
+#~ msgid "HTTP"
+#~ msgstr "HTTP"
+
+#~ msgid "SOCKS"
+#~ msgstr "SOCKS"
+
+#~ msgid "Certificates (TLS)"
+#~ msgstr "Сертификаты (TLS)"
+
+#~ msgid "Password"
+#~ msgstr "Пароль"
+
+#~ msgid "Password with Certificates (TLS)"
+#~ msgstr "Пароль с сертификатами (TLS)"
+
+#~ msgid "Static Key"
+#~ msgstr "Статический ключ"
+
+#~ msgid "<b>Authentication</b>"
+#~ msgstr "<b>Аутентификация</b>"
+
+#~ msgid ""
+#~ "<i>Connect only to servers whose certificate matches the given subject.\n"
+#~ "Example: /CN=myvpn.company.com</i>"
+#~ msgstr ""
+#~ "<i>Подключаться только к серверам, чьи сертификаты совпадают с заданным "
+#~ "объектом.\n"
+#~ "Пример: /CN=myvpn.company.com</i>"
+
+#~ msgid ""
+#~ "<i>If key direction is used, it must be the opposite of that used on the "
+#~ "VPN peer.  For example, if the peer uses '1', this connection must use "
+#~ "'0'.  If you are unsure what value to use, contact your system "
+#~ "administrator.</i>"
+#~ msgstr ""
+#~ "<i>Если используется направление ключа, оно должно быть противоположно "
+#~ "направлению, которое использует вторая сторона. Например, если вторая "
+#~ "сторона использует «1», это соединение должно использовать «0». Если вы "
+#~ "не уверены, какое значение использовать, свяжитесь с системным "
+#~ "администратором.</i>"
+
+#~ msgid ""
+#~ "<i>Select this option if your organization requires the use of a proxy "
+#~ "server to access the Internet.</i>"
+#~ msgstr ""
+#~ "<i>Выберите этот параметр, если в вашей организации требуется "
+#~ "использовать прокси-сервер для доступа к Интернет.</i>"
+
+#~ msgid "CA Certificate:"
+#~ msgstr "Сертификат ЦС:"
+
+#~ msgid "Cipher:"
+#~ msgstr "Шифр:"
+
+#~ msgid "HMAC Authentication:"
+#~ msgstr "Аутентификация HMAC:"
+
+#~ msgid "Key Direction:"
+#~ msgstr "Направление ключа:"
+
+#~ msgid "Key File:"
+#~ msgstr "Файл ключа:"
+
+#~ msgid "Password:"
+#~ msgstr "Пароль:"
+
+#~ msgid "Port:"
+#~ msgstr "Порт:"
+
+#~ msgid "Private Key Password:"
+#~ msgstr "Пароль к личному ключу:"
+
+#~ msgid "Private Key:"
+#~ msgstr "Личный ключ:"
+
+#~ msgid "Proxies"
+#~ msgstr "Прокси"
+
+#~ msgid "Proxy Password:"
+#~ msgstr "Пароль к прокси:"
+
+#~ msgid "Proxy Type:"
+#~ msgstr "Тип прокси:"
+
+#~ msgid "Restrict tunnel TCP Maximum Segment Size (MSS)"
+#~ msgstr "Ограничить максимальный размер сегмента TCP (MSS) туннеля"
+
+#~ msgid "Retry indefinitely when errors occur"
+#~ msgstr "Повторять бесконечно при ошибках"
+
+#~ msgid "Security"
+#~ msgstr "Безопасность"
+
+#~ msgid "Server Address:"
+#~ msgstr "Адрес сервера:"
+
+#~ msgid "Show password"
+#~ msgstr "Показать пароль"
+
+#~ msgid "Show passwords"
+#~ msgstr "Показать пароли"
+
+#~ msgid "Static Key:"
+#~ msgstr "Статический ключ:"
+
+#~ msgid "Subject Match:"
+#~ msgstr "Объект совпадения:"
+
+#~ msgid "TLS Authentication"
+#~ msgstr "Аутентификация TLS"
+
+#~ msgid "Type:"
+#~ msgstr "Тип:"
+
+#~ msgid "Use L_ZO data compression"
+#~ msgstr "Использовать для данных сжатие L_ZO"
+
+#~ msgid "Use a _TCP connection"
+#~ msgstr "Использовать соединение _TCP"
+
+#~ msgid "Use additional TLS authentication"
+#~ msgstr "Использовать дополнительную аутентификацию TLS"
+
+#~ msgid "Use custom UDP _fragment size:"
+#~ msgstr "Использовать нестандартный размер _фрагмента UDP:"
+
+#~ msgid "Use custom _renegotiation interval:"
+#~ msgstr "Использовать нестандартный интервал _пересогласования:"
+
+#~ msgid "User Certificate:"
+#~ msgstr "Сертификат пользователя:"
+
+#~ msgid "User name:"
+#~ msgstr "Имя пользователя:"
+
+#~ msgid "No VPN secrets!"
+#~ msgstr "Нет VPN-ключей!"
+
+#~ msgid "Invalid HMAC auth."
+#~ msgstr "Некорректная аутентификация HMAC."
+
+#~ msgid "Invalid connection type."
+#~ msgstr "Некорректный тип подключения."
+
+#~ msgid "Invalid proxy type '%s'."
+#~ msgstr "Некорректный тип прокси «%s»."
+
+#~ msgid "Invalid reneg seconds '%s'."
+#~ msgstr "Некорректное число секунд «%s» для пересогласования."
+
+#~ msgid "Invalid fragment size '%s'."
+#~ msgstr "Некорректный размер фрагмента «%s»."
+
+#~ msgid "Unknown connection type '%s'."
+#~ msgstr "Неизвестный тип подключения «%s»."
+
+#~ msgid "Could not process the request because no username was provided."
+#~ msgstr "Не удалось обработать запрос, так как не указано имя пользователя."

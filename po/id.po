@@ -6,11 +6,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: network-manager-ssh master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=NetworkManager&keywords=I18N+L10N&component=VPN: ssh\n"
-"POT-Creation-Date: 2011-07-14 03:13+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-06-09 18:57+1000\n"
 "PO-Revision-Date: 2011-08-20 15:13+0700\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: GNOME Indonesian Translation Team <gnome@i15n.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -18,341 +19,129 @@ msgstr ""
 "X-Poedit-Country: Indonesia\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../auth-dialog/vpn-password-dialog.c:95
-msgid "_Password:"
-msgstr "Sa_ndi:"
-
-#: ../auth-dialog/vpn-password-dialog.c:97
-msgid "_Secondary Password:"
-msgstr "_Sandi Sekunder:"
-
-#: ../auth-dialog/vpn-password-dialog.c:239
-#| msgid "Show passwords"
-msgid "Sh_ow passwords"
-msgstr "T_ampilkan sandi"
-
-#: ../auth-dialog/main.c:133
+#: ../auth-dialog/main.c:122
 #, c-format
-msgid "You need to authenticate to access the Virtual Private Network '%s'."
-msgstr "Anda perlu mengotentikasi untuk mengakses Virtual Private Network '%s'."
+msgid ""
+"Couldn't find '%s' environment variable.\n"
+"\n"
+"Is ssh-agent running?"
+msgstr ""
 
-#: ../auth-dialog/main.c:134
-msgid "Authenticate VPN"
-msgstr "Otentikasikan VPN"
+#: ../properties/advanced-dialog.c:137
+msgid ""
+"You have chosen not to use 'root' as the remote username.\n"
+"\n"
+"Please make sure the user you specify is allowed to open tun/tap devices on "
+"the remote host."
+msgstr ""
 
-#: ../auth-dialog/main.c:140
-msgid "Certificate pass_word:"
-msgstr "_Kata sandi sertifikat:"
-
-#: ../auth-dialog/main.c:154
-msgid "Certificate password:"
-msgstr "Kata sandi sertifikat:"
-
-#: ../properties/auth-helpers.c:148
-msgid "Choose your personal certificate..."
-msgstr "Pilih sertifikat pribadi Anda..."
-
-#: ../properties/auth-helpers.c:166
-msgid "Choose your private key..."
-msgstr "Pilih kunci privat Anda..."
-
-#: ../properties/auth-helpers.c:238
-msgid "Saved"
-msgstr "Disimpan"
-
-#: ../properties/auth-helpers.c:246
-msgid "Always Ask"
-msgstr "Selalu Tanyakan"
-
-#: ../properties/auth-helpers.c:251
-#| msgid "Not required"
-msgid "Not Required"
-msgstr "Tak Diperlukan"
-
-#: ../properties/auth-helpers.c:341
-msgid "Choose a Certificate Authority certificate..."
-msgstr "Pilih sebuah sertifikat Certificate Authority..."
-
-#: ../properties/auth-helpers.c:385
-msgid "Choose an SSH static key..."
-msgstr "Pilih kunci statik SSH..."
-
-#: ../properties/auth-helpers.c:409
-#: ../properties/auth-helpers.c:1169
-#: ../properties/auth-helpers.c:1571
-msgid "None"
-msgstr "Tak ada"
-
-#: ../properties/auth-helpers.c:865
-msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
-msgstr "Sertifikat PEM atau PKCS#12 (*.pem, *.crt, *.key, *.cer, *.p12)"
-
-#: ../properties/auth-helpers.c:866
-msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
-msgstr "Sertifikat PEM (*.pem, *.crt, *.key, *.cer)"
-
-#: ../properties/auth-helpers.c:926
-msgid "SSH Static Keys (*.key)"
-msgstr "Kunci Statik SSH (*.key)"
-
-#: ../properties/auth-helpers.c:1085
-#: ../properties/auth-helpers.c:1161
-msgid "Default"
-msgstr "Baku"
-
-#: ../properties/auth-helpers.c:1171
-msgid "RSA MD-4"
-msgstr "RSA MD-4"
-
-#: ../properties/auth-helpers.c:1173
-msgid "MD-5"
-msgstr "MD-5"
-
-#: ../properties/auth-helpers.c:1175
-msgid "SHA-1"
-msgstr "SHA-1"
-
-#: ../properties/auth-helpers.c:1177
-msgid "SHA-224"
-msgstr "SHA-224"
-
-#: ../properties/auth-helpers.c:1179
-msgid "SHA-256"
-msgstr "SHA-256"
-
-#: ../properties/auth-helpers.c:1181
-msgid "SHA-384"
-msgstr "SHA-384"
-
-#: ../properties/auth-helpers.c:1183
-msgid "SHA-512"
-msgstr "SHA-512"
-
-#: ../properties/auth-helpers.c:1185
-msgid "RIPEMD-160"
-msgstr "RIPEMD-160"
-
-#: ../properties/auth-helpers.c:1360
-#: ../properties/nm-ssh-dialog.ui.h:16
-msgid "Not required"
-msgstr "Tak diperlukan"
-
-#: ../properties/auth-helpers.c:1362
-msgid "HTTP"
-msgstr "HTTP"
-
-#: ../properties/auth-helpers.c:1364
-msgid "SOCKS"
-msgstr "SOCKS"
-
-#: ../properties/nm-ssh.c:52
+#: ../properties/nm-ssh.c:49
 msgid "SSH"
 msgstr "SSH"
 
-#: ../properties/nm-ssh.c:53
+#: ../properties/nm-ssh.c:50
 msgid "Compatible with the SSH server."
 msgstr "Kompatibel dengan server SSH."
-
-#: ../properties/nm-ssh.c:317
-msgid "Certificates (TLS)"
-msgstr "Sertifikat (TLS)"
-
-#: ../properties/nm-ssh.c:328
-msgid "Password"
-msgstr "Kata Sandi"
-
-#: ../properties/nm-ssh.c:341
-msgid "Password with Certificates (TLS)"
-msgstr "Kata Sandi dengan Sertifikat (TLS)"
-
-#: ../properties/nm-ssh.c:353
-msgid "Static Key"
-msgstr "Kunci Statik"
 
 #: ../properties/nm-ssh-dialog.ui.h:1
 msgid " "
 msgstr " "
 
 #: ../properties/nm-ssh-dialog.ui.h:2
-msgid "<b>Authentication</b>"
-msgstr "<b>Otentikasi</b>"
+msgid "Not required"
+msgstr "Tak diperlukan"
 
 #: ../properties/nm-ssh-dialog.ui.h:3
-msgid "<b>General</b>"
-msgstr "<b>Umum</b>"
+msgid "SSH Advanced Options"
+msgstr "Opsi Tingkat Lanjut SSH"
 
 #: ../properties/nm-ssh-dialog.ui.h:4
-msgid ""
-"<i>Connect only to servers whose certificate matches the given subject.\n"
-"Example: /CN=myvpn.company.com</i>"
-msgstr ""
-"<i>Menyambung hanya ke server yang sertifikatnya cocok dengan subjek yang diberikan.\n"
-"Contoh: /CN=myvpn.company.com</i>"
+#, fuzzy
+msgid "Use custom gateway port:"
+msgstr "Gunakan p_ort gateway gubahan:"
+
+#: ../properties/nm-ssh-dialog.ui.h:5
+#, fuzzy
+msgid "Use custom tunnel Maximum Transmission Unit (MTU):"
+msgstr "Gunakan MTU _tembusan gubahan:"
 
 #: ../properties/nm-ssh-dialog.ui.h:6
-msgid "<i>If key direction is used, it must be the opposite of that used on the VPN peer.  For example, if the peer uses '1', this connection must use '0'.  If you are unsure what value to use, contact your system administrator.</i>"
-msgstr "<i>Bila arah kunci dipakai, ini mesti lawan dari yang dipakai pada pasangan VPN. Sebagai contoh, bila pasangan memakai '1', sambungan ini mesti memakai '0'. Bila Anda tak yakin nilai apa yang dipakai, hubungi administrator sistem Anda.</i>"
+msgid "Extra SSH options:"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:7
-msgid "<i>Select this option if your organization requires the use of a proxy server to access the Internet.</i>"
-msgstr "<i>Pilih opsi ini bila organisasi Anda memerlukan penggunaan server proksi untuk mengakses Internet.</i>"
+msgid "Remote device number:"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:8
-msgid "Ad_vanced..."
-msgstr "Tingkat _Lanjut..."
+#, fuzzy
+msgid "Use a TAP device"
+msgstr "Gunakan perangkat TA_P"
 
 #: ../properties/nm-ssh-dialog.ui.h:9
-msgid "CA Certificate:"
-msgstr "Sertifikat CA:"
+#, fuzzy
+msgid "Remote username:"
+msgstr "Nama Pengguna Proksi:"
 
 #: ../properties/nm-ssh-dialog.ui.h:10
-msgid "Cipher:"
-msgstr "Cipher:"
+msgid "Do not replace default route"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:11
 msgid "General"
 msgstr "Umum"
 
 #: ../properties/nm-ssh-dialog.ui.h:12
-msgid "HMAC Authentication:"
-msgstr "Otentikasi HMAC:"
+msgid "<b>General</b>"
+msgstr "<b>Umum</b>"
 
 #: ../properties/nm-ssh-dialog.ui.h:13
-msgid "Key Direction:"
-msgstr "Arah Kunci:"
+#, fuzzy
+msgid "Gateway:"
+msgstr "_Gateway:"
 
 #: ../properties/nm-ssh-dialog.ui.h:14
-msgid "Key File:"
-msgstr "Berkas Kunci:"
+msgid "<b>Network Settings</b>"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:15
+msgid "Remote IP Address:"
+msgstr "Alamat IP Jauh:"
+
+#: ../properties/nm-ssh-dialog.ui.h:16
 msgid "Local IP Address:"
 msgstr "Alamat IP Lokal:"
 
 #: ../properties/nm-ssh-dialog.ui.h:17
-msgid "SSH Advanced Options"
-msgstr "Opsi Tingkat Lanjut SSH"
+msgid "Netmask:"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:18
-msgid "Password:"
-msgstr "Kata Sandi:"
+msgid "<b>IPv6 Network Settings</b>"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:19
-msgid "Port:"
-msgstr "Port:"
+msgid "Use IPv6"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:20
-msgid "Private Key Password:"
-msgstr "Kata Sandi Kunci Privat:"
-
-#: ../properties/nm-ssh-dialog.ui.h:21
-msgid "Private Key:"
-msgstr "Kunci Privat:"
-
-#: ../properties/nm-ssh-dialog.ui.h:22
-msgid "Proxies"
-msgstr "Proksi"
-
-#: ../properties/nm-ssh-dialog.ui.h:23
-msgid "Proxy Password:"
-msgstr "Sandi Proksi:"
-
-#: ../properties/nm-ssh-dialog.ui.h:24
-msgid "Proxy Type:"
-msgstr "Jenis Proksi:"
-
-#: ../properties/nm-ssh-dialog.ui.h:25
-msgid "Proxy Username:"
-msgstr "Nama Pengguna Proksi:"
-
-#: ../properties/nm-ssh-dialog.ui.h:26
-msgid "Remote IP Address:"
+#, fuzzy
+msgid "Remote IP Address (IPv6):"
 msgstr "Alamat IP Jauh:"
 
-#: ../properties/nm-ssh-dialog.ui.h:27
-msgid "Restrict tunnel TCP Maximum Segment Size (MSS)"
-msgstr "Batasi MSS TCP tembusan"
+#: ../properties/nm-ssh-dialog.ui.h:21
+#, fuzzy
+msgid "Local IP Address (IPv6):"
+msgstr "Alamat IP Lokal:"
 
-#: ../properties/nm-ssh-dialog.ui.h:28
-msgid "Retry indefinitely when errors occur"
-msgstr "Coba lagi seterusnya ketika terjadi galat"
+#: ../properties/nm-ssh-dialog.ui.h:22
+msgid "Prefix (IPv6):"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.ui.h:29
-msgid "Security"
-msgstr "Keamanan"
-
-#: ../properties/nm-ssh-dialog.ui.h:30
-msgid "Server Address:"
-msgstr "Alamat Server:"
-
-#: ../properties/nm-ssh-dialog.ui.h:31
-#| msgid "Show passwords"
-msgid "Show password"
-msgstr "Tampilkan sandi"
-
-#: ../properties/nm-ssh-dialog.ui.h:32
-msgid "Show passwords"
-msgstr "Tampilkan kata sandi"
-
-#: ../properties/nm-ssh-dialog.ui.h:33
-msgid "Static Key:"
-msgstr "Kunci Statik:"
-
-#: ../properties/nm-ssh-dialog.ui.h:34
-msgid "Subject Match:"
-msgstr "Cocok Subjek:"
-
-#: ../properties/nm-ssh-dialog.ui.h:35
-msgid "TLS Authentication"
-msgstr "Otentikasi TLS"
-
-#: ../properties/nm-ssh-dialog.ui.h:36
-msgid "Type:"
-msgstr "Jenis:"
-
-#: ../properties/nm-ssh-dialog.ui.h:37
-msgid "Use L_ZO data compression"
-msgstr "Gunakan pemampatan data L_ZO"
-
-#: ../properties/nm-ssh-dialog.ui.h:38
-msgid "Use a TA_P device"
-msgstr "Gunakan perangkat TA_P"
-
-#: ../properties/nm-ssh-dialog.ui.h:39
-msgid "Use a _TCP connection"
-msgstr "Gunakan koneksi _TCP"
-
-#: ../properties/nm-ssh-dialog.ui.h:40
-msgid "Use additional TLS authentication"
-msgstr "Gunakan otentikasi TLS tambahan"
-
-#: ../properties/nm-ssh-dialog.ui.h:41
-msgid "Use custom UDP _fragment size:"
-msgstr "Gunakan ukuran _fragmen UDP gubahan:"
-
-#: ../properties/nm-ssh-dialog.ui.h:42
-msgid "Use custom _renegotiation interval:"
-msgstr "Gunakan interval _renegosiasi gubahan:"
-
-#: ../properties/nm-ssh-dialog.ui.h:43
-msgid "Use custom _tunnel Maximum Transmission Unit (MTU):"
-msgstr "Gunakan MTU _tembusan gubahan:"
-
-#: ../properties/nm-ssh-dialog.ui.h:44
-msgid "Use custom gateway p_ort:"
-msgstr "Gunakan p_ort gateway gubahan:"
-
-#: ../properties/nm-ssh-dialog.ui.h:45
-msgid "User Certificate:"
-msgstr "Sertifikat Pengguna:"
-
-#: ../properties/nm-ssh-dialog.ui.h:46
-msgid "User name:"
-msgstr "Nama pengguna:"
-
-#: ../properties/nm-ssh-dialog.ui.h:47
-msgid "_Gateway:"
-msgstr "_Gateway:"
+#: ../properties/nm-ssh-dialog.ui.h:23
+#, fuzzy
+msgid "Advanced..."
+msgstr "Tingkat _Lanjut..."
 
 #: ../src/nm-ssh-service.c:192
 #, c-format
@@ -383,80 +172,328 @@ msgstr "properti '%s' tak valid atau tak didukung"
 msgid "No VPN configuration options."
 msgstr "Tak ada opsi konfigurasi VPN."
 
-#: ../src/nm-ssh-service.c:272
-msgid "No VPN secrets!"
-msgstr "Tak ada rahasia VPN!"
-
-#: ../src/nm-ssh-service.c:745
+#: ../src/nm-ssh-service.c:984
 msgid "Could not find the ssh binary."
 msgstr "Tak bisa temukan biner ssh."
 
-#: ../src/nm-ssh-service.c:756
-msgid "Invalid HMAC auth."
-msgstr "Otentikasi HMAC tak valid."
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1024
+msgid "Missing required SSH_AUTH_SOCK."
+msgstr ""
 
-#: ../src/nm-ssh-service.c:768
-#: ../src/nm-ssh-service.c:1164
-#: ../src/nm-ssh-service.c:1234
-msgid "Invalid connection type."
-msgstr "Tipe sambungan tak valid."
-
-#: ../src/nm-ssh-service.c:803
+#: ../src/nm-ssh-service.c:1080
 #, c-format
-msgid "Invalid proxy type '%s'."
-msgstr "Tipe proksi '%s' tak valid."
+msgid "Please set remote address."
+msgstr ""
 
-#: ../src/nm-ssh-service.c:839
+#: ../src/nm-ssh-service.c:1097
 #, c-format
 msgid "Invalid port number '%s'."
 msgstr "Nomor port '%s' tak valid."
 
-#: ../src/nm-ssh-service.c:889
-#, c-format
-msgid "Invalid reneg seconds '%s'."
-msgstr "Reneg detik '%s' tak valid."
-
-#: ../src/nm-ssh-service.c:913
+#: ../src/nm-ssh-service.c:1116
 #, c-format
 msgid "Invalid TUN MTU size '%s'."
 msgstr "Ukuran MTU TUN '%s' tak valid."
 
-#: ../src/nm-ssh-service.c:928
-#, c-format
-msgid "Invalid fragment size '%s'."
-msgstr "Ukuran fragmen '%s' tak valid."
+#: ../src/nm-ssh-service.c:1135
+#, fuzzy, c-format
+msgid "Invalid TUN/TAP device number '%s'."
+msgstr "Nomor port '%s' tak valid."
 
-#: ../src/nm-ssh-service.c:996
-msgid "Missing required local IP address for static key mode."
-msgstr "Kehilangan alamat IP lokal yang diperlukan bagi mode kunci statik."
-
-#: ../src/nm-ssh-service.c:1009
-msgid "Missing required remote IP address for static key mode."
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1156
+#, fuzzy
+msgid "Missing required remote IP address."
 msgstr "Kehilangan alamat IP jauh yang diperlukan bagi mode kunci statik."
 
-#: ../src/nm-ssh-service.c:1034
-#, c-format
-msgid "Unknown connection type '%s'."
-msgstr "Tipe sambungan '%s' tak dikenal."
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1171
+#, fuzzy
+msgid "Missing required local IP address."
+msgstr "Kehilangan alamat IP lokal yang diperlukan bagi mode kunci statik."
 
-#: ../src/nm-ssh-service.c:1153
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1188
+msgid "Missing required netmask."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1209
+#, fuzzy
+msgid "Missing required IPv6 remote IP address."
+msgstr "Kehilangan alamat IP jauh yang diperlukan bagi mode kunci statik."
+
+#. FIXME translation
 #: ../src/nm-ssh-service.c:1224
-msgid "Could not process the request because the VPN connection settings were invalid."
+#, fuzzy
+msgid "Missing required IPv6 local IP address."
+msgstr "Kehilangan alamat IP lokal yang diperlukan bagi mode kunci statik."
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1239
+msgid "Missing required IPv6 netmask."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1391 ../src/nm-ssh-service.c:1432
+msgid ""
+"Could not process the request because the VPN connection settings were "
+"invalid."
 msgstr "Tak bisa memroses permintaan karena pengaturan koneksi VPN tak valid."
 
-#: ../src/nm-ssh-service.c:1178
-msgid "Could not process the request because no username was provided."
-msgstr "Tak bisa memroses permintaan karena tak diberikan nama pengguna."
-
-#: ../src/nm-ssh-service.c:1368
+#: ../src/nm-ssh-service.c:1567
 msgid "Don't quit when VPN connection terminates"
 msgstr "Jangan keluar ketika koneksi VPN diputus"
 
-#: ../src/nm-ssh-service.c:1369
+#: ../src/nm-ssh-service.c:1568
 msgid "Enable verbose debug logging (may expose passwords)"
 msgstr "Aktifkan log pengawakutuan verbose (mungkin mengungkap sandi)"
 
-#: ../src/nm-ssh-service.c:1383
-msgid "nm-vpnc-service provides integrated SSH capability to NetworkManager."
-msgstr "nm-vpnc-service menyediakan kapabilitas SSH terintegrasi ke NetworkManager."
+#: ../src/nm-ssh-service.c:1584
+#, fuzzy
+msgid "nm-ssh-service provides integrated SSH capability to NetworkManager."
+msgstr ""
+"nm-vpnc-service menyediakan kapabilitas SSH terintegrasi ke NetworkManager."
 
+#~ msgid "_Password:"
+#~ msgstr "Sa_ndi:"
+
+#~ msgid "_Secondary Password:"
+#~ msgstr "_Sandi Sekunder:"
+
+#~| msgid "Show passwords"
+#~ msgid "Sh_ow passwords"
+#~ msgstr "T_ampilkan sandi"
+
+#~ msgid "You need to authenticate to access the Virtual Private Network '%s'."
+#~ msgstr ""
+#~ "Anda perlu mengotentikasi untuk mengakses Virtual Private Network '%s'."
+
+#~ msgid "Authenticate VPN"
+#~ msgstr "Otentikasikan VPN"
+
+#~ msgid "Certificate pass_word:"
+#~ msgstr "_Kata sandi sertifikat:"
+
+#~ msgid "Certificate password:"
+#~ msgstr "Kata sandi sertifikat:"
+
+#~ msgid "Choose your personal certificate..."
+#~ msgstr "Pilih sertifikat pribadi Anda..."
+
+#~ msgid "Choose your private key..."
+#~ msgstr "Pilih kunci privat Anda..."
+
+#~ msgid "Saved"
+#~ msgstr "Disimpan"
+
+#~ msgid "Always Ask"
+#~ msgstr "Selalu Tanyakan"
+
+#~| msgid "Not required"
+#~ msgid "Not Required"
+#~ msgstr "Tak Diperlukan"
+
+#~ msgid "Choose a Certificate Authority certificate..."
+#~ msgstr "Pilih sebuah sertifikat Certificate Authority..."
+
+#~ msgid "Choose an SSH static key..."
+#~ msgstr "Pilih kunci statik SSH..."
+
+#~ msgid "None"
+#~ msgstr "Tak ada"
+
+#~ msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
+#~ msgstr "Sertifikat PEM atau PKCS#12 (*.pem, *.crt, *.key, *.cer, *.p12)"
+
+#~ msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
+#~ msgstr "Sertifikat PEM (*.pem, *.crt, *.key, *.cer)"
+
+#~ msgid "SSH Static Keys (*.key)"
+#~ msgstr "Kunci Statik SSH (*.key)"
+
+#~ msgid "Default"
+#~ msgstr "Baku"
+
+#~ msgid "RSA MD-4"
+#~ msgstr "RSA MD-4"
+
+#~ msgid "MD-5"
+#~ msgstr "MD-5"
+
+#~ msgid "SHA-1"
+#~ msgstr "SHA-1"
+
+#~ msgid "SHA-224"
+#~ msgstr "SHA-224"
+
+#~ msgid "SHA-256"
+#~ msgstr "SHA-256"
+
+#~ msgid "SHA-384"
+#~ msgstr "SHA-384"
+
+#~ msgid "SHA-512"
+#~ msgstr "SHA-512"
+
+#~ msgid "RIPEMD-160"
+#~ msgstr "RIPEMD-160"
+
+#~ msgid "HTTP"
+#~ msgstr "HTTP"
+
+#~ msgid "SOCKS"
+#~ msgstr "SOCKS"
+
+#~ msgid "Certificates (TLS)"
+#~ msgstr "Sertifikat (TLS)"
+
+#~ msgid "Password"
+#~ msgstr "Kata Sandi"
+
+#~ msgid "Password with Certificates (TLS)"
+#~ msgstr "Kata Sandi dengan Sertifikat (TLS)"
+
+#~ msgid "Static Key"
+#~ msgstr "Kunci Statik"
+
+#~ msgid "<b>Authentication</b>"
+#~ msgstr "<b>Otentikasi</b>"
+
+#~ msgid ""
+#~ "<i>Connect only to servers whose certificate matches the given subject.\n"
+#~ "Example: /CN=myvpn.company.com</i>"
+#~ msgstr ""
+#~ "<i>Menyambung hanya ke server yang sertifikatnya cocok dengan subjek yang "
+#~ "diberikan.\n"
+#~ "Contoh: /CN=myvpn.company.com</i>"
+
+#~ msgid ""
+#~ "<i>If key direction is used, it must be the opposite of that used on the "
+#~ "VPN peer.  For example, if the peer uses '1', this connection must use "
+#~ "'0'.  If you are unsure what value to use, contact your system "
+#~ "administrator.</i>"
+#~ msgstr ""
+#~ "<i>Bila arah kunci dipakai, ini mesti lawan dari yang dipakai pada "
+#~ "pasangan VPN. Sebagai contoh, bila pasangan memakai '1', sambungan ini "
+#~ "mesti memakai '0'. Bila Anda tak yakin nilai apa yang dipakai, hubungi "
+#~ "administrator sistem Anda.</i>"
+
+#~ msgid ""
+#~ "<i>Select this option if your organization requires the use of a proxy "
+#~ "server to access the Internet.</i>"
+#~ msgstr ""
+#~ "<i>Pilih opsi ini bila organisasi Anda memerlukan penggunaan server "
+#~ "proksi untuk mengakses Internet.</i>"
+
+#~ msgid "CA Certificate:"
+#~ msgstr "Sertifikat CA:"
+
+#~ msgid "Cipher:"
+#~ msgstr "Cipher:"
+
+#~ msgid "HMAC Authentication:"
+#~ msgstr "Otentikasi HMAC:"
+
+#~ msgid "Key Direction:"
+#~ msgstr "Arah Kunci:"
+
+#~ msgid "Key File:"
+#~ msgstr "Berkas Kunci:"
+
+#~ msgid "Password:"
+#~ msgstr "Kata Sandi:"
+
+#~ msgid "Port:"
+#~ msgstr "Port:"
+
+#~ msgid "Private Key Password:"
+#~ msgstr "Kata Sandi Kunci Privat:"
+
+#~ msgid "Private Key:"
+#~ msgstr "Kunci Privat:"
+
+#~ msgid "Proxies"
+#~ msgstr "Proksi"
+
+#~ msgid "Proxy Password:"
+#~ msgstr "Sandi Proksi:"
+
+#~ msgid "Proxy Type:"
+#~ msgstr "Jenis Proksi:"
+
+#~ msgid "Restrict tunnel TCP Maximum Segment Size (MSS)"
+#~ msgstr "Batasi MSS TCP tembusan"
+
+#~ msgid "Retry indefinitely when errors occur"
+#~ msgstr "Coba lagi seterusnya ketika terjadi galat"
+
+#~ msgid "Security"
+#~ msgstr "Keamanan"
+
+#~ msgid "Server Address:"
+#~ msgstr "Alamat Server:"
+
+#~| msgid "Show passwords"
+#~ msgid "Show password"
+#~ msgstr "Tampilkan sandi"
+
+#~ msgid "Show passwords"
+#~ msgstr "Tampilkan kata sandi"
+
+#~ msgid "Static Key:"
+#~ msgstr "Kunci Statik:"
+
+#~ msgid "Subject Match:"
+#~ msgstr "Cocok Subjek:"
+
+#~ msgid "TLS Authentication"
+#~ msgstr "Otentikasi TLS"
+
+#~ msgid "Type:"
+#~ msgstr "Jenis:"
+
+#~ msgid "Use L_ZO data compression"
+#~ msgstr "Gunakan pemampatan data L_ZO"
+
+#~ msgid "Use a _TCP connection"
+#~ msgstr "Gunakan koneksi _TCP"
+
+#~ msgid "Use additional TLS authentication"
+#~ msgstr "Gunakan otentikasi TLS tambahan"
+
+#~ msgid "Use custom UDP _fragment size:"
+#~ msgstr "Gunakan ukuran _fragmen UDP gubahan:"
+
+#~ msgid "Use custom _renegotiation interval:"
+#~ msgstr "Gunakan interval _renegosiasi gubahan:"
+
+#~ msgid "User Certificate:"
+#~ msgstr "Sertifikat Pengguna:"
+
+#~ msgid "User name:"
+#~ msgstr "Nama pengguna:"
+
+#~ msgid "No VPN secrets!"
+#~ msgstr "Tak ada rahasia VPN!"
+
+#~ msgid "Invalid HMAC auth."
+#~ msgstr "Otentikasi HMAC tak valid."
+
+#~ msgid "Invalid connection type."
+#~ msgstr "Tipe sambungan tak valid."
+
+#~ msgid "Invalid proxy type '%s'."
+#~ msgstr "Tipe proksi '%s' tak valid."
+
+#~ msgid "Invalid reneg seconds '%s'."
+#~ msgstr "Reneg detik '%s' tak valid."
+
+#~ msgid "Invalid fragment size '%s'."
+#~ msgstr "Ukuran fragmen '%s' tak valid."
+
+#~ msgid "Unknown connection type '%s'."
+#~ msgstr "Tipe sambungan '%s' tak dikenal."
+
+#~ msgid "Could not process the request because no username was provided."
+#~ msgstr "Tak bisa memroses permintaan karena tak diberikan nama pengguna."

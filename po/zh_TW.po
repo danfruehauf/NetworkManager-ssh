@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NetworkManager-ssh 0.8.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-25 19:37+0800\n"
+"POT-Creation-Date: 2013-06-09 18:57+1000\n"
 "PO-Revision-Date: 2011-01-25 17:31+0800\n"
 "Last-Translator: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>\n"
 "Language-Team: Chinese (traditional) <community@linuxhall.org>\n"
@@ -16,164 +16,334 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../auth-dialog/gnome-two-password-dialog.c:130
-msgid "_Password:"
-msgstr "密碼(_P):"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:131
-msgid "_Secondary Password:"
-msgstr "第二組密碼(_S):"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:248
-msgid "_Username:"
-msgstr "使用者名稱(_U):"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:250
-msgid "_Domain:"
-msgstr "網域(_D):"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:346
-msgid "Connect _anonymously"
-msgstr "匿名連線(_A)"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:351
-msgid "Connect as _user:"
-msgstr "以使用者連線(_U):"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:456
-msgid "_Remember password for this session"
-msgstr "記住這個作業階段的密碼(_R)"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:458
-msgid "_Save password in keyring"
-msgstr "將密碼儲存到鑰匙圈(_S)"
-
-#: ../auth-dialog/main.c:94
+#: ../auth-dialog/main.c:122
 #, c-format
-msgid "You need to authenticate to access the Virtual Private Network '%s'."
-msgstr "您需要驗證才能存取虛擬私人網路「%s」。"
+msgid ""
+"Couldn't find '%s' environment variable.\n"
+"\n"
+"Is ssh-agent running?"
+msgstr ""
 
-#: ../auth-dialog/main.c:95
-msgid "Authenticate VPN"
-msgstr "驗證 VPN"
+#: ../properties/advanced-dialog.c:137
+msgid ""
+"You have chosen not to use 'root' as the remote username.\n"
+"\n"
+"Please make sure the user you specify is allowed to open tun/tap devices on "
+"the remote host."
+msgstr ""
 
-#: ../auth-dialog/main.c:116
-msgid "Certificate pass_word:"
-msgstr "憑證密碼(_W):"
-
-#: ../auth-dialog/main.c:130
-msgid "Certificate password:"
-msgstr "憑證密碼:"
-
-#: ../properties/auth-helpers.c:207
-msgid "Choose a Certificate Authority certificate..."
-msgstr "選擇一個憑證管理中心的憑證…"
-
-#: ../properties/auth-helpers.c:226
-msgid "Choose your personal certificate..."
-msgstr "選擇您的個人憑證…"
-
-#: ../properties/auth-helpers.c:244
-msgid "Choose your private key..."
-msgstr "選擇您的私密金鑰…"
-
-#: ../properties/auth-helpers.c:302
-msgid "Choose an SSH static key..."
-msgstr "選擇 SSH 靜態金鑰…"
-
-#: ../properties/auth-helpers.c:326 ../properties/auth-helpers.c:1084
-#: ../properties/auth-helpers.c:1457
-msgid "None"
-msgstr "無"
-
-#: ../properties/auth-helpers.c:781
-msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
-msgstr "PEM 或 PKCS#12 憑證 (*.pem, *.crt, *.key, *.cer, *.p12)"
-
-#: ../properties/auth-helpers.c:782
-msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
-msgstr "PEM 憑證 (*.pem, *.crt, *.key, *.cer)"
-
-#: ../properties/auth-helpers.c:842
-msgid "SSH Static Keys (*.key)"
-msgstr "SSH 靜態金鑰 (*.key)"
-
-#: ../properties/auth-helpers.c:1001 ../properties/auth-helpers.c:1076
-msgid "Default"
-msgstr "預設值"
-
-#: ../properties/auth-helpers.c:1086
-msgid "MD-5"
-msgstr "MD-5"
-
-#: ../properties/auth-helpers.c:1088
-msgid "SHA-1"
-msgstr "SHA-1"
-
-#: ../properties/auth-helpers.c:1090
-msgid "SHA-224"
-msgstr "SHA-224"
-
-#: ../properties/auth-helpers.c:1092
-msgid "SHA-256"
-msgstr "SHA-256"
-
-#: ../properties/auth-helpers.c:1094
-msgid "SHA-384"
-msgstr "SHA-384"
-
-#: ../properties/auth-helpers.c:1096
-msgid "SHA-512"
-msgstr "SHA-512"
-
-#: ../properties/auth-helpers.c:1098
-msgid "RIPEMD-160"
-msgstr "RIPEMD-160"
-
-#: ../properties/auth-helpers.c:1259
-msgid "Not required"
-msgstr "不需要"
-
-#: ../properties/auth-helpers.c:1261
-msgid "HTTP"
-msgstr "HTTP"
-
-#: ../properties/auth-helpers.c:1263
-msgid "SOCKS"
-msgstr "SOCKS"
-
-#: ../properties/nm-ssh.c:52
+#: ../properties/nm-ssh.c:49
 msgid "SSH"
 msgstr "SSH"
 
-#: ../properties/nm-ssh.c:53
+#: ../properties/nm-ssh.c:50
 msgid "Compatible with the SSH server."
 msgstr "相容於 SSH 伺服器。"
 
-#: ../properties/nm-ssh.c:321
-msgid "Certificates (TLS)"
-msgstr "憑證 (TLS)"
+#: ../properties/nm-ssh-dialog.ui.h:1
+msgid " "
+msgstr " "
 
-#: ../properties/nm-ssh.c:335
-msgid "Password"
-msgstr "密碼"
+#: ../properties/nm-ssh-dialog.ui.h:2
+msgid "Not required"
+msgstr "不需要"
 
-#: ../properties/nm-ssh.c:352
-msgid "Password with Certificates (TLS)"
-msgstr "憑證密碼 (TLS)"
+#: ../properties/nm-ssh-dialog.ui.h:3
+msgid "SSH Advanced Options"
+msgstr "SSH 進階選項"
 
-#: ../properties/nm-ssh.c:364
-msgid "Static Key"
-msgstr "靜態金鑰"
+#: ../properties/nm-ssh-dialog.ui.h:4
+msgid "Use custom gateway port:"
+msgstr ""
 
-#~ msgid " "
-#~ msgstr " "
+#: ../properties/nm-ssh-dialog.ui.h:5
+msgid "Use custom tunnel Maximum Transmission Unit (MTU):"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:6
+msgid "Extra SSH options:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:7
+msgid "Remote device number:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:8
+msgid "Use a TAP device"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:9
+#, fuzzy
+msgid "Remote username:"
+msgstr "使用者名稱(_U):"
+
+#: ../properties/nm-ssh-dialog.ui.h:10
+msgid "Do not replace default route"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:11
+msgid "General"
+msgstr "一般"
+
+#: ../properties/nm-ssh-dialog.ui.h:12
+msgid "<b>General</b>"
+msgstr "<b>一般</b>"
+
+#: ../properties/nm-ssh-dialog.ui.h:13
+msgid "Gateway:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:14
+msgid "<b>Network Settings</b>"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:15
+#, fuzzy
+msgid "Remote IP Address:"
+msgstr "本地端 IP 位址:"
+
+#: ../properties/nm-ssh-dialog.ui.h:16
+msgid "Local IP Address:"
+msgstr "本地端 IP 位址:"
+
+#: ../properties/nm-ssh-dialog.ui.h:17
+msgid "Netmask:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:18
+msgid "<b>IPv6 Network Settings</b>"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:19
+msgid "Use IPv6"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:20
+#, fuzzy
+msgid "Remote IP Address (IPv6):"
+msgstr "本地端 IP 位址:"
+
+#: ../properties/nm-ssh-dialog.ui.h:21
+#, fuzzy
+msgid "Local IP Address (IPv6):"
+msgstr "本地端 IP 位址:"
+
+#: ../properties/nm-ssh-dialog.ui.h:22
+msgid "Prefix (IPv6):"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:23
+#, fuzzy
+msgid "Advanced..."
+msgstr "進階(_V)…"
+
+#: ../src/nm-ssh-service.c:192
+#, c-format
+msgid "invalid address '%s'"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:204
+#, c-format
+msgid "invalid integer property '%s' or out of range [%d -> %d]"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:214
+#, c-format
+msgid "invalid boolean property '%s' (not yes or no)"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:221
+#, c-format
+msgid "unhandled property '%s' type %s"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:232
+#, c-format
+msgid "property '%s' invalid or not supported"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:249
+msgid "No VPN configuration options."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:984
+msgid "Could not find the ssh binary."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1024
+msgid "Missing required SSH_AUTH_SOCK."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1080
+#, c-format
+msgid "Please set remote address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1097
+#, c-format
+msgid "Invalid port number '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1116
+#, c-format
+msgid "Invalid TUN MTU size '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1135
+#, c-format
+msgid "Invalid TUN/TAP device number '%s'."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1156
+msgid "Missing required remote IP address."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1171
+msgid "Missing required local IP address."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1188
+msgid "Missing required netmask."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1209
+msgid "Missing required IPv6 remote IP address."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1224
+msgid "Missing required IPv6 local IP address."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1239
+msgid "Missing required IPv6 netmask."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1391 ../src/nm-ssh-service.c:1432
+msgid ""
+"Could not process the request because the VPN connection settings were "
+"invalid."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1567
+msgid "Don't quit when VPN connection terminates"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1568
+msgid "Enable verbose debug logging (may expose passwords)"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1584
+msgid "nm-ssh-service provides integrated SSH capability to NetworkManager."
+msgstr ""
+
+#~ msgid "_Password:"
+#~ msgstr "密碼(_P):"
+
+#~ msgid "_Secondary Password:"
+#~ msgstr "第二組密碼(_S):"
+
+#~ msgid "_Domain:"
+#~ msgstr "網域(_D):"
+
+#~ msgid "Connect _anonymously"
+#~ msgstr "匿名連線(_A)"
+
+#~ msgid "Connect as _user:"
+#~ msgstr "以使用者連線(_U):"
+
+#~ msgid "_Remember password for this session"
+#~ msgstr "記住這個作業階段的密碼(_R)"
+
+#~ msgid "_Save password in keyring"
+#~ msgstr "將密碼儲存到鑰匙圈(_S)"
+
+#~ msgid "You need to authenticate to access the Virtual Private Network '%s'."
+#~ msgstr "您需要驗證才能存取虛擬私人網路「%s」。"
+
+#~ msgid "Authenticate VPN"
+#~ msgstr "驗證 VPN"
+
+#~ msgid "Certificate pass_word:"
+#~ msgstr "憑證密碼(_W):"
+
+#~ msgid "Certificate password:"
+#~ msgstr "憑證密碼:"
+
+#~ msgid "Choose a Certificate Authority certificate..."
+#~ msgstr "選擇一個憑證管理中心的憑證…"
+
+#~ msgid "Choose your personal certificate..."
+#~ msgstr "選擇您的個人憑證…"
+
+#~ msgid "Choose your private key..."
+#~ msgstr "選擇您的私密金鑰…"
+
+#~ msgid "Choose an SSH static key..."
+#~ msgstr "選擇 SSH 靜態金鑰…"
+
+#~ msgid "None"
+#~ msgstr "無"
+
+#~ msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
+#~ msgstr "PEM 或 PKCS#12 憑證 (*.pem, *.crt, *.key, *.cer, *.p12)"
+
+#~ msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
+#~ msgstr "PEM 憑證 (*.pem, *.crt, *.key, *.cer)"
+
+#~ msgid "SSH Static Keys (*.key)"
+#~ msgstr "SSH 靜態金鑰 (*.key)"
+
+#~ msgid "Default"
+#~ msgstr "預設值"
+
+#~ msgid "MD-5"
+#~ msgstr "MD-5"
+
+#~ msgid "SHA-1"
+#~ msgstr "SHA-1"
+
+#~ msgid "SHA-224"
+#~ msgstr "SHA-224"
+
+#~ msgid "SHA-256"
+#~ msgstr "SHA-256"
+
+#~ msgid "SHA-384"
+#~ msgstr "SHA-384"
+
+#~ msgid "SHA-512"
+#~ msgstr "SHA-512"
+
+#~ msgid "RIPEMD-160"
+#~ msgstr "RIPEMD-160"
+
+#~ msgid "HTTP"
+#~ msgstr "HTTP"
+
+#~ msgid "SOCKS"
+#~ msgstr "SOCKS"
+
+#~ msgid "Certificates (TLS)"
+#~ msgstr "憑證 (TLS)"
+
+#~ msgid "Password"
+#~ msgstr "密碼"
+
+#~ msgid "Password with Certificates (TLS)"
+#~ msgstr "憑證密碼 (TLS)"
+
+#~ msgid "Static Key"
+#~ msgstr "靜態金鑰"
 
 #~ msgid "<b>Authentication</b>"
 #~ msgstr "<b>驗證</b>"
-
-#~ msgid "<b>General</b>"
-#~ msgstr "<b>一般</b>"
 
 #~ msgid ""
 #~ "<i>If key direction is used, it must be the opposite of that used on the "
@@ -185,17 +355,11 @@ msgstr "靜態金鑰"
 #~ "「1」，這個連線必須使用「0」。如果您不確定要使用什麼數值，請連絡您的系統管"
 #~ "理員。</i>"
 
-#~ msgid "Ad_vanced..."
-#~ msgstr "進階(_V)…"
-
 #~ msgid "CA Certificate:"
 #~ msgstr "CA 憑證:"
 
 #~ msgid "Cipher:"
 #~ msgstr "加密器:"
-
-#~ msgid "General"
-#~ msgstr "一般"
 
 #~ msgid "HMAC Authentication:"
 #~ msgstr "HMAC 驗證:"
@@ -205,12 +369,6 @@ msgstr "靜態金鑰"
 
 #~ msgid "Key File:"
 #~ msgstr "金鑰檔案:"
-
-#~ msgid "Local IP Address:"
-#~ msgstr "本地端 IP 位址:"
-
-#~ msgid "SSH Advanced Options"
-#~ msgstr "SSH 進階選項"
 
 #~ msgid "Password:"
 #~ msgstr "密碼:"

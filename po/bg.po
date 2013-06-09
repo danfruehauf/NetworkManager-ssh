@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: network-manager-ssh master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-02 10:52+0300\n"
+"POT-Creation-Date: 2013-06-09 18:57+1000\n"
 "PO-Revision-Date: 2010-10-02 10:52+0300\n"
 "Last-Translator: Krasimir Chonov <mk2616@abv.bg>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
@@ -18,345 +18,448 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: ../auth-dialog/gnome-two-password-dialog.c:130
-msgid "_Password:"
-msgstr "_Парола:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:131
-msgid "_Secondary Password:"
-msgstr "_Втора парола:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:248
-msgid "_Username:"
-msgstr "Потребителско _име:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:250
-msgid "_Domain:"
-msgstr "_Домейн:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:346
-msgid "Connect _anonymously"
-msgstr "_Анонимно свързване"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:351
-msgid "Connect as _user:"
-msgstr "Свързване _като потребителя:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:456
-msgid "_Remember password for this session"
-msgstr "_Запомняне на паролата за тази сесия"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:458
-msgid "_Save password in keyring"
-msgstr "Запазване на паролата в клю_чодържателя"
-
-#: ../auth-dialog/main.c:94
+#: ../auth-dialog/main.c:122
 #, c-format
-msgid "You need to authenticate to access the Virtual Private Network '%s'."
-msgstr "Трябва да се идентифицирате, за да ползвате ВЧМ „%s“."
-
-#: ../auth-dialog/main.c:95
-msgid "Authenticate VPN"
-msgstr "Идентифициране пред ВЧМ"
-
-#: ../auth-dialog/main.c:116
-msgid "Certificate pass_word:"
-msgstr "Парола за _сертификата:"
-
-#: ../auth-dialog/main.c:130
-msgid "Certificate password:"
-msgstr "Парола за сертификата:"
-
-#: ../properties/auth-helpers.c:207
-msgid "Choose a Certificate Authority certificate..."
-msgstr "Изберете сертификата на сертифициращата организация…"
-
-#: ../properties/auth-helpers.c:226
-msgid "Choose your personal certificate..."
-msgstr "Изберете личния си сертификат…"
-
-#: ../properties/auth-helpers.c:244
-msgid "Choose your private key..."
-msgstr "Изберете личния си ключ…"
-
-#: ../properties/auth-helpers.c:302
-msgid "Choose an SSH static key..."
-msgstr "Изберете статичния ключ на SSH…"
-
-#: ../properties/auth-helpers.c:326 ../properties/auth-helpers.c:1078
-#: ../properties/auth-helpers.c:1443
-msgid "None"
-msgstr "Няма"
-
-#: ../properties/auth-helpers.c:775
-msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
+msgid ""
+"Couldn't find '%s' environment variable.\n"
+"\n"
+"Is ssh-agent running?"
 msgstr ""
-"Сертификати във формат PEM или PKCS#12 (*.pem, *.crt, *.key, *.cer, *.p12)"
 
-#: ../properties/auth-helpers.c:776
-msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
-msgstr "Сертификати във формат PEM (*.pem, *.crt, *.key, *.cer)"
+#: ../properties/advanced-dialog.c:137
+msgid ""
+"You have chosen not to use 'root' as the remote username.\n"
+"\n"
+"Please make sure the user you specify is allowed to open tun/tap devices on "
+"the remote host."
+msgstr ""
 
-#: ../properties/auth-helpers.c:836
-msgid "SSH Static Keys (*.key)"
-msgstr "Статични ключове за SSH (*.key)"
-
-#: ../properties/auth-helpers.c:995 ../properties/auth-helpers.c:1070
-msgid "Default"
-msgstr "Стандартно"
-
-#: ../properties/auth-helpers.c:1080
-msgid "MD-5"
-msgstr "MD-5"
-
-#: ../properties/auth-helpers.c:1082
-msgid "SHA-1"
-msgstr "SHA-1"
-
-#: ../properties/auth-helpers.c:1084
-msgid "SHA-224"
-msgstr "SHA-224"
-
-#: ../properties/auth-helpers.c:1086
-msgid "SHA-256"
-msgstr "SHA-256"
-
-#: ../properties/auth-helpers.c:1088
-msgid "SHA-384"
-msgstr "SHA-384"
-
-#: ../properties/auth-helpers.c:1090
-msgid "SHA-512"
-msgstr "SHA-512"
-
-#: ../properties/auth-helpers.c:1092
-msgid "RIPEMD-160"
-msgstr "RIPEMD-160"
-
-#: ../properties/auth-helpers.c:1245
-#: ../properties/nm-ssh-dialog.glade.h:16
-msgid "Not required"
-msgstr "Не е задължително"
-
-#: ../properties/auth-helpers.c:1247
-msgid "HTTP"
-msgstr "HTTP"
-
-#: ../properties/auth-helpers.c:1249
-msgid "SOCKS"
-msgstr "SOCKS"
-
-#: ../properties/nm-ssh.c:53
+#: ../properties/nm-ssh.c:49
 msgid "SSH"
 msgstr "SSH"
 
-#: ../properties/nm-ssh.c:54
+#: ../properties/nm-ssh.c:50
 msgid "Compatible with the SSH server."
 msgstr "Съвместим със сървърите за SSH."
 
-#: ../properties/nm-ssh.c:322
-msgid "Certificates (TLS)"
-msgstr "Сертификати (TLS)"
-
-#: ../properties/nm-ssh.c:336
-msgid "Password"
-msgstr "Парола"
-
-#: ../properties/nm-ssh.c:353
-msgid "Password with Certificates (TLS)"
-msgstr "Парола със сертификати (TLS)"
-
-#: ../properties/nm-ssh.c:365
-msgid "Static Key"
-msgstr "Статичен ключ"
-
-#: ../properties/nm-ssh-dialog.glade.h:1
+#: ../properties/nm-ssh-dialog.ui.h:1
 msgid " "
 msgstr " "
 
-#: ../properties/nm-ssh-dialog.glade.h:2
-msgid "<b>Authentication</b>"
-msgstr "<b>Идентификация</b>"
+#: ../properties/nm-ssh-dialog.ui.h:2
+msgid "Not required"
+msgstr "Не е задължително"
 
-#: ../properties/nm-ssh-dialog.glade.h:3
-msgid "<b>General</b>"
-msgstr "<b>Общи</b>"
-
-#: ../properties/nm-ssh-dialog.glade.h:4
-msgid ""
-"<i>Connect only to servers whose certificate matches the given subject.\n"
-"Example: /CN=myvpn.company.com</i>"
-msgstr ""
-"<i>Свързване само към сървъри, чийто сертификат съвпада с указаната тема.\n"
-"Пример: /CN=myvpn.company.com</i>"
-
-#: ../properties/nm-ssh-dialog.glade.h:6
-msgid ""
-"<i>If key direction is used, it must be the opposite of that used on the VPN "
-"peer.  For example, if the peer uses '1', this connection must use '0'.  If "
-"you are unsure what value to use, contact your system administrator.</i>"
-msgstr ""
-"<i>Ако се използва посока на ключа, тя трябва да е обратната на използваната "
-"от отсрещната страна по ВЧМ. Например — ако тя ползва „1“, тази връзка "
-"трябва да ползва „0“. Ако не сте сигурни, попитайте системния си "
-"администратор.</i>"
-
-#: ../properties/nm-ssh-dialog.glade.h:7
-msgid ""
-"<i>Select this option if your organization requires the use of a proxy "
-"server to access the Internet.</i>"
-msgstr ""
-"<i>Изберете тази настройка, ако организацията, в която се намирате, ви "
-"задължава да използвате сървър-посредник за връзката ви към Internet.</i>"
-
-#: ../properties/nm-ssh-dialog.glade.h:8
-msgid "Ad_vanced..."
-msgstr "_Допълнителни…"
-
-#: ../properties/nm-ssh-dialog.glade.h:9
-msgid "CA Certificate:"
-msgstr "Сертификат на сертифициращата организация:"
-
-#: ../properties/nm-ssh-dialog.glade.h:10
-msgid "Cipher:"
-msgstr "Шифър:"
-
-#: ../properties/nm-ssh-dialog.glade.h:11
-msgid "General"
-msgstr "Общи"
-
-#: ../properties/nm-ssh-dialog.glade.h:12
-msgid "HMAC Authentication:"
-msgstr "Идентификация с HMAC:"
-
-#: ../properties/nm-ssh-dialog.glade.h:13
-msgid "Key Direction:"
-msgstr "Посока на ключа:"
-
-#: ../properties/nm-ssh-dialog.glade.h:14
-msgid "Key File:"
-msgstr "Файл-ключ:"
-
-#: ../properties/nm-ssh-dialog.glade.h:15
-msgid "Local IP Address:"
-msgstr "Локален адрес:"
-
-#: ../properties/nm-ssh-dialog.glade.h:17
+#: ../properties/nm-ssh-dialog.ui.h:3
 msgid "SSH Advanced Options"
 msgstr "Допълнителни настройки на SSH"
 
-#: ../properties/nm-ssh-dialog.glade.h:18
-msgid "Password:"
-msgstr "Парола:"
+#: ../properties/nm-ssh-dialog.ui.h:4
+#, fuzzy
+msgid "Use custom gateway port:"
+msgstr "_Потребителски порт на шлюза:"
 
-#: ../properties/nm-ssh-dialog.glade.h:19
-msgid "Port:"
-msgstr "Порт:"
+#: ../properties/nm-ssh-dialog.ui.h:5
+#, fuzzy
+msgid "Use custom tunnel Maximum Transmission Unit (MTU):"
+msgstr "Различен _максимален размер на пакета (MTU) за тунела:"
 
-#: ../properties/nm-ssh-dialog.glade.h:20
-msgid "Private Key Password:"
-msgstr "Частен ключ:"
+#: ../properties/nm-ssh-dialog.ui.h:6
+msgid "Extra SSH options:"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:21
-msgid "Private Key:"
-msgstr "Частен ключ:"
+#: ../properties/nm-ssh-dialog.ui.h:7
+msgid "Remote device number:"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:22
-msgid "Proxies"
-msgstr "Посредници"
+#: ../properties/nm-ssh-dialog.ui.h:8
+#, fuzzy
+msgid "Use a TAP device"
+msgstr "Използване на _устройство TAP"
 
-#: ../properties/nm-ssh-dialog.glade.h:23
-msgid "Proxy Password:"
-msgstr "Парола за посредника:"
-
-#: ../properties/nm-ssh-dialog.glade.h:24
-msgid "Proxy Type:"
-msgstr "Вид посредник:"
-
-#: ../properties/nm-ssh-dialog.glade.h:25
-msgid "Proxy Username:"
+#: ../properties/nm-ssh-dialog.ui.h:9
+#, fuzzy
+msgid "Remote username:"
 msgstr "Потребителско _име за посредника:"
 
-#: ../properties/nm-ssh-dialog.glade.h:26
+#: ../properties/nm-ssh-dialog.ui.h:10
+msgid "Do not replace default route"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:11
+msgid "General"
+msgstr "Общи"
+
+#: ../properties/nm-ssh-dialog.ui.h:12
+msgid "<b>General</b>"
+msgstr "<b>Общи</b>"
+
+#: ../properties/nm-ssh-dialog.ui.h:13
+#, fuzzy
+msgid "Gateway:"
+msgstr "_Шлюз:"
+
+#: ../properties/nm-ssh-dialog.ui.h:14
+msgid "<b>Network Settings</b>"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:15
 msgid "Remote IP Address:"
 msgstr "Отдалечен адрес:"
 
-#: ../properties/nm-ssh-dialog.glade.h:27
-msgid "Restrict tunnel TCP Maximum Segment Size (MSS)"
-msgstr "Ограничаване на максималния размер на сегментите (MSS) по TCP"
+#: ../properties/nm-ssh-dialog.ui.h:16
+msgid "Local IP Address:"
+msgstr "Локален адрес:"
 
-#: ../properties/nm-ssh-dialog.glade.h:28
-msgid "Retry indefinitely when errors occur"
-msgstr "При появата на грешка да се повтаря до безкрай"
+#: ../properties/nm-ssh-dialog.ui.h:17
+msgid "Netmask:"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:29
-msgid "Security"
-msgstr "Сигурност"
+#: ../properties/nm-ssh-dialog.ui.h:18
+msgid "<b>IPv6 Network Settings</b>"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:30
-msgid "Server Address:"
-msgstr "Адрес на сървъра:"
+#: ../properties/nm-ssh-dialog.ui.h:19
+msgid "Use IPv6"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:31
-msgid "Show passwords"
-msgstr "Показване на паролите"
+#: ../properties/nm-ssh-dialog.ui.h:20
+#, fuzzy
+msgid "Remote IP Address (IPv6):"
+msgstr "Отдалечен адрес:"
 
-#: ../properties/nm-ssh-dialog.glade.h:32
-msgid "Static Key:"
-msgstr "Статичен ключ:"
+#: ../properties/nm-ssh-dialog.ui.h:21
+#, fuzzy
+msgid "Local IP Address (IPv6):"
+msgstr "Локален адрес:"
 
-#: ../properties/nm-ssh-dialog.glade.h:33
-msgid "Subject Match:"
-msgstr "Съвпадане на темата:"
+#: ../properties/nm-ssh-dialog.ui.h:22
+msgid "Prefix (IPv6):"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:34
-msgid "TLS Authentication"
-msgstr "Идентификация с TSL"
+#: ../properties/nm-ssh-dialog.ui.h:23
+#, fuzzy
+msgid "Advanced..."
+msgstr "_Допълнителни…"
 
-#: ../properties/nm-ssh-dialog.glade.h:35
-msgid "Type:"
-msgstr "Вид:"
+#: ../src/nm-ssh-service.c:192
+#, c-format
+msgid "invalid address '%s'"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:36
-msgid "Use L_ZO data compression"
-msgstr "Използване на _компресия LZO"
+#: ../src/nm-ssh-service.c:204
+#, c-format
+msgid "invalid integer property '%s' or out of range [%d -> %d]"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:37
-msgid "Use a TA_P device"
-msgstr "Използване на _устройство TAP"
+#: ../src/nm-ssh-service.c:214
+#, c-format
+msgid "invalid boolean property '%s' (not yes or no)"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:38
-msgid "Use a _TCP connection"
-msgstr "Използване на _връзка по TCP"
+#: ../src/nm-ssh-service.c:221
+#, c-format
+msgid "unhandled property '%s' type %s"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:39
-msgid "Use additional TLS authentication"
-msgstr "Използване на допълнителна идентификация с TLS"
+#: ../src/nm-ssh-service.c:232
+#, c-format
+msgid "property '%s' invalid or not supported"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:40
-msgid "Use custom UDP _fragment size:"
-msgstr "Различен размер на _фрагментите на UDP:"
+#: ../src/nm-ssh-service.c:249
+msgid "No VPN configuration options."
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:41
-msgid "Use custom _renegotiation interval:"
-msgstr "_Различен интервал на предоговаряне:"
+#: ../src/nm-ssh-service.c:984
+msgid "Could not find the ssh binary."
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:42
-msgid "Use custom _tunnel Maximum Transmission Unit (MTU):"
-msgstr "Различен _максимален размер на пакета (MTU) за тунела:"
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1024
+msgid "Missing required SSH_AUTH_SOCK."
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:43
-msgid "Use custom gateway p_ort:"
-msgstr "_Потребителски порт на шлюза:"
+#: ../src/nm-ssh-service.c:1080
+#, c-format
+msgid "Please set remote address."
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:44
-msgid "User Certificate:"
-msgstr "Потребителски сертификат:"
+#: ../src/nm-ssh-service.c:1097
+#, c-format
+msgid "Invalid port number '%s'."
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:45
-msgid "User name:"
-msgstr "Потребителско име:"
+#: ../src/nm-ssh-service.c:1116
+#, c-format
+msgid "Invalid TUN MTU size '%s'."
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:46
-msgid "_Gateway:"
-msgstr "_Шлюз:"
+#: ../src/nm-ssh-service.c:1135
+#, c-format
+msgid "Invalid TUN/TAP device number '%s'."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1156
+msgid "Missing required remote IP address."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1171
+msgid "Missing required local IP address."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1188
+msgid "Missing required netmask."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1209
+msgid "Missing required IPv6 remote IP address."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1224
+msgid "Missing required IPv6 local IP address."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1239
+msgid "Missing required IPv6 netmask."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1391 ../src/nm-ssh-service.c:1432
+msgid ""
+"Could not process the request because the VPN connection settings were "
+"invalid."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1567
+msgid "Don't quit when VPN connection terminates"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1568
+msgid "Enable verbose debug logging (may expose passwords)"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1584
+msgid "nm-ssh-service provides integrated SSH capability to NetworkManager."
+msgstr ""
+
+#~ msgid "_Password:"
+#~ msgstr "_Парола:"
+
+#~ msgid "_Secondary Password:"
+#~ msgstr "_Втора парола:"
+
+#~ msgid "_Username:"
+#~ msgstr "Потребителско _име:"
+
+#~ msgid "_Domain:"
+#~ msgstr "_Домейн:"
+
+#~ msgid "Connect _anonymously"
+#~ msgstr "_Анонимно свързване"
+
+#~ msgid "Connect as _user:"
+#~ msgstr "Свързване _като потребителя:"
+
+#~ msgid "_Remember password for this session"
+#~ msgstr "_Запомняне на паролата за тази сесия"
+
+#~ msgid "_Save password in keyring"
+#~ msgstr "Запазване на паролата в клю_чодържателя"
+
+#~ msgid "You need to authenticate to access the Virtual Private Network '%s'."
+#~ msgstr "Трябва да се идентифицирате, за да ползвате ВЧМ „%s“."
+
+#~ msgid "Authenticate VPN"
+#~ msgstr "Идентифициране пред ВЧМ"
+
+#~ msgid "Certificate pass_word:"
+#~ msgstr "Парола за _сертификата:"
+
+#~ msgid "Certificate password:"
+#~ msgstr "Парола за сертификата:"
+
+#~ msgid "Choose a Certificate Authority certificate..."
+#~ msgstr "Изберете сертификата на сертифициращата организация…"
+
+#~ msgid "Choose your personal certificate..."
+#~ msgstr "Изберете личния си сертификат…"
+
+#~ msgid "Choose your private key..."
+#~ msgstr "Изберете личния си ключ…"
+
+#~ msgid "Choose an SSH static key..."
+#~ msgstr "Изберете статичния ключ на SSH…"
+
+#~ msgid "None"
+#~ msgstr "Няма"
+
+#~ msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
+#~ msgstr ""
+#~ "Сертификати във формат PEM или PKCS#12 (*.pem, *.crt, *.key, *.cer, *.p12)"
+
+#~ msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
+#~ msgstr "Сертификати във формат PEM (*.pem, *.crt, *.key, *.cer)"
+
+#~ msgid "SSH Static Keys (*.key)"
+#~ msgstr "Статични ключове за SSH (*.key)"
+
+#~ msgid "Default"
+#~ msgstr "Стандартно"
+
+#~ msgid "MD-5"
+#~ msgstr "MD-5"
+
+#~ msgid "SHA-1"
+#~ msgstr "SHA-1"
+
+#~ msgid "SHA-224"
+#~ msgstr "SHA-224"
+
+#~ msgid "SHA-256"
+#~ msgstr "SHA-256"
+
+#~ msgid "SHA-384"
+#~ msgstr "SHA-384"
+
+#~ msgid "SHA-512"
+#~ msgstr "SHA-512"
+
+#~ msgid "RIPEMD-160"
+#~ msgstr "RIPEMD-160"
+
+#~ msgid "HTTP"
+#~ msgstr "HTTP"
+
+#~ msgid "SOCKS"
+#~ msgstr "SOCKS"
+
+#~ msgid "Certificates (TLS)"
+#~ msgstr "Сертификати (TLS)"
+
+#~ msgid "Password"
+#~ msgstr "Парола"
+
+#~ msgid "Password with Certificates (TLS)"
+#~ msgstr "Парола със сертификати (TLS)"
+
+#~ msgid "Static Key"
+#~ msgstr "Статичен ключ"
+
+#~ msgid "<b>Authentication</b>"
+#~ msgstr "<b>Идентификация</b>"
+
+#~ msgid ""
+#~ "<i>Connect only to servers whose certificate matches the given subject.\n"
+#~ "Example: /CN=myvpn.company.com</i>"
+#~ msgstr ""
+#~ "<i>Свързване само към сървъри, чийто сертификат съвпада с указаната "
+#~ "тема.\n"
+#~ "Пример: /CN=myvpn.company.com</i>"
+
+#~ msgid ""
+#~ "<i>If key direction is used, it must be the opposite of that used on the "
+#~ "VPN peer.  For example, if the peer uses '1', this connection must use "
+#~ "'0'.  If you are unsure what value to use, contact your system "
+#~ "administrator.</i>"
+#~ msgstr ""
+#~ "<i>Ако се използва посока на ключа, тя трябва да е обратната на "
+#~ "използваната от отсрещната страна по ВЧМ. Например — ако тя ползва „1“, "
+#~ "тази връзка трябва да ползва „0“. Ако не сте сигурни, попитайте системния "
+#~ "си администратор.</i>"
+
+#~ msgid ""
+#~ "<i>Select this option if your organization requires the use of a proxy "
+#~ "server to access the Internet.</i>"
+#~ msgstr ""
+#~ "<i>Изберете тази настройка, ако организацията, в която се намирате, ви "
+#~ "задължава да използвате сървър-посредник за връзката ви към Internet.</i>"
+
+#~ msgid "CA Certificate:"
+#~ msgstr "Сертификат на сертифициращата организация:"
+
+#~ msgid "Cipher:"
+#~ msgstr "Шифър:"
+
+#~ msgid "HMAC Authentication:"
+#~ msgstr "Идентификация с HMAC:"
+
+#~ msgid "Key Direction:"
+#~ msgstr "Посока на ключа:"
+
+#~ msgid "Key File:"
+#~ msgstr "Файл-ключ:"
+
+#~ msgid "Password:"
+#~ msgstr "Парола:"
+
+#~ msgid "Port:"
+#~ msgstr "Порт:"
+
+#~ msgid "Private Key Password:"
+#~ msgstr "Частен ключ:"
+
+#~ msgid "Private Key:"
+#~ msgstr "Частен ключ:"
+
+#~ msgid "Proxies"
+#~ msgstr "Посредници"
+
+#~ msgid "Proxy Password:"
+#~ msgstr "Парола за посредника:"
+
+#~ msgid "Proxy Type:"
+#~ msgstr "Вид посредник:"
+
+#~ msgid "Restrict tunnel TCP Maximum Segment Size (MSS)"
+#~ msgstr "Ограничаване на максималния размер на сегментите (MSS) по TCP"
+
+#~ msgid "Retry indefinitely when errors occur"
+#~ msgstr "При появата на грешка да се повтаря до безкрай"
+
+#~ msgid "Security"
+#~ msgstr "Сигурност"
+
+#~ msgid "Server Address:"
+#~ msgstr "Адрес на сървъра:"
+
+#~ msgid "Show passwords"
+#~ msgstr "Показване на паролите"
+
+#~ msgid "Static Key:"
+#~ msgstr "Статичен ключ:"
+
+#~ msgid "Subject Match:"
+#~ msgstr "Съвпадане на темата:"
+
+#~ msgid "TLS Authentication"
+#~ msgstr "Идентификация с TSL"
+
+#~ msgid "Type:"
+#~ msgstr "Вид:"
+
+#~ msgid "Use L_ZO data compression"
+#~ msgstr "Използване на _компресия LZO"
+
+#~ msgid "Use a _TCP connection"
+#~ msgstr "Използване на _връзка по TCP"
+
+#~ msgid "Use additional TLS authentication"
+#~ msgstr "Използване на допълнителна идентификация с TLS"
+
+#~ msgid "Use custom UDP _fragment size:"
+#~ msgstr "Различен размер на _фрагментите на UDP:"
+
+#~ msgid "Use custom _renegotiation interval:"
+#~ msgstr "_Различен интервал на предоговаряне:"
+
+#~ msgid "User Certificate:"
+#~ msgstr "Потребителски сертификат:"
+
+#~ msgid "User name:"
+#~ msgstr "Потребителско име:"

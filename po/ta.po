@@ -8,11 +8,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: network-manager-ssh.master.ta\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=NetworkManager&component=VPN: ssh\n"
-"POT-Creation-Date: 2009-09-28 11:36+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-06-09 18:57+1000\n"
 "PO-Revision-Date: 2009-10-30 12:25+0530\n"
 "Last-Translator: I. Felix <ifelix@redhat.com>\n"
 "Language-Team: Tamil <fedora-trans-ta@redhat.com>\n"
+"Language: ta\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -22,248 +23,377 @@ msgstr ""
 "\n"
 "\n"
 
-#: ../auth-dialog/gnome-two-password-dialog.c:130
-msgid "_Password:"
-msgstr "கடவுச்சொல் (_P):"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:131
-msgid "_Secondary Password:"
-msgstr "இரண்டாவது கடவுச்சொல் (_S):"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:248
-msgid "_Username:"
-msgstr "(_U) பயனர் பெயர்:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:250
-msgid "_Domain:"
-msgstr "செய்களம் (_D):"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:342
-msgid "Connect _anonymously"
-msgstr "பெயரில்லாமல் இணை (_a)"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:347
-msgid "Connect as _user:"
-msgstr "பயனராக இணைக்கவும் (_u):"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:456
-msgid "_Remember password for this session"
-msgstr "இந்த அமர்வுக்கு கடவுச்சொல்லை நினைவு கொள்ளவும் (_R)"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:458
-msgid "_Save password in keyring"
-msgstr "கீரிங்கில் கடவுச்சொல்லை சேமிக்கவும் (_S)"
-
-#: ../auth-dialog/main.c:127
+#: ../auth-dialog/main.c:122
 #, c-format
-msgid "You need to authenticate to access the Virtual Private Network '%s'."
-msgstr "மெய்நிகர் தனிப்பட்ட பிணைய '%s'ஐ அணுக உங்களுக்கு அங்கீகாரம் தேவைப்படுகிறது."
+msgid ""
+"Couldn't find '%s' environment variable.\n"
+"\n"
+"Is ssh-agent running?"
+msgstr ""
 
-#: ../auth-dialog/main.c:128
-msgid "Authenticate VPN"
-msgstr "அங்கீகரிக்கப்பட்ட VPN"
+#: ../properties/advanced-dialog.c:137
+msgid ""
+"You have chosen not to use 'root' as the remote username.\n"
+"\n"
+"Please make sure the user you specify is allowed to open tun/tap devices on "
+"the remote host."
+msgstr ""
 
-#: ../auth-dialog/main.c:149
-msgid "Certificate pass_word:"
-msgstr "சான்றிதழ் கடவுச்சொல் (_w):"
-
-#: ../auth-dialog/main.c:163
-msgid "Certificate password:"
-msgstr "சான்றிதழ் கடவுச்சொல்:"
-
-#: ../properties/auth-helpers.c:160
-msgid "Choose a Certificate Authority certificate..."
-msgstr "ஒரு சான்றிதழ் அங்கீகார சான்றிதழை தேர்ந்தெடுக்கவும்..."
-
-#: ../properties/auth-helpers.c:179
-msgid "Choose your personal certificate..."
-msgstr "உங்களது தனிப்பட்ட சான்றிதழை தேர்ந்தெடுக்கவும்..."
-
-#: ../properties/auth-helpers.c:197
-msgid "Choose your private key..."
-msgstr "உங்களது தனிப்பட்ட விசையை தேர்ந்தெடுக்கவும்..."
-
-#: ../properties/auth-helpers.c:250
-msgid "Choose an SSH static key..."
-msgstr "ஒரு திறந்தVPN நிலையான விசையைத் தேர்ந்தெடு..."
-
-#: ../properties/auth-helpers.c:274 ../properties/auth-helpers.c:949
-#: ../properties/auth-helpers.c:1126
-msgid "None"
-msgstr "ஒன்றுமில்லை"
-
-#: ../properties/auth-helpers.c:691
-msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
-msgstr "PEM சான்றிதழ்கள் (*.pem, *.crt, *.key, *.cer)"
-
-#: ../properties/auth-helpers.c:751
-msgid "SSH Static Keys (*.key)"
-msgstr "திறந்தVPN நிலையான விசைகள் (*.key)"
-
-#: ../properties/auth-helpers.c:871 ../properties/auth-helpers.c:941
-msgid "Default"
-msgstr "முன்னிருப்பு"
-
-#: ../properties/auth-helpers.c:951
-msgid "MD-5"
-msgstr "MD-5"
-
-#: ../properties/auth-helpers.c:953
-msgid "SHA-1"
-msgstr "SHA-1"
-
-#: ../properties/nm-ssh.c:53
+#: ../properties/nm-ssh.c:49
 msgid "SSH"
 msgstr "VPNஐ திறக்கவும்"
 
-#: ../properties/nm-ssh.c:54
+#: ../properties/nm-ssh.c:50
 msgid "Compatible with the SSH server."
 msgstr "திறந்த VPN சேவையகத்துடன் ஏற்றவும்."
 
-#: ../properties/nm-ssh.c:322
-msgid "Certificates (TLS)"
-msgstr "சான்றிதழ்கள் (TLS)"
-
-#: ../properties/nm-ssh.c:336
-msgid "Password"
-msgstr "கடவுச்சொல்"
-
-#: ../properties/nm-ssh.c:353
-msgid "Password with Certificates (TLS)"
-msgstr "கடவுச்சொல்லுடன் சான்றிதழ்கள் (TLS)"
-
-#: ../properties/nm-ssh.c:365
-msgid "Static Key"
-msgstr "நிலையான விசை"
-
-#: ../properties/nm-ssh-dialog.glade.h:1
+#: ../properties/nm-ssh-dialog.ui.h:1
 msgid " "
 msgstr " "
 
-#: ../properties/nm-ssh-dialog.glade.h:2
-msgid "<b>Authentication</b>"
-msgstr "<b>அங்கீகாரம்</b>"
-
-#: ../properties/nm-ssh-dialog.glade.h:3
-msgid "<b>General</b>"
-msgstr "<b>பொதுவான</b>"
-
-#: ../properties/nm-ssh-dialog.glade.h:4
-msgid ""
-"<i>If key direction is used, it must be the opposite of that used on the VPN "
-"peer.  For example, if the peer uses '1', this connection must use '0'.  If "
-"you are unsure what value to use, contact your system administrator.</i>"
+#: ../properties/nm-ssh-dialog.ui.h:2
+msgid "Not required"
 msgstr ""
-"<i>விசை திசை பயன்படுத்தப்பட்டால், அது VPN பீரில் பயன்படுத்துபடும் எதிரில் இருக்கும்.  "
-"எடுத்துக்காட்டாக, பீர் '1'ஐ பயன்படுத்தினால், இந்த இணைப்பு '0'வை பயன்படுத்தும்.  நீங்கள் எந்த "
-"மதிப்பை பயன்படுத்த வேண்டுமென தெளிவில்லாமல் இருந்தால், உங்கள் கணினி நிர்வாகியை தொடர்பு "
-"கொள்ளவும்.</i>"
 
-#: ../properties/nm-ssh-dialog.glade.h:5
-msgid "Ad_vanced..."
-msgstr "கூடுதல் (_v)..."
-
-#: ../properties/nm-ssh-dialog.glade.h:6
-msgid "CA Certificate:"
-msgstr "CA சான்றிதழ்:"
-
-#: ../properties/nm-ssh-dialog.glade.h:7
-msgid "Cipher:"
-msgstr "சிப்பர்:"
-
-#: ../properties/nm-ssh-dialog.glade.h:8
-msgid "General"
-msgstr "பொது"
-
-#: ../properties/nm-ssh-dialog.glade.h:9
-msgid "HMAC Authentication:"
-msgstr "HMAC அங்கீகாரம்:"
-
-#: ../properties/nm-ssh-dialog.glade.h:10
-msgid "Key Direction:"
-msgstr "விசை திசை:"
-
-#: ../properties/nm-ssh-dialog.glade.h:11
-msgid "Key File:"
-msgstr "விசை கோப்பு:"
-
-#: ../properties/nm-ssh-dialog.glade.h:12
-msgid "Local IP Address:"
-msgstr "உள்ளமை IP முகவரி:"
-
-#: ../properties/nm-ssh-dialog.glade.h:13
+#: ../properties/nm-ssh-dialog.ui.h:3
 msgid "SSH Advanced Options"
 msgstr "திறந்தVPN கூடுதல் விருப்பங்கள்"
 
-#: ../properties/nm-ssh-dialog.glade.h:14
-msgid "Password:"
-msgstr "கடவுச்சொல்:"
+#: ../properties/nm-ssh-dialog.ui.h:4
+#, fuzzy
+msgid "Use custom gateway port:"
+msgstr "தனிபயன் கேட்வே துறையைப் பயன்படுத்து (_o):"
 
-#: ../properties/nm-ssh-dialog.glade.h:15
-msgid "Private Key Password:"
-msgstr "தனிப்பட்ட விசை கடவுச்சொல்:"
+#: ../properties/nm-ssh-dialog.ui.h:5
+msgid "Use custom tunnel Maximum Transmission Unit (MTU):"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:16
-msgid "Private Key:"
-msgstr "தனிப்பட்ட விசை:"
+#: ../properties/nm-ssh-dialog.ui.h:6
+msgid "Extra SSH options:"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:17
+#: ../properties/nm-ssh-dialog.ui.h:7
+msgid "Remote device number:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:8
+#, fuzzy
+msgid "Use a TAP device"
+msgstr "ஒரு TA_P சாதனத்தை பயன்படுத்து"
+
+#: ../properties/nm-ssh-dialog.ui.h:9
+#, fuzzy
+msgid "Remote username:"
+msgstr "(_U) பயனர் பெயர்:"
+
+#: ../properties/nm-ssh-dialog.ui.h:10
+msgid "Do not replace default route"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:11
+msgid "General"
+msgstr "பொது"
+
+#: ../properties/nm-ssh-dialog.ui.h:12
+msgid "<b>General</b>"
+msgstr "<b>பொதுவான</b>"
+
+#: ../properties/nm-ssh-dialog.ui.h:13
+#, fuzzy
+msgid "Gateway:"
+msgstr "கேட்வே (_G):"
+
+#: ../properties/nm-ssh-dialog.ui.h:14
+msgid "<b>Network Settings</b>"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:15
 msgid "Remote IP Address:"
 msgstr "தொலை IP முகவரி:"
 
-#: ../properties/nm-ssh-dialog.glade.h:18
-msgid "Security"
-msgstr "பாதுகாப்பு"
+#: ../properties/nm-ssh-dialog.ui.h:16
+msgid "Local IP Address:"
+msgstr "உள்ளமை IP முகவரி:"
 
-#: ../properties/nm-ssh-dialog.glade.h:19
-msgid "Show passwords"
-msgstr "கடவுச்சொற்களைக் காட்டு"
+#: ../properties/nm-ssh-dialog.ui.h:17
+msgid "Netmask:"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:20
-msgid "Static Key:"
-msgstr "நிலையான விசை:"
+#: ../properties/nm-ssh-dialog.ui.h:18
+msgid "<b>IPv6 Network Settings</b>"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:21
-msgid "TLS Authentication"
-msgstr "TLS அங்கீகாரம்"
+#: ../properties/nm-ssh-dialog.ui.h:19
+msgid "Use IPv6"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:22
-msgid "Type:"
-msgstr "வகை:"
+#: ../properties/nm-ssh-dialog.ui.h:20
+#, fuzzy
+msgid "Remote IP Address (IPv6):"
+msgstr "தொலை IP முகவரி:"
 
-#: ../properties/nm-ssh-dialog.glade.h:23
-msgid "Use L_ZO data compression"
-msgstr "L_ZO தரவு குறுக்கத்தை பயன்படுத்து"
+#: ../properties/nm-ssh-dialog.ui.h:21
+#, fuzzy
+msgid "Local IP Address (IPv6):"
+msgstr "உள்ளமை IP முகவரி:"
 
-#: ../properties/nm-ssh-dialog.glade.h:24
-msgid "Use a TA_P device"
-msgstr "ஒரு TA_P சாதனத்தை பயன்படுத்து"
+#: ../properties/nm-ssh-dialog.ui.h:22
+msgid "Prefix (IPv6):"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:25
-msgid "Use a _TCP connection"
-msgstr "ஒரு _TCP இணைப்பை பயன்படுத்து"
+#: ../properties/nm-ssh-dialog.ui.h:23
+#, fuzzy
+msgid "Advanced..."
+msgstr "கூடுதல் (_v)..."
 
-#: ../properties/nm-ssh-dialog.glade.h:26
-msgid "Use additional TLS authentication"
-msgstr "கூடுதல் TLS அங்கீகாரத்தை பயன்படுத்து"
+#: ../src/nm-ssh-service.c:192
+#, c-format
+msgid "invalid address '%s'"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:27
-msgid "Use custom _renegotiation interval:"
-msgstr "தனிபயன் மறுகுறைத்தல் இடைவெறியை பயன்படுத்து (_r):"
+#: ../src/nm-ssh-service.c:204
+#, c-format
+msgid "invalid integer property '%s' or out of range [%d -> %d]"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:28
-msgid "Use custom gateway p_ort:"
-msgstr "தனிபயன் கேட்வே துறையைப் பயன்படுத்து (_o):"
+#: ../src/nm-ssh-service.c:214
+#, c-format
+msgid "invalid boolean property '%s' (not yes or no)"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:29
-msgid "User Certificate:"
-msgstr "பயனர் சான்றிதழ்:"
+#: ../src/nm-ssh-service.c:221
+#, c-format
+msgid "unhandled property '%s' type %s"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:30
-msgid "User name:"
-msgstr "பயனர் பெயர்:"
+#: ../src/nm-ssh-service.c:232
+#, c-format
+msgid "property '%s' invalid or not supported"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:31
-msgid "_Gateway:"
-msgstr "கேட்வே (_G):"
+#: ../src/nm-ssh-service.c:249
+msgid "No VPN configuration options."
+msgstr ""
 
+#: ../src/nm-ssh-service.c:984
+msgid "Could not find the ssh binary."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1024
+msgid "Missing required SSH_AUTH_SOCK."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1080
+#, c-format
+msgid "Please set remote address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1097
+#, c-format
+msgid "Invalid port number '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1116
+#, c-format
+msgid "Invalid TUN MTU size '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1135
+#, c-format
+msgid "Invalid TUN/TAP device number '%s'."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1156
+msgid "Missing required remote IP address."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1171
+msgid "Missing required local IP address."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1188
+msgid "Missing required netmask."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1209
+msgid "Missing required IPv6 remote IP address."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1224
+msgid "Missing required IPv6 local IP address."
+msgstr ""
+
+#. FIXME translation
+#: ../src/nm-ssh-service.c:1239
+msgid "Missing required IPv6 netmask."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1391 ../src/nm-ssh-service.c:1432
+msgid ""
+"Could not process the request because the VPN connection settings were "
+"invalid."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1567
+msgid "Don't quit when VPN connection terminates"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1568
+msgid "Enable verbose debug logging (may expose passwords)"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1584
+msgid "nm-ssh-service provides integrated SSH capability to NetworkManager."
+msgstr ""
+
+#~ msgid "_Password:"
+#~ msgstr "கடவுச்சொல் (_P):"
+
+#~ msgid "_Secondary Password:"
+#~ msgstr "இரண்டாவது கடவுச்சொல் (_S):"
+
+#~ msgid "_Domain:"
+#~ msgstr "செய்களம் (_D):"
+
+#~ msgid "Connect _anonymously"
+#~ msgstr "பெயரில்லாமல் இணை (_a)"
+
+#~ msgid "Connect as _user:"
+#~ msgstr "பயனராக இணைக்கவும் (_u):"
+
+#~ msgid "_Remember password for this session"
+#~ msgstr "இந்த அமர்வுக்கு கடவுச்சொல்லை நினைவு கொள்ளவும் (_R)"
+
+#~ msgid "_Save password in keyring"
+#~ msgstr "கீரிங்கில் கடவுச்சொல்லை சேமிக்கவும் (_S)"
+
+#~ msgid "You need to authenticate to access the Virtual Private Network '%s'."
+#~ msgstr "மெய்நிகர் தனிப்பட்ட பிணைய '%s'ஐ அணுக உங்களுக்கு அங்கீகாரம் தேவைப்படுகிறது."
+
+#~ msgid "Authenticate VPN"
+#~ msgstr "அங்கீகரிக்கப்பட்ட VPN"
+
+#~ msgid "Certificate pass_word:"
+#~ msgstr "சான்றிதழ் கடவுச்சொல் (_w):"
+
+#~ msgid "Certificate password:"
+#~ msgstr "சான்றிதழ் கடவுச்சொல்:"
+
+#~ msgid "Choose a Certificate Authority certificate..."
+#~ msgstr "ஒரு சான்றிதழ் அங்கீகார சான்றிதழை தேர்ந்தெடுக்கவும்..."
+
+#~ msgid "Choose your personal certificate..."
+#~ msgstr "உங்களது தனிப்பட்ட சான்றிதழை தேர்ந்தெடுக்கவும்..."
+
+#~ msgid "Choose your private key..."
+#~ msgstr "உங்களது தனிப்பட்ட விசையை தேர்ந்தெடுக்கவும்..."
+
+#~ msgid "Choose an SSH static key..."
+#~ msgstr "ஒரு திறந்தVPN நிலையான விசையைத் தேர்ந்தெடு..."
+
+#~ msgid "None"
+#~ msgstr "ஒன்றுமில்லை"
+
+#~ msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
+#~ msgstr "PEM சான்றிதழ்கள் (*.pem, *.crt, *.key, *.cer)"
+
+#~ msgid "SSH Static Keys (*.key)"
+#~ msgstr "திறந்தVPN நிலையான விசைகள் (*.key)"
+
+#~ msgid "Default"
+#~ msgstr "முன்னிருப்பு"
+
+#~ msgid "MD-5"
+#~ msgstr "MD-5"
+
+#~ msgid "SHA-1"
+#~ msgstr "SHA-1"
+
+#~ msgid "Certificates (TLS)"
+#~ msgstr "சான்றிதழ்கள் (TLS)"
+
+#~ msgid "Password"
+#~ msgstr "கடவுச்சொல்"
+
+#~ msgid "Password with Certificates (TLS)"
+#~ msgstr "கடவுச்சொல்லுடன் சான்றிதழ்கள் (TLS)"
+
+#~ msgid "Static Key"
+#~ msgstr "நிலையான விசை"
+
+#~ msgid "<b>Authentication</b>"
+#~ msgstr "<b>அங்கீகாரம்</b>"
+
+#~ msgid ""
+#~ "<i>If key direction is used, it must be the opposite of that used on the "
+#~ "VPN peer.  For example, if the peer uses '1', this connection must use "
+#~ "'0'.  If you are unsure what value to use, contact your system "
+#~ "administrator.</i>"
+#~ msgstr ""
+#~ "<i>விசை திசை பயன்படுத்தப்பட்டால், அது VPN பீரில் பயன்படுத்துபடும் எதிரில் இருக்கும்.  "
+#~ "எடுத்துக்காட்டாக, பீர் '1'ஐ பயன்படுத்தினால், இந்த இணைப்பு '0'வை பயன்படுத்தும்.  நீங்கள் "
+#~ "எந்த மதிப்பை பயன்படுத்த வேண்டுமென தெளிவில்லாமல் இருந்தால், உங்கள் கணினி நிர்வாகியை "
+#~ "தொடர்பு கொள்ளவும்.</i>"
+
+#~ msgid "CA Certificate:"
+#~ msgstr "CA சான்றிதழ்:"
+
+#~ msgid "Cipher:"
+#~ msgstr "சிப்பர்:"
+
+#~ msgid "HMAC Authentication:"
+#~ msgstr "HMAC அங்கீகாரம்:"
+
+#~ msgid "Key Direction:"
+#~ msgstr "விசை திசை:"
+
+#~ msgid "Key File:"
+#~ msgstr "விசை கோப்பு:"
+
+#~ msgid "Password:"
+#~ msgstr "கடவுச்சொல்:"
+
+#~ msgid "Private Key Password:"
+#~ msgstr "தனிப்பட்ட விசை கடவுச்சொல்:"
+
+#~ msgid "Private Key:"
+#~ msgstr "தனிப்பட்ட விசை:"
+
+#~ msgid "Security"
+#~ msgstr "பாதுகாப்பு"
+
+#~ msgid "Show passwords"
+#~ msgstr "கடவுச்சொற்களைக் காட்டு"
+
+#~ msgid "Static Key:"
+#~ msgstr "நிலையான விசை:"
+
+#~ msgid "TLS Authentication"
+#~ msgstr "TLS அங்கீகாரம்"
+
+#~ msgid "Type:"
+#~ msgstr "வகை:"
+
+#~ msgid "Use L_ZO data compression"
+#~ msgstr "L_ZO தரவு குறுக்கத்தை பயன்படுத்து"
+
+#~ msgid "Use a _TCP connection"
+#~ msgstr "ஒரு _TCP இணைப்பை பயன்படுத்து"
+
+#~ msgid "Use additional TLS authentication"
+#~ msgstr "கூடுதல் TLS அங்கீகாரத்தை பயன்படுத்து"
+
+#~ msgid "Use custom _renegotiation interval:"
+#~ msgstr "தனிபயன் மறுகுறைத்தல் இடைவெறியை பயன்படுத்து (_r):"
+
+#~ msgid "User Certificate:"
+#~ msgstr "பயனர் சான்றிதழ்:"
+
+#~ msgid "User name:"
+#~ msgstr "பயனர் பெயர்:"
