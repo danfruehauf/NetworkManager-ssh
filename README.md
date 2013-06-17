@@ -17,7 +17,13 @@ Basically NetworkManager-ssh integrates OpenSSH tunnel capabilities with Network
 
 ## Compiling
 ### Fedora/CentOS
-On Fedora things should be simple, after you clone the repository:
+If you're using Fedora 18 or later, you can simply run:
+
+	yum install NetworkManager-ssh-gnome
+
+That will set you up with NetworkManager and the traditional GNOME interface.
+
+On older version of Fedora or CentOS, you can run the following after cloning the repository:
 
 	autoreconf -fvi && ./configure && make rpm
 
