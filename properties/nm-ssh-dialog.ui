@@ -1109,7 +1109,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkCheckButton" id="auth_password_show_passwords_checkbutton">
+                  <object class="GtkCheckButton" id="auth_password_show_password_checkbutton">
                     <property name="label" translatable="yes">Show Passwords</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
