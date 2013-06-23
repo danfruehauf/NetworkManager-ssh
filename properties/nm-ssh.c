@@ -356,7 +356,7 @@ init_auth_widget (GtkBuilder *builder,
 		g_signal_connect (widget, "toggled", G_CALLBACK (show_password_toggled), widget2);
 		show_password_toggled (GTK_TOGGLE_BUTTON (widget), GTK_ENTRY (widget2));
 		// FIXME
-		//g_signal_connect (widget2, "toggled", G_CALLBACK (show_password_toggled), widget2);
+		//g_signal_connect (G_OBJECT (widget2), "changed", G_CALLBACK (changed_cb), user_data);
 	}
 	else if (!strcmp (contype, NM_SSH_AUTH_TYPE_KEY)) {
 		/* Get key filename and set it */

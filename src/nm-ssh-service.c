@@ -1020,6 +1020,9 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 
 	/* Handle different behaviour for different auth types */
 	if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_PASSWORD)) {
+		/* If the user wishes to supply a password */
+		const gchar *password = NULL;
+
 		/* Find sshpass, we'll use it to wrap ssh and provide a password from
 	 	* the command line */
 		sshpass_binary = nm_find_sshpass ();
@@ -1035,17 +1038,31 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		/* Use sshpass binary */
 		add_ssh_arg (args, sshpass_binary);
 
-		/* If the user wishes to supply a password */
-		add_ssh_arg (args, "-p");
+		/* Get password */
+		password = nm_setting_vpn_get_secret (s_vpn, NM_SSH_KEY_PASSWORD);
+		if (password && strlen(password)) {
+			add_ssh_arg (args, "-p");
+		} else {
+			/* No password specified? Exit! */
+			g_set_error (
+				error,
+				NM_VPN_PLUGIN_ERROR,
+				NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
+				"%s",
+				_("No password specified."));
+			free_ssh_args (args);
+			return FALSE;
+		}
 
-		/* FIXME get password from config!! */
-		add_ssh_arg (args, "PASSWORD");
+		/* Use password from config */
+		add_ssh_arg (args, password);
 
 		/* And add the ssh_binary */
 		add_ssh_arg (args, ssh_binary);
 
 		/* Prompt just once for password, it's enough */
 		add_ssh_arg (args, "-o"); add_ssh_arg (args, "NumberOfPasswordPrompts=1");
+		add_ssh_arg (args, "-o"); add_ssh_arg (args, "PreferredAuthentications=password");
 
 	} else {
 		/* Add the ssh binary, as we're not going to use sshpass */
@@ -1054,6 +1071,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		/* No password prompts, only key authentication if user specifies
 		 * key of ssh agent auth */
 		add_ssh_arg (args, "-o"); add_ssh_arg (args, "NumberOfPasswordPrompts=0");
+		add_ssh_arg (args, "-o"); add_ssh_arg (args, "PreferredAuthentications=publickey");
 
 		/* Passing a id_dsa/id_rsa key as an argument to ssh */
 		if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_KEY)) {
@@ -1098,7 +1116,13 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 				g_message ("Using ssh-agent socket: '%s'", envp[0]);
 
 		} else {
-			// FIXME FATAL ERROR
+			g_set_error (
+				error,
+				NM_VPN_PLUGIN_ERROR,
+				NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
+				_("Unknown authentication type: %s."), auth_type);
+			free_ssh_args (args);
+			return FALSE;
 		}
 	}
 
@@ -1534,18 +1558,24 @@ real_need_secrets (NMVPNPlugin *plugin,
 
 	/* Lets see if we need some passwords... */
 	if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_PASSWORD)) {
-		/* Find sshpass, we'll use it to wrap ssh and provide a password from
-	 	* the command line */
-		// FIXME
-		need_secrets = TRUE;
+		/* Password auth */
+		const gchar* password = NULL;
+		password = nm_setting_vpn_get_secret (s_vpn, NM_SSH_KEY_PASSWORD);
+		need_secrets = password == NULL;
+		/* FIXME integrate with gnome keyring or whatever */
+		/*if (nm_setting_get_secret_flags (NM_SETTING (s_vpn), NM_OPENVPN_KEY_PASSWORD, &secret_flags, NULL)) {
+			if (secret_flags & NM_SETTING_SECRET_FLAG_NOT_REQUIRED)
+				*need_secrets = FALSE;
+			}
+		}*/
 	} else if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_KEY)) {
-		// FIXME check if key file needs a password
+		/* FIXME check if key file needs a password */
 		need_secrets = FALSE;
 	} else if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_SSH_AGENT)) {
 		/* If we don't have our SSH_AUTH_SOCK set, we need it
 		 * SSH_AUTH_SOCK is passed as a secret only because it has to come
 		 * from a user's context and this plugin will run as root... */
-		const char *ssh_agent_socket = NULL;
+		const gchar *ssh_agent_socket = NULL;
 		ssh_agent_socket = nm_setting_vpn_get_secret (s_vpn, NM_SSH_KEY_SSH_AUTH_SOCK);
 		if (ssh_agent_socket && validate_ssh_agent_socket (ssh_agent_socket, error)) {
 			need_secrets = FALSE;
@@ -1553,7 +1583,11 @@ real_need_secrets (NMVPNPlugin *plugin,
 			need_secrets = TRUE;
 		}
 	} else {
-		// FIXME FATAL ERROR
+		g_set_error (
+			error,
+			NM_VPN_PLUGIN_ERROR,
+			NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
+			_("Unknown authentication type: %s."), auth_type);
 	}
 
 	if (need_secrets)

@@ -1,8 +1,7 @@
 /* -*- Mode: C; tab-width: 4; indent-tabs-mode: t; c-basic-offset: 4 -*- */
 /* NetworkManager Wireless Applet -- Display wireless access points and allow user control
  *
- * Dan Williams <dcbw@redhat.com>
- * Tim Niemueller <tim@niemueller.de>
+ * Dan Fruehauf <malkodan@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,28 +17,184 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *
- * (C) Copyright 2004 - 2008 Red Hat, Inc.
- *               2005 Tim Niemueller [www.niemueller.de]
+ * (C) Copyright 2013 Dan Fruehauf <malkodan@gmail.com>
  */
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
 
-#include <errno.h>
 #include <string.h>
 #include <stdlib.h>
+#include <errno.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
+
 #include <gnome-keyring.h>
 #include <gnome-keyring-memory.h>
+
 #include <nm-setting-vpn.h>
-#include <nm-setting-connection.h>
 #include <nm-vpn-plugin-utils.h>
 
 #include "src/nm-ssh-service.h"
+#include "vpn-password-dialog.h"
 
-static void wait_for_quit (void)
+#define KEYRING_UUID_TAG "connection-uuid"
+#define KEYRING_SN_TAG "setting-name"
+#define KEYRING_SK_TAG "setting-key"
+
+#define UI_KEYFILE_GROUP "VPN Plugin UI"
+
+static char *
+keyring_lookup_secret (const char *uuid, const char *secret_name)
+{
+	GList *found_list = NULL;
+	GnomeKeyringResult ret;
+	GnomeKeyringFound *found;
+	char *secret = NULL;
+
+	ret = gnome_keyring_find_itemsv_sync (GNOME_KEYRING_ITEM_GENERIC_SECRET,
+	                                      &found_list,
+	                                      KEYRING_UUID_TAG,
+	                                      GNOME_KEYRING_ATTRIBUTE_TYPE_STRING,
+	                                      uuid,
+	                                      KEYRING_SN_TAG,
+	                                      GNOME_KEYRING_ATTRIBUTE_TYPE_STRING,
+	                                      NM_SETTING_VPN_SETTING_NAME,
+	                                      KEYRING_SK_TAG,
+	                                      GNOME_KEYRING_ATTRIBUTE_TYPE_STRING,
+	                                      secret_name,
+	                                      NULL);
+	if (ret == GNOME_KEYRING_RESULT_OK && found_list) {
+		found = g_list_nth_data (found_list, 0);
+		secret = gnome_keyring_memory_strdup (found->secret);
+	}
+
+	gnome_keyring_found_list_free (found_list);
+	return secret;
+}
+
+static void
+keyfile_add_entry_info (GKeyFile    *keyfile,
+                        const gchar *key,
+                        const gchar *value,
+                        const gchar *label,
+                        gboolean     is_secret,
+                        gboolean     should_ask)
+{
+	g_key_file_set_string (keyfile, key, "Value", value);
+	g_key_file_set_string (keyfile, key, "Label", label);
+	g_key_file_set_boolean (keyfile, key, "IsSecret", is_secret);
+	g_key_file_set_boolean (keyfile, key, "ShouldAsk", should_ask);
+}
+
+static void
+keyfile_print_stdout (GKeyFile *keyfile)
+{
+	gchar *data;
+	gsize length;
+
+	data = g_key_file_to_data (keyfile, &length, NULL);
+
+	fputs (data, stdout);
+
+	g_free (data);
+}
+
+static gboolean
+get_secrets (const char *vpn_uuid,
+             const char *vpn_name,
+             gboolean retry,
+             gboolean allow_interaction,
+             gboolean external_ui_mode,
+             const char *in_pw,
+             char **out_pw,
+             NMSettingSecretFlags pw_flags)
+{
+	VpnPasswordDialog *dialog;
+	char *prompt, *pw = NULL;
+	const char *new_password = NULL;
+
+	g_return_val_if_fail (vpn_uuid != NULL, FALSE);
+	g_return_val_if_fail (vpn_name != NULL, FALSE);
+	g_return_val_if_fail (out_pw != NULL, FALSE);
+	g_return_val_if_fail (*out_pw == NULL, FALSE);
+
+	/* Get the existing secret, if any */
+	if (   !(pw_flags & NM_SETTING_SECRET_FLAG_NOT_SAVED)
+	    && !(pw_flags & NM_SETTING_SECRET_FLAG_NOT_REQUIRED)) {
+		if (in_pw)
+			pw = gnome_keyring_memory_strdup (in_pw);
+		else
+			pw = keyring_lookup_secret (vpn_uuid, NM_SSH_KEY_PASSWORD);
+	}
+
+	/* Don't ask if the passwords is unused */
+	if (pw_flags & NM_SETTING_SECRET_FLAG_NOT_REQUIRED) {
+		gnome_keyring_memory_free (pw);
+		return TRUE;
+	}
+
+	/* Otherwise, we have no saved password, or the password flags indicated
+	 * that the password should never be saved.
+	 */
+	prompt = g_strdup_printf (_("You need to authenticate to access the Virtual Private Network '%s'."), vpn_name);
+
+	if (external_ui_mode) {
+		GKeyFile *keyfile;
+
+		keyfile = g_key_file_new ();
+
+		g_key_file_set_integer (keyfile, UI_KEYFILE_GROUP, "Version", 2);
+		g_key_file_set_string (keyfile, UI_KEYFILE_GROUP, "Description", prompt);
+		g_key_file_set_string (keyfile, UI_KEYFILE_GROUP, "Title", _("Authenticate VPN"));
+
+		keyfile_add_entry_info (keyfile, NM_SSH_KEY_PASSWORD, pw ? pw : "", _("Password:"), TRUE, allow_interaction);
+
+		keyfile_print_stdout (keyfile);
+		g_key_file_unref (keyfile);
+		goto out;
+	} else if (   allow_interaction == FALSE
+	           || (!retry && pw && !(pw_flags & NM_SETTING_SECRET_FLAG_NOT_SAVED))) {
+		/* If interaction isn't allowed, just return existing secrets.
+		 * Also, don't ask the user if we don't need a new password (ie, !retry),
+		 * we have an existing PW, and the password is saved.
+		 */
+
+		*out_pw = pw;
+		g_free (prompt);
+		return TRUE;
+	}
+
+
+	dialog = (VpnPasswordDialog *) vpn_password_dialog_new (_("Authenticate VPN"), prompt, NULL);
+
+	vpn_password_dialog_set_show_password_secondary (dialog, FALSE);
+
+	/* pre-fill dialog with the password */
+	if (pw && !(pw_flags & NM_SETTING_SECRET_FLAG_NOT_SAVED))
+		vpn_password_dialog_set_password (dialog, pw);
+
+	gtk_widget_show (GTK_WIDGET (dialog));
+
+	if (vpn_password_dialog_run_and_block (dialog)) {
+
+		new_password = vpn_password_dialog_get_password (dialog);
+		if (new_password)
+			*out_pw = gnome_keyring_memory_strdup (new_password);
+	}
+
+	gtk_widget_hide (GTK_WIDGET (dialog));
+	gtk_widget_destroy (GTK_WIDGET (dialog));
+
+ out:
+	g_free (prompt);
+
+	return TRUE;
+}
+
+static void
+wait_for_quit (void)
 {
 	GString *str;
 	char c;
@@ -66,12 +221,11 @@ static void wait_for_quit (void)
 int 
 main (int argc, char *argv[])
 {
-	gboolean retry = FALSE, allow_interaction = FALSE;
-	gchar *vpn_name = NULL;
-	gchar *vpn_uuid = NULL;
-	gchar *vpn_service = NULL;
-	const char *ssh_agent_sock = NULL;
+	gboolean retry = FALSE, allow_interaction = FALSE, external_ui_mode = FALSE;
+	char *vpn_name = NULL, *vpn_uuid = NULL, *vpn_service = NULL, *password = NULL;
+	const char *auth_type, *password_key;
 	GHashTable *data = NULL, *secrets = NULL;
+	NMSettingSecretFlags pw_flags = NM_SETTING_SECRET_FLAG_NONE;
 	GOptionContext *context;
 	GOptionEntry entries[] = {
 			{ "reprompt", 'r', 0, G_OPTION_ARG_NONE, &retry, "Reprompt for passwords", NULL},
@@ -79,6 +233,7 @@ main (int argc, char *argv[])
 			{ "name", 'n', 0, G_OPTION_ARG_STRING, &vpn_name, "Name of VPN connection", NULL},
 			{ "service", 's', 0, G_OPTION_ARG_STRING, &vpn_service, "VPN service type", NULL},
 			{ "allow-interaction", 'i', 0, G_OPTION_ARG_NONE, &allow_interaction, "Allow user interaction", NULL},
+			{ "external-ui-mode", 0, 0, G_OPTION_ARG_NONE, &external_ui_mode, "External UI mode", NULL},
 			{ NULL }
 		};
 
@@ -93,14 +248,14 @@ main (int argc, char *argv[])
 	g_option_context_parse (context, &argc, &argv, NULL);
 	g_option_context_free (context);
 
-	if (vpn_uuid == NULL || vpn_name == NULL || vpn_service == NULL) {
+	if (!vpn_uuid || !vpn_service || !vpn_name) {
 		fprintf (stderr, "Have to supply ID, name, and service\n");
-		return EXIT_FAILURE;
+		return 1;
 	}
 
 	if (strcmp (vpn_service, NM_DBUS_SERVICE_SSH) != 0) {
 		fprintf (stderr, "This dialog only works with the '%s' service\n", NM_DBUS_SERVICE_SSH);
-		return EXIT_FAILURE;
+		return 1;
 	}
 
 	if (!nm_vpn_plugin_utils_read_vpn_details (0, &data, &secrets)) {
@@ -109,28 +264,60 @@ main (int argc, char *argv[])
 		return 1;
 	}
 
-	ssh_agent_sock = getenv (SSH_AUTH_SOCK);
-	if (ssh_agent_sock && strlen (ssh_agent_sock)) {
-		printf ("%s\n%s\n", NM_SSH_KEY_SSH_AUTH_SOCK, ssh_agent_sock);
-		printf ("\n\n");
-	} else {
-		GtkWidget *dialog;
-		dialog = gtk_message_dialog_new(NULL,
-			GTK_DIALOG_MODAL,
-			GTK_MESSAGE_WARNING,
-			GTK_BUTTONS_OK,
-			_("Couldn't find '%s' environment variable.\n\nIs ssh-agent running?"), SSH_AUTH_SOCK);
-		gtk_window_set_title(GTK_WINDOW(dialog), "Warning");
-		gtk_dialog_run(GTK_DIALOG(dialog));
-		gtk_widget_destroy(dialog);
+	nm_vpn_plugin_utils_get_secret_flags (secrets, NM_SSH_KEY_PASSWORD, &pw_flags);
+
+	/* Depending on auth type see if we need a password */
+	auth_type = g_hash_table_lookup (data, NM_SSH_KEY_AUTH_TYPE);
+	if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_PASSWORD)) {
+		password_key = NM_SSH_KEY_PASSWORD;
+		if (!get_secrets (vpn_uuid, vpn_name, retry, allow_interaction, external_ui_mode,
+			g_hash_table_lookup (secrets, NM_SSH_KEY_PASSWORD),
+			&password,
+			pw_flags))
+		return 1;
+	} else if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_KEY)) {
+		/* FIXME ask for password if key is encrypted */
+	} else if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_SSH_AGENT)) {
+		/* Probe the SSH agent socket */
+		password = getenv (SSH_AUTH_SOCK);
+		if (password && strlen (password)) {
+			password_key = NM_SSH_KEY_SSH_AUTH_SOCK;
+		} else {
+			GtkWidget *dialog;
+			dialog = gtk_message_dialog_new(NULL,
+				GTK_DIALOG_MODAL,
+				GTK_MESSAGE_WARNING,
+				GTK_BUTTONS_OK,
+				_("Couldn't find '%s' environment variable.\n\nIs ssh-agent running?"), SSH_AUTH_SOCK);
+			gtk_window_set_title(GTK_WINDOW(dialog), "Warning");
+			gtk_dialog_run(GTK_DIALOG(dialog));
+			gtk_widget_destroy(dialog);
 	
+			return 1;
+		}
+	} else {
+		fprintf (stderr, "Unknown authentication method required: '%s'.\n", auth_type);
 		return 1;
 	}
 
-	/* flush everything */
-	fflush (stdout);
+	if (!external_ui_mode) {
+		/* dump the passwords to stdout */
+		if (password)
+			printf ("%s\n%s\n", password_key, password);
+		printf ("\n\n");
 
-	wait_for_quit ();
+		gnome_keyring_memory_free (password);
 
+		/* for good measure, flush stdout since Kansas is going Bye-Bye */
+		fflush (stdout);
+
+		/* Wait for quit signal */
+		wait_for_quit ();
+	}
+
+	if (data)
+		g_hash_table_unref (data);
+	if (secrets)
+		g_hash_table_unref (secrets);
 	return 0;
 }
