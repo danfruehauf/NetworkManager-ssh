@@ -133,6 +133,8 @@ static ValidProperty valid_properties[] = {
 	{ NM_SSH_KEY_REMOTE_IP_6,          G_TYPE_STRING, 0, 0, FALSE },
 	{ NM_SSH_KEY_LOCAL_IP_6,           G_TYPE_STRING, 0, 0, FALSE },
 	{ NM_SSH_KEY_NETMASK_6,            G_TYPE_STRING, 0, 0, FALSE },
+	{ NM_SSH_KEY_AUTH_TYPE,            G_TYPE_STRING, 0, 0, FALSE },
+	{ NM_SSH_KEY_KEY_FILE,             G_TYPE_STRING, 0, 0, FALSE },
 	{ NULL,                            G_TYPE_NONE, FALSE }
 };
 
@@ -1005,7 +1007,6 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
 		             "%s",
 		             _("Could not find the ssh binary."));
-					/* FIXME translation */
 		return FALSE;
 	}
 
@@ -1014,9 +1015,11 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 
 	args = g_ptr_array_new ();
 
-	/* FIXME get auth_type from s_vpn */
-	auth_type = g_strdup (NM_SSH_AUTH_TYPE_PASSWORD);
-	if (strcmp (auth_type, NM_SSH_AUTH_TYPE_PASSWORD) == 0) {
+	/* Get auth_type from s_vpn */
+	auth_type = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_AUTH_TYPE);
+
+	/* Handle different behaviour for different auth types */
+	if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_PASSWORD)) {
 		/* Find sshpass, we'll use it to wrap ssh and provide a password from
 	 	* the command line */
 		sshpass_binary = nm_find_sshpass ();
@@ -1048,16 +1051,28 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		/* Add the ssh binary, as we're not going to use sshpass */
 		add_ssh_arg (args, ssh_binary);
 
-		/* No password prompts, only key authentication */
+		/* No password prompts, only key authentication if user specifies
+		 * key of ssh agent auth */
 		add_ssh_arg (args, "-o"); add_ssh_arg (args, "NumberOfPasswordPrompts=0");
 
 		/* Passing a id_dsa/id_rsa key as an argument to ssh */
-		if (strcmp (auth_type, NM_SSH_AUTH_TYPE_KEY) == 0) {
-			add_ssh_arg (args, "-i");
-			/* FIXME get key from config!! */
-			add_ssh_arg (args, "/tmp/id_dsa");
-
-		} else { /* Assume (auth_type == NM_SSH_AUTH_TYPE_SSH_AGENT) */
+		if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_KEY)) {
+			tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_KEY_FILE);
+			if (tmp && strlen (tmp)) {
+				/* Specify key file */
+				add_ssh_arg (args, "-i");
+				add_ssh_arg (args, tmp);
+			} else {
+				/* No key specified? Exit! */
+				g_set_error (error,
+		                     NM_VPN_PLUGIN_ERROR,
+		                     NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
+		                     "%s",
+		                     _("Key authentication selected, but no key file specified."));
+				free_ssh_args (args);
+				return FALSE;
+			}
+		} else if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_SSH_AGENT)) {
 			/* Last but not least, the original nm-ssh default behaviour which
 		 	* which is the sanest of all - SSH_AGENT socket */
 			/* FIXME add all the ssh agent logic here */
@@ -1082,6 +1097,8 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 			if (debug)
 				g_message ("Using ssh-agent socket: '%s'", envp[0]);
 
+		} else {
+			// FIXME FATAL ERROR
 		}
 	}
 
@@ -1492,7 +1509,7 @@ real_need_secrets (NMVPNPlugin *plugin,
 {
 	NMSettingVPN *s_vpn;
 	gboolean need_secrets = FALSE;
-	const char *ssh_agent_socket = NULL;
+	const char *auth_type = NULL;
 
 	g_return_val_if_fail (NM_IS_VPN_PLUGIN (plugin), FALSE);
 	g_return_val_if_fail (NM_IS_CONNECTION (connection), FALSE);
@@ -1512,14 +1529,31 @@ real_need_secrets (NMVPNPlugin *plugin,
 		return FALSE;
 	}
 
-	/* If we don't have our SSH_AUTH_SOCK set, we need it
-	 * SSH_AUTH_SOCK is passed as a secret only because it has to come
-	 * from a user's context and this plugin will run as root... */
-	ssh_agent_socket = nm_setting_vpn_get_secret (s_vpn, NM_SSH_KEY_SSH_AUTH_SOCK);
-	if (ssh_agent_socket && validate_ssh_agent_socket (ssh_agent_socket, error)) {
-		need_secrets = FALSE;
-	} else {
+	/* Get auth_type from s_vpn */
+	auth_type = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_AUTH_TYPE);
+
+	/* Lets see if we need some passwords... */
+	if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_PASSWORD)) {
+		/* Find sshpass, we'll use it to wrap ssh and provide a password from
+	 	* the command line */
+		// FIXME
 		need_secrets = TRUE;
+	} else if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_KEY)) {
+		// FIXME check if key file needs a password
+		need_secrets = FALSE;
+	} else if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_SSH_AGENT)) {
+		/* If we don't have our SSH_AUTH_SOCK set, we need it
+		 * SSH_AUTH_SOCK is passed as a secret only because it has to come
+		 * from a user's context and this plugin will run as root... */
+		const char *ssh_agent_socket = NULL;
+		ssh_agent_socket = nm_setting_vpn_get_secret (s_vpn, NM_SSH_KEY_SSH_AUTH_SOCK);
+		if (ssh_agent_socket && validate_ssh_agent_socket (ssh_agent_socket, error)) {
+			need_secrets = FALSE;
+		} else {
+			need_secrets = TRUE;
+		}
+	} else {
+		// FIXME FATAL ERROR
 	}
 
 	if (need_secrets)
