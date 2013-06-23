@@ -389,7 +389,7 @@ resolve_hostname (const char *hostname)
 		}
 
 		/* FIXME: so what if the name resolves to multiple IP addresses?  We
-		 * don't know which one pptp decided to use so we could end up using a
+		 * don't know which one ssh decided to use so we could end up using a
 		 * different one here, and the VPN just won't work.
 		 */
 		for (rp = result; rp; rp = rp->ai_next) {
@@ -982,7 +982,6 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
 		             "%s",
 		             _("Could not find the ssh binary."));
-					/* FIXME translation */
 		return FALSE;
 	}
 
@@ -1020,7 +1019,6 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		             NM_VPN_PLUGIN_ERROR,
 		             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
 		             "%s",
-					/* FIXME translation */
 		             _("Missing required SSH_AUTH_SOCK."));
 		free_ssh_args (args);
 		return FALSE;
@@ -1078,7 +1076,6 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		             NM_VPN_PLUGIN_ERROR,
 		             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
 		             _("Please set remote address."));
-					/* FIXME translation */
 		free_ssh_args (args);
 		return FALSE;
 	} else {
@@ -1134,7 +1131,6 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 			             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
 			             _("Invalid TUN/TAP device number '%s'."),
 			             tmp);
-						/* FIXME translation */
 			free_ssh_args (args);
 			return FALSE;
 		}
@@ -1152,7 +1148,6 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		             NM_VPN_PLUGIN_ERROR,
 		             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
 		             "%s",
-					/* FIXME translation */
 		             _("Missing required remote IP address."));
 		free_ssh_args (args);
 		return FALSE;
@@ -1167,7 +1162,6 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		             NM_VPN_PLUGIN_ERROR,
 		             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
 		             "%s",
-					/* FIXME translation */
 		             _("Missing required local IP address."));
 		free_ssh_args (args);
 		return FALSE;
@@ -1184,7 +1178,6 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		             NM_VPN_PLUGIN_ERROR,
 		             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
 		             "%s",
-					/* FIXME translation */
 		             _("Missing required netmask."));
 		free_ssh_args (args);
 		return FALSE;
@@ -1205,7 +1198,6 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 			             NM_VPN_PLUGIN_ERROR,
 			             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
 			             "%s",
-						/* FIXME translation */
 			             _("Missing required IPv6 remote IP address."));
 			free_ssh_args (args);
 			return FALSE;
@@ -1220,7 +1212,6 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 			             NM_VPN_PLUGIN_ERROR,
 			             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
 			             "%s",
-						/* FIXME translation */
 			             _("Missing required IPv6 local IP address."));
 			free_ssh_args (args);
 			return FALSE;
@@ -1235,7 +1226,6 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 			             NM_VPN_PLUGIN_ERROR,
 			             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
 			             "%s",
-						/* FIXME translation */
 			             _("Missing required IPv6 netmask."));
 			free_ssh_args (args);
 			return FALSE;
