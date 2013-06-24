@@ -228,6 +228,7 @@ auth_combo_changed_cb (GtkWidget *combo, gpointer user_data)
 	SshPluginUiWidgetPrivate *priv = SSH_PLUGIN_UI_WIDGET_GET_PRIVATE (self);
 	GtkWidget *auth_notebook;
 	GtkWidget *show_password;
+	GtkWidget *file_chooser;
 	GtkTreeModel *model;
 	GtkTreeIter iter;
 	gint new_page = 0;
@@ -236,6 +237,8 @@ auth_combo_changed_cb (GtkWidget *combo, gpointer user_data)
 	g_assert (auth_notebook);
 	show_password = GTK_WIDGET (gtk_builder_get_object (priv->builder, "auth_password_show_password_checkbutton"));
 	g_assert (show_password);
+	file_chooser = GTK_WIDGET (gtk_builder_get_object (priv->builder, "auth_keyfile_filechooserbutton"));
+	g_assert (file_chooser);
 
 	model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo));
 	g_assert (model);
@@ -247,7 +250,7 @@ auth_combo_changed_cb (GtkWidget *combo, gpointer user_data)
 	gtk_widget_set_sensitive (show_password, new_page == 1);
 
 	/* Key file entry relevant only to key page (2) */
-	gtk_widget_set_sensitive (show_password, new_page == 2);
+	gtk_widget_set_sensitive (file_chooser, new_page == 2);
 
 	gtk_notebook_set_current_page (GTK_NOTEBOOK (auth_notebook), new_page);
 
@@ -348,6 +351,8 @@ init_auth_widget (GtkBuilder *builder,
 
 	/* Three major connection types here: ssh-agent, key file, password */
 	if (!strcmp (contype, NM_SSH_AUTH_TYPE_PASSWORD)) {
+		const gchar* password;
+		NMSettingSecretFlags pw_flags = NM_SETTING_SECRET_FLAG_NONE;
 		/* Show password button - by default don't show the password */
 		widget = GTK_WIDGET (gtk_builder_get_object (builder, "auth_password_show_password_checkbutton"));
 		g_assert (widget);
@@ -355,14 +360,24 @@ init_auth_widget (GtkBuilder *builder,
 		g_assert (widget2);
 		g_signal_connect (widget, "toggled", G_CALLBACK (show_password_toggled), widget2);
 		show_password_toggled (GTK_TOGGLE_BUTTON (widget), GTK_ENTRY (widget2));
-		// FIXME
-		//g_signal_connect (G_OBJECT (widget2), "changed", G_CALLBACK (changed_cb), user_data);
+
+		/* Load password */
+		g_signal_connect (G_OBJECT (widget2), "changed", G_CALLBACK (changed_cb), user_data);
+		if (s_vpn) {
+			password = nm_setting_vpn_get_secret (s_vpn, NM_SSH_KEY_PASSWORD);
+			if (password)
+				gtk_entry_set_text (GTK_ENTRY (widget2), password);
+
+			nm_setting_get_secret_flags (NM_SETTING (s_vpn), NM_SSH_KEY_PASSWORD, &pw_flags, NULL);
+			/* FIXME */
+			//g_object_set_data (G_OBJECT (widget2), "flags", GUINT_TO_POINTER (pw_flags));
+		}
 	}
 	else if (!strcmp (contype, NM_SSH_AUTH_TYPE_KEY)) {
 		/* Get key filename and set it */
 		const gchar *filename;
 		widget = GTK_WIDGET (gtk_builder_get_object (builder, "auth_keyfile_filechooserbutton"));
-		// FIXME
+		// FIXME add filter
 		//gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (widget), filter);
 		gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (widget), TRUE);
 		if (s_vpn) {
@@ -524,6 +539,8 @@ init_plugin_ui (SshPluginUiWidget *self, NMConnection *connection, GError **erro
 		COL_AUTH_PAGE, 0,
 		COL_AUTH_TYPE, NM_SSH_AUTH_TYPE_SSH_AGENT,
 		-1);
+	if ((active < 0) && !strcmp (auth_type, NM_SSH_AUTH_TYPE_SSH_AGENT))
+		active = 0;
 
 	/* Password auth widget */
 	init_auth_widget (priv->builder, priv->group, s_vpn,
@@ -593,7 +610,6 @@ static gboolean auth_widget_update_connection (
 	GtkTreeModel *model;
 	GtkTreeIter iter;
 	char *auth_type = NULL;
-	const char *str = NULL;
 	gboolean success = TRUE;
 
 	combo = GTK_COMBO_BOX (GTK_WIDGET (gtk_builder_get_object (builder, "auth_auth_type_combobox")));
@@ -608,11 +624,16 @@ static gboolean auth_widget_update_connection (
 
 	if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_PASSWORD)) {
 		/* Password auth */
-		//gchar *password;
+		const gchar *password;
+		NMSettingSecretFlags pw_flags = NM_SETTING_SECRET_FLAG_NONE;
+
 		widget = GTK_WIDGET (gtk_builder_get_object (builder, "auth_password_entry"));
-		str = gtk_entry_get_text (GTK_ENTRY (widget));
-		// FIXME store password with gnome keyring!!
-		//if (str && strlen (str))
+		password = gtk_entry_get_text (GTK_ENTRY (widget));
+		/* Store password */
+		if (password && strlen (password)) {
+			nm_setting_vpn_add_secret (s_vpn, NM_SSH_KEY_PASSWORD, password);
+			nm_setting_set_secret_flags (NM_SETTING (s_vpn), NM_SSH_KEY_PASSWORD, pw_flags, NULL);
+		}
 	}
 	else if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_KEY)) {
 		/* Key auth */

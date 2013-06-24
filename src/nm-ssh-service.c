@@ -135,6 +135,7 @@ static ValidProperty valid_properties[] = {
 	{ NM_SSH_KEY_NETMASK_6,            G_TYPE_STRING, 0, 0, FALSE },
 	{ NM_SSH_KEY_AUTH_TYPE,            G_TYPE_STRING, 0, 0, FALSE },
 	{ NM_SSH_KEY_KEY_FILE,             G_TYPE_STRING, 0, 0, FALSE },
+	{ NM_SSH_KEY_PASSWORD"-flags",     G_TYPE_STRING, 0, 0, FALSE },
 	{ NULL,                            G_TYPE_NONE, FALSE }
 };
 
