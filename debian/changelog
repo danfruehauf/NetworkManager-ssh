@@ -1,3 +1,10 @@
+network-manager-ssh (0.0.4-0ubuntu2) precise; urgency=low
+
+  * DBUS and NetworkManager files in /etc are no longer config files
+  * Other refactoring to conform with other NetworkManager VPN plugins
+
+ -- Dan Fruehauf <malkodan@gmail.com>  Tue, Jun 25 2013 11:22:37 +1000
+
 network-manager-ssh (0.0.3-0ubuntu2) precise; urgency=low
 
   * ipv6 support

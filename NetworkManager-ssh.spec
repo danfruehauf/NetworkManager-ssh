@@ -5,7 +5,7 @@
 Summary:   NetworkManager VPN plugin for SSH
 Name:      NetworkManager-ssh
 Version:   ___version___
-Release:   0.7.%{checkout}%{?dist}
+Release:   0.1.%{checkout}%{?dist}
 License:   GPLv2+
 URL:       https://github.com/danfruehauf/NetworkManager-ssh
 Group:     System Environment/Base
@@ -79,7 +79,11 @@ rm -f %{buildroot}%{_libdir}/NetworkManager/lib*.la
 %{_datadir}/gnome-vpn-properties/ssh/nm-ssh-dialog.ui
 
 %changelog
-* ___changelog_date___ Dan Fruehauf <malkodan@gmail.com> - 0.0.3-0.7.___checkout______shortcommit___
+* ___changelog_date___ Dan Fruehauf <malkodan@gmail.com> - 0.0.4-0.1.___checkout______shortcommit___
+- DBUS and NetworkManager files in /etc are no longer config files
+- Other refactoring to conform with other NetworkManager VPN plugins
+
+* Fri Apr 19 2013 Dan Fruehauf <malkodan@gmail.com> - 0.0.3-0.8.20130419git3d5321b
 - Added sub package for NetworkManager-ssh-gnome
 
 * Tue Apr 02 2013 Dan Fruehauf <malkodan@gmail.com> - 0.0.3-0.6.20130402git6ba59c4
