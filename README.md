@@ -23,7 +23,7 @@ If you're using Fedora 18 or later, you can simply run:
 
 That will set you up with NetworkManager and the traditional GNOME interface.
 
-On older version of Fedora or CentOS, you can run the following after cloning the repository:
+On older versions of Fedora or CentOS, you can run the following after cloning the repository:
 
 	autoreconf -fvi && ./configure && make rpm
 
