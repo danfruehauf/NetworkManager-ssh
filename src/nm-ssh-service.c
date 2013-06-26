@@ -1556,6 +1556,8 @@ real_need_secrets (NMVPNPlugin *plugin,
 
 	/* Get auth_type from s_vpn */
 	auth_type = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_AUTH_TYPE);
+	if (!auth_type)
+		auth_type = NM_SSH_AUTH_TYPE_SSH_AGENT;
 
 	/* Lets see if we need some passwords... */
 	if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_PASSWORD)) {
