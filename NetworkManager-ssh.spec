@@ -25,6 +25,7 @@ Requires: NetworkManager
 Requires: openssh-clients
 Requires: shared-mime-info
 Requires: gnome-keyring
+Requires: sshpass
 
 %global _privatelibs libnm-ssh-properties[.]so.*
 %global __provides_exclude ^(%{_privatelibs})$

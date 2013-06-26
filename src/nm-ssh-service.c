@@ -133,6 +133,9 @@ static ValidProperty valid_properties[] = {
 	{ NM_SSH_KEY_REMOTE_IP_6,          G_TYPE_STRING, 0, 0, FALSE },
 	{ NM_SSH_KEY_LOCAL_IP_6,           G_TYPE_STRING, 0, 0, FALSE },
 	{ NM_SSH_KEY_NETMASK_6,            G_TYPE_STRING, 0, 0, FALSE },
+	{ NM_SSH_KEY_AUTH_TYPE,            G_TYPE_STRING, 0, 0, FALSE },
+	{ NM_SSH_KEY_KEY_FILE,             G_TYPE_STRING, 0, 0, FALSE },
+	{ NM_SSH_KEY_PASSWORD"-flags",     G_TYPE_STRING, 0, 0, FALSE },
 	{ NULL,                            G_TYPE_NONE, FALSE }
 };
 
@@ -871,6 +874,27 @@ nm_find_ssh (void)
 	return *ssh_binary;
 }
 
+/* FIXME refactor this with nm_find_ssh */
+static const char *
+nm_find_sshpass (void)
+{
+	static const char *sshpass_binary_paths[] = {
+		"/usr/bin/sshpass",
+		"/bin/sshpass",
+		"/usr/local/bin/sshpass",
+		NULL
+	};
+	const char  **sshpass_binary = sshpass_binary_paths;
+
+	while (*sshpass_binary != NULL) {
+		if (g_file_test (*sshpass_binary, G_FILE_TEST_EXISTS))
+			break;
+		sshpass_binary++;
+	}
+
+	return *sshpass_binary;
+}
+
 static void
 free_ssh_args (GPtrArray *args)
 {
@@ -961,9 +985,11 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	const char *default_username,
 	GError **error)
 {
+	/* This giant function is basically taking care of passing all the
+	 * correct parameters to ssh (and sshpass) */
 	NMSshPluginPrivate *priv = NM_SSH_PLUGIN_GET_PRIVATE (plugin);
-	const char *ssh_binary, *tmp;
-	const char *remote, *port, *mtu, *ssh_agent_socket;
+	const char *ssh_binary, *sshpass_binary, *tmp;
+	const char *remote, *port, *mtu, *ssh_agent_socket, *auth_type;
 	char *known_hosts_file;
 	char *tmp_arg;
 	char *ifconfig_cmd_4, *ifconfig_cmd_6;
@@ -982,7 +1008,6 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
 		             "%s",
 		             _("Could not find the ssh binary."));
-					/* FIXME translation */
 		return FALSE;
 	}
 
@@ -990,13 +1015,120 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	priv->io_data = g_malloc0 (sizeof (NMSshPluginIOData));
 
 	args = g_ptr_array_new ();
-	add_ssh_arg (args, ssh_binary);
+
+	/* Get auth_type from s_vpn */
+	auth_type = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_AUTH_TYPE);
+
+	/* Handle different behaviour for different auth types */
+	if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_PASSWORD)) {
+		/* If the user wishes to supply a password */
+		const gchar *password = NULL;
+
+		/* Find sshpass, we'll use it to wrap ssh and provide a password from
+	 	* the command line */
+		sshpass_binary = nm_find_sshpass ();
+		if (!sshpass_binary) {
+			g_set_error (error,
+		                 NM_VPN_PLUGIN_ERROR,
+		                 NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
+		                 "%s",
+		                 _("Could not find the sshpass binary."));
+			return FALSE;
+		}
+
+		/* Use sshpass binary */
+		add_ssh_arg (args, sshpass_binary);
+
+		/* Get password */
+		password = nm_setting_vpn_get_secret (s_vpn, NM_SSH_KEY_PASSWORD);
+		if (password && strlen(password)) {
+			add_ssh_arg (args, "-p");
+		} else {
+			/* No password specified? Exit! */
+			g_set_error (
+				error,
+				NM_VPN_PLUGIN_ERROR,
+				NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
+				"%s",
+				_("No password specified."));
+			free_ssh_args (args);
+			return FALSE;
+		}
+
+		/* Use password from config */
+		add_ssh_arg (args, password);
+
+		/* And add the ssh_binary */
+		add_ssh_arg (args, ssh_binary);
+
+		/* Prompt just once for password, it's enough */
+		add_ssh_arg (args, "-o"); add_ssh_arg (args, "NumberOfPasswordPrompts=1");
+		add_ssh_arg (args, "-o"); add_ssh_arg (args, "PreferredAuthentications=password");
+
+	} else {
+		/* Add the ssh binary, as we're not going to use sshpass */
+		add_ssh_arg (args, ssh_binary);
+
+		/* No password prompts, only key authentication if user specifies
+		 * key of ssh agent auth */
+		add_ssh_arg (args, "-o"); add_ssh_arg (args, "NumberOfPasswordPrompts=0");
+		add_ssh_arg (args, "-o"); add_ssh_arg (args, "PreferredAuthentications=publickey");
+
+		/* Passing a id_dsa/id_rsa key as an argument to ssh */
+		if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_KEY)) {
+			tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_KEY_FILE);
+			if (tmp && strlen (tmp)) {
+				/* Specify key file */
+				add_ssh_arg (args, "-i");
+				add_ssh_arg (args, tmp);
+			} else {
+				/* No key specified? Exit! */
+				g_set_error (error,
+		                     NM_VPN_PLUGIN_ERROR,
+		                     NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
+		                     "%s",
+		                     _("Key authentication selected, but no key file specified."));
+				free_ssh_args (args);
+				return FALSE;
+			}
+		} else if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_SSH_AGENT)) {
+			/* Last but not least, the original nm-ssh default behaviour which
+		 	* which is the sanest of all - SSH_AGENT socket */
+			/* FIXME add all the ssh agent logic here */
+			/* Set SSH_AUTH_SOCK from ssh-agent
+	 		* Passes as a secret key from the user's context
+	 		* using auth-dialog */
+			ssh_agent_socket = nm_setting_vpn_get_secret (s_vpn, NM_SSH_KEY_SSH_AUTH_SOCK);
+			if (ssh_agent_socket && strlen(ssh_agent_socket)) {
+				envp[0] = (gpointer) g_strdup_printf ("%s=%s", SSH_AUTH_SOCK, ssh_agent_socket);
+			} else {
+				/* No SSH_AUTH_SOCK passed from user context */
+				g_set_error (error,
+		                     NM_VPN_PLUGIN_ERROR,
+		                     NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
+		                     "%s",
+		                     _("Missing required SSH_AUTH_SOCK."));
+				free_ssh_args (args);
+				return FALSE;
+			}
+			envp[1] = NULL;
+
+			if (debug)
+				g_message ("Using ssh-agent socket: '%s'", envp[0]);
+
+		} else {
+			g_set_error (
+				error,
+				NM_VPN_PLUGIN_ERROR,
+				NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
+				_("Unknown authentication type: %s."), auth_type);
+			free_ssh_args (args);
+			return FALSE;
+		}
+	}
 
 	/* Set verbose mode, we'll parse the arguments */
 	add_ssh_arg (args, "-v");
-
-	/* No password prompts, only key authentication supported... */
-	add_ssh_arg (args, "-o"); add_ssh_arg (args, "NumberOfPasswordPrompts=0");
 
 	/* Dictate whether to replace the default route or not */
 	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_NO_DEFAULT_ROUTE);
@@ -1008,25 +1140,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		priv->io_data->no_default_route = FALSE;
 	}
 
-	/* Set SSH_AUTH_SOCK from ssh-agent
-	 * Passes as a secret key from the user's context
-	 * using auth-dialog */
-	ssh_agent_socket = nm_setting_vpn_get_secret (s_vpn, NM_SSH_KEY_SSH_AUTH_SOCK);
-	if (ssh_agent_socket && strlen(ssh_agent_socket)) {
-		envp[0] = (gpointer) g_strdup_printf ("%s=%s", SSH_AUTH_SOCK, ssh_agent_socket);
-	} else {
-		/* No SSH_AUTH_SOCK passed from user context */
-		g_set_error (error,
-		             NM_VPN_PLUGIN_ERROR,
-		             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
-		             "%s",
-					/* FIXME translation */
-		             _("Missing required SSH_AUTH_SOCK."));
-		free_ssh_args (args);
-		return FALSE;
-	}
-	envp[1] = NULL;
-
+	/* FIXME if not using SSH_AUTH_SOCK we can't know where is known_hosts */
 	/* We have SSH_AUTH_SOCK, we'll assume it's owned by the user
 	 * that we should use its .ssh/known_hosts file
 	 * So we'll probe the user owning SSH_AUTH_SOCK and then use
@@ -1087,7 +1201,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 
 	/* Port */
 	port = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_PORT);
-	add_ssh_arg (args, "-p");
+	add_ssh_arg (args, "-o");
 	if (port && strlen (port)) {
 		/* Range validation is done in dialog... */
 		if (!get_ssh_arg_int (port, &tmp_int)) {
@@ -1099,10 +1213,10 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 			free_ssh_args (args);
 			return FALSE;
 		}
-		add_ssh_arg (args, (gpointer) g_strdup_printf ("%d", (guint32) tmp_int));
+		add_ssh_arg (args, (gpointer) g_strdup_printf ("Port=%d", (guint32) tmp_int));
 	} else {
 		/* Default to SSH port 22 */
-		add_ssh_arg (args, (gpointer) g_strdup_printf("%d", (guint32) NM_SSH_DEFAULT_PORT));
+		add_ssh_arg (args, (gpointer) g_strdup_printf("Port=%d", (guint32) NM_SSH_DEFAULT_PORT));
 	}
 
 	/* TUN MTU size */
@@ -1252,22 +1366,32 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 
 	/* The -w option, provide a remote and local tun/tap device */
 	tmp_arg = (gpointer) g_strdup_printf (
-			"%d:%d", priv->io_data->local_dev_number, priv->io_data->remote_dev_number);
-	add_ssh_arg (args, "-w"); add_ssh_arg (args, tmp_arg);
+			"TunnelDevice=%d:%d", priv->io_data->local_dev_number, priv->io_data->remote_dev_number);
+	add_ssh_arg (args, "-o"); add_ssh_arg (args, tmp_arg);
 	g_free(tmp_arg);
 
 	/* Remote username, should usually be root */
 	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_REMOTE_USERNAME);
 	if (tmp && strlen (tmp)) {
-		priv->io_data->username = g_strdup(tmp);
+		priv->io_data->username = g_strdup (tmp);
 	} else {
 		/* Add default username - root */
-		priv->io_data->username = g_strdup(NM_SSH_DEFAULT_REMOTE_USERNAME);
+		priv->io_data->username = g_strdup (NM_SSH_DEFAULT_REMOTE_USERNAME);
 	}
-	add_ssh_arg (args, "-l"); add_ssh_arg (args, priv->io_data->username);
+	tmp_arg = g_strdup_printf ("User=%s", priv->io_data->username);
+	add_ssh_arg (args, "-o");
+	add_ssh_arg (args, tmp_arg);
+	g_free(tmp_arg);
 
-	/* connect to remote */
-	add_ssh_arg (args, priv->io_data->remote_gw);
+	/* Connect to remote */
+	tmp_arg = g_strdup_printf ("HostName=%s", priv->io_data->remote_gw);
+	add_ssh_arg (args, "-o");
+	add_ssh_arg (args, tmp_arg);
+	g_free(tmp_arg);
+
+	/* This is supposedly the hostname parameter, but we can pass anything
+	 * as we passed '-o Hostname=' before that */
+	add_ssh_arg (args, "NetworkManager-ssh");
 
 	/* Command line to run on remote machine */
 	ifconfig_cmd_4 = (gpointer) g_strdup_printf (
@@ -1301,9 +1425,6 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 
 	/* Wrap it up */
 	g_ptr_array_add (args, NULL);
-
-	if (debug)
-		g_message ("Using ssh-agent socket: '%s'", envp[0]);
 
 	/* Spawn with pipes */
 	if (!g_spawn_async_with_pipes (NULL, (char **) args->pdata, envp,
@@ -1413,7 +1534,7 @@ real_need_secrets (NMVPNPlugin *plugin,
 {
 	NMSettingVPN *s_vpn;
 	gboolean need_secrets = FALSE;
-	const char *ssh_agent_socket = NULL;
+	const char *auth_type = NULL;
 
 	g_return_val_if_fail (NM_IS_VPN_PLUGIN (plugin), FALSE);
 	g_return_val_if_fail (NM_IS_CONNECTION (connection), FALSE);
@@ -1433,14 +1554,41 @@ real_need_secrets (NMVPNPlugin *plugin,
 		return FALSE;
 	}
 
-	/* If we don't have our SSH_AUTH_SOCK set, we need it
-	 * SSH_AUTH_SOCK is passed as a secret only because it has to come
-	 * from a user's context and this plugin will run as root... */
-	ssh_agent_socket = nm_setting_vpn_get_secret (s_vpn, NM_SSH_KEY_SSH_AUTH_SOCK);
-	if (ssh_agent_socket && validate_ssh_agent_socket (ssh_agent_socket, error)) {
+	/* Get auth_type from s_vpn */
+	auth_type = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_AUTH_TYPE);
+
+	/* Lets see if we need some passwords... */
+	if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_PASSWORD)) {
+		/* Password auth */
+		const gchar* password = NULL;
+		password = nm_setting_vpn_get_secret (s_vpn, NM_SSH_KEY_PASSWORD);
+		need_secrets = password == NULL;
+		/* FIXME integrate with gnome keyring or whatever */
+		/*if (nm_setting_get_secret_flags (NM_SETTING (s_vpn), NM_OPENVPN_KEY_PASSWORD, &secret_flags, NULL)) {
+			if (secret_flags & NM_SETTING_SECRET_FLAG_NOT_REQUIRED)
+				*need_secrets = FALSE;
+			}
+		}*/
+	} else if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_KEY)) {
+		/* FIXME check if key file needs a password */
 		need_secrets = FALSE;
+	} else if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_SSH_AGENT)) {
+		/* If we don't have our SSH_AUTH_SOCK set, we need it
+		 * SSH_AUTH_SOCK is passed as a secret only because it has to come
+		 * from a user's context and this plugin will run as root... */
+		const gchar *ssh_agent_socket = NULL;
+		ssh_agent_socket = nm_setting_vpn_get_secret (s_vpn, NM_SSH_KEY_SSH_AUTH_SOCK);
+		if (ssh_agent_socket && validate_ssh_agent_socket (ssh_agent_socket, error)) {
+			need_secrets = FALSE;
+		} else {
+			need_secrets = TRUE;
+		}
 	} else {
-		need_secrets = TRUE;
+		g_set_error (
+			error,
+			NM_VPN_PLUGIN_ERROR,
+			NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
+			_("Unknown authentication type: %s."), auth_type);
 	}
 
 	if (need_secrets)

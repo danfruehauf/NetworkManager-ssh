@@ -16,7 +16,9 @@ nm_ssh_auth_dialog_CPPFLAGS =			\
 	-DVERSION=\"$(VERSION)\"
 
 nm_ssh_auth_dialog_SOURCES = \
-	main.c
+	main.c \
+	vpn-password-dialog.c \
+	vpn-password-dialog.h
 
 nm_ssh_auth_dialog_LDADD = \
 	$(GTK_LIBS) \

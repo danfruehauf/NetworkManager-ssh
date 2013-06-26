@@ -37,12 +37,12 @@
 #define NM_DBUS_INTERFACE_SSH  "org.freedesktop.NetworkManager.ssh"
 #define NM_DBUS_PATH_SSH       "/org/freedesktop/NetworkManager/ssh"
 
-#define NM_SSH_KEY_REMOTE "remote"
-#define NM_SSH_KEY_REMOTE_IP "remote-ip"
-#define NM_SSH_KEY_LOCAL_IP "local-ip"
+#define	NM_SSH_KEY_REMOTE "remote"
+#define	NM_SSH_KEY_REMOTE_IP "remote-ip"
+#define	NM_SSH_KEY_LOCAL_IP "local-ip"
 #define	NM_SSH_KEY_NETMASK "netmask"
-#define NM_SSH_KEY_PORT "port"
-#define NM_SSH_KEY_TUNNEL_MTU "tunnel-mtu"
+#define	NM_SSH_KEY_PORT "port"
+#define	NM_SSH_KEY_TUNNEL_MTU "tunnel-mtu"
 #define	NM_SSH_KEY_EXTRA_OPTS "extra-opts"
 #define	NM_SSH_KEY_REMOTE_DEV "remote-dev"
 #define	NM_SSH_KEY_SSH_AUTH_SOCK "ssh-auth-sock"
@@ -53,12 +53,19 @@
 #define	NM_SSH_KEY_REMOTE_IP_6 "remote-ip-6"
 #define	NM_SSH_KEY_LOCAL_IP_6 "local-ip-6"
 #define	NM_SSH_KEY_NETMASK_6 "netmask-6"
+#define	NM_SSH_KEY_AUTH_TYPE "auth-type"
+#define	NM_SSH_KEY_KEY_FILE "key-file"
+#define	NM_SSH_KEY_PASSWORD "password"
 
 #define	NM_SSH_DEFAULT_PORT 22
 #define	NM_SSH_DEFAULT_MTU 1500
 #define	NM_SSH_DEFAULT_REMOTE_DEV 100
 #define	NM_SSH_DEFAULT_EXTRA_OPTS "-o ServerAliveInterval=10 -o TCPKeepAlive=yes"
 #define	NM_SSH_DEFAULT_REMOTE_USERNAME "root"
+
+#define	NM_SSH_AUTH_TYPE_SSH_AGENT "ssh-agent"
+#define	NM_SSH_AUTH_TYPE_PASSWORD "password"
+#define	NM_SSH_AUTH_TYPE_KEY "key"
 
 /* Backward compatibility with NetworkManager < 0.9.6 when no IPv6 is supported */
 #if !defined(NM_VPN_PLUGIN_CONFIG_EXT_GATEWAY)
