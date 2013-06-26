@@ -96,6 +96,10 @@ void init_auth_widget (GtkBuilder *builder,
 
 /* Export/Import key dictionary */
 #define	REMOTE_KEY "REMOTE"
+#define	AUTH_TYPE_KEY "AUTH_TYPE"
+#define	KEY_FILE_KEY "KEY_FILE"
+#define	PREFERRED_AUTHENTICATION_KEY "PREFERRED_AUTHENTICATION"
+#define	PASSWORD_PROMPT_NR_KEY "PASSWORD_PROMPT_NR"
 #define	REMOTE_USERNAME_KEY "REMOTE_USERNAME"
 #define	REMOTE_IP_KEY "REMOTE_IP"
 #define	LOCAL_IP_KEY "LOCAL_IP"

@@ -943,9 +943,11 @@ import (NMVpnPluginUiInterface *iface, const char *path, GError **error)
 		}
 
 		/* the PARSE_IMPORT_KEY will save heaps of lines of code, it's
- 		 * on the top of the file if you're looking for it */
+		 * on the top of the file if you're looking for it */
 		PARSE_IMPORT_KEY (REMOTE_KEY, NM_SSH_KEY_REMOTE, items, s_vpn)
-		PARSE_IMPORT_KEY_WITH_DEFAULT_VALUE_STR (REMOTE_USERNAME_KEY, NM_SSH_KEY_REMOTE_USERNAME, items, s_vpn,NM_SSH_DEFAULT_REMOTE_USERNAME);
+		PARSE_IMPORT_KEY_WITH_DEFAULT_VALUE_STR (AUTH_TYPE_KEY, NM_SSH_KEY_AUTH_TYPE, items, s_vpn, NM_SSH_AUTH_TYPE_SSH_AGENT)
+		PARSE_IMPORT_KEY_WITH_DEFAULT_VALUE_STR (REMOTE_USERNAME_KEY, NM_SSH_KEY_REMOTE_USERNAME, items, s_vpn, NM_SSH_DEFAULT_REMOTE_USERNAME);
+		PARSE_IMPORT_KEY (KEY_FILE_KEY, NM_SSH_KEY_KEY_FILE, items, s_vpn)
 		PARSE_IMPORT_KEY (REMOTE_IP_KEY, NM_SSH_KEY_REMOTE_IP, items, s_vpn)
 		PARSE_IMPORT_KEY (LOCAL_IP_KEY, NM_SSH_KEY_LOCAL_IP, items, s_vpn)
 		PARSE_IMPORT_KEY (NETMASK_KEY, NM_SSH_KEY_NETMASK, items, s_vpn)
@@ -1007,6 +1009,8 @@ export (NMVpnPluginUiInterface *iface,
 	NMSettingVPN *s_vpn;
 	FILE *f;
 	const char *value;
+	const char *auth_type = NULL;
+	const char *key_file = NULL;
 	const char *gateway = NULL;
 	const char *port = NULL;
 	const char *local_ip = NULL;
@@ -1023,6 +1027,8 @@ export (NMVpnPluginUiInterface *iface,
 	char *tunnel_type = NULL;
 	char *ifconfig_cmd_local_6 = NULL;
 	char *ifconfig_cmd_remote_6 = NULL;
+	char *preferred_authentication = NULL;
+	unsigned password_prompt_nr = 0;
 	gboolean ipv6 = FALSE;
 	gboolean no_default_route = FALSE;
 	gboolean success = FALSE;
@@ -1069,6 +1075,22 @@ export (NMVpnPluginUiInterface *iface,
 		g_set_error (error, 0, 0, "connection was incomplete (missing netmask)");
 		goto done;
 	}
+
+	/* Auth type */
+	auth_type = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_AUTH_TYPE);
+	if (auth_type) {
+		if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_PASSWORD)) {
+			password_prompt_nr = 1;
+			preferred_authentication = g_strdup("password");
+		} else if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_KEY)) {
+			key_file = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_KEY_FILE);
+			preferred_authentication = g_strdup("publickey");
+		} else { // (!strcmp (auth_type, NM_SSH_AUTH_TYPE_SSH_AGENT)) {
+			// Nothing to be done for ssh-agent, the wise choice...
+			preferred_authentication = g_strdup("publickey");
+		}
+	}
+	/* Auth type */
 
 	/* Advanced values start */
 	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_PORT);
@@ -1155,6 +1177,11 @@ export (NMVpnPluginUiInterface *iface,
 
 	/* Serialize everything to a file */
 	fprintf (f, "#!/bin/bash\n");
+	/* Make my life easier and just add the AUTH_TYPE= key, not used though */
+	fprintf (f, "%s=%s\n", AUTH_TYPE_KEY, auth_type);
+	if (key_file) {
+		fprintf (f, "%s=%s\n", KEY_FILE_KEY, key_file);
+	}
 	fprintf (f, "%s=%s\n", REMOTE_KEY, gateway);
 	fprintf (f, "%s=%s\n", REMOTE_USERNAME_KEY, remote_username);
 	fprintf (f, "%s=%s\n", REMOTE_IP_KEY, remote_ip);
@@ -1182,10 +1209,21 @@ export (NMVpnPluginUiInterface *iface,
 
 	/* The generic lines that will perform the connection */
 	fprintf (f, "\n");
-	fprintf(f, "ssh -f -v -o Tunnel=$TUNNEL_TYPE -o NumberOfPasswordPrompts=0 $EXTRA_OPTS -w $LOCAL_DEV:$REMOTE_DEV -l $REMOTE_USERNAME -p $PORT $REMOTE \"%s $DEV_TYPE$REMOTE_DEV $REMOTE_IP netmask $NETMASK pointopoint $LOCAL_IP; %s\" && \\\n", IFCONFIG, ifconfig_cmd_remote_6);
+	fprintf(f, "ssh -f %s -o PreferredAuthentications=%s -o NumberOfPasswordPrompts=%d -o Tunnel=$TUNNEL_TYPE $EXTRA_OPTS -o TunnelDevice=$LOCAL_DEV:$REMOTE_DEV -o User=$REMOTE_USERNAME -o Port=$PORT -o HostName=$REMOTE $REMOTE \"%s $DEV_TYPE$REMOTE_DEV $REMOTE_IP netmask $NETMASK pointopoint $LOCAL_IP; %s\" && \\\n",
+		(key_file ? g_strconcat("-i ", key_file, NULL) : ""),
+		preferred_authentication,
+		password_prompt_nr,
+		IFCONFIG,
+		ifconfig_cmd_remote_6);
 	fprintf(f, "%s $DEV_TYPE$LOCAL_DEV $LOCAL_IP netmask $NETMASK pointopoint $REMOTE_IP; %s\n", IFCONFIG, ifconfig_cmd_local_6);
 
 	success = TRUE;
+
+	g_free(device_type);
+	g_free(tunnel_type);
+	g_free(ifconfig_cmd_local_6);
+	g_free(ifconfig_cmd_remote_6);
+	g_free(preferred_authentication);
 
 done:
 	fclose (f);
