@@ -80,7 +80,13 @@ rm -f %{buildroot}%{_libdir}/NetworkManager/lib*.la
 %{_datadir}/gnome-vpn-properties/ssh/nm-ssh-dialog.ui
 
 %changelog
-* ___changelog_date___ Dan Fruehauf <malkodan@gmail.com> - 0.0.4-0.1.___checkout______shortcommit___
+* ___changelog_date___ Dan Fruehauf <malkodan@gmail.com> - 0.0.9-0.1.___checkout______shortcommit___
+- Support for password and plain key authentication
+
+* Tue Jun 25 2013 Dan Fruehauf <malkodan@gmail.com> - 0.0.4-0.1.20130625git241fee0
+- Can choose to not set VPN as default route
+
+* Fri Apr 19 2013 Dan Fruehauf <malkodan@gmail.com> - 0.0.3-0.8.20130419git3d5321b
 - DBUS and NetworkManager files in /etc are no longer config files
 - Other refactoring to conform with other NetworkManager VPN plugins
 
