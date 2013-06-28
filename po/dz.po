@@ -7,10 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: networkmanager-ssh.networkmamager-0-6-0=release.pot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-19 03:35+0000\n"
+"POT-Creation-Date: 2013-06-29 00:41+1000\n"
 "PO-Revision-Date: 2007-03-19 15:41+0530\n"
 "Last-Translator: sonam pelden <sonaa_peldn@yahoo.com>\n"
 "Language-Team: Dzongkha <pgeyleg@dit.gov.bt>\n"
+"Language: dz\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,446 +20,588 @@ msgstr ""
 "X-Poedit-Country: Bhutan\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: ../auth-dialog/gnome-two-password-dialog.c:148
-msgid "_Password:"
-msgstr "ཆོག་ཡིག: (_P)"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:149
-msgid "_Secondary Password:"
-msgstr "གལ་ནད་ཆུང་བའི་ཆོག་ཡིག: (_S)"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:272
-msgid "_Username:"
-msgstr "ལག་ལེན་པའི་མིང་: (_U)"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:274
-msgid "_Domain:"
-msgstr "ཌོ་མེན་: (_D)"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:360
-msgid "Connect _anonymously"
-msgstr "མིང་མེད་ཐོག་ལས་མཐུད།(_a)"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:365
-msgid "Connect as _user:"
-msgstr "ལག་ལེན་པ་བཟུམ་སྦེ་མཐུད:(_u)"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:471
-msgid "_Remember password for this session"
-msgstr "ལཱ་ཡུན་འདི་གི་དོན་ལུ་ ཆོག་ཡིག་སེམས་ཁར་བཞག(_R)"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:473
-msgid "_Save password in keyring"
-msgstr "ལྡེ་འཁོར་ནང་ ཆོག་ཡིག་སྲུངས་(_S)"
-
-#: ../auth-dialog/main.c:214
+#. Otherwise, we have no saved password, or the password flags indicated
+#. * that the password should never be saved.
+#.
+#: ../auth-dialog/main.c:141
 #, c-format
 msgid "You need to authenticate to access the Virtual Private Network '%s'."
 msgstr "བར་ཅུ་ཡལ་སྒེར་སྡེ་ཡོངས་འབྲེལ་'%s'འཛུལ་སྤྱོད་འབད་ནི་ལུ་ ཁྱོད་ཀྱིས་བདེན་བཤད་འབད་དགོ།"
 
-#: ../auth-dialog/main.c:215
+#: ../auth-dialog/main.c:150 ../auth-dialog/main.c:170
 msgid "Authenticate VPN"
 msgstr "ཝི་པི་ཨེན་བདེན་བཤད་འབད་"
 
-#: ../auth-dialog/main.c:227
-#: ../auth-dialog/main.c:252
-msgid "Certificate password:"
-msgstr "ལག་ཁྱེལ་ཆོག་ཡིག:"
+#: ../auth-dialog/main.c:152 ../properties/nm-ssh-dialog.ui.h:27
+#, fuzzy
+msgid "Password:"
+msgstr "ཆོག་ཡིག: (_P)"
 
-#: ../nm-ssh.desktop.in.h:1
-msgid "Add, Remove, and Edit VPN Connections"
-msgstr "ཝི་པི་ཨེན་མཐུད་ལམ་ཚུ་ཁ་སྐོང་བརྐྱབ་ནི་རྩ་བསྐྲད་གཏང་ནི་དང་ཞུན་དག་འབད"
+#: ../auth-dialog/main.c:291
+#, c-format
+msgid ""
+"Couldn't find '%s' environment variable.\n"
+"\n"
+"Is ssh-agent running?"
+msgstr ""
 
-#: ../nm-ssh.desktop.in.h:2
-msgid "VPN Connection Manager (SSH)"
-msgstr "ཝི་པི་ཨེན་མཐུད་ལམ་འཛིན་སྐྱོང་པ(ཝི་པི་ཨེན་ཁ་ཕྱེ)"
+#: ../properties/advanced-dialog.c:137
+msgid ""
+"You have chosen not to use 'root' as the remote username.\n"
+"\n"
+"Please make sure the user you specify is allowed to open tun/tap devices on "
+"the remote host."
+msgstr ""
 
-#: ../properties/nm-ssh.c:146
-msgid "SSH Client"
+#: ../properties/nm-ssh.c:49
+msgid "SSH"
+msgstr ""
+
+#: ../properties/nm-ssh.c:50
+msgid "Compatible with the SSH server."
+msgstr ""
+
+#: ../properties/nm-ssh.c:538
+#, fuzzy
+msgid "SSH Agent"
 msgstr "ཝི་པི་ཨེན་ཁྱེ་བའི་ཞབས་ཏོག་"
 
-#: ../properties/nm-ssh.c:803
-msgid "The following SSH connection will be created:"
-msgstr "འོག་གི་ཝི་པི་ཨེན་ཁ་ཕྱེ་བའི་མཐུད་ལམ་འདི་གསར་བསྐྲུན་འབད་ནི་ཨིན:"
-
-#: ../properties/nm-ssh.c:805
-#, c-format
-msgid "Name:  %s"
-msgstr "མིང་:%s"
-
-#: ../properties/nm-ssh.c:813
-msgid "Connection Type: X.509 Certificates"
-msgstr "མཐུད་ལམ་དབྱེ་བ: X.509 ལག་ཁྱེར་"
-
-#: ../properties/nm-ssh.c:816
-#: ../properties/nm-ssh.c:843
-#: ../properties/nm-ssh.c:855
-#, c-format
-msgid "CA:  %s"
-msgstr "སི་ཨེ: %s"
-
-#: ../properties/nm-ssh.c:819
-#: ../properties/nm-ssh.c:858
-#, c-format
-msgid "Cert:  %s"
-msgstr "ངེས་ཅན: %s"
-
-#: ../properties/nm-ssh.c:822
-#: ../properties/nm-ssh.c:861
-#, c-format
-msgid "Key:  %s"
-msgstr "ལྡེ་མིག: %s"
-
-#: ../properties/nm-ssh.c:826
-msgid "Connection Type: Shared Key"
-msgstr "མཐུད་ལམ་དབྱེ་བ: རུབ་སྤྱོད་འབད་ཡོད་པའི་ལྡེ་མིག་"
-
-#: ../properties/nm-ssh.c:829
-#, c-format
-msgid "Shared Key:  %s"
-msgstr "རུབ་སྤྱོད་འབད་ཡོད་པའི་ལྡེ་མིག་: %s"
-
-#: ../properties/nm-ssh.c:832
-#, c-format
-msgid "Local IP:  %s"
-msgstr "ཉེ་གནས་ཨའི་པི: %s"
-
-#: ../properties/nm-ssh.c:835
-#, c-format
-msgid "Remote IP:  %s"
-msgstr "ཐག་རིང་གི་ཨའི་པི: %s"
-
-#: ../properties/nm-ssh.c:840
-msgid "Connection Type: Password"
-msgstr "མཐུད་ལམ་དབྱེ་བ: ཆོག་ཡིག་"
-
-#: ../properties/nm-ssh.c:846
-#: ../properties/nm-ssh.c:864
-#, c-format
-msgid "Username:  %s"
-msgstr "ལག་ལེན་པའི་མིང་: %s"
-
-#: ../properties/nm-ssh.c:852
-msgid "Connection Type: X.509 with Password Authentication"
-msgstr "མཐུད་ལམ་དབྱེ་བ: X.509འདི་ཆོག་ཡིག་བདེན་བཤད་དང་ཅིག་ཁར་"
-
-#: ../properties/nm-ssh.c:870
-#, c-format
-msgid "Remote:  %s"
-msgstr "ཐག་རིང་གི:  %s"
-
-#: ../properties/nm-ssh.c:873
-#, c-format
-msgid "Port:  %s"
-msgstr "འདྲེན་ལམ:  %s"
-
-#: ../properties/nm-ssh.c:876
-#, c-format
-msgid "Device: %s"
-msgstr "ཐབས་འཕྲུལ: %s"
-
-#: ../properties/nm-ssh.c:876
-msgid "TAP"
-msgstr "ཊི་ཨེ་པི་"
-
-#: ../properties/nm-ssh.c:876
-msgid "TUN"
-msgstr "ཊི་ཡུ་ཨེན་"
-
-#: ../properties/nm-ssh.c:879
-#, c-format
-msgid "Protocol: %s"
-msgstr "གནད་སྤེལ་ལམ་ལུགས: %s"
-
-#: ../properties/nm-ssh.c:879
-msgid "TCP"
-msgstr "ཊི་སི་པི་"
-
-#: ../properties/nm-ssh.c:879
-msgid "UDP"
-msgstr "ཡུ་ཌི་པི་"
-
-#: ../properties/nm-ssh.c:883
-#, c-format
-msgid "Routes:  %s"
-msgstr "འགྲུལ་ལམ:  %s"
-
-#: ../properties/nm-ssh.c:887
-#, c-format
-msgid "Use LZO Compression: %s"
-msgstr "ཨེལ་ཛེརཌི་ཨོ་ཨེབ་བཙུགས་ལག་ལེན་འཐབ: %s"
-
-#: ../properties/nm-ssh.c:887
-msgid "Yes"
-msgstr "ཨིན་"
-
-#: ../properties/nm-ssh.c:887
-msgid "No"
-msgstr "མེན་"
-
-#: ../properties/nm-ssh.c:891
-#, c-format
-msgid "Cipher:  %s"
-msgstr "གསང་ཡིག:  %s"
-
-#: ../properties/nm-ssh.c:896
-#, c-format
-msgid "TLS auth:  %s %s"
-msgstr "ཊི་ཨེལ་ཨེསི་བདེན་བཤད:  %s %s"
-
-#: ../properties/nm-ssh.c:900
-msgid "The connection details can be changed using the \"Edit\" button."
-msgstr "མཐུད་ལམ་རྒྱས་བཤད་ཚུ་  \"Edit\" ཨེབ་རྟ་ལག་ལེན་འཐབ་སྟེ་བསྒྱུར་བཅོས་འབད་ཚུགས།"
-
-#: ../properties/nm-ssh.c:1124
-msgid "Cannot import settings"
-msgstr "སྒྲིག་སྟངས་ཚུ་ནང་འདྲེན་འབད་མི་ཚུགས་"
-
-#: ../properties/nm-ssh.c:1126
-#, c-format
-msgid "The VPN settings file '%s' does not contain valid data."
-msgstr "ཝི་པི་ཨེན་སྒྲིག་སྟངས་ཚུའི་ཡིག་སྣོད་'%s' དེ་གིས་ནུས་ཅན་གནས་སྡུད་གནས་ཏེ་མེདཔ་ཨིན།"
-
-#: ../properties/nm-ssh.c:1173
-msgid "Select file to import"
-msgstr "ནང་འདྲེན་འབད་ནི་ལུ་ཡིག་སྣོད་སེལ་འཐུ་འབད་"
-
-#: ../properties/nm-ssh.c:1232
-#: ../properties/nm-ssh.c:1244
-#: ../properties/nm-ssh.c:1247
-msgid "Select CA to use"
-msgstr "ལག་ལེན་འཐབ་ནི་ལུ་སི་ཨེ་སེལ་འཐུ་འབད་"
-
-#: ../properties/nm-ssh.c:1235
-#: ../properties/nm-ssh.c:1250
-msgid "Select certificate to use"
-msgstr "ལག་ལེན་འཐབ་ནི་ལུ་ལག་ཁྱེར་སེལ་འཐུ་འབད་"
-
-#: ../properties/nm-ssh.c:1238
-#: ../properties/nm-ssh.c:1253
-msgid "Select key to use"
-msgstr "ལག་ལེན་འཐབ་ནི་ལུ་ལྡེ་མིག་སེལ་འཐུ་འབད་"
-
-#: ../properties/nm-ssh.c:1241
-msgid "Select shared key to use"
-msgstr "ལག་ལེན་འཐབ་ནི་ལུ་རུབ་སྤྱོད་འབད་ཡོད་པའི་ལྡེ་མིག་སེལ་འཐུ་འབད་"
-
-#: ../properties/nm-ssh.c:1256
-msgid "Select TA to use"
-msgstr "ལག་ལེན་འཐབ་ནི་ལུ་ཊི་ཨེ་སེལ་འཐུ་འབད་"
-
-#. printf ("in impl_export\n");
-#: ../properties/nm-ssh.c:1450
-msgid "Save as..."
-msgstr "དེ་སྦེ་སྲུང་..."
-
-#: ../properties/nm-ssh.c:1480
-#, c-format
-msgid "A file named \"%s\" already exists."
-msgstr "ཡིག་སྣོད་མིང་ \"%s\" ཧེ་མ་ལས་རང་འདུག།"
-
-#: ../properties/nm-ssh.c:1483
-msgid "Do you want to replace it with the one you are saving?"
-msgstr "ཁྱོད་ཀྱིས་སྲུང་མི་དང་ཅིག་ཁར་ཁྱོད་ཀྱིས་ཚབ་བཙུགས་ནི་ཨིན་ན?"
-
-#: ../properties/nm-ssh.c:1497
-msgid "Failed to export configuration"
-msgstr "རིམ་སྒྲིག་ཕྱིར་འདྲེན་འབད་ནི་ལུ་འཐུས་ཤོར་བྱུང་ཡོདཔ་"
-
-#: ../properties/nm-ssh.c:1499
-#, c-format
-msgid "Failed to save file %s"
-msgstr "ཡིག་སྣོད་%sསྲུང་མ་ཚུགས་"
-
-#: ../properties/nm-ssh-dialog.glade.h:1
-msgid "(Default: 1194)"
-msgstr "(སྔོན་སྒྲིག: 1194)"
-
-#: ../properties/nm-ssh-dialog.glade.h:2
-msgid "0"
-msgstr "༠"
-
-#: ../properties/nm-ssh-dialog.glade.h:3
-msgid "1"
-msgstr "༡"
-
-#: ../properties/nm-ssh-dialog.glade.h:4
-msgid "65536"
-msgstr "65536"
-
-#: ../properties/nm-ssh-dialog.glade.h:5
-msgid "<b>Connection Information</b>"
-msgstr "<b>མཐུད་ལམ་བརྡ་དོན</b>"
-
-#: ../properties/nm-ssh-dialog.glade.h:6
-msgid "<b>Connection Name</b>"
-msgstr "<b>མཐུད་ལམ་མིང་</b>"
-
-#: ../properties/nm-ssh-dialog.glade.h:7
-msgid "<i>example: 172.16.0.0/16 10.11.12.0/24</i>"
-msgstr "<i>དཔེར་ན: 172.16.0.0/16 10.11.12.0/24</i>"
-
-#: ../properties/nm-ssh-dialog.glade.h:8
-msgid "Advanced"
-msgstr "སྔ་གཡར་"
-
-#: ../properties/nm-ssh-dialog.glade.h:9
-msgid "CA file:"
-msgstr "སི་ཨེ་ཡིག་སྣོད:"
-
-#: ../properties/nm-ssh-dialog.glade.h:10
-msgid "Certificate:"
-msgstr "ལག་ཁྱེར:"
-
-#: ../properties/nm-ssh-dialog.glade.h:11
-msgid "Connection Name"
-msgstr "མཐུད་ལམ་མིང་"
-
-#: ../properties/nm-ssh-dialog.glade.h:12
-msgid "Connection Type:"
-msgstr "མཐུད་ལམ་དབྱེ་བ་"
-
-#: ../properties/nm-ssh-dialog.glade.h:13
-msgid "Direction:"
-msgstr "ཕྱོགས:"
-
-#: ../properties/nm-ssh-dialog.glade.h:14
-msgid "Gateway _Port:"
-msgstr "འཛུལ་སྒོའི་འདྲེན་ལམ: (_P)"
-
-#: ../properties/nm-ssh-dialog.glade.h:15
-msgid "Key:"
-msgstr "ལྡེ་མིག:"
-
-#: ../properties/nm-ssh-dialog.glade.h:16
-msgid "Local IP:"
-msgstr "ཉེ་གནས་ཨའི་པི:"
-
-#: ../properties/nm-ssh-dialog.glade.h:17
-msgid "Name used to identify the connection to the private network, e.g. \"Campus VPN\" or \"Corporate Network\""
-msgstr "སྒེར་སྡེ་ཡོངས་འབྲེལ་ལུ་མཐུད་ལམ་ངོས་འཛིན་འབད་ནི་ལུ་ལག་ལེན་འཐབ་ཡོད་པའི་མིང་ e.g. \"Campus VPN\" or \"Corporate Network\""
-
-#: ../properties/nm-ssh-dialog.glade.h:18
-msgid "Network"
-msgstr "ཡོངས་འབྲེལ་"
-
-#: ../properties/nm-ssh-dialog.glade.h:19
-msgid "SSH Advanced Options"
-msgstr "ཝི་པི་ཨེན་ཁ་ཕྱེ་སྔ་གཡར་གདམ་ཁ་ཚུ་"
-
-#: ../properties/nm-ssh-dialog.glade.h:20
-msgid "SSH Configuration"
-msgstr "ཝི་པི་ཨེན་ཁ་ཕྱེ་བའི་རིམ་སྒྲིག་"
-
-#: ../properties/nm-ssh-dialog.glade.h:21
+#: ../properties/nm-ssh.c:551
 msgid "Password"
 msgstr "ཆོག་ཡིག་"
 
-#: ../properties/nm-ssh-dialog.glade.h:22
-msgid "Please enter the information provided by your system administrator below. Do not enter your password here as you will be prompted when connecting."
-msgstr "འོག་ལུ་ཁྱོད་རའི་རིམ་ལུགས་བདག་སྐྱོང་པ་གིས་བྱིན་ཡོད་པའི་བརྡ་དོན་ཐོ་བཀོད་འབད་གནང་།  མཐུད་པའི་བསྒང་ཁྱོད་ཡར་བསྐྱེད་འབདཝ་ལས་ ནཱ་ལུ་ཁྱོད་རའི་ཆོག་ཡིག་མ་བཙུགས།  "
+#: ../properties/nm-ssh.c:564
+#, fuzzy
+msgid "Key Authentication"
+msgstr "ཝི་པི་ཨེན་བདེན་བཤད་འབད་"
 
-#: ../properties/nm-ssh-dialog.glade.h:23
-msgid "Please note that the file you import is not an SSH configuration file. Ask your administrator for the file."
-msgstr "ཁྱོད་ཀྱིས་ནང་འདྲེན་འབད་མི་ཡིག་སྣོད་འདི་  ཝི་པི་ཨེན་ཁ་ཕྱེ་རིམ་སྒྲིག་ཡིག་སྣོད་མེན་ཟེར་དྲན་འཛིན་འབད།  ཁྱོད་རའི་བདག་སྐྱོང་པ་ལུ་ཡིག་སྣོད་དོན་ལུ་དྲི།"
+#: ../properties/nm-ssh-dialog.ui.h:1
+msgid " "
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:24
-msgid "Remote IP:"
-msgstr "ཐག་རིང་གི་ཨའི་པི:"
+#: ../properties/nm-ssh-dialog.ui.h:2
+msgid "Not required"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:25
-msgid "Shared Key:"
-msgstr "རུབ་སྤྱོད་འབད་ཡོད་པའི་ལྡེ་མིག:"
+#: ../properties/nm-ssh-dialog.ui.h:3
+msgid "SSH Advanced Options"
+msgstr "ཝི་པི་ཨེན་ཁ་ཕྱེ་སྔ་གཡར་གདམ་ཁ་ཚུ་"
 
-#: ../properties/nm-ssh-dialog.glade.h:26
-msgid "Shared key"
-msgstr "རུབ་སྤྱོད་འབད་ཡོད་པའི་ལྡེ་མིག་"
+#: ../properties/nm-ssh-dialog.ui.h:4
+msgid "Use custom gateway port:"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:27
-msgid "TLS-Auth"
-msgstr "ཊི་ཨེལ་ཨེསི་-བདེན་བཤད་"
+#: ../properties/nm-ssh-dialog.ui.h:5
+msgid "Use custom tunnel Maximum Transmission Unit (MTU):"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:28
-msgid "Use LZO compression"
-msgstr "ཨེལ་ཛེརཌི་ཨེབ་བཙུགས་ལག་ལེན་འཐབ་"
+#: ../properties/nm-ssh-dialog.ui.h:6
+msgid "Extra SSH options:"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:29
-msgid "Use TAP device"
+#: ../properties/nm-ssh-dialog.ui.h:7
+msgid "Remote device number:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:8
+#, fuzzy
+msgid "Use a TAP device"
 msgstr "ཊི་ཨེ་པི་ཐབས་འཕྲུལ་ལག་ལེན་འཐབ་"
 
-#: ../properties/nm-ssh-dialog.glade.h:30
-msgid "Use TCP connection"
-msgstr "ཊི་སི་པི་མཐུད་ལམ་ལག་ལེན་འཐབ་"
-
-#: ../properties/nm-ssh-dialog.glade.h:31
-msgid "Use TLS auth:"
-msgstr "ཊི་ཨེལ་ཨེསི་བདེན་བཤད་ལག་ལེན་འཐབ:"
-
-#: ../properties/nm-ssh-dialog.glade.h:32
-msgid "Use cipher:"
-msgstr "གསང་ཡིག་ལག་ལེན་འཐབ:"
-
-#: ../properties/nm-ssh-dialog.glade.h:33
-msgid "Username:"
+#: ../properties/nm-ssh-dialog.ui.h:9
+#, fuzzy
+msgid "Remote username:"
 msgstr "ལག་ལེན་པའི་མིང་:"
 
-#: ../properties/nm-ssh-dialog.glade.h:34
-msgid "X.509"
-msgstr "X.509"
-
-#: ../properties/nm-ssh-dialog.glade.h:35
-msgid ""
-"X.509 Certificates\n"
-"Pre-shared key\n"
-"Password Authentication\n"
-"X.509 with Password Authentication"
+#: ../properties/nm-ssh-dialog.ui.h:10
+msgid "Do not replace default route"
 msgstr ""
-"X.509 ལག་ཁྱེར་ཚུ་\n"
-"སྔོན་-རུབ་སྤྱོད་འབད་ཡོད་པའི་ལྡེ་མིག\n"
-"ཆོག་ཡིག་བདེན་བཤད\n"
-"X.509 ཆོག་ཡིག་བདེན་བཤད་དང་ཅིག་ཁར་"
 
-#: ../properties/nm-ssh-dialog.glade.h:39
-msgid "X.509/Pass"
-msgstr "X.509/རྩིས་སྤྲོད་"
+#: ../properties/nm-ssh-dialog.ui.h:11
+msgid "General"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:40
-msgid "_Gateway Address:"
-msgstr "འཛུལ་སྒོའི་ཁ་བྱང་: (_G)"
+#: ../properties/nm-ssh-dialog.ui.h:12
+msgid "<b>General</b>"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:41
-msgid "_Import Saved Configuration..."
-msgstr "སྲུང་བཞག་པའི་རིམ་སྒྲིག་ནང་འདྲེན་འབད... (_I)"
+#: ../properties/nm-ssh-dialog.ui.h:13
+#, fuzzy
+msgid "Gateway:"
+msgstr "འཛུལ་སྒོའི་འདྲེན་ལམ: (_P)"
 
-#: ../properties/nm-ssh-dialog.glade.h:42
-msgid "_Only use VPN connection for these addresses"
-msgstr "ཁ་བྱང་འདི་གི་དོན་ལུ་ ཝི་པི་ཨེན་མཐུད་ལམ་རྐྱངམ་ཅིག་ལག་ལེན་འཐབ། (_O)"
+#: ../properties/nm-ssh-dialog.ui.h:14
+msgid "<b>Network Settings</b>"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:43
-msgid "none"
-msgstr "ཅི་མེད་"
+#: ../properties/nm-ssh-dialog.ui.h:15
+#, fuzzy
+msgid "Remote IP Address:"
+msgstr "ཐག་རིང་གི་ཨའི་པི:"
 
-#: ../src/nm-ssh-service.c:127
-msgid "The VPN login failed because the user name and password were not accepted or the certificate password was wrong."
-msgstr "ཝི་པི་ཨེན་ནང་བསྐྱོད་འཐུས་ཤོར་བྱུང་ཡོདཔ་  ག་ཅི་སྦེ་ཟེར་བ་ཅིན་ ལག་ལེན་པ་དང་ཆོག་ཡིག་དང་ལེན་མ་འབད་བས་ ཡང་ན་  ལག་ཁྱེར་ཆོག་ཡིག་འདི་འཛོལ་བ་འདུག།"
+#: ../properties/nm-ssh-dialog.ui.h:16
+#, fuzzy
+msgid "Local IP Address:"
+msgstr "ཉེ་གནས་ཨའི་པི:"
 
-#: ../src/nm-ssh-service.c:129
-msgid "The VPN login failed because the VPN program could not be started."
-msgstr "ཝི་པི་ཨེན་ནང་བསྐྱོད་འཐུས་ཤོར་བྱུང་ཡོདཔ་  ག་ཅི་སྦེ་ཟེར་བ་ཅིན་  ཝི་པི་ཨེན་འགོ་བཙུགས་མ་ཚུགས།"
+#: ../properties/nm-ssh-dialog.ui.h:17
+msgid "Netmask:"
+msgstr ""
 
-#: ../src/nm-ssh-service.c:131
-msgid "The VPN login failed because the VPN program could not connect to the VPN server."
-msgstr "ཝི་པི་ཨེན་ནང་བསྐྱོད་འཐུས་ཤོར་བྱུང་ཡོདཔ་  ག་ཅི་སྦེ་ཟེར་བ་ཅིན་  ཝི་པི་ཨེན་ལས་རིམ་ཝི་པི་ཨེན་སར་བར་ལུ་མཐུད་མ་ཚུགས།"
+#: ../properties/nm-ssh-dialog.ui.h:18
+msgid "<b>IPv6 Network Settings</b>"
+msgstr ""
 
-#: ../src/nm-ssh-service.c:133
-msgid "The VPN login failed because the VPN configuration options were invalid."
-msgstr "ཝི་པི་ཨེན་ནང་བསྐྱོད་འཐུས་ཤོར་བྱུང་ཡོདཔ་  ག་ཅི་སྦེ་ཟེར་བ་ཅིན་  ཝི་པི་ཨེན་རིམ་སྒྲིག་གདམ་ཁ་ཚུ་ནུས་ཅན་མེད།"
+#: ../properties/nm-ssh-dialog.ui.h:19
+msgid "Use IPv6"
+msgstr ""
 
-#: ../src/nm-ssh-service.c:135
-msgid "The VPN login failed because the VPN program received an invalid configuration from the VPN server."
-msgstr "ཝི་པི་ཨེན་ནང་བསྐྱོད་འཐུས་ཤོར་བྱུང་ཡོདཔ་ག་ཅི་སྦེ་ཟེར་བ་ཅིན་  ཝི་པི་ཨེན་ལས་རིམ་གྱིས་  ཝི་པི་ཨེན་སར་བར་ལས་ནུས་ཅན་མེད་པའི་རིམ་སྒྲིག་ཐོབ་ཡོད།"
+#: ../properties/nm-ssh-dialog.ui.h:20
+msgid "Remote IP Address (IPv6):"
+msgstr ""
 
-#: ../src/nm-ssh-service.c:137
-msgid "VPN connection failed"
-msgstr "ཝི་པི་ཨེན་མཐུད་ལམ་འཐུས་ཤོར་བྱུང་ཡོད།"
+#: ../properties/nm-ssh-dialog.ui.h:21
+msgid "Local IP Address (IPv6):"
+msgstr ""
 
+#: ../properties/nm-ssh-dialog.ui.h:22
+msgid "Prefix (IPv6):"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:23
+#, fuzzy
+msgid "Advanced..."
+msgstr "སྔ་གཡར་"
+
+#: ../properties/nm-ssh-dialog.ui.h:24
+#, fuzzy
+msgid "<b>Authentication</b>"
+msgstr "<b>མཐུད་ལམ་མིང་</b>"
+
+#: ../properties/nm-ssh-dialog.ui.h:25
+msgid "Type:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:26
+msgid "Select an authentication mode."
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:28
+#, fuzzy
+msgid "Show Passwords"
+msgstr "ཆོག་ཡིག་"
+
+#: ../properties/nm-ssh-dialog.ui.h:29
+msgid "SSH Key File:"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:195
+#, c-format
+msgid "invalid address '%s'"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:207
+#, c-format
+msgid "invalid integer property '%s' or out of range [%d -> %d]"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:217
+#, c-format
+msgid "invalid boolean property '%s' (not yes or no)"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:224
+#, c-format
+msgid "unhandled property '%s' type %s"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:235
+#, c-format
+msgid "property '%s' invalid or not supported"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:252
+msgid "No VPN configuration options."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1010
+msgid "Could not find the ssh binary."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1035
+msgid "Could not find the sshpass binary."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1053
+msgid "No password specified."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1090
+msgid "Key authentication selected, but no key file specified."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1110
+msgid "Missing required SSH_AUTH_SOCK."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1124 ../src/nm-ssh-service.c:1585
+#, c-format
+msgid "Unknown authentication type: %s."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1194
+#, c-format
+msgid "Please set remote address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1210
+#, c-format
+msgid "Invalid port number '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1229
+#, c-format
+msgid "Invalid TUN MTU size '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1248
+#, c-format
+msgid "Invalid TUN/TAP device number '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1267
+msgid "Missing required remote IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1281
+msgid "Missing required local IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1297
+msgid "Missing required netmask."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1317
+msgid "Missing required IPv6 remote IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1331
+msgid "Missing required IPv6 local IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1345
+msgid "Missing required IPv6 netmask."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1504 ../src/nm-ssh-service.c:1545
+#, fuzzy
+msgid ""
+"Could not process the request because the VPN connection settings were "
+"invalid."
+msgstr ""
+"ཝི་པི་ཨེན་ནང་བསྐྱོད་འཐུས་ཤོར་བྱུང་ཡོདཔ་  ག་ཅི་སྦེ་ཟེར་བ་ཅིན་  ཝི་པི་ཨེན་རིམ་སྒྲིག་གདམ་ཁ་ཚུ་ནུས་ཅན་མེད།"
+
+#: ../src/nm-ssh-service.c:1709
+msgid "Don't quit when VPN connection terminates"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1710
+msgid "Enable verbose debug logging (may expose passwords)"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1726
+msgid "nm-ssh-service provides integrated SSH capability to NetworkManager."
+msgstr ""
+
+#~ msgid "_Secondary Password:"
+#~ msgstr "གལ་ནད་ཆུང་བའི་ཆོག་ཡིག: (_S)"
+
+#~ msgid "_Username:"
+#~ msgstr "ལག་ལེན་པའི་མིང་: (_U)"
+
+#~ msgid "_Domain:"
+#~ msgstr "ཌོ་མེན་: (_D)"
+
+#~ msgid "Connect _anonymously"
+#~ msgstr "མིང་མེད་ཐོག་ལས་མཐུད།(_a)"
+
+#~ msgid "Connect as _user:"
+#~ msgstr "ལག་ལེན་པ་བཟུམ་སྦེ་མཐུད:(_u)"
+
+#~ msgid "_Remember password for this session"
+#~ msgstr "ལཱ་ཡུན་འདི་གི་དོན་ལུ་ ཆོག་ཡིག་སེམས་ཁར་བཞག(_R)"
+
+#~ msgid "_Save password in keyring"
+#~ msgstr "ལྡེ་འཁོར་ནང་ ཆོག་ཡིག་སྲུངས་(_S)"
+
+#~ msgid "Certificate password:"
+#~ msgstr "ལག་ཁྱེལ་ཆོག་ཡིག:"
+
+#~ msgid "Add, Remove, and Edit VPN Connections"
+#~ msgstr "ཝི་པི་ཨེན་མཐུད་ལམ་ཚུ་ཁ་སྐོང་བརྐྱབ་ནི་རྩ་བསྐྲད་གཏང་ནི་དང་ཞུན་དག་འབད"
+
+#~ msgid "VPN Connection Manager (SSH)"
+#~ msgstr "ཝི་པི་ཨེན་མཐུད་ལམ་འཛིན་སྐྱོང་པ(ཝི་པི་ཨེན་ཁ་ཕྱེ)"
+
+#~ msgid "The following SSH connection will be created:"
+#~ msgstr "འོག་གི་ཝི་པི་ཨེན་ཁ་ཕྱེ་བའི་མཐུད་ལམ་འདི་གསར་བསྐྲུན་འབད་ནི་ཨིན:"
+
+#~ msgid "Name:  %s"
+#~ msgstr "མིང་:%s"
+
+#~ msgid "Connection Type: X.509 Certificates"
+#~ msgstr "མཐུད་ལམ་དབྱེ་བ: X.509 ལག་ཁྱེར་"
+
+#~ msgid "CA:  %s"
+#~ msgstr "སི་ཨེ: %s"
+
+#~ msgid "Cert:  %s"
+#~ msgstr "ངེས་ཅན: %s"
+
+#~ msgid "Key:  %s"
+#~ msgstr "ལྡེ་མིག: %s"
+
+#~ msgid "Connection Type: Shared Key"
+#~ msgstr "མཐུད་ལམ་དབྱེ་བ: རུབ་སྤྱོད་འབད་ཡོད་པའི་ལྡེ་མིག་"
+
+#~ msgid "Shared Key:  %s"
+#~ msgstr "རུབ་སྤྱོད་འབད་ཡོད་པའི་ལྡེ་མིག་: %s"
+
+#~ msgid "Local IP:  %s"
+#~ msgstr "ཉེ་གནས་ཨའི་པི: %s"
+
+#~ msgid "Remote IP:  %s"
+#~ msgstr "ཐག་རིང་གི་ཨའི་པི: %s"
+
+#~ msgid "Connection Type: Password"
+#~ msgstr "མཐུད་ལམ་དབྱེ་བ: ཆོག་ཡིག་"
+
+#~ msgid "Username:  %s"
+#~ msgstr "ལག་ལེན་པའི་མིང་: %s"
+
+#~ msgid "Connection Type: X.509 with Password Authentication"
+#~ msgstr "མཐུད་ལམ་དབྱེ་བ: X.509འདི་ཆོག་ཡིག་བདེན་བཤད་དང་ཅིག་ཁར་"
+
+#~ msgid "Remote:  %s"
+#~ msgstr "ཐག་རིང་གི:  %s"
+
+#~ msgid "Port:  %s"
+#~ msgstr "འདྲེན་ལམ:  %s"
+
+#~ msgid "Device: %s"
+#~ msgstr "ཐབས་འཕྲུལ: %s"
+
+#~ msgid "TAP"
+#~ msgstr "ཊི་ཨེ་པི་"
+
+#~ msgid "TUN"
+#~ msgstr "ཊི་ཡུ་ཨེན་"
+
+#~ msgid "Protocol: %s"
+#~ msgstr "གནད་སྤེལ་ལམ་ལུགས: %s"
+
+#~ msgid "TCP"
+#~ msgstr "ཊི་སི་པི་"
+
+#~ msgid "UDP"
+#~ msgstr "ཡུ་ཌི་པི་"
+
+#~ msgid "Routes:  %s"
+#~ msgstr "འགྲུལ་ལམ:  %s"
+
+#~ msgid "Use LZO Compression: %s"
+#~ msgstr "ཨེལ་ཛེརཌི་ཨོ་ཨེབ་བཙུགས་ལག་ལེན་འཐབ: %s"
+
+#~ msgid "Yes"
+#~ msgstr "ཨིན་"
+
+#~ msgid "No"
+#~ msgstr "མེན་"
+
+#~ msgid "Cipher:  %s"
+#~ msgstr "གསང་ཡིག:  %s"
+
+#~ msgid "TLS auth:  %s %s"
+#~ msgstr "ཊི་ཨེལ་ཨེསི་བདེན་བཤད:  %s %s"
+
+#~ msgid "The connection details can be changed using the \"Edit\" button."
+#~ msgstr "མཐུད་ལམ་རྒྱས་བཤད་ཚུ་  \"Edit\" ཨེབ་རྟ་ལག་ལེན་འཐབ་སྟེ་བསྒྱུར་བཅོས་འབད་ཚུགས།"
+
+#~ msgid "Cannot import settings"
+#~ msgstr "སྒྲིག་སྟངས་ཚུ་ནང་འདྲེན་འབད་མི་ཚུགས་"
+
+#~ msgid "The VPN settings file '%s' does not contain valid data."
+#~ msgstr "ཝི་པི་ཨེན་སྒྲིག་སྟངས་ཚུའི་ཡིག་སྣོད་'%s' དེ་གིས་ནུས་ཅན་གནས་སྡུད་གནས་ཏེ་མེདཔ་ཨིན།"
+
+#~ msgid "Select file to import"
+#~ msgstr "ནང་འདྲེན་འབད་ནི་ལུ་ཡིག་སྣོད་སེལ་འཐུ་འབད་"
+
+#~ msgid "Select CA to use"
+#~ msgstr "ལག་ལེན་འཐབ་ནི་ལུ་སི་ཨེ་སེལ་འཐུ་འབད་"
+
+#~ msgid "Select certificate to use"
+#~ msgstr "ལག་ལེན་འཐབ་ནི་ལུ་ལག་ཁྱེར་སེལ་འཐུ་འབད་"
+
+#~ msgid "Select key to use"
+#~ msgstr "ལག་ལེན་འཐབ་ནི་ལུ་ལྡེ་མིག་སེལ་འཐུ་འབད་"
+
+#~ msgid "Select shared key to use"
+#~ msgstr "ལག་ལེན་འཐབ་ནི་ལུ་རུབ་སྤྱོད་འབད་ཡོད་པའི་ལྡེ་མིག་སེལ་འཐུ་འབད་"
+
+#~ msgid "Select TA to use"
+#~ msgstr "ལག་ལེན་འཐབ་ནི་ལུ་ཊི་ཨེ་སེལ་འཐུ་འབད་"
+
+#~ msgid "Save as..."
+#~ msgstr "དེ་སྦེ་སྲུང་..."
+
+#~ msgid "A file named \"%s\" already exists."
+#~ msgstr "ཡིག་སྣོད་མིང་ \"%s\" ཧེ་མ་ལས་རང་འདུག།"
+
+#~ msgid "Do you want to replace it with the one you are saving?"
+#~ msgstr "ཁྱོད་ཀྱིས་སྲུང་མི་དང་ཅིག་ཁར་ཁྱོད་ཀྱིས་ཚབ་བཙུགས་ནི་ཨིན་ན?"
+
+#~ msgid "Failed to export configuration"
+#~ msgstr "རིམ་སྒྲིག་ཕྱིར་འདྲེན་འབད་ནི་ལུ་འཐུས་ཤོར་བྱུང་ཡོདཔ་"
+
+#~ msgid "Failed to save file %s"
+#~ msgstr "ཡིག་སྣོད་%sསྲུང་མ་ཚུགས་"
+
+#~ msgid "(Default: 1194)"
+#~ msgstr "(སྔོན་སྒྲིག: 1194)"
+
+#~ msgid "0"
+#~ msgstr "༠"
+
+#~ msgid "1"
+#~ msgstr "༡"
+
+#~ msgid "65536"
+#~ msgstr "65536"
+
+#~ msgid "<b>Connection Information</b>"
+#~ msgstr "<b>མཐུད་ལམ་བརྡ་དོན</b>"
+
+#~ msgid "<i>example: 172.16.0.0/16 10.11.12.0/24</i>"
+#~ msgstr "<i>དཔེར་ན: 172.16.0.0/16 10.11.12.0/24</i>"
+
+#~ msgid "CA file:"
+#~ msgstr "སི་ཨེ་ཡིག་སྣོད:"
+
+#~ msgid "Certificate:"
+#~ msgstr "ལག་ཁྱེར:"
+
+#~ msgid "Connection Name"
+#~ msgstr "མཐུད་ལམ་མིང་"
+
+#~ msgid "Connection Type:"
+#~ msgstr "མཐུད་ལམ་དབྱེ་བ་"
+
+#~ msgid "Direction:"
+#~ msgstr "ཕྱོགས:"
+
+#~ msgid "Key:"
+#~ msgstr "ལྡེ་མིག:"
+
+#~ msgid ""
+#~ "Name used to identify the connection to the private network, e.g. "
+#~ "\"Campus VPN\" or \"Corporate Network\""
+#~ msgstr ""
+#~ "སྒེར་སྡེ་ཡོངས་འབྲེལ་ལུ་མཐུད་ལམ་ངོས་འཛིན་འབད་ནི་ལུ་ལག་ལེན་འཐབ་ཡོད་པའི་མིང་ e.g. \"Campus VPN"
+#~ "\" or \"Corporate Network\""
+
+#~ msgid "Network"
+#~ msgstr "ཡོངས་འབྲེལ་"
+
+#~ msgid "SSH Configuration"
+#~ msgstr "ཝི་པི་ཨེན་ཁ་ཕྱེ་བའི་རིམ་སྒྲིག་"
+
+#~ msgid ""
+#~ "Please enter the information provided by your system administrator below. "
+#~ "Do not enter your password here as you will be prompted when connecting."
+#~ msgstr ""
+#~ "འོག་ལུ་ཁྱོད་རའི་རིམ་ལུགས་བདག་སྐྱོང་པ་གིས་བྱིན་ཡོད་པའི་བརྡ་དོན་ཐོ་བཀོད་འབད་གནང་།  མཐུད་པའི་བསྒང་"
+#~ "ཁྱོད་ཡར་བསྐྱེད་འབདཝ་ལས་ ནཱ་ལུ་ཁྱོད་རའི་ཆོག་ཡིག་མ་བཙུགས།  "
+
+#~ msgid ""
+#~ "Please note that the file you import is not an SSH configuration file. "
+#~ "Ask your administrator for the file."
+#~ msgstr ""
+#~ "ཁྱོད་ཀྱིས་ནང་འདྲེན་འབད་མི་ཡིག་སྣོད་འདི་  ཝི་པི་ཨེན་ཁ་ཕྱེ་རིམ་སྒྲིག་ཡིག་སྣོད་མེན་ཟེར་དྲན་འཛིན་འབད།  "
+#~ "ཁྱོད་རའི་བདག་སྐྱོང་པ་ལུ་ཡིག་སྣོད་དོན་ལུ་དྲི།"
+
+#~ msgid "Shared Key:"
+#~ msgstr "རུབ་སྤྱོད་འབད་ཡོད་པའི་ལྡེ་མིག:"
+
+#~ msgid "Shared key"
+#~ msgstr "རུབ་སྤྱོད་འབད་ཡོད་པའི་ལྡེ་མིག་"
+
+#~ msgid "TLS-Auth"
+#~ msgstr "ཊི་ཨེལ་ཨེསི་-བདེན་བཤད་"
+
+#~ msgid "Use LZO compression"
+#~ msgstr "ཨེལ་ཛེརཌི་ཨེབ་བཙུགས་ལག་ལེན་འཐབ་"
+
+#~ msgid "Use TCP connection"
+#~ msgstr "ཊི་སི་པི་མཐུད་ལམ་ལག་ལེན་འཐབ་"
+
+#~ msgid "Use TLS auth:"
+#~ msgstr "ཊི་ཨེལ་ཨེསི་བདེན་བཤད་ལག་ལེན་འཐབ:"
+
+#~ msgid "Use cipher:"
+#~ msgstr "གསང་ཡིག་ལག་ལེན་འཐབ:"
+
+#~ msgid "X.509"
+#~ msgstr "X.509"
+
+#~ msgid ""
+#~ "X.509 Certificates\n"
+#~ "Pre-shared key\n"
+#~ "Password Authentication\n"
+#~ "X.509 with Password Authentication"
+#~ msgstr ""
+#~ "X.509 ལག་ཁྱེར་ཚུ་\n"
+#~ "སྔོན་-རུབ་སྤྱོད་འབད་ཡོད་པའི་ལྡེ་མིག\n"
+#~ "ཆོག་ཡིག་བདེན་བཤད\n"
+#~ "X.509 ཆོག་ཡིག་བདེན་བཤད་དང་ཅིག་ཁར་"
+
+#~ msgid "X.509/Pass"
+#~ msgstr "X.509/རྩིས་སྤྲོད་"
+
+#~ msgid "_Gateway Address:"
+#~ msgstr "འཛུལ་སྒོའི་ཁ་བྱང་: (_G)"
+
+#~ msgid "_Import Saved Configuration..."
+#~ msgstr "སྲུང་བཞག་པའི་རིམ་སྒྲིག་ནང་འདྲེན་འབད... (_I)"
+
+#~ msgid "_Only use VPN connection for these addresses"
+#~ msgstr "ཁ་བྱང་འདི་གི་དོན་ལུ་ ཝི་པི་ཨེན་མཐུད་ལམ་རྐྱངམ་ཅིག་ལག་ལེན་འཐབ། (_O)"
+
+#~ msgid "none"
+#~ msgstr "ཅི་མེད་"
+
+#~ msgid ""
+#~ "The VPN login failed because the user name and password were not accepted "
+#~ "or the certificate password was wrong."
+#~ msgstr ""
+#~ "ཝི་པི་ཨེན་ནང་བསྐྱོད་འཐུས་ཤོར་བྱུང་ཡོདཔ་  ག་ཅི་སྦེ་ཟེར་བ་ཅིན་ ལག་ལེན་པ་དང་ཆོག་ཡིག་དང་ལེན་མ་འབད་"
+#~ "བས་ ཡང་ན་  ལག་ཁྱེར་ཆོག་ཡིག་འདི་འཛོལ་བ་འདུག།"
+
+#~ msgid "The VPN login failed because the VPN program could not be started."
+#~ msgstr "ཝི་པི་ཨེན་ནང་བསྐྱོད་འཐུས་ཤོར་བྱུང་ཡོདཔ་  ག་ཅི་སྦེ་ཟེར་བ་ཅིན་  ཝི་པི་ཨེན་འགོ་བཙུགས་མ་ཚུགས།"
+
+#~ msgid ""
+#~ "The VPN login failed because the VPN program could not connect to the VPN "
+#~ "server."
+#~ msgstr ""
+#~ "ཝི་པི་ཨེན་ནང་བསྐྱོད་འཐུས་ཤོར་བྱུང་ཡོདཔ་  ག་ཅི་སྦེ་ཟེར་བ་ཅིན་  ཝི་པི་ཨེན་ལས་རིམ་ཝི་པི་ཨེན་སར་བར་ལུ་"
+#~ "མཐུད་མ་ཚུགས།"
+
+#~ msgid ""
+#~ "The VPN login failed because the VPN program received an invalid "
+#~ "configuration from the VPN server."
+#~ msgstr ""
+#~ "ཝི་པི་ཨེན་ནང་བསྐྱོད་འཐུས་ཤོར་བྱུང་ཡོདཔ་ག་ཅི་སྦེ་ཟེར་བ་ཅིན་  ཝི་པི་ཨེན་ལས་རིམ་གྱིས་  ཝི་པི་ཨེན་སར་"
+#~ "བར་ལས་ནུས་ཅན་མེད་པའི་རིམ་སྒྲིག་ཐོབ་ཡོད།"
+
+#~ msgid "VPN connection failed"
+#~ msgstr "ཝི་པི་ཨེན་མཐུད་ལམ་འཐུས་ཤོར་བྱུང་ཡོད།"

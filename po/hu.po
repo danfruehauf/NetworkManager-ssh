@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: network-manager-ssh master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-10 10:58+0200\n"
+"POT-Creation-Date: 2013-06-29 00:41+1000\n"
 "PO-Revision-Date: 2011-04-03 11:23+0200\n"
 "Last-Translator: Gabor Kelemen <kelemeng at gnome dot hu>\n"
 "Language-Team: Hungarian <gnome at fsf dot hu>\n"
@@ -20,437 +20,288 @@ msgstr ""
 "X-Generator: VIM - Vi IMproved 7.3\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
-#: ../auth-dialog/gnome-two-password-dialog.c:130
-msgid "_Password:"
-msgstr "_Jelszó:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:131
-msgid "_Secondary Password:"
-msgstr "Jelszó _még egyszer:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:248
-msgid "_Username:"
-msgstr "_Felhasználói név:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:250
-msgid "_Domain:"
-msgstr "_Tartomány:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:348
-msgid "Connect _anonymously"
-msgstr "Csatlakozás _névtelenül"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:353
-msgid "Connect as _user:"
-msgstr "Csatlakozás _mint:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:458
-msgid "_Remember password for this session"
-msgstr "Je_lszó megjegyzése a munkamenetre"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:460
-msgid "_Save password in keyring"
-msgstr "Jelszó mentése a _kulcstartóra"
-
-#: ../auth-dialog/main.c:103
+#. Otherwise, we have no saved password, or the password flags indicated
+#. * that the password should never be saved.
+#.
+#: ../auth-dialog/main.c:141
 #, c-format
 msgid "You need to authenticate to access the Virtual Private Network '%s'."
 msgstr "Azonosítania kell magát a(z) „%s” virtuális magánhálózat eléréséhez."
 
-#: ../auth-dialog/main.c:104
+#: ../auth-dialog/main.c:150 ../auth-dialog/main.c:170
 msgid "Authenticate VPN"
 msgstr "VPN azonosítás"
 
-#: ../auth-dialog/main.c:125
-msgid "Certificate pass_word:"
-msgstr "Tanúsítvány _jelszava:"
+#: ../auth-dialog/main.c:152 ../properties/nm-ssh-dialog.ui.h:27
+msgid "Password:"
+msgstr "Jelszó:"
 
-#: ../auth-dialog/main.c:139
-msgid "Certificate password:"
-msgstr "Tanúsítvány jelszava:"
+#: ../auth-dialog/main.c:291
+#, c-format
+msgid ""
+"Couldn't find '%s' environment variable.\n"
+"\n"
+"Is ssh-agent running?"
+msgstr ""
 
-#: ../properties/auth-helpers.c:202
-msgid "Choose a Certificate Authority certificate..."
-msgstr "Válasszon hitelesítésszolgáltatói tanúsítványt…"
+#: ../properties/advanced-dialog.c:137
+msgid ""
+"You have chosen not to use 'root' as the remote username.\n"
+"\n"
+"Please make sure the user you specify is allowed to open tun/tap devices on "
+"the remote host."
+msgstr ""
 
-#: ../properties/auth-helpers.c:221
-msgid "Choose your personal certificate..."
-msgstr "Válassza ki a személyes tanúsítványát…"
-
-#: ../properties/auth-helpers.c:239
-msgid "Choose your private key..."
-msgstr "Válassza ki a személyes kulcsát…"
-
-#: ../properties/auth-helpers.c:297
-msgid "Choose an SSH static key..."
-msgstr "Válassza ki az SSH statikus kulcsát…"
-
-#: ../properties/auth-helpers.c:321 ../properties/auth-helpers.c:1104
-#: ../properties/auth-helpers.c:1494
-msgid "None"
-msgstr "Nincs"
-
-#: ../properties/auth-helpers.c:801
-msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
-msgstr "PEM vagy PKCS#12 tanúsítványok (*.pem, *.crt, *.key, *.cer, *.p12)"
-
-#: ../properties/auth-helpers.c:802
-msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
-msgstr "PEM tanúsítványok (*.pem, *.crt, *.key, *.cer)"
-
-#: ../properties/auth-helpers.c:862
-msgid "SSH Static Keys (*.key)"
-msgstr "SSH statikus kulcsok (*.key)"
-
-#: ../properties/auth-helpers.c:1021 ../properties/auth-helpers.c:1096
-msgid "Default"
-msgstr "Alapértelmezett"
-
-#: ../properties/auth-helpers.c:1106
-msgid "MD-5"
-msgstr "MD-5"
-
-#: ../properties/auth-helpers.c:1108
-msgid "SHA-1"
-msgstr "SHA-1"
-
-#: ../properties/auth-helpers.c:1110
-msgid "SHA-224"
-msgstr "SHA-224"
-
-#: ../properties/auth-helpers.c:1112
-msgid "SHA-256"
-msgstr "SHA-256"
-
-#: ../properties/auth-helpers.c:1114
-msgid "SHA-384"
-msgstr "SHA-384"
-
-#: ../properties/auth-helpers.c:1116
-msgid "SHA-512"
-msgstr "SHA-512"
-
-#: ../properties/auth-helpers.c:1118
-msgid "RIPEMD-160"
-msgstr "RIPEMD-160"
-
-#: ../properties/auth-helpers.c:1293 ../properties/nm-ssh-dialog.ui.h:16
-msgid "Not required"
-msgstr "Nem szükséges"
-
-#: ../properties/auth-helpers.c:1295
-msgid "HTTP"
-msgstr "HTTP"
-
-#: ../properties/auth-helpers.c:1297
-msgid "SOCKS"
-msgstr "SOCKS"
-
-#: ../properties/nm-ssh.c:53
+#: ../properties/nm-ssh.c:49
 msgid "SSH"
 msgstr "SSH"
 
-#: ../properties/nm-ssh.c:54
+#: ../properties/nm-ssh.c:50
 msgid "Compatible with the SSH server."
 msgstr "Kompatibilis az SSH kiszolgálóval."
 
-#: ../properties/nm-ssh.c:323
-msgid "Certificates (TLS)"
-msgstr "Tanúsítványok (TLS)"
+#: ../properties/nm-ssh.c:538
+msgid "SSH Agent"
+msgstr ""
 
-#: ../properties/nm-ssh.c:337
+#: ../properties/nm-ssh.c:551
 msgid "Password"
 msgstr "Jelszó"
 
-#: ../properties/nm-ssh.c:354
-msgid "Password with Certificates (TLS)"
-msgstr "Jelszó tanúsítványokkal (TLS)"
-
-#: ../properties/nm-ssh.c:366
-msgid "Static Key"
-msgstr "Statikus kulcs"
+#: ../properties/nm-ssh.c:564
+#, fuzzy
+msgid "Key Authentication"
+msgstr "TLS hitelesítés"
 
 #: ../properties/nm-ssh-dialog.ui.h:1
 msgid " "
 msgstr " "
 
 #: ../properties/nm-ssh-dialog.ui.h:2
-msgid "<b>Authentication</b>"
-msgstr "<b>Hitelesítés</b>"
+msgid "Not required"
+msgstr "Nem szükséges"
 
 #: ../properties/nm-ssh-dialog.ui.h:3
-msgid "<b>General</b>"
-msgstr "<b>Általános</b>"
+msgid "SSH Advanced Options"
+msgstr "SSH speciális beállításai"
 
 #: ../properties/nm-ssh-dialog.ui.h:4
-msgid ""
-"<i>Connect only to servers whose certificate matches the given subject.\n"
-"Example: /CN=myvpn.company.com</i>"
-msgstr ""
-"<i>Csak olyan kiszolgálókhoz kapcsolódjon, amelyek tanúsítványa megfelel a "
-"megadott alanynak.\n"
-"Például: /CN=myvpn.cég.hu</i>"
+#, fuzzy
+msgid "Use custom gateway port:"
+msgstr "Egyéni átjáró_port használata:"
+
+#: ../properties/nm-ssh-dialog.ui.h:5
+#, fuzzy
+msgid "Use custom tunnel Maximum Transmission Unit (MTU):"
+msgstr "Egyéni _maximális átviteli egység (MTU) használata az alagúthoz:"
 
 #: ../properties/nm-ssh-dialog.ui.h:6
-msgid ""
-"<i>If key direction is used, it must be the opposite of that used on the VPN "
-"peer.  For example, if the peer uses '1', this connection must use '0'.  If "
-"you are unsure what value to use, contact your system administrator.</i>"
+msgid "Extra SSH options:"
 msgstr ""
-"<i>A kulcsirány használatakor a VPN partneren használttal ellentétesnek kell "
-"lennie. Ha például a partner 1-et használ, akkor a kapcsolatnak 0-t kell. Ha "
-"nem biztos benne, hogy melyik értéket kell használnia, keresse meg a "
-"rendszergazdát.</i>"
 
 #: ../properties/nm-ssh-dialog.ui.h:7
-msgid ""
-"<i>Select this option if your organization requires the use of a proxy "
-"server to access the Internet.</i>"
+msgid "Remote device number:"
 msgstr ""
-"<i>Válassza ezt a lehetőséget, ha a szervezet proxy kiszolgáló használatát "
-"követeli meg az internet eléréséhez.</i>"
 
 #: ../properties/nm-ssh-dialog.ui.h:8
-msgid "Ad_vanced..."
-msgstr "S_peciális…"
+#, fuzzy
+msgid "Use a TAP device"
+msgstr "TA_P eszköz használata"
 
 #: ../properties/nm-ssh-dialog.ui.h:9
-msgid "CA Certificate:"
-msgstr "CA tanúsítvány:"
+#, fuzzy
+msgid "Remote username:"
+msgstr "Proxy felhasználói név:"
 
 #: ../properties/nm-ssh-dialog.ui.h:10
-msgid "Cipher:"
-msgstr "Rejtjelzés:"
+msgid "Do not replace default route"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:11
 msgid "General"
 msgstr "Általános"
 
 #: ../properties/nm-ssh-dialog.ui.h:12
-msgid "HMAC Authentication:"
-msgstr "HMAC hitelesítés:"
+msgid "<b>General</b>"
+msgstr "<b>Általános</b>"
 
 #: ../properties/nm-ssh-dialog.ui.h:13
-msgid "Key Direction:"
-msgstr "Kulcsirány:"
+#, fuzzy
+msgid "Gateway:"
+msgstr "Á_tjáró:"
 
 #: ../properties/nm-ssh-dialog.ui.h:14
-msgid "Key File:"
-msgstr "Kulcsfájl:"
+msgid "<b>Network Settings</b>"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:15
+msgid "Remote IP Address:"
+msgstr "Távoli IP-cím:"
+
+#: ../properties/nm-ssh-dialog.ui.h:16
 msgid "Local IP Address:"
 msgstr "Helyi IP-cím:"
 
 #: ../properties/nm-ssh-dialog.ui.h:17
-msgid "SSH Advanced Options"
-msgstr "SSH speciális beállításai"
+msgid "Netmask:"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:18
-msgid "Password:"
-msgstr "Jelszó:"
+msgid "<b>IPv6 Network Settings</b>"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:19
-msgid "Port:"
-msgstr "Port:"
+msgid "Use IPv6"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:20
-msgid "Private Key Password:"
-msgstr "Személyes kulcs jelszava:"
-
-#: ../properties/nm-ssh-dialog.ui.h:21
-msgid "Private Key:"
-msgstr "Személyes kulcs:"
-
-#: ../properties/nm-ssh-dialog.ui.h:22
-msgid "Proxies"
-msgstr "Proxyk"
-
-#: ../properties/nm-ssh-dialog.ui.h:23
-msgid "Proxy Password:"
-msgstr "Proxy jelszó:"
-
-#: ../properties/nm-ssh-dialog.ui.h:24
-msgid "Proxy Type:"
-msgstr "Proxy típus:"
-
-#: ../properties/nm-ssh-dialog.ui.h:25
-msgid "Proxy Username:"
-msgstr "Proxy felhasználói név:"
-
-#: ../properties/nm-ssh-dialog.ui.h:26
-msgid "Remote IP Address:"
+#, fuzzy
+msgid "Remote IP Address (IPv6):"
 msgstr "Távoli IP-cím:"
 
-#: ../properties/nm-ssh-dialog.ui.h:27
-msgid "Restrict tunnel TCP Maximum Segment Size (MSS)"
-msgstr "TCP alagút maximális szegmensméretének (MSS) korlátozása"
+#: ../properties/nm-ssh-dialog.ui.h:21
+#, fuzzy
+msgid "Local IP Address (IPv6):"
+msgstr "Helyi IP-cím:"
 
-#: ../properties/nm-ssh-dialog.ui.h:28
-msgid "Retry indefinitely when errors occur"
-msgstr "Hiba esetén végtelen számú újrapróbálkozás"
+#: ../properties/nm-ssh-dialog.ui.h:22
+msgid "Prefix (IPv6):"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.ui.h:29
-msgid "Security"
-msgstr "Biztonság"
+#: ../properties/nm-ssh-dialog.ui.h:23
+#, fuzzy
+msgid "Advanced..."
+msgstr "S_peciális…"
 
-#: ../properties/nm-ssh-dialog.ui.h:30
-msgid "Server Address:"
-msgstr "Kiszolgáló címe:"
+#: ../properties/nm-ssh-dialog.ui.h:24
+msgid "<b>Authentication</b>"
+msgstr "<b>Hitelesítés</b>"
 
-#: ../properties/nm-ssh-dialog.ui.h:31
-msgid "Show password"
-msgstr "Jelszó megjelenítése"
-
-#: ../properties/nm-ssh-dialog.ui.h:32
-msgid "Show passwords"
-msgstr "Jelszavak megjelenítése"
-
-#: ../properties/nm-ssh-dialog.ui.h:33
-msgid "Static Key:"
-msgstr "Statikus kulcs:"
-
-#: ../properties/nm-ssh-dialog.ui.h:34
-msgid "Subject Match:"
-msgstr "Alany egyezik:"
-
-#: ../properties/nm-ssh-dialog.ui.h:35
-msgid "TLS Authentication"
-msgstr "TLS hitelesítés"
-
-#: ../properties/nm-ssh-dialog.ui.h:36
+#: ../properties/nm-ssh-dialog.ui.h:25
 msgid "Type:"
 msgstr "Típus:"
 
-#: ../properties/nm-ssh-dialog.ui.h:37
-msgid "Use L_ZO data compression"
-msgstr "L_ZO tömörítés használata"
+#: ../properties/nm-ssh-dialog.ui.h:26
+#, fuzzy
+msgid "Select an authentication mode."
+msgstr "TLS hitelesítés"
 
-#: ../properties/nm-ssh-dialog.ui.h:38
-msgid "Use a TA_P device"
-msgstr "TA_P eszköz használata"
+#: ../properties/nm-ssh-dialog.ui.h:28
+#, fuzzy
+msgid "Show Passwords"
+msgstr "Jelszavak megjelenítése"
 
-#: ../properties/nm-ssh-dialog.ui.h:39
-msgid "Use a _TCP connection"
-msgstr "T_CP kapcsolat használata"
+#: ../properties/nm-ssh-dialog.ui.h:29
+#, fuzzy
+msgid "SSH Key File:"
+msgstr "Kulcsfájl:"
 
-#: ../properties/nm-ssh-dialog.ui.h:40
-msgid "Use additional TLS authentication"
-msgstr "Kiegészítő TLS hitelesítés használata"
-
-#: ../properties/nm-ssh-dialog.ui.h:41
-msgid "Use custom UDP _fragment size:"
-msgstr "Egyéni _UDP-darab méret használata:"
-
-#: ../properties/nm-ssh-dialog.ui.h:42
-msgid "Use custom _renegotiation interval:"
-msgstr "_Egyéni újratárgyalási időköz használata:"
-
-#: ../properties/nm-ssh-dialog.ui.h:43
-msgid "Use custom _tunnel Maximum Transmission Unit (MTU):"
-msgstr "Egyéni _maximális átviteli egység (MTU) használata az alagúthoz:"
-
-#: ../properties/nm-ssh-dialog.ui.h:44
-msgid "Use custom gateway p_ort:"
-msgstr "Egyéni átjáró_port használata:"
-
-#: ../properties/nm-ssh-dialog.ui.h:45
-msgid "User Certificate:"
-msgstr "Felhasználói tanúsítvány:"
-
-#: ../properties/nm-ssh-dialog.ui.h:46
-msgid "User name:"
-msgstr "Felhasználónév:"
-
-#: ../properties/nm-ssh-dialog.ui.h:47
-msgid "_Gateway:"
-msgstr "Á_tjáró:"
-
-#: ../src/nm-ssh-service.c:192
+#: ../src/nm-ssh-service.c:195
 #, c-format
 msgid "invalid address '%s'"
 msgstr "érvénytelen cím: „%s”"
 
-#: ../src/nm-ssh-service.c:204
+#: ../src/nm-ssh-service.c:207
 #, c-format
 msgid "invalid integer property '%s' or out of range [%d -> %d]"
-msgstr "érvénytelen, vagy a(z) %2$d…%3$d tartományon kívüli egész érték: „%1$s”"
+msgstr ""
+"érvénytelen, vagy a(z) %2$d…%3$d tartományon kívüli egész érték: „%1$s”"
 
-#: ../src/nm-ssh-service.c:214
+#: ../src/nm-ssh-service.c:217
 #, c-format
 msgid "invalid boolean property '%s' (not yes or no)"
 msgstr "érvénytelen logikai érték: „%s” (érvényes értékek: yes, no)"
 
-#: ../src/nm-ssh-service.c:221
+#: ../src/nm-ssh-service.c:224
 #, c-format
 msgid "unhandled property '%s' type %s"
 msgstr "kezeletlen %2$s típusú érték: „%1$s”"
 
-#: ../src/nm-ssh-service.c:232
+#: ../src/nm-ssh-service.c:235
 #, c-format
 msgid "property '%s' invalid or not supported"
 msgstr "érvénytelen vagy nem támogatott érték: „%s”"
 
-#: ../src/nm-ssh-service.c:249
+#: ../src/nm-ssh-service.c:252
 msgid "No VPN configuration options."
 msgstr "Nincsenek VPN-beállítások."
 
-#: ../src/nm-ssh-service.c:272
-msgid "No VPN secrets!"
-msgstr "Nincs VPN-titok!"
-
-#: ../src/nm-ssh-service.c:744
+#: ../src/nm-ssh-service.c:1010
 msgid "Could not find the ssh binary."
 msgstr "Nem található az ssh program."
 
-#: ../src/nm-ssh-service.c:755
-msgid "Invalid HMAC auth."
-msgstr "Érvénytelen HMAC azonosítás."
+#: ../src/nm-ssh-service.c:1035
+#, fuzzy
+msgid "Could not find the sshpass binary."
+msgstr "Nem található az ssh program."
 
-#: ../src/nm-ssh-service.c:767 ../src/nm-ssh-service.c:1163
-#: ../src/nm-ssh-service.c:1233
-msgid "Invalid connection type."
-msgstr "Érvénytelen kapcsolattípus."
+#: ../src/nm-ssh-service.c:1053
+#, fuzzy
+msgid "No password specified."
+msgstr "Jelszavak megjelenítése"
 
-#: ../src/nm-ssh-service.c:802
+#: ../src/nm-ssh-service.c:1090
+msgid "Key authentication selected, but no key file specified."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1110
+msgid "Missing required SSH_AUTH_SOCK."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1124 ../src/nm-ssh-service.c:1585
+#, fuzzy, c-format
+msgid "Unknown authentication type: %s."
+msgstr "Ismeretlen kapcsolattípus: „%s”."
+
+#: ../src/nm-ssh-service.c:1194
 #, c-format
-msgid "Invalid proxy type '%s'."
-msgstr "Érvénytelen proxytípus: „%s”."
+msgid "Please set remote address."
+msgstr ""
 
-#: ../src/nm-ssh-service.c:838
+#: ../src/nm-ssh-service.c:1210
 #, c-format
 msgid "Invalid port number '%s'."
 msgstr "Érvénytelen portszám: „%s”."
 
-#: ../src/nm-ssh-service.c:888
-#, c-format
-msgid "Invalid reneg seconds '%s'."
-msgstr "Érvénytelen reneg seconds érték: „%s”."
-
-#: ../src/nm-ssh-service.c:912
+#: ../src/nm-ssh-service.c:1229
 #, c-format
 msgid "Invalid TUN MTU size '%s'."
 msgstr "Érvénytelen TUN MTU érték: „%s”."
 
-#: ../src/nm-ssh-service.c:927
-#, c-format
-msgid "Invalid fragment size '%s'."
-msgstr "Érvénytelen töredékméret: „%s”."
+#: ../src/nm-ssh-service.c:1248
+#, fuzzy, c-format
+msgid "Invalid TUN/TAP device number '%s'."
+msgstr "Érvénytelen portszám: „%s”."
 
-#: ../src/nm-ssh-service.c:995
-msgid "Missing required local IP address for static key mode."
-msgstr "Hiányzó helyi IP-cím a statikus kulcsos módhoz."
-
-#: ../src/nm-ssh-service.c:1008
-msgid "Missing required remote IP address for static key mode."
+#: ../src/nm-ssh-service.c:1267
+#, fuzzy
+msgid "Missing required remote IP address."
 msgstr "Hiányzó távoli IP-cím a statikus kulcsos módhoz."
 
-#: ../src/nm-ssh-service.c:1033
-#, c-format
-msgid "Unknown connection type '%s'."
-msgstr "Ismeretlen kapcsolattípus: „%s”."
+#: ../src/nm-ssh-service.c:1281
+#, fuzzy
+msgid "Missing required local IP address."
+msgstr "Hiányzó helyi IP-cím a statikus kulcsos módhoz."
 
-#: ../src/nm-ssh-service.c:1152 ../src/nm-ssh-service.c:1223
+#: ../src/nm-ssh-service.c:1297
+msgid "Missing required netmask."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1317
+#, fuzzy
+msgid "Missing required IPv6 remote IP address."
+msgstr "Hiányzó távoli IP-cím a statikus kulcsos módhoz."
+
+#: ../src/nm-ssh-service.c:1331
+#, fuzzy
+msgid "Missing required IPv6 local IP address."
+msgstr "Hiányzó helyi IP-cím a statikus kulcsos módhoz."
+
+#: ../src/nm-ssh-service.c:1345
+msgid "Missing required IPv6 netmask."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1504 ../src/nm-ssh-service.c:1545
 msgid ""
 "Could not process the request because the VPN connection settings were "
 "invalid."
@@ -458,22 +309,230 @@ msgstr ""
 "A kérés feldolgozása sikertelen, mivel a VPN-kapcsolat beállításai "
 "érvénytelenek."
 
-#: ../src/nm-ssh-service.c:1177
-msgid "Could not process the request because no username was provided."
-msgstr "A kérés feldolgozása sikertelen, mivel nem adott meg felhasználónevet."
-
-#: ../src/nm-ssh-service.c:1367
+#: ../src/nm-ssh-service.c:1709
 msgid "Don't quit when VPN connection terminates"
 msgstr "Ne lépjen ki, ha a VPN kapcsolat megszakad"
 
-#: ../src/nm-ssh-service.c:1368
+#: ../src/nm-ssh-service.c:1710
 msgid "Enable verbose debug logging (may expose passwords)"
 msgstr ""
 "Részletes hibakeresési naplózás engedélyezése (jelszavak is  a naplóba "
 "kerülhetnek)"
 
-#: ../src/nm-ssh-service.c:1382
-msgid ""
-"nm-vpnc-service provides integrated SSH capability to NetworkManager."
-msgstr ""
-"Az nm-vpnc-service integrált SSH-támogatást nyújt a Hálózatkezelőhöz."
+#: ../src/nm-ssh-service.c:1726
+#, fuzzy
+msgid "nm-ssh-service provides integrated SSH capability to NetworkManager."
+msgstr "Az nm-vpnc-service integrált SSH-támogatást nyújt a Hálózatkezelőhöz."
+
+#~ msgid "_Password:"
+#~ msgstr "_Jelszó:"
+
+#~ msgid "_Secondary Password:"
+#~ msgstr "Jelszó _még egyszer:"
+
+#~ msgid "_Username:"
+#~ msgstr "_Felhasználói név:"
+
+#~ msgid "_Domain:"
+#~ msgstr "_Tartomány:"
+
+#~ msgid "Connect _anonymously"
+#~ msgstr "Csatlakozás _névtelenül"
+
+#~ msgid "Connect as _user:"
+#~ msgstr "Csatlakozás _mint:"
+
+#~ msgid "_Remember password for this session"
+#~ msgstr "Je_lszó megjegyzése a munkamenetre"
+
+#~ msgid "_Save password in keyring"
+#~ msgstr "Jelszó mentése a _kulcstartóra"
+
+#~ msgid "Certificate pass_word:"
+#~ msgstr "Tanúsítvány _jelszava:"
+
+#~ msgid "Certificate password:"
+#~ msgstr "Tanúsítvány jelszava:"
+
+#~ msgid "Choose a Certificate Authority certificate..."
+#~ msgstr "Válasszon hitelesítésszolgáltatói tanúsítványt…"
+
+#~ msgid "Choose your personal certificate..."
+#~ msgstr "Válassza ki a személyes tanúsítványát…"
+
+#~ msgid "Choose your private key..."
+#~ msgstr "Válassza ki a személyes kulcsát…"
+
+#~ msgid "Choose an SSH static key..."
+#~ msgstr "Válassza ki az SSH statikus kulcsát…"
+
+#~ msgid "None"
+#~ msgstr "Nincs"
+
+#~ msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
+#~ msgstr "PEM vagy PKCS#12 tanúsítványok (*.pem, *.crt, *.key, *.cer, *.p12)"
+
+#~ msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
+#~ msgstr "PEM tanúsítványok (*.pem, *.crt, *.key, *.cer)"
+
+#~ msgid "SSH Static Keys (*.key)"
+#~ msgstr "SSH statikus kulcsok (*.key)"
+
+#~ msgid "Default"
+#~ msgstr "Alapértelmezett"
+
+#~ msgid "MD-5"
+#~ msgstr "MD-5"
+
+#~ msgid "SHA-1"
+#~ msgstr "SHA-1"
+
+#~ msgid "SHA-224"
+#~ msgstr "SHA-224"
+
+#~ msgid "SHA-256"
+#~ msgstr "SHA-256"
+
+#~ msgid "SHA-384"
+#~ msgstr "SHA-384"
+
+#~ msgid "SHA-512"
+#~ msgstr "SHA-512"
+
+#~ msgid "RIPEMD-160"
+#~ msgstr "RIPEMD-160"
+
+#~ msgid "HTTP"
+#~ msgstr "HTTP"
+
+#~ msgid "SOCKS"
+#~ msgstr "SOCKS"
+
+#~ msgid "Certificates (TLS)"
+#~ msgstr "Tanúsítványok (TLS)"
+
+#~ msgid "Password with Certificates (TLS)"
+#~ msgstr "Jelszó tanúsítványokkal (TLS)"
+
+#~ msgid "Static Key"
+#~ msgstr "Statikus kulcs"
+
+#~ msgid ""
+#~ "<i>Connect only to servers whose certificate matches the given subject.\n"
+#~ "Example: /CN=myvpn.company.com</i>"
+#~ msgstr ""
+#~ "<i>Csak olyan kiszolgálókhoz kapcsolódjon, amelyek tanúsítványa megfelel "
+#~ "a megadott alanynak.\n"
+#~ "Például: /CN=myvpn.cég.hu</i>"
+
+#~ msgid ""
+#~ "<i>If key direction is used, it must be the opposite of that used on the "
+#~ "VPN peer.  For example, if the peer uses '1', this connection must use "
+#~ "'0'.  If you are unsure what value to use, contact your system "
+#~ "administrator.</i>"
+#~ msgstr ""
+#~ "<i>A kulcsirány használatakor a VPN partneren használttal ellentétesnek "
+#~ "kell lennie. Ha például a partner 1-et használ, akkor a kapcsolatnak 0-t "
+#~ "kell. Ha nem biztos benne, hogy melyik értéket kell használnia, keresse "
+#~ "meg a rendszergazdát.</i>"
+
+#~ msgid ""
+#~ "<i>Select this option if your organization requires the use of a proxy "
+#~ "server to access the Internet.</i>"
+#~ msgstr ""
+#~ "<i>Válassza ezt a lehetőséget, ha a szervezet proxy kiszolgáló "
+#~ "használatát követeli meg az internet eléréséhez.</i>"
+
+#~ msgid "CA Certificate:"
+#~ msgstr "CA tanúsítvány:"
+
+#~ msgid "Cipher:"
+#~ msgstr "Rejtjelzés:"
+
+#~ msgid "HMAC Authentication:"
+#~ msgstr "HMAC hitelesítés:"
+
+#~ msgid "Key Direction:"
+#~ msgstr "Kulcsirány:"
+
+#~ msgid "Port:"
+#~ msgstr "Port:"
+
+#~ msgid "Private Key Password:"
+#~ msgstr "Személyes kulcs jelszava:"
+
+#~ msgid "Private Key:"
+#~ msgstr "Személyes kulcs:"
+
+#~ msgid "Proxies"
+#~ msgstr "Proxyk"
+
+#~ msgid "Proxy Password:"
+#~ msgstr "Proxy jelszó:"
+
+#~ msgid "Proxy Type:"
+#~ msgstr "Proxy típus:"
+
+#~ msgid "Restrict tunnel TCP Maximum Segment Size (MSS)"
+#~ msgstr "TCP alagút maximális szegmensméretének (MSS) korlátozása"
+
+#~ msgid "Retry indefinitely when errors occur"
+#~ msgstr "Hiba esetén végtelen számú újrapróbálkozás"
+
+#~ msgid "Security"
+#~ msgstr "Biztonság"
+
+#~ msgid "Server Address:"
+#~ msgstr "Kiszolgáló címe:"
+
+#~ msgid "Show password"
+#~ msgstr "Jelszó megjelenítése"
+
+#~ msgid "Static Key:"
+#~ msgstr "Statikus kulcs:"
+
+#~ msgid "Subject Match:"
+#~ msgstr "Alany egyezik:"
+
+#~ msgid "Use L_ZO data compression"
+#~ msgstr "L_ZO tömörítés használata"
+
+#~ msgid "Use a _TCP connection"
+#~ msgstr "T_CP kapcsolat használata"
+
+#~ msgid "Use additional TLS authentication"
+#~ msgstr "Kiegészítő TLS hitelesítés használata"
+
+#~ msgid "Use custom UDP _fragment size:"
+#~ msgstr "Egyéni _UDP-darab méret használata:"
+
+#~ msgid "Use custom _renegotiation interval:"
+#~ msgstr "_Egyéni újratárgyalási időköz használata:"
+
+#~ msgid "User Certificate:"
+#~ msgstr "Felhasználói tanúsítvány:"
+
+#~ msgid "User name:"
+#~ msgstr "Felhasználónév:"
+
+#~ msgid "No VPN secrets!"
+#~ msgstr "Nincs VPN-titok!"
+
+#~ msgid "Invalid HMAC auth."
+#~ msgstr "Érvénytelen HMAC azonosítás."
+
+#~ msgid "Invalid connection type."
+#~ msgstr "Érvénytelen kapcsolattípus."
+
+#~ msgid "Invalid proxy type '%s'."
+#~ msgstr "Érvénytelen proxytípus: „%s”."
+
+#~ msgid "Invalid reneg seconds '%s'."
+#~ msgstr "Érvénytelen reneg seconds érték: „%s”."
+
+#~ msgid "Invalid fragment size '%s'."
+#~ msgstr "Érvénytelen töredékméret: „%s”."
+
+#~ msgid "Could not process the request because no username was provided."
+#~ msgstr ""
+#~ "A kérés feldolgozása sikertelen, mivel nem adott meg felhasználónevet."

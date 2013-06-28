@@ -6,413 +6,556 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NetworkManager-ssh GNOME TRUNK\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-13 14:35+0000\n"
+"POT-Creation-Date: 2013-06-29 00:41+1000\n"
 "PO-Revision-Date: 2008-06-06 14:34+0930\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
+"Language: vi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: LocFactoryEditor 1.7b3\n"
 
-#: ../auth-dialog/gnome-two-password-dialog.c:145
-msgid "_Password:"
-msgstr "_Mật khẩu :"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:146
-msgid "_Secondary Password:"
-msgstr "Mật khẩu _phụ :"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:263
-msgid "_Username:"
-msgstr "_Tên người dùng:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:265
-msgid "_Domain:"
-msgstr "_Miền:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:357
-msgid "Connect _anonymously"
-msgstr "Kết nối nặc d_anh"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:362
-msgid "Connect as _user:"
-msgstr "Kết nối _với tư cách người dùng:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:471
-msgid "_Remember password for this session"
-msgstr "Nhớ mật khẩu cho _buổi hợp này"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:473
-msgid "_Save password in keyring"
-msgstr "_Lưu mật khẩu trong vòng khoá"
-
-#: ../auth-dialog/main.c:181
+#. Otherwise, we have no saved password, or the password flags indicated
+#. * that the password should never be saved.
+#.
+#: ../auth-dialog/main.c:141
 #, c-format
 msgid "You need to authenticate to access the Virtual Private Network '%s'."
 msgstr "Bạn cần phải xác thực để truy cập Mạng Riêng Ảo (VPN) « %s »."
 
-#: ../auth-dialog/main.c:182
+#: ../auth-dialog/main.c:150 ../auth-dialog/main.c:170
 msgid "Authenticate VPN"
 msgstr "Xác thực VPN"
 
-#: ../auth-dialog/main.c:195
-msgid "Certificate pass_word:"
-msgstr "Mật _khẩu chứng nhận:"
+#: ../auth-dialog/main.c:152 ../properties/nm-ssh-dialog.ui.h:27
+#, fuzzy
+msgid "Password:"
+msgstr "_Mật khẩu :"
 
-#: ../auth-dialog/main.c:210
-msgid "Certificate password:"
-msgstr "Mật khẩu chứng nhận:"
+#: ../auth-dialog/main.c:291
+#, c-format
+msgid ""
+"Couldn't find '%s' environment variable.\n"
+"\n"
+"Is ssh-agent running?"
+msgstr ""
 
-#: ../properties/nm-ssh.c:150
-msgid "SSH Client"
+#: ../properties/advanced-dialog.c:137
+msgid ""
+"You have chosen not to use 'root' as the remote username.\n"
+"\n"
+"Please make sure the user you specify is allowed to open tun/tap devices on "
+"the remote host."
+msgstr ""
+
+#: ../properties/nm-ssh.c:49
+msgid "SSH"
+msgstr ""
+
+#: ../properties/nm-ssh.c:50
+msgid "Compatible with the SSH server."
+msgstr ""
+
+#: ../properties/nm-ssh.c:538
+#, fuzzy
+msgid "SSH Agent"
 msgstr "Ứng dụng khách SSH"
 
-#: ../properties/nm-ssh.c:824
-msgid "The following SSH connection will be created:"
-msgstr "Kết nối SSH này sẽ được tạo :"
+#: ../properties/nm-ssh.c:551
+#, fuzzy
+msgid "Password"
+msgstr "_Mật khẩu :"
 
-#: ../properties/nm-ssh.c:826
-#, c-format
-msgid "Name:  %s"
-msgstr "Tên: %s"
+#: ../properties/nm-ssh.c:564
+#, fuzzy
+msgid "Key Authentication"
+msgstr "Xác thực VPN"
 
-#: ../properties/nm-ssh.c:834
-msgid "Connection Type: X.509 Certificates"
-msgstr "Kiểu kết nối: chứng nhận X.509"
-
-#: ../properties/nm-ssh.c:837
-#: ../properties/nm-ssh.c:864
-#: ../properties/nm-ssh.c:876
-#, c-format
-msgid "CA:  %s"
-msgstr "Nhà cầm quyền chứng nhận: %s"
-
-#: ../properties/nm-ssh.c:840
-#: ../properties/nm-ssh.c:879
-#, c-format
-msgid "Cert:  %s"
-msgstr "Chứng nhận: %s"
-
-#: ../properties/nm-ssh.c:843
-#: ../properties/nm-ssh.c:882
-#, c-format
-msgid "Key:  %s"
-msgstr "Khoá: %s"
-
-#: ../properties/nm-ssh.c:847
-msgid "Connection Type: Shared Key"
-msgstr "Kiểu kết nối: khoá chia sẻ"
-
-#: ../properties/nm-ssh.c:850
-#, c-format
-msgid "Shared Key:  %s"
-msgstr "Khoá chia sẻ: %s"
-
-#: ../properties/nm-ssh.c:853
-#, c-format
-msgid "Local IP:  %s"
-msgstr "IP cục bộ : %s"
-
-#: ../properties/nm-ssh.c:856
-#, c-format
-msgid "Remote IP:  %s"
-msgstr "IP ở xa: %s"
-
-#: ../properties/nm-ssh.c:861
-msgid "Connection Type: Password"
-msgstr "Kiểu kết nối: mật khẩu"
-
-#: ../properties/nm-ssh.c:867
-#: ../properties/nm-ssh.c:885
-#, c-format
-msgid "Username:  %s"
-msgstr "Tên người dùng: %s"
-
-#: ../properties/nm-ssh.c:873
-msgid "Connection Type: X.509 with Password Authentication"
-msgstr "Kiểu kết nối: X.509 và xác thực mật khẩu"
-
-#: ../properties/nm-ssh.c:891
-#, c-format
-msgid "Remote:  %s"
-msgstr "Ở xa: %s"
-
-#: ../properties/nm-ssh.c:894
-#, c-format
-msgid "Port:  %s"
-msgstr "Cổng: %s"
-
-#: ../properties/nm-ssh.c:897
-#, c-format
-msgid "Device: %s"
-msgstr "Thiết bị: %s"
-
-#: ../properties/nm-ssh.c:897
-msgid "TAP"
-msgstr "TAP"
-
-#: ../properties/nm-ssh.c:897
-msgid "TUN"
-msgstr "TUN"
-
-#: ../properties/nm-ssh.c:900
-#, c-format
-msgid "Protocol: %s"
-msgstr "Giao thức: %s"
-
-#: ../properties/nm-ssh.c:900
-msgid "TCP"
-msgstr "TCP"
-
-#: ../properties/nm-ssh.c:900
-msgid "UDP"
-msgstr "UDP"
-
-#: ../properties/nm-ssh.c:904
-#, c-format
-msgid "Routes:  %s"
-msgstr "Tuyến: %s"
-
-#: ../properties/nm-ssh.c:908
-#, c-format
-msgid "Use LZO Compression: %s"
-msgstr "Nén bằng LZO: %s"
-
-#: ../properties/nm-ssh.c:908
-msgid "Yes"
-msgstr "Có"
-
-#: ../properties/nm-ssh.c:908
-msgid "No"
-msgstr "Không"
-
-#: ../properties/nm-ssh.c:912
-#, c-format
-msgid "Cipher:  %s"
-msgstr "Mật mã: %s"
-
-#: ../properties/nm-ssh.c:917
-#, c-format
-msgid "TLS auth:  %s %s"
-msgstr "Xác thực TLS: %s %s"
-
-#: ../properties/nm-ssh.c:921
-msgid "The connection details can be changed using the \"Edit\" button."
-msgstr "Chi tiết kết nối có thể được sửa đổi dùng nút « Sửa »."
-
-#: ../properties/nm-ssh.c:1151
-msgid "Cannot import settings"
-msgstr "Không thể nhập thiết lập"
-
-#: ../properties/nm-ssh.c:1153
-#, c-format
-msgid "The VPN settings file '%s' does not contain valid data."
-msgstr "Tập tin thiết lập VPN « %s » không chứa dữ liệu hợp lệ."
-
-#: ../properties/nm-ssh.c:1200
-msgid "Select file to import"
-msgstr "Chọn tập tin cần nhập vào"
-
-#: ../properties/nm-ssh.c:1259
-#: ../properties/nm-ssh.c:1271
-#: ../properties/nm-ssh.c:1274
-msgid "Select CA to use"
-msgstr "Chọn nhà cầm quyền chứng nhận (CA) cần dùng"
-
-#: ../properties/nm-ssh.c:1262
-#: ../properties/nm-ssh.c:1277
-msgid "Select certificate to use"
-msgstr "Chọn chứng nhận cần dùng"
-
-#: ../properties/nm-ssh.c:1265
-#: ../properties/nm-ssh.c:1280
-msgid "Select key to use"
-msgstr "Chọn khoá cần dùng"
-
-#: ../properties/nm-ssh.c:1268
-msgid "Select shared key to use"
-msgstr "Chọn khoá chia sẻ cần dùng"
-
-#: ../properties/nm-ssh.c:1283
-msgid "Select TA to use"
-msgstr "Chọn TA cần dùng"
-
-#: ../properties/nm-ssh.c:1525
-#. printf ("in impl_export\n");
-msgid "Save as..."
-msgstr "Lưu dạng..."
-
-#: ../properties/nm-ssh.c:1554
-#, c-format
-msgid "A file named \"%s\" already exists."
-msgstr "Một tập tin tên « %s » đã có."
-
-#: ../properties/nm-ssh.c:1557
-msgid "Do you want to replace it with the one you are saving?"
-msgstr "Bạn có muốn thay thế nó bằng tập tin đang lưu không?"
-
-#: ../properties/nm-ssh.c:1571
-msgid "Failed to export configuration"
-msgstr "Lỗi xuất cấu hình"
-
-#: ../properties/nm-ssh.c:1573
-#, c-format
-msgid "Failed to save file %s"
-msgstr "Lỗi lưu tập tin %s"
-
-#: ../properties/nm-ssh-dialog.glade.h:1
-msgid "(Default: 1194)"
-msgstr "(Mặc định: 1194)"
-
-#: ../properties/nm-ssh-dialog.glade.h:2
-msgid "65536"
-msgstr "65536"
-
-#: ../properties/nm-ssh-dialog.glade.h:3
-msgid "<i>example: 172.16.0.0/16 10.11.12.0/24</i>"
-msgstr "<i>v.d.: 172.16.0.0/16 10.11.12.0/24</i>"
-
-#: ../properties/nm-ssh-dialog.glade.h:4
-msgid "Ad_vanced"
-msgstr "Cấp ca_o"
-
-#: ../properties/nm-ssh-dialog.glade.h:5
-msgid "C_A file:"
-msgstr "Tập tin nhà cầm _quyền chứng nhận:"
-
-#: ../properties/nm-ssh-dialog.glade.h:6
-msgid "C_ertificate:"
-msgstr "C_hứng nhận:"
-
-#: ../properties/nm-ssh-dialog.glade.h:7
-msgid "Co_nnection type:"
-msgstr "Kiểu kết _nối:"
-
-#: ../properties/nm-ssh-dialog.glade.h:8
-msgid "Connection na_me:"
-msgstr "Tên _kết nối:"
-
-#: ../properties/nm-ssh-dialog.glade.h:9
-msgid "Direction:"
-msgstr "Hướng:"
-
-#: ../properties/nm-ssh-dialog.glade.h:10
-msgid "Import _Saved Configuration..."
-msgstr "Nhập cấu hình đã _lưu..."
-
-#: ../properties/nm-ssh-dialog.glade.h:11
-msgid ""
-"Name used to identify the connection to the private network, e.g. \"Campus "
-"VPN\" or \"Corporate Network\""
+#: ../properties/nm-ssh-dialog.ui.h:1
+msgid " "
 msgstr ""
-"Tên dùng để nhận diện kết nối cho mạng riêng, v.d. « VPN đại học » hay « Mạng "
-"công ty »."
 
-#: ../properties/nm-ssh-dialog.glade.h:12
-msgid "Network"
-msgstr "Mạng"
+#: ../properties/nm-ssh-dialog.ui.h:2
+msgid "Not required"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:13
-msgid "Only use _VPN connection for these addresses:"
-msgstr "Chỉ dùng kết nối _VPN cho những địa chỉ này:"
-
-#: ../properties/nm-ssh-dialog.glade.h:14
+#: ../properties/nm-ssh-dialog.ui.h:3
 msgid "SSH Advanced Options"
 msgstr "Tùy chọn cấp cao SSH"
 
-#: ../properties/nm-ssh-dialog.glade.h:15
-msgid "SSH Configuration"
-msgstr "Cấu hình SSH"
-
-#: ../properties/nm-ssh-dialog.glade.h:16
-msgid ""
-"Please enter the information provided by your system administrator below. Do "
-"not enter your password here as you will be prompted when connecting."
-msgstr ""
-"Hãy gõ dưới đây thông tin được cung cấp bởi nhà quản trị hệ thống. Đừng gõ mật khẩu vào đây: bạn sẽ được nhắc gõ nó trong khi kết nối."
-
-#: ../properties/nm-ssh-dialog.glade.h:17
-msgid ""
-"Please note that the file you import is not an SSH configuration file. "
-"Ask your administrator for the file."
-msgstr ""
-"Ghi chú : tập tin nhập vào không phải là tập tin cấu hình SSH. Hãy xin nhà "
-"quản trị hệ thống cung cấp tập tin đó."
-
-#: ../properties/nm-ssh-dialog.glade.h:18
-msgid "Shared _key:"
-msgstr "_Khoá chia sẻ:"
-
-#: ../properties/nm-ssh-dialog.glade.h:19
-msgid "TLS-Auth"
-msgstr "XácT-TLS"
-
-#: ../properties/nm-ssh-dialog.glade.h:20
-msgid "Use L_ZO compression"
-msgstr "Nén bằng L_ZO"
-
-#: ../properties/nm-ssh-dialog.glade.h:21
-msgid "Use TA_P device"
-msgstr "Dùng thiết bị TA_P"
-
-#: ../properties/nm-ssh-dialog.glade.h:22
-msgid "Use _TCP connection"
-msgstr "Dùng kết nối _TCP"
-
-#: ../properties/nm-ssh-dialog.glade.h:23
-msgid "Use _TLS auth:"
-msgstr "Dùng xác thực ĐTLS:"
-
-#: ../properties/nm-ssh-dialog.glade.h:24
-msgid "Use cip_her:"
-msgstr "Dùng _mật mã:"
-
-#: ../properties/nm-ssh-dialog.glade.h:25
-msgid ""
-"X.509 Certificates\n"
-"Pre-shared key\n"
-"Password Authentication\n"
-"X.509 with Password Authentication"
-msgstr ""
-"Chứng nhận X.509\n"
-"Khoá chia sẻ sẵn\n"
-"Xác thực bằng mật khẩu\n"
-"X.509 và xác thực bằng mật khẩu"
-
-#: ../properties/nm-ssh-dialog.glade.h:29
-msgid "_0"
-msgstr "_0"
-
-#: ../properties/nm-ssh-dialog.glade.h:30
-msgid "_1"
-msgstr "_1"
-
-#: ../properties/nm-ssh-dialog.glade.h:31
-msgid "_Gateway address:"
-msgstr "Địa chỉ cổn_g ra:"
-
-#: ../properties/nm-ssh-dialog.glade.h:32
-msgid "_Gateway port:"
+#: ../properties/nm-ssh-dialog.ui.h:4
+#, fuzzy
+msgid "Use custom gateway port:"
 msgstr "Cổn_g là cổng ra:"
 
-#: ../properties/nm-ssh-dialog.glade.h:33
-msgid "_Key:"
-msgstr "_Phím:"
+#: ../properties/nm-ssh-dialog.ui.h:5
+msgid "Use custom tunnel Maximum Transmission Unit (MTU):"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:34
-msgid "_Local IP:"
-msgstr "IP cục _bộ :"
+#: ../properties/nm-ssh-dialog.ui.h:6
+msgid "Extra SSH options:"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:35
-msgid "_Remote IP:"
-msgstr "IP ở _xa:"
+#: ../properties/nm-ssh-dialog.ui.h:7
+msgid "Remote device number:"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:36
-msgid "_User name:"
+#: ../properties/nm-ssh-dialog.ui.h:8
+#, fuzzy
+msgid "Use a TAP device"
+msgstr "Dùng thiết bị TA_P"
+
+#: ../properties/nm-ssh-dialog.ui.h:9
+#, fuzzy
+msgid "Remote username:"
 msgstr "_Tên người dùng:"
 
-#: ../properties/nm-ssh-dialog.glade.h:37
-msgid "_none"
-msgstr "khô_ng có"
+#: ../properties/nm-ssh-dialog.ui.h:10
+msgid "Do not replace default route"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:11
+msgid "General"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:12
+msgid "<b>General</b>"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:13
+#, fuzzy
+msgid "Gateway:"
+msgstr "Cổn_g là cổng ra:"
+
+#: ../properties/nm-ssh-dialog.ui.h:14
+msgid "<b>Network Settings</b>"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:15
+#, fuzzy
+msgid "Remote IP Address:"
+msgstr "IP ở _xa:"
+
+#: ../properties/nm-ssh-dialog.ui.h:16
+#, fuzzy
+msgid "Local IP Address:"
+msgstr "IP cục bộ : %s"
+
+#: ../properties/nm-ssh-dialog.ui.h:17
+msgid "Netmask:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:18
+msgid "<b>IPv6 Network Settings</b>"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:19
+msgid "Use IPv6"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:20
+msgid "Remote IP Address (IPv6):"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:21
+msgid "Local IP Address (IPv6):"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:22
+msgid "Prefix (IPv6):"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:23
+#, fuzzy
+msgid "Advanced..."
+msgstr "Cấp ca_o"
+
+#: ../properties/nm-ssh-dialog.ui.h:24
+msgid "<b>Authentication</b>"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:25
+msgid "Type:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:26
+msgid "Select an authentication mode."
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:28
+#, fuzzy
+msgid "Show Passwords"
+msgstr "_Mật khẩu :"
+
+#: ../properties/nm-ssh-dialog.ui.h:29
+msgid "SSH Key File:"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:195
+#, c-format
+msgid "invalid address '%s'"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:207
+#, c-format
+msgid "invalid integer property '%s' or out of range [%d -> %d]"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:217
+#, c-format
+msgid "invalid boolean property '%s' (not yes or no)"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:224
+#, c-format
+msgid "unhandled property '%s' type %s"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:235
+#, c-format
+msgid "property '%s' invalid or not supported"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:252
+msgid "No VPN configuration options."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1010
+msgid "Could not find the ssh binary."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1035
+msgid "Could not find the sshpass binary."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1053
+msgid "No password specified."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1090
+msgid "Key authentication selected, but no key file specified."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1110
+msgid "Missing required SSH_AUTH_SOCK."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1124 ../src/nm-ssh-service.c:1585
+#, c-format
+msgid "Unknown authentication type: %s."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1194
+#, c-format
+msgid "Please set remote address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1210
+#, c-format
+msgid "Invalid port number '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1229
+#, c-format
+msgid "Invalid TUN MTU size '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1248
+#, c-format
+msgid "Invalid TUN/TAP device number '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1267
+msgid "Missing required remote IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1281
+msgid "Missing required local IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1297
+msgid "Missing required netmask."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1317
+msgid "Missing required IPv6 remote IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1331
+msgid "Missing required IPv6 local IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1345
+msgid "Missing required IPv6 netmask."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1504 ../src/nm-ssh-service.c:1545
+msgid ""
+"Could not process the request because the VPN connection settings were "
+"invalid."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1709
+msgid "Don't quit when VPN connection terminates"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1710
+msgid "Enable verbose debug logging (may expose passwords)"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1726
+msgid "nm-ssh-service provides integrated SSH capability to NetworkManager."
+msgstr ""
+
+#~ msgid "_Secondary Password:"
+#~ msgstr "Mật khẩu _phụ :"
+
+#~ msgid "_Domain:"
+#~ msgstr "_Miền:"
+
+#~ msgid "Connect _anonymously"
+#~ msgstr "Kết nối nặc d_anh"
+
+#~ msgid "Connect as _user:"
+#~ msgstr "Kết nối _với tư cách người dùng:"
+
+#~ msgid "_Remember password for this session"
+#~ msgstr "Nhớ mật khẩu cho _buổi hợp này"
+
+#~ msgid "_Save password in keyring"
+#~ msgstr "_Lưu mật khẩu trong vòng khoá"
+
+#~ msgid "Certificate pass_word:"
+#~ msgstr "Mật _khẩu chứng nhận:"
+
+#~ msgid "Certificate password:"
+#~ msgstr "Mật khẩu chứng nhận:"
+
+#~ msgid "The following SSH connection will be created:"
+#~ msgstr "Kết nối SSH này sẽ được tạo :"
+
+#~ msgid "Name:  %s"
+#~ msgstr "Tên: %s"
+
+#~ msgid "Connection Type: X.509 Certificates"
+#~ msgstr "Kiểu kết nối: chứng nhận X.509"
+
+#~ msgid "CA:  %s"
+#~ msgstr "Nhà cầm quyền chứng nhận: %s"
+
+#~ msgid "Cert:  %s"
+#~ msgstr "Chứng nhận: %s"
+
+#~ msgid "Key:  %s"
+#~ msgstr "Khoá: %s"
+
+#~ msgid "Connection Type: Shared Key"
+#~ msgstr "Kiểu kết nối: khoá chia sẻ"
+
+#~ msgid "Shared Key:  %s"
+#~ msgstr "Khoá chia sẻ: %s"
+
+#~ msgid "Remote IP:  %s"
+#~ msgstr "IP ở xa: %s"
+
+#~ msgid "Connection Type: Password"
+#~ msgstr "Kiểu kết nối: mật khẩu"
+
+#~ msgid "Username:  %s"
+#~ msgstr "Tên người dùng: %s"
+
+#~ msgid "Connection Type: X.509 with Password Authentication"
+#~ msgstr "Kiểu kết nối: X.509 và xác thực mật khẩu"
+
+#~ msgid "Remote:  %s"
+#~ msgstr "Ở xa: %s"
+
+#~ msgid "Port:  %s"
+#~ msgstr "Cổng: %s"
+
+#~ msgid "Device: %s"
+#~ msgstr "Thiết bị: %s"
+
+#~ msgid "TAP"
+#~ msgstr "TAP"
+
+#~ msgid "TUN"
+#~ msgstr "TUN"
+
+#~ msgid "Protocol: %s"
+#~ msgstr "Giao thức: %s"
+
+#~ msgid "TCP"
+#~ msgstr "TCP"
+
+#~ msgid "UDP"
+#~ msgstr "UDP"
+
+#~ msgid "Routes:  %s"
+#~ msgstr "Tuyến: %s"
+
+#~ msgid "Use LZO Compression: %s"
+#~ msgstr "Nén bằng LZO: %s"
+
+#~ msgid "Yes"
+#~ msgstr "Có"
+
+#~ msgid "No"
+#~ msgstr "Không"
+
+#~ msgid "Cipher:  %s"
+#~ msgstr "Mật mã: %s"
+
+#~ msgid "TLS auth:  %s %s"
+#~ msgstr "Xác thực TLS: %s %s"
+
+#~ msgid "The connection details can be changed using the \"Edit\" button."
+#~ msgstr "Chi tiết kết nối có thể được sửa đổi dùng nút « Sửa »."
+
+#~ msgid "Cannot import settings"
+#~ msgstr "Không thể nhập thiết lập"
+
+#~ msgid "The VPN settings file '%s' does not contain valid data."
+#~ msgstr "Tập tin thiết lập VPN « %s » không chứa dữ liệu hợp lệ."
+
+#~ msgid "Select file to import"
+#~ msgstr "Chọn tập tin cần nhập vào"
+
+#~ msgid "Select CA to use"
+#~ msgstr "Chọn nhà cầm quyền chứng nhận (CA) cần dùng"
+
+#~ msgid "Select certificate to use"
+#~ msgstr "Chọn chứng nhận cần dùng"
+
+#~ msgid "Select key to use"
+#~ msgstr "Chọn khoá cần dùng"
+
+#~ msgid "Select shared key to use"
+#~ msgstr "Chọn khoá chia sẻ cần dùng"
+
+#~ msgid "Select TA to use"
+#~ msgstr "Chọn TA cần dùng"
+
+#~ msgid "Save as..."
+#~ msgstr "Lưu dạng..."
+
+#~ msgid "A file named \"%s\" already exists."
+#~ msgstr "Một tập tin tên « %s » đã có."
+
+#~ msgid "Do you want to replace it with the one you are saving?"
+#~ msgstr "Bạn có muốn thay thế nó bằng tập tin đang lưu không?"
+
+#~ msgid "Failed to export configuration"
+#~ msgstr "Lỗi xuất cấu hình"
+
+#~ msgid "Failed to save file %s"
+#~ msgstr "Lỗi lưu tập tin %s"
+
+#~ msgid "(Default: 1194)"
+#~ msgstr "(Mặc định: 1194)"
+
+#~ msgid "65536"
+#~ msgstr "65536"
+
+#~ msgid "<i>example: 172.16.0.0/16 10.11.12.0/24</i>"
+#~ msgstr "<i>v.d.: 172.16.0.0/16 10.11.12.0/24</i>"
+
+#~ msgid "C_A file:"
+#~ msgstr "Tập tin nhà cầm _quyền chứng nhận:"
+
+#~ msgid "C_ertificate:"
+#~ msgstr "C_hứng nhận:"
+
+#~ msgid "Co_nnection type:"
+#~ msgstr "Kiểu kết _nối:"
+
+#~ msgid "Connection na_me:"
+#~ msgstr "Tên _kết nối:"
+
+#~ msgid "Direction:"
+#~ msgstr "Hướng:"
+
+#~ msgid "Import _Saved Configuration..."
+#~ msgstr "Nhập cấu hình đã _lưu..."
+
+#~ msgid ""
+#~ "Name used to identify the connection to the private network, e.g. "
+#~ "\"Campus VPN\" or \"Corporate Network\""
+#~ msgstr ""
+#~ "Tên dùng để nhận diện kết nối cho mạng riêng, v.d. « VPN đại học » hay « "
+#~ "Mạng công ty »."
+
+#~ msgid "Network"
+#~ msgstr "Mạng"
+
+#~ msgid "Only use _VPN connection for these addresses:"
+#~ msgstr "Chỉ dùng kết nối _VPN cho những địa chỉ này:"
+
+#~ msgid "SSH Configuration"
+#~ msgstr "Cấu hình SSH"
+
+#~ msgid ""
+#~ "Please enter the information provided by your system administrator below. "
+#~ "Do not enter your password here as you will be prompted when connecting."
+#~ msgstr ""
+#~ "Hãy gõ dưới đây thông tin được cung cấp bởi nhà quản trị hệ thống. Đừng "
+#~ "gõ mật khẩu vào đây: bạn sẽ được nhắc gõ nó trong khi kết nối."
+
+#~ msgid ""
+#~ "Please note that the file you import is not an SSH configuration file. "
+#~ "Ask your administrator for the file."
+#~ msgstr ""
+#~ "Ghi chú : tập tin nhập vào không phải là tập tin cấu hình SSH. Hãy xin "
+#~ "nhà quản trị hệ thống cung cấp tập tin đó."
+
+#~ msgid "Shared _key:"
+#~ msgstr "_Khoá chia sẻ:"
+
+#~ msgid "TLS-Auth"
+#~ msgstr "XácT-TLS"
+
+#~ msgid "Use L_ZO compression"
+#~ msgstr "Nén bằng L_ZO"
+
+#~ msgid "Use _TCP connection"
+#~ msgstr "Dùng kết nối _TCP"
+
+#~ msgid "Use _TLS auth:"
+#~ msgstr "Dùng xác thực ĐTLS:"
+
+#~ msgid "Use cip_her:"
+#~ msgstr "Dùng _mật mã:"
+
+#~ msgid ""
+#~ "X.509 Certificates\n"
+#~ "Pre-shared key\n"
+#~ "Password Authentication\n"
+#~ "X.509 with Password Authentication"
+#~ msgstr ""
+#~ "Chứng nhận X.509\n"
+#~ "Khoá chia sẻ sẵn\n"
+#~ "Xác thực bằng mật khẩu\n"
+#~ "X.509 và xác thực bằng mật khẩu"
+
+#~ msgid "_0"
+#~ msgstr "_0"
+
+#~ msgid "_1"
+#~ msgstr "_1"
+
+#~ msgid "_Gateway address:"
+#~ msgstr "Địa chỉ cổn_g ra:"
+
+#~ msgid "_Key:"
+#~ msgstr "_Phím:"
+
+#~ msgid "_Local IP:"
+#~ msgstr "IP cục _bộ :"
+
+#~ msgid "_User name:"
+#~ msgstr "_Tên người dùng:"
+
+#~ msgid "_none"
+#~ msgstr "khô_ng có"

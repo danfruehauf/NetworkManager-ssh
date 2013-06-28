@@ -7,259 +7,426 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: network-manager-ssh.master.te\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=NetworkManager&component=VPN: ssh\n"
-"POT-Creation-Date: 2009-09-28 11:36+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-06-29 00:41+1000\n"
 "PO-Revision-Date: 2009-10-27 19:25+0530\n"
 "Last-Translator: Krishna Babu K <kkrothap@redhat.com>\n"
 "Language-Team: Telugu <en@li.org>\n"
+"Language: te\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms: nplurals=2; plural=(n!=1);\n\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"\n"
 "\n"
 
-#: ../auth-dialog/gnome-two-password-dialog.c:130
-msgid "_Password:"
-msgstr "సంకేతపదము (_P):"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:131
-msgid "_Secondary Password:"
-msgstr "రెండవ సంకేతపదము (_S):"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:248
-msgid "_Username:"
-msgstr "వినియోగదారినామము (_U):"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:250
-msgid "_Domain:"
-msgstr "డొమైన్ (_D):"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:342
-msgid "Connect _anonymously"
-msgstr "నామములేకుండా అనుసంధానము అవ్వుము (_a)"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:347
-msgid "Connect as _user:"
-msgstr "వినియోగదారివలె అనుసంధానము అవ్వుము(_u):"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:456
-msgid "_Remember password for this session"
-msgstr "ఈ సెషన్ కొరకు సంకేతపదమును గుర్తుంచుకొనుము (_R)"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:458
-msgid "_Save password in keyring"
-msgstr "సంకేతపదమును కీరింగ్ నందు దాయుము (_S)"
-
-#: ../auth-dialog/main.c:127
+#. Otherwise, we have no saved password, or the password flags indicated
+#. * that the password should never be saved.
+#.
+#: ../auth-dialog/main.c:141
 #, c-format
 msgid "You need to authenticate to access the Virtual Private Network '%s'."
 msgstr "వర్చ్యువల్ వ్యక్తిగత నెట్వర్కు '%s'ను యాక్సిస్ చేయుటకు మీరు దృవీకరింపబడవలసి వుంది."
 
-#: ../auth-dialog/main.c:128
+#: ../auth-dialog/main.c:150 ../auth-dialog/main.c:170
 msgid "Authenticate VPN"
 msgstr "VPN దృవీకరించుము"
 
-#: ../auth-dialog/main.c:149
-msgid "Certificate pass_word:"
-msgstr "దృవీకరణపత్రము సంకేతపదము (_w):"
-
-#: ../auth-dialog/main.c:163
-msgid "Certificate password:"
-msgstr "దృవీకరణపత్రము సంకేతపదము:"
-
-#: ../properties/auth-helpers.c:160
-msgid "Choose a Certificate Authority certificate..."
-msgstr "దృవీకరణపత్రము అధికారికం దృవీకరణపత్రము యెంచుకొనుము..."
-
-#: ../properties/auth-helpers.c:179
-msgid "Choose your personal certificate..."
-msgstr "మీ వ్యక్తిగత దృవీకరణపత్రమును యెంచుకొనుము..."
-
-#: ../properties/auth-helpers.c:197
-msgid "Choose your private key..."
-msgstr "మీ వ్యక్తిగత కీను యెంచుకొనుము..."
-
-#: ../properties/auth-helpers.c:250
-msgid "Choose an SSH static key..."
-msgstr "SSH స్టాటిక్ కీను యెంచుకొనుము..."
-
-#: ../properties/auth-helpers.c:274 ../properties/auth-helpers.c:949
-#: ../properties/auth-helpers.c:1126
-msgid "None"
-msgstr "ఏదీకాదు"
-
-#: ../properties/auth-helpers.c:691
-msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
-msgstr "PEM దృవీకరణపత్రములు (*.pem, *.crt, *.key, *.cer)"
-
-#: ../properties/auth-helpers.c:751
-msgid "SSH Static Keys (*.key)"
-msgstr "SSH స్టాటిక్ కీలు (*.key)"
-
-#: ../properties/auth-helpers.c:871 ../properties/auth-helpers.c:941
-msgid "Default"
-msgstr "అప్రమేయం"
-
-#: ../properties/auth-helpers.c:951
-msgid "MD-5"
-msgstr "MD-5"
-
-#: ../properties/auth-helpers.c:953
-msgid "SHA-1"
-msgstr "SHA-1"
-
-#: ../properties/nm-ssh.c:53
-msgid "SSH"
-msgstr "SSH"
-
-#: ../properties/nm-ssh.c:54
-msgid "Compatible with the SSH server."
-msgstr "SSH సేవికతో సారూప్యం."
-
-#: ../properties/nm-ssh.c:322
-msgid "Certificates (TLS)"
-msgstr "దృవీకరణపత్రములు (TLS)"
-
-#: ../properties/nm-ssh.c:336
-msgid "Password"
-msgstr "సంకేతపదము"
-
-#: ../properties/nm-ssh.c:353
-msgid "Password with Certificates (TLS)"
-msgstr "దృవీకరణపత్రములు (TLS)తో సంకేతపదము"
-
-#: ../properties/nm-ssh.c:365
-msgid "Static Key"
-msgstr "స్టాటిక్ కీ"
-
-#: ../properties/nm-ssh-dialog.glade.h:1
-msgid " "
-msgstr " "
-
-#: ../properties/nm-ssh-dialog.glade.h:2
-msgid "<b>Authentication</b>"
-msgstr "<b>దృవీకరణము</b>"
-
-#: ../properties/nm-ssh-dialog.glade.h:3
-msgid "<b>General</b>"
-msgstr "<b>సాదారణ</b>"
-
-#: ../properties/nm-ssh-dialog.glade.h:4
-msgid ""
-"<i>If key direction is used, it must be the opposite of that used on the VPN "
-"peer.  For example, if the peer uses '1', this connection must use '0'.  If "
-"you are unsure what value to use, contact your system administrator.</i>"
-msgstr ""
-"<i>కీ దిశానిర్దేశం వుపయోగించుతుంటే, అది తప్పక VPN పీర్ నందు వుపయోగించన దానికి వ్యతిరేకంగా వుండాలి.  "
-"ఉదాహరణకు, పీర్ '1' వుపయోగిస్తుంటే, ఈ అనుసంధానం తప్పక '0' వుపయోగించాలి.  ఏ విలువ వుపయోగించాలో "
-"మీకు ఖచ్చితంగా తెలియకుంటే, మీ సిస్టమ్ నిర్వహణాధికారిని సంప్రదించండి.</i>"
-
-#: ../properties/nm-ssh-dialog.glade.h:5
-msgid "Ad_vanced..."
-msgstr "అధునాతన... (_v)"
-
-#: ../properties/nm-ssh-dialog.glade.h:6
-msgid "CA Certificate:"
-msgstr "CA దృవీకరణపత్రము:"
-
-#: ../properties/nm-ssh-dialog.glade.h:7
-msgid "Cipher:"
-msgstr "సైఫర్:"
-
-#: ../properties/nm-ssh-dialog.glade.h:8
-msgid "General"
-msgstr "సాదారణ"
-
-#: ../properties/nm-ssh-dialog.glade.h:9
-msgid "HMAC Authentication:"
-msgstr "HMAC దృవీకరణము:"
-
-#: ../properties/nm-ssh-dialog.glade.h:10
-msgid "Key Direction:"
-msgstr "కీ దిశ:"
-
-#: ../properties/nm-ssh-dialog.glade.h:11
-msgid "Key File:"
-msgstr "కీ దస్త్రము:"
-
-#: ../properties/nm-ssh-dialog.glade.h:12
-msgid "Local IP Address:"
-msgstr "స్థానిక IP చిరునామా:"
-
-#: ../properties/nm-ssh-dialog.glade.h:13
-msgid "SSH Advanced Options"
-msgstr "SSH అధునాతన ఐచ్చికములు"
-
-#: ../properties/nm-ssh-dialog.glade.h:14
+#: ../auth-dialog/main.c:152 ../properties/nm-ssh-dialog.ui.h:27
 msgid "Password:"
 msgstr "సంకేతపదము:"
 
-#: ../properties/nm-ssh-dialog.glade.h:15
-msgid "Private Key Password:"
-msgstr "వ్యక్తిగత కీ సంకేతపదము:"
+#: ../auth-dialog/main.c:291
+#, c-format
+msgid ""
+"Couldn't find '%s' environment variable.\n"
+"\n"
+"Is ssh-agent running?"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:16
-msgid "Private Key:"
-msgstr "వ్యక్తిగత కీ:"
+#: ../properties/advanced-dialog.c:137
+msgid ""
+"You have chosen not to use 'root' as the remote username.\n"
+"\n"
+"Please make sure the user you specify is allowed to open tun/tap devices on "
+"the remote host."
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:17
+#: ../properties/nm-ssh.c:49
+msgid "SSH"
+msgstr "SSH"
+
+#: ../properties/nm-ssh.c:50
+msgid "Compatible with the SSH server."
+msgstr "SSH సేవికతో సారూప్యం."
+
+#: ../properties/nm-ssh.c:538
+msgid "SSH Agent"
+msgstr ""
+
+#: ../properties/nm-ssh.c:551
+msgid "Password"
+msgstr "సంకేతపదము"
+
+#: ../properties/nm-ssh.c:564
+#, fuzzy
+msgid "Key Authentication"
+msgstr "TLS దృవీకరణ"
+
+#: ../properties/nm-ssh-dialog.ui.h:1
+msgid " "
+msgstr " "
+
+#: ../properties/nm-ssh-dialog.ui.h:2
+msgid "Not required"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:3
+msgid "SSH Advanced Options"
+msgstr "SSH అధునాతన ఐచ్చికములు"
+
+#: ../properties/nm-ssh-dialog.ui.h:4
+#, fuzzy
+msgid "Use custom gateway port:"
+msgstr "మలచుకొనిన గేట్‌వే పోర్టు వుపయోగించుము (_o):"
+
+#: ../properties/nm-ssh-dialog.ui.h:5
+msgid "Use custom tunnel Maximum Transmission Unit (MTU):"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:6
+msgid "Extra SSH options:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:7
+msgid "Remote device number:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:8
+#, fuzzy
+msgid "Use a TAP device"
+msgstr "TA_P పరికరాన్ని వుపయోగించుము"
+
+#: ../properties/nm-ssh-dialog.ui.h:9
+#, fuzzy
+msgid "Remote username:"
+msgstr "వినియోగదారినామము (_U):"
+
+#: ../properties/nm-ssh-dialog.ui.h:10
+msgid "Do not replace default route"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:11
+msgid "General"
+msgstr "సాదారణ"
+
+#: ../properties/nm-ssh-dialog.ui.h:12
+msgid "<b>General</b>"
+msgstr "<b>సాదారణ</b>"
+
+#: ../properties/nm-ssh-dialog.ui.h:13
+#, fuzzy
+msgid "Gateway:"
+msgstr "గేట్‌వే (_G):"
+
+#: ../properties/nm-ssh-dialog.ui.h:14
+msgid "<b>Network Settings</b>"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:15
 msgid "Remote IP Address:"
 msgstr "దూరస్థ IP చిరునామా:"
 
-#: ../properties/nm-ssh-dialog.glade.h:18
-msgid "Security"
-msgstr "రక్షణ"
+#: ../properties/nm-ssh-dialog.ui.h:16
+msgid "Local IP Address:"
+msgstr "స్థానిక IP చిరునామా:"
 
-#: ../properties/nm-ssh-dialog.glade.h:19
-msgid "Show passwords"
-msgstr "సంకేతపదములను చూపుము"
+#: ../properties/nm-ssh-dialog.ui.h:17
+msgid "Netmask:"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:20
-msgid "Static Key:"
-msgstr "స్టాటిక్ కీ:"
+#: ../properties/nm-ssh-dialog.ui.h:18
+msgid "<b>IPv6 Network Settings</b>"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:21
-msgid "TLS Authentication"
-msgstr "TLS దృవీకరణ"
+#: ../properties/nm-ssh-dialog.ui.h:19
+msgid "Use IPv6"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:22
+#: ../properties/nm-ssh-dialog.ui.h:20
+#, fuzzy
+msgid "Remote IP Address (IPv6):"
+msgstr "దూరస్థ IP చిరునామా:"
+
+#: ../properties/nm-ssh-dialog.ui.h:21
+#, fuzzy
+msgid "Local IP Address (IPv6):"
+msgstr "స్థానిక IP చిరునామా:"
+
+#: ../properties/nm-ssh-dialog.ui.h:22
+msgid "Prefix (IPv6):"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:23
+#, fuzzy
+msgid "Advanced..."
+msgstr "అధునాతన... (_v)"
+
+#: ../properties/nm-ssh-dialog.ui.h:24
+msgid "<b>Authentication</b>"
+msgstr "<b>దృవీకరణము</b>"
+
+#: ../properties/nm-ssh-dialog.ui.h:25
 msgid "Type:"
 msgstr "రకము:"
 
-#: ../properties/nm-ssh-dialog.glade.h:23
-msgid "Use L_ZO data compression"
-msgstr "L_ZO డాటా కుదింపును వుపయోగించుము"
+#: ../properties/nm-ssh-dialog.ui.h:26
+#, fuzzy
+msgid "Select an authentication mode."
+msgstr "TLS దృవీకరణ"
 
-#: ../properties/nm-ssh-dialog.glade.h:24
-msgid "Use a TA_P device"
-msgstr "TA_P పరికరాన్ని వుపయోగించుము"
+#: ../properties/nm-ssh-dialog.ui.h:28
+#, fuzzy
+msgid "Show Passwords"
+msgstr "సంకేతపదములను చూపుము"
 
-#: ../properties/nm-ssh-dialog.glade.h:25
-msgid "Use a _TCP connection"
-msgstr "_TCP అనుసంధానమును వుపయోగించుము"
+#: ../properties/nm-ssh-dialog.ui.h:29
+#, fuzzy
+msgid "SSH Key File:"
+msgstr "కీ దస్త్రము:"
 
-#: ../properties/nm-ssh-dialog.glade.h:26
-msgid "Use additional TLS authentication"
-msgstr "అదనపు TLS దృవీకరణము వుపయోగించుము"
+#: ../src/nm-ssh-service.c:195
+#, c-format
+msgid "invalid address '%s'"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:27
-msgid "Use custom _renegotiation interval:"
-msgstr "మలచుకొనిన అచర్చనీయ విరామంను వుపయోగించుము (_r):"
+#: ../src/nm-ssh-service.c:207
+#, c-format
+msgid "invalid integer property '%s' or out of range [%d -> %d]"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:28
-msgid "Use custom gateway p_ort:"
-msgstr "మలచుకొనిన గేట్‌వే పోర్టు వుపయోగించుము (_o):"
+#: ../src/nm-ssh-service.c:217
+#, c-format
+msgid "invalid boolean property '%s' (not yes or no)"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:29
-msgid "User Certificate:"
-msgstr "వినియోగదారి దృవీకరణపత్రము:"
+#: ../src/nm-ssh-service.c:224
+#, c-format
+msgid "unhandled property '%s' type %s"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:30
-msgid "User name:"
-msgstr "వినియోగదారి నామము:"
+#: ../src/nm-ssh-service.c:235
+#, c-format
+msgid "property '%s' invalid or not supported"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:31
-msgid "_Gateway:"
-msgstr "గేట్‌వే (_G):"
+#: ../src/nm-ssh-service.c:252
+msgid "No VPN configuration options."
+msgstr ""
 
+#: ../src/nm-ssh-service.c:1010
+msgid "Could not find the ssh binary."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1035
+msgid "Could not find the sshpass binary."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1053
+#, fuzzy
+msgid "No password specified."
+msgstr "సంకేతపదములను చూపుము"
+
+#: ../src/nm-ssh-service.c:1090
+msgid "Key authentication selected, but no key file specified."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1110
+msgid "Missing required SSH_AUTH_SOCK."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1124 ../src/nm-ssh-service.c:1585
+#, c-format
+msgid "Unknown authentication type: %s."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1194
+#, c-format
+msgid "Please set remote address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1210
+#, c-format
+msgid "Invalid port number '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1229
+#, c-format
+msgid "Invalid TUN MTU size '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1248
+#, c-format
+msgid "Invalid TUN/TAP device number '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1267
+msgid "Missing required remote IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1281
+msgid "Missing required local IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1297
+msgid "Missing required netmask."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1317
+msgid "Missing required IPv6 remote IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1331
+msgid "Missing required IPv6 local IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1345
+msgid "Missing required IPv6 netmask."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1504 ../src/nm-ssh-service.c:1545
+msgid ""
+"Could not process the request because the VPN connection settings were "
+"invalid."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1709
+msgid "Don't quit when VPN connection terminates"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1710
+msgid "Enable verbose debug logging (may expose passwords)"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1726
+msgid "nm-ssh-service provides integrated SSH capability to NetworkManager."
+msgstr ""
+
+#~ msgid "_Password:"
+#~ msgstr "సంకేతపదము (_P):"
+
+#~ msgid "_Secondary Password:"
+#~ msgstr "రెండవ సంకేతపదము (_S):"
+
+#~ msgid "_Domain:"
+#~ msgstr "డొమైన్ (_D):"
+
+#~ msgid "Connect _anonymously"
+#~ msgstr "నామములేకుండా అనుసంధానము అవ్వుము (_a)"
+
+#~ msgid "Connect as _user:"
+#~ msgstr "వినియోగదారివలె అనుసంధానము అవ్వుము(_u):"
+
+#~ msgid "_Remember password for this session"
+#~ msgstr "ఈ సెషన్ కొరకు సంకేతపదమును గుర్తుంచుకొనుము (_R)"
+
+#~ msgid "_Save password in keyring"
+#~ msgstr "సంకేతపదమును కీరింగ్ నందు దాయుము (_S)"
+
+#~ msgid "Certificate pass_word:"
+#~ msgstr "దృవీకరణపత్రము సంకేతపదము (_w):"
+
+#~ msgid "Certificate password:"
+#~ msgstr "దృవీకరణపత్రము సంకేతపదము:"
+
+#~ msgid "Choose a Certificate Authority certificate..."
+#~ msgstr "దృవీకరణపత్రము అధికారికం దృవీకరణపత్రము యెంచుకొనుము..."
+
+#~ msgid "Choose your personal certificate..."
+#~ msgstr "మీ వ్యక్తిగత దృవీకరణపత్రమును యెంచుకొనుము..."
+
+#~ msgid "Choose your private key..."
+#~ msgstr "మీ వ్యక్తిగత కీను యెంచుకొనుము..."
+
+#~ msgid "Choose an SSH static key..."
+#~ msgstr "SSH స్టాటిక్ కీను యెంచుకొనుము..."
+
+#~ msgid "None"
+#~ msgstr "ఏదీకాదు"
+
+#~ msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
+#~ msgstr "PEM దృవీకరణపత్రములు (*.pem, *.crt, *.key, *.cer)"
+
+#~ msgid "SSH Static Keys (*.key)"
+#~ msgstr "SSH స్టాటిక్ కీలు (*.key)"
+
+#~ msgid "Default"
+#~ msgstr "అప్రమేయం"
+
+#~ msgid "MD-5"
+#~ msgstr "MD-5"
+
+#~ msgid "SHA-1"
+#~ msgstr "SHA-1"
+
+#~ msgid "Certificates (TLS)"
+#~ msgstr "దృవీకరణపత్రములు (TLS)"
+
+#~ msgid "Password with Certificates (TLS)"
+#~ msgstr "దృవీకరణపత్రములు (TLS)తో సంకేతపదము"
+
+#~ msgid "Static Key"
+#~ msgstr "స్టాటిక్ కీ"
+
+#~ msgid ""
+#~ "<i>If key direction is used, it must be the opposite of that used on the "
+#~ "VPN peer.  For example, if the peer uses '1', this connection must use "
+#~ "'0'.  If you are unsure what value to use, contact your system "
+#~ "administrator.</i>"
+#~ msgstr ""
+#~ "<i>కీ దిశానిర్దేశం వుపయోగించుతుంటే, అది తప్పక VPN పీర్ నందు వుపయోగించన దానికి వ్యతిరేకంగా "
+#~ "వుండాలి.  ఉదాహరణకు, పీర్ '1' వుపయోగిస్తుంటే, ఈ అనుసంధానం తప్పక '0' వుపయోగించాలి.  ఏ విలువ "
+#~ "వుపయోగించాలో మీకు ఖచ్చితంగా తెలియకుంటే, మీ సిస్టమ్ నిర్వహణాధికారిని సంప్రదించండి.</i>"
+
+#~ msgid "CA Certificate:"
+#~ msgstr "CA దృవీకరణపత్రము:"
+
+#~ msgid "Cipher:"
+#~ msgstr "సైఫర్:"
+
+#~ msgid "HMAC Authentication:"
+#~ msgstr "HMAC దృవీకరణము:"
+
+#~ msgid "Key Direction:"
+#~ msgstr "కీ దిశ:"
+
+#~ msgid "Private Key Password:"
+#~ msgstr "వ్యక్తిగత కీ సంకేతపదము:"
+
+#~ msgid "Private Key:"
+#~ msgstr "వ్యక్తిగత కీ:"
+
+#~ msgid "Security"
+#~ msgstr "రక్షణ"
+
+#~ msgid "Static Key:"
+#~ msgstr "స్టాటిక్ కీ:"
+
+#~ msgid "Use L_ZO data compression"
+#~ msgstr "L_ZO డాటా కుదింపును వుపయోగించుము"
+
+#~ msgid "Use a _TCP connection"
+#~ msgstr "_TCP అనుసంధానమును వుపయోగించుము"
+
+#~ msgid "Use additional TLS authentication"
+#~ msgstr "అదనపు TLS దృవీకరణము వుపయోగించుము"
+
+#~ msgid "Use custom _renegotiation interval:"
+#~ msgstr "మలచుకొనిన అచర్చనీయ విరామంను వుపయోగించుము (_r):"
+
+#~ msgid "User Certificate:"
+#~ msgstr "వినియోగదారి దృవీకరణపత్రము:"
+
+#~ msgid "User name:"
+#~ msgstr "వినియోగదారి నామము:"
