@@ -161,7 +161,7 @@
                     <property name="spacing">6</property>
                     <child>
                       <object class="GtkCheckButton" id="port_checkbutton">
-                        <property name="label" translatable="yes">Use custom gateway p_ort:</property>
+                        <property name="label" translatable="yes">Use custom gateway port:</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
@@ -206,7 +206,7 @@
                     <property name="spacing">6</property>
                     <child>
                       <object class="GtkCheckButton" id="tunmtu_checkbutton">
-                        <property name="label" translatable="yes">Use custom _tunnel Maximum Transmission Unit (MTU):</property>
+                        <property name="label" translatable="yes">Use custom tunnel Maximum Transmission Unit (MTU):</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
@@ -271,7 +271,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="invisible_char">●</property>
-                        <property name="text" translatable="yes">-o ServerAliveInterval=10 -o TCPKeepAlive=yes</property>
+                        <property name="text" translatable="no">-o ServerAliveInterval=10 -o TCPKeepAlive=yes</property>
                         <property name="primary_icon_activatable">False</property>
                         <property name="secondary_icon_activatable">False</property>
                         <property name="primary_icon_sensitive">True</property>
@@ -620,7 +620,7 @@
                               <object class="GtkEntry" id="remote_ip_entry">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
-                                <property name="text" translatable="yes">172.16.40.1</property>
+                                <property name="text" translatable="no">172.16.40.1</property>
                                 <property name="primary_icon_activatable">False</property>
                                 <property name="secondary_icon_activatable">False</property>
                                 <property name="primary_icon_sensitive">True</property>
@@ -657,7 +657,7 @@
                               <object class="GtkEntry" id="local_ip_entry">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
-                                <property name="text" translatable="yes">172.16.40.2</property>
+                                <property name="text" translatable="no">172.16.40.2</property>
                                 <property name="primary_icon_activatable">False</property>
                                 <property name="secondary_icon_activatable">False</property>
                                 <property name="primary_icon_sensitive">True</property>
@@ -697,7 +697,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="invisible_char">●</property>
-                                <property name="text" translatable="yes">255.255.255.252</property>
+                                <property name="text" translatable="no">255.255.255.252</property>
                                 <property name="invisible_char_set">True</property>
                                 <property name="primary_icon_activatable">False</property>
                                 <property name="secondary_icon_activatable">False</property>
@@ -812,7 +812,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="invisible_char">●</property>
-                                <property name="text" translatable="yes">2001:db8:abba:1000::1</property>
+                                <property name="text" translatable="no">2001:db8:abba:1000::1</property>
                                 <property name="invisible_char_set">True</property>
                                 <property name="primary_icon_activatable">False</property>
                                 <property name="secondary_icon_activatable">False</property>
@@ -853,7 +853,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="invisible_char">●</property>
-                                <property name="text" translatable="yes">2001:db8:abba:1000::2</property>
+                                <property name="text" translatable="no">2001:db8:abba:1000::2</property>
                                 <property name="invisible_char_set">True</property>
                                 <property name="primary_icon_activatable">False</property>
                                 <property name="secondary_icon_activatable">False</property>
@@ -894,7 +894,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="invisible_char">●</property>
-                                <property name="text" translatable="yes">64</property>
+                                <property name="text" translatable="no">64</property>
                                 <property name="invisible_char_set">True</property>
                                 <property name="primary_icon_activatable">False</property>
                                 <property name="secondary_icon_activatable">False</property>
@@ -970,7 +970,7 @@
                   <object class="GtkLabel" id="advanced_button_label">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">Ad_vanced...</property>
+                    <property name="label" translatable="yes">Advanced...</property>
                     <property name="use_markup">True</property>
                     <property name="use_underline">True</property>
                   </object>
@@ -1089,7 +1089,7 @@
               <object class="GtkLabel" id="auth_notebook_label1">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">page 1</property>
+                <property name="label" translatable="no">page 1</property>
               </object>
               <packing>
                 <property name="tab_fill">False</property>
@@ -1108,7 +1108,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="xalign">0</property>
-                    <property name="label" translatable="yes">_Password:</property>
+                    <property name="label" translatable="yes">Password:</property>
                     <property name="use_underline">True</property>
                     <property name="mnemonic_widget">gateway_entry</property>
                   </object>
@@ -1167,7 +1167,7 @@
               <object class="GtkLabel" id="auth_notebook_label2">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">page 2</property>
+                <property name="label" translatable="no">page 2</property>
               </object>
               <packing>
                 <property name="position">1</property>
@@ -1186,7 +1186,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="xalign">0</property>
-                    <property name="label" translatable="yes">_SSH Key File:</property>
+                    <property name="label" translatable="yes">SSH Key File:</property>
                     <property name="use_underline">True</property>
                     <property name="mnemonic_widget">gateway_entry</property>
                   </object>
@@ -1223,7 +1223,7 @@
               <object class="GtkLabel" id="auth_notebook_label3">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">page 3</property>
+                <property name="label" translatable="no">page 3</property>
               </object>
               <packing>
                 <property name="position">2</property>

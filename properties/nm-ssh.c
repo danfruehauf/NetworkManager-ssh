@@ -377,7 +377,7 @@ init_auth_widget (GtkBuilder *builder,
 		/* Get key filename and set it */
 		const gchar *filename;
 		widget = GTK_WIDGET (gtk_builder_get_object (builder, "auth_keyfile_filechooserbutton"));
-		// FIXME add filter
+		/* FIXME add filter */
 		//gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (widget), filter);
 		gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (widget), TRUE);
 		if (s_vpn) {
@@ -390,7 +390,7 @@ init_auth_widget (GtkBuilder *builder,
 		/* ssh-agent is the default */
 		/* Not much to do here! No options for ssh-agent :) */
 	} else {
-		// FIXME FATAL ERROR
+		/* FIXME FATAL ERROR */
 	}
 }
 
