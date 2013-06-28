@@ -6,9 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=Networ"
-"kManager&component=VPN: ssh\n"
-"POT-Creation-Date: 2010-11-27 12:34+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-06-29 00:41+1000\n"
 "PO-Revision-Date: 2010-11-27 14:43+0300\n"
 "Last-Translator: Lucian Adrian Grijincu <lucian.grijincu@gmail.com>\n"
 "Language-Team: Romanian Gnome Team <gnomero-list@lists.sourceforge.net>\n"
@@ -20,348 +19,487 @@ msgstr ""
 "20)) ? 1 : 2);;\n"
 "X-Generator: Virtaal 0.6.1\n"
 
-#: ../auth-dialog/gnome-two-password-dialog.c:130
-msgid "_Password:"
-msgstr "_Parolă:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:131
-msgid "_Secondary Password:"
-msgstr "Parolă _secundară:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:248
-msgid "_Username:"
-msgstr "Nume _utilizator:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:250
-msgid "_Domain:"
-msgstr "_Domeniu:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:346
-msgid "Connect _anonymously"
-msgstr "Conectare _anonimă"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:351
-msgid "Connect as _user:"
-msgstr "Conectare ca _utilizator:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:456
-msgid "_Remember password for this session"
-msgstr "_Reține parola pentru această sesiune"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:458
-msgid "_Save password in keyring"
-msgstr "_Salvează parola în inelul de chei"
-
-#: ../auth-dialog/main.c:94
+#. Otherwise, we have no saved password, or the password flags indicated
+#. * that the password should never be saved.
+#.
+#: ../auth-dialog/main.c:141
 #, c-format
 msgid "You need to authenticate to access the Virtual Private Network '%s'."
 msgstr ""
 "Trebuie să vă autentificați pentru a accesa Rețeaua privată virtuală „%s”."
 
-#: ../auth-dialog/main.c:95
+#: ../auth-dialog/main.c:150 ../auth-dialog/main.c:170
 msgid "Authenticate VPN"
 msgstr "Autentifică VPN"
 
-#: ../auth-dialog/main.c:116
-msgid "Certificate pass_word:"
-msgstr "Paro_la certificatului:"
-
-#: ../auth-dialog/main.c:130
-msgid "Certificate password:"
-msgstr "Parola certificatului:"
-
-#: ../properties/auth-helpers.c:207
-msgid "Choose a Certificate Authority certificate..."
-msgstr "Alegeți certificatul Autorității de certificare..."
-
-#: ../properties/auth-helpers.c:226
-msgid "Choose your personal certificate..."
-msgstr "Alegeți certificatul personal..."
-
-#: ../properties/auth-helpers.c:244
-msgid "Choose your private key..."
-msgstr "Alegeți cheia privată..."
-
-#: ../properties/auth-helpers.c:302
-msgid "Choose an SSH static key..."
-msgstr "Alegeți o cheie statică SSH..."
-
-#: ../properties/auth-helpers.c:326 ../properties/auth-helpers.c:1078
-#: ../properties/auth-helpers.c:1443
-msgid "None"
-msgstr "Niciuna"
-
-#: ../properties/auth-helpers.c:775
-msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
-msgstr "Certificate PEM sau PKCS#12 (*.pem, *.crt, *.key, *.cer, *.p12)"
-
-#: ../properties/auth-helpers.c:776
-msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
-msgstr "Certificate PEM (*.pem, *.crt, *.key, *.cer)"
-
-#: ../properties/auth-helpers.c:836
-msgid "SSH Static Keys (*.key)"
-msgstr "Chei statice SSH (*.key)"
-
-#: ../properties/auth-helpers.c:995 ../properties/auth-helpers.c:1070
-msgid "Default"
-msgstr "Implicit"
-
-#: ../properties/auth-helpers.c:1080
-msgid "MD-5"
-msgstr "MD-5"
-
-#: ../properties/auth-helpers.c:1082
-msgid "SHA-1"
-msgstr "SHA-1"
-
-#: ../properties/auth-helpers.c:1084
-msgid "SHA-224"
-msgstr "SHA-224"
-
-#: ../properties/auth-helpers.c:1086
-msgid "SHA-256"
-msgstr "SHA-256"
-
-#: ../properties/auth-helpers.c:1088
-msgid "SHA-384"
-msgstr "SHA-384"
-
-#: ../properties/auth-helpers.c:1090
-msgid "SHA-512"
-msgstr "SHA-512"
-
-#: ../properties/auth-helpers.c:1092
-msgid "RIPEMD-160"
-msgstr "RIPEMD-160"
-
-#: ../properties/auth-helpers.c:1245
-#: ../properties/nm-ssh-dialog.glade.h:16
-msgid "Not required"
-msgstr "Nu este necesar"
-
-#: ../properties/auth-helpers.c:1247
-msgid "HTTP"
-msgstr "HTTP"
-
-#: ../properties/auth-helpers.c:1249
-msgid "SOCKS"
-msgstr "SOCKS"
-
-#: ../properties/nm-ssh.c:53
-msgid "SSH"
-msgstr "SSH"
-
-#: ../properties/nm-ssh.c:54
-msgid "Compatible with the SSH server."
-msgstr "Compatibil cu serverul SSH."
-
-#: ../properties/nm-ssh.c:322
-msgid "Certificates (TLS)"
-msgstr "Certificate (TLS)"
-
-#: ../properties/nm-ssh.c:336
-msgid "Password"
-msgstr "Parolă"
-
-#: ../properties/nm-ssh.c:353
-msgid "Password with Certificates (TLS)"
-msgstr "Parolă cu certificate (TLS)"
-
-#: ../properties/nm-ssh.c:365
-msgid "Static Key"
-msgstr "Cheie statică"
-
-#: ../properties/nm-ssh-dialog.glade.h:1
-msgid " "
-msgstr " "
-
-#: ../properties/nm-ssh-dialog.glade.h:2
-msgid "<b>Authentication</b>"
-msgstr "<b>Autentificare</b>"
-
-#: ../properties/nm-ssh-dialog.glade.h:3
-msgid "<b>General</b>"
-msgstr "<b>Generale</b>"
-
-#: ../properties/nm-ssh-dialog.glade.h:4
-msgid ""
-"<i>Connect only to servers whose certificate matches the given subject.\n"
-"Example: /CN=myvpn.company.com</i>"
-msgstr ""
-"<i>Se conectează doar la serverele ale căror certificate se potrivesc cu "
-"subiectul dat.\n"
-"Exemplu: /CN=myvpn.company.com</i>"
-
-#: ../properties/nm-ssh-dialog.glade.h:6
-msgid ""
-"<i>If key direction is used, it must be the opposite of that used on the VPN "
-"peer.  For example, if the peer uses '1', this connection must use '0'.  If "
-"you are unsure what value to use, contact your system administrator.</i>"
-msgstr ""
-"<i>Dacă a fost utilizată o direcție cheie, aceasta trebuie să fie opusă "
-"celei utilizate de celălalt capăt VPN. De exemplu, dacă celălalt capăt "
-"folosește „1”, conexiunea aceasta trebuie să folosească „0”. Dacă sunteți "
-"nesigur de valoarea care trebuie folosită, contactați administratorul de "
-"sistem.</i>"
-
-#: ../properties/nm-ssh-dialog.glade.h:7
-msgid ""
-"<i>Select this option if your organization requires the use of a proxy "
-"server to access the Internet.</i>"
-msgstr ""
-"<i>Selectați această opțiune dacă organizația dumneavoastră vă impune să "
-"accesați Internetul printr-un server proxy.</i>"
-
-#: ../properties/nm-ssh-dialog.glade.h:8
-msgid "Ad_vanced..."
-msgstr "A_vansat..."
-
-#: ../properties/nm-ssh-dialog.glade.h:9
-msgid "CA Certificate:"
-msgstr "Certificat CA:"
-
-#: ../properties/nm-ssh-dialog.glade.h:10
-msgid "Cipher:"
-msgstr "Cifru:"
-
-#: ../properties/nm-ssh-dialog.glade.h:11
-msgid "General"
-msgstr "Generale"
-
-#: ../properties/nm-ssh-dialog.glade.h:12
-msgid "HMAC Authentication:"
-msgstr "Autentificare HMAC:"
-
-#: ../properties/nm-ssh-dialog.glade.h:13
-msgid "Key Direction:"
-msgstr "Direcție cheie:"
-
-#: ../properties/nm-ssh-dialog.glade.h:14
-msgid "Key File:"
-msgstr "Fișier cheie:"
-
-#: ../properties/nm-ssh-dialog.glade.h:15
-msgid "Local IP Address:"
-msgstr "Adresă IP locală:"
-
-#: ../properties/nm-ssh-dialog.glade.h:17
-msgid "SSH Advanced Options"
-msgstr "Opțiuni avansate SSH"
-
-#: ../properties/nm-ssh-dialog.glade.h:18
+#: ../auth-dialog/main.c:152 ../properties/nm-ssh-dialog.ui.h:27
 msgid "Password:"
 msgstr "Parolă:"
 
-#: ../properties/nm-ssh-dialog.glade.h:19
-msgid "Port:"
-msgstr "Port:"
+#: ../auth-dialog/main.c:291
+#, c-format
+msgid ""
+"Couldn't find '%s' environment variable.\n"
+"\n"
+"Is ssh-agent running?"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:20
-msgid "Private Key Password:"
-msgstr "Parolă cheie privată:"
+#: ../properties/advanced-dialog.c:137
+msgid ""
+"You have chosen not to use 'root' as the remote username.\n"
+"\n"
+"Please make sure the user you specify is allowed to open tun/tap devices on "
+"the remote host."
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:21
-msgid "Private Key:"
-msgstr "Cheie privată:"
+#: ../properties/nm-ssh.c:49
+msgid "SSH"
+msgstr "SSH"
 
-#: ../properties/nm-ssh-dialog.glade.h:22
-msgid "Proxies"
-msgstr "Proxy-uri"
+#: ../properties/nm-ssh.c:50
+msgid "Compatible with the SSH server."
+msgstr "Compatibil cu serverul SSH."
 
-#: ../properties/nm-ssh-dialog.glade.h:23
-msgid "Proxy Password:"
-msgstr "Parolă proxy:"
+#: ../properties/nm-ssh.c:538
+msgid "SSH Agent"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:24
-msgid "Proxy Type:"
-msgstr "Tip proxy:"
+#: ../properties/nm-ssh.c:551
+msgid "Password"
+msgstr "Parolă"
 
-#: ../properties/nm-ssh-dialog.glade.h:25
-msgid "Proxy Username:"
-msgstr "Nume utilizator proxy:"
-
-#: ../properties/nm-ssh-dialog.glade.h:26
-msgid "Remote IP Address:"
-msgstr "Adresă IP la distanță:"
-
-#: ../properties/nm-ssh-dialog.glade.h:27
-msgid "Restrict tunnel TCP Maximum Segment Size (MSS)"
-msgstr "Restricționează dimensiunea maximă de segment pentru tunelare TCP (MSS)"
-
-#: ../properties/nm-ssh-dialog.glade.h:28
-msgid "Retry indefinitely when errors occur"
-msgstr "Reîncearcă pe termen nelimitat când se produc erori"
-
-#: ../properties/nm-ssh-dialog.glade.h:29
-msgid "Security"
-msgstr "Securitate"
-
-#: ../properties/nm-ssh-dialog.glade.h:30
-msgid "Server Address:"
-msgstr "Adresă server:"
-
-#: ../properties/nm-ssh-dialog.glade.h:31
-msgid "Show passwords"
-msgstr "Arată parolele"
-
-#: ../properties/nm-ssh-dialog.glade.h:32
-msgid "Static Key:"
-msgstr "Cheie statică:"
-
-#: ../properties/nm-ssh-dialog.glade.h:33
-msgid "Subject Match:"
-msgstr "Potrivire subiect:"
-
-#: ../properties/nm-ssh-dialog.glade.h:34
-msgid "TLS Authentication"
+#: ../properties/nm-ssh.c:564
+#, fuzzy
+msgid "Key Authentication"
 msgstr "Autentificare TLS"
 
-#: ../properties/nm-ssh-dialog.glade.h:35
-msgid "Type:"
-msgstr "Tip:"
+#: ../properties/nm-ssh-dialog.ui.h:1
+msgid " "
+msgstr " "
 
-#: ../properties/nm-ssh-dialog.glade.h:36
-msgid "Use L_ZO data compression"
-msgstr "Folosește compresia de date L_ZO"
+#: ../properties/nm-ssh-dialog.ui.h:2
+msgid "Not required"
+msgstr "Nu este necesar"
 
-#: ../properties/nm-ssh-dialog.glade.h:37
-msgid "Use a TA_P device"
-msgstr "Folosește un dispozitiv TA_P"
+#: ../properties/nm-ssh-dialog.ui.h:3
+msgid "SSH Advanced Options"
+msgstr "Opțiuni avansate SSH"
 
-#: ../properties/nm-ssh-dialog.glade.h:38
-msgid "Use a _TCP connection"
-msgstr "Folosește o conexiune _TCP"
+#: ../properties/nm-ssh-dialog.ui.h:4
+#, fuzzy
+msgid "Use custom gateway port:"
+msgstr "Folosește un p_ort gateway personalizat:"
 
-#: ../properties/nm-ssh-dialog.glade.h:39
-msgid "Use additional TLS authentication"
-msgstr "Folosește o conexiune TLS suplimentară"
-
-#: ../properties/nm-ssh-dialog.glade.h:40
-msgid "Use custom UDP _fragment size:"
-msgstr "Folosește o mărime de _fragment UDP personalizată:"
-
-#: ../properties/nm-ssh-dialog.glade.h:41
-msgid "Use custom _renegotiation interval:"
-msgstr "Folosește un interval de _renegociere personalizat:"
-
-#: ../properties/nm-ssh-dialog.glade.h:42
-msgid "Use custom _tunnel Maximum Transmission Unit (MTU):"
+#: ../properties/nm-ssh-dialog.ui.h:5
+#, fuzzy
+msgid "Use custom tunnel Maximum Transmission Unit (MTU):"
 msgstr ""
 "Folosește un _tunel cu o Unitate de transfer maximă (MTU) personalizată:"
 
-#: ../properties/nm-ssh-dialog.glade.h:43
-msgid "Use custom gateway p_ort:"
-msgstr "Folosește un p_ort gateway personalizat:"
+#: ../properties/nm-ssh-dialog.ui.h:6
+msgid "Extra SSH options:"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:44
-msgid "User Certificate:"
-msgstr "Certificat utilizator:"
+#: ../properties/nm-ssh-dialog.ui.h:7
+msgid "Remote device number:"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:45
-msgid "User name:"
-msgstr "Nume utilizator:"
+#: ../properties/nm-ssh-dialog.ui.h:8
+#, fuzzy
+msgid "Use a TAP device"
+msgstr "Folosește un dispozitiv TA_P"
 
-#: ../properties/nm-ssh-dialog.glade.h:46
-msgid "_Gateway:"
+#: ../properties/nm-ssh-dialog.ui.h:9
+#, fuzzy
+msgid "Remote username:"
+msgstr "Nume utilizator proxy:"
+
+#: ../properties/nm-ssh-dialog.ui.h:10
+msgid "Do not replace default route"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:11
+msgid "General"
+msgstr "Generale"
+
+#: ../properties/nm-ssh-dialog.ui.h:12
+msgid "<b>General</b>"
+msgstr "<b>Generale</b>"
+
+#: ../properties/nm-ssh-dialog.ui.h:13
+#, fuzzy
+msgid "Gateway:"
 msgstr "_Gateway:"
+
+#: ../properties/nm-ssh-dialog.ui.h:14
+msgid "<b>Network Settings</b>"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:15
+msgid "Remote IP Address:"
+msgstr "Adresă IP la distanță:"
+
+#: ../properties/nm-ssh-dialog.ui.h:16
+msgid "Local IP Address:"
+msgstr "Adresă IP locală:"
+
+#: ../properties/nm-ssh-dialog.ui.h:17
+msgid "Netmask:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:18
+msgid "<b>IPv6 Network Settings</b>"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:19
+msgid "Use IPv6"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:20
+#, fuzzy
+msgid "Remote IP Address (IPv6):"
+msgstr "Adresă IP la distanță:"
+
+#: ../properties/nm-ssh-dialog.ui.h:21
+#, fuzzy
+msgid "Local IP Address (IPv6):"
+msgstr "Adresă IP locală:"
+
+#: ../properties/nm-ssh-dialog.ui.h:22
+msgid "Prefix (IPv6):"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:23
+#, fuzzy
+msgid "Advanced..."
+msgstr "A_vansat..."
+
+#: ../properties/nm-ssh-dialog.ui.h:24
+msgid "<b>Authentication</b>"
+msgstr "<b>Autentificare</b>"
+
+#: ../properties/nm-ssh-dialog.ui.h:25
+msgid "Type:"
+msgstr "Tip:"
+
+#: ../properties/nm-ssh-dialog.ui.h:26
+#, fuzzy
+msgid "Select an authentication mode."
+msgstr "Autentificare TLS"
+
+#: ../properties/nm-ssh-dialog.ui.h:28
+#, fuzzy
+msgid "Show Passwords"
+msgstr "Arată parolele"
+
+#: ../properties/nm-ssh-dialog.ui.h:29
+#, fuzzy
+msgid "SSH Key File:"
+msgstr "Fișier cheie:"
+
+#: ../src/nm-ssh-service.c:195
+#, c-format
+msgid "invalid address '%s'"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:207
+#, c-format
+msgid "invalid integer property '%s' or out of range [%d -> %d]"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:217
+#, c-format
+msgid "invalid boolean property '%s' (not yes or no)"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:224
+#, c-format
+msgid "unhandled property '%s' type %s"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:235
+#, c-format
+msgid "property '%s' invalid or not supported"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:252
+msgid "No VPN configuration options."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1010
+msgid "Could not find the ssh binary."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1035
+msgid "Could not find the sshpass binary."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1053
+#, fuzzy
+msgid "No password specified."
+msgstr "Arată parolele"
+
+#: ../src/nm-ssh-service.c:1090
+msgid "Key authentication selected, but no key file specified."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1110
+msgid "Missing required SSH_AUTH_SOCK."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1124 ../src/nm-ssh-service.c:1585
+#, c-format
+msgid "Unknown authentication type: %s."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1194
+#, c-format
+msgid "Please set remote address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1210
+#, c-format
+msgid "Invalid port number '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1229
+#, c-format
+msgid "Invalid TUN MTU size '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1248
+#, c-format
+msgid "Invalid TUN/TAP device number '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1267
+msgid "Missing required remote IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1281
+msgid "Missing required local IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1297
+msgid "Missing required netmask."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1317
+msgid "Missing required IPv6 remote IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1331
+msgid "Missing required IPv6 local IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1345
+msgid "Missing required IPv6 netmask."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1504 ../src/nm-ssh-service.c:1545
+msgid ""
+"Could not process the request because the VPN connection settings were "
+"invalid."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1709
+msgid "Don't quit when VPN connection terminates"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1710
+msgid "Enable verbose debug logging (may expose passwords)"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1726
+msgid "nm-ssh-service provides integrated SSH capability to NetworkManager."
+msgstr ""
+
+#~ msgid "_Password:"
+#~ msgstr "_Parolă:"
+
+#~ msgid "_Secondary Password:"
+#~ msgstr "Parolă _secundară:"
+
+#~ msgid "_Username:"
+#~ msgstr "Nume _utilizator:"
+
+#~ msgid "_Domain:"
+#~ msgstr "_Domeniu:"
+
+#~ msgid "Connect _anonymously"
+#~ msgstr "Conectare _anonimă"
+
+#~ msgid "Connect as _user:"
+#~ msgstr "Conectare ca _utilizator:"
+
+#~ msgid "_Remember password for this session"
+#~ msgstr "_Reține parola pentru această sesiune"
+
+#~ msgid "_Save password in keyring"
+#~ msgstr "_Salvează parola în inelul de chei"
+
+#~ msgid "Certificate pass_word:"
+#~ msgstr "Paro_la certificatului:"
+
+#~ msgid "Certificate password:"
+#~ msgstr "Parola certificatului:"
+
+#~ msgid "Choose a Certificate Authority certificate..."
+#~ msgstr "Alegeți certificatul Autorității de certificare..."
+
+#~ msgid "Choose your personal certificate..."
+#~ msgstr "Alegeți certificatul personal..."
+
+#~ msgid "Choose your private key..."
+#~ msgstr "Alegeți cheia privată..."
+
+#~ msgid "Choose an SSH static key..."
+#~ msgstr "Alegeți o cheie statică SSH..."
+
+#~ msgid "None"
+#~ msgstr "Niciuna"
+
+#~ msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
+#~ msgstr "Certificate PEM sau PKCS#12 (*.pem, *.crt, *.key, *.cer, *.p12)"
+
+#~ msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
+#~ msgstr "Certificate PEM (*.pem, *.crt, *.key, *.cer)"
+
+#~ msgid "SSH Static Keys (*.key)"
+#~ msgstr "Chei statice SSH (*.key)"
+
+#~ msgid "Default"
+#~ msgstr "Implicit"
+
+#~ msgid "MD-5"
+#~ msgstr "MD-5"
+
+#~ msgid "SHA-1"
+#~ msgstr "SHA-1"
+
+#~ msgid "SHA-224"
+#~ msgstr "SHA-224"
+
+#~ msgid "SHA-256"
+#~ msgstr "SHA-256"
+
+#~ msgid "SHA-384"
+#~ msgstr "SHA-384"
+
+#~ msgid "SHA-512"
+#~ msgstr "SHA-512"
+
+#~ msgid "RIPEMD-160"
+#~ msgstr "RIPEMD-160"
+
+#~ msgid "HTTP"
+#~ msgstr "HTTP"
+
+#~ msgid "SOCKS"
+#~ msgstr "SOCKS"
+
+#~ msgid "Certificates (TLS)"
+#~ msgstr "Certificate (TLS)"
+
+#~ msgid "Password with Certificates (TLS)"
+#~ msgstr "Parolă cu certificate (TLS)"
+
+#~ msgid "Static Key"
+#~ msgstr "Cheie statică"
+
+#~ msgid ""
+#~ "<i>Connect only to servers whose certificate matches the given subject.\n"
+#~ "Example: /CN=myvpn.company.com</i>"
+#~ msgstr ""
+#~ "<i>Se conectează doar la serverele ale căror certificate se potrivesc cu "
+#~ "subiectul dat.\n"
+#~ "Exemplu: /CN=myvpn.company.com</i>"
+
+#~ msgid ""
+#~ "<i>If key direction is used, it must be the opposite of that used on the "
+#~ "VPN peer.  For example, if the peer uses '1', this connection must use "
+#~ "'0'.  If you are unsure what value to use, contact your system "
+#~ "administrator.</i>"
+#~ msgstr ""
+#~ "<i>Dacă a fost utilizată o direcție cheie, aceasta trebuie să fie opusă "
+#~ "celei utilizate de celălalt capăt VPN. De exemplu, dacă celălalt capăt "
+#~ "folosește „1”, conexiunea aceasta trebuie să folosească „0”. Dacă sunteți "
+#~ "nesigur de valoarea care trebuie folosită, contactați administratorul de "
+#~ "sistem.</i>"
+
+#~ msgid ""
+#~ "<i>Select this option if your organization requires the use of a proxy "
+#~ "server to access the Internet.</i>"
+#~ msgstr ""
+#~ "<i>Selectați această opțiune dacă organizația dumneavoastră vă impune să "
+#~ "accesați Internetul printr-un server proxy.</i>"
+
+#~ msgid "CA Certificate:"
+#~ msgstr "Certificat CA:"
+
+#~ msgid "Cipher:"
+#~ msgstr "Cifru:"
+
+#~ msgid "HMAC Authentication:"
+#~ msgstr "Autentificare HMAC:"
+
+#~ msgid "Key Direction:"
+#~ msgstr "Direcție cheie:"
+
+#~ msgid "Port:"
+#~ msgstr "Port:"
+
+#~ msgid "Private Key Password:"
+#~ msgstr "Parolă cheie privată:"
+
+#~ msgid "Private Key:"
+#~ msgstr "Cheie privată:"
+
+#~ msgid "Proxies"
+#~ msgstr "Proxy-uri"
+
+#~ msgid "Proxy Password:"
+#~ msgstr "Parolă proxy:"
+
+#~ msgid "Proxy Type:"
+#~ msgstr "Tip proxy:"
+
+#~ msgid "Restrict tunnel TCP Maximum Segment Size (MSS)"
+#~ msgstr ""
+#~ "Restricționează dimensiunea maximă de segment pentru tunelare TCP (MSS)"
+
+#~ msgid "Retry indefinitely when errors occur"
+#~ msgstr "Reîncearcă pe termen nelimitat când se produc erori"
+
+#~ msgid "Security"
+#~ msgstr "Securitate"
+
+#~ msgid "Server Address:"
+#~ msgstr "Adresă server:"
+
+#~ msgid "Static Key:"
+#~ msgstr "Cheie statică:"
+
+#~ msgid "Subject Match:"
+#~ msgstr "Potrivire subiect:"
+
+#~ msgid "Use L_ZO data compression"
+#~ msgstr "Folosește compresia de date L_ZO"
+
+#~ msgid "Use a _TCP connection"
+#~ msgstr "Folosește o conexiune _TCP"
+
+#~ msgid "Use additional TLS authentication"
+#~ msgstr "Folosește o conexiune TLS suplimentară"
+
+#~ msgid "Use custom UDP _fragment size:"
+#~ msgstr "Folosește o mărime de _fragment UDP personalizată:"
+
+#~ msgid "Use custom _renegotiation interval:"
+#~ msgstr "Folosește un interval de _renegociere personalizat:"
+
+#~ msgid "User Certificate:"
+#~ msgstr "Certificat utilizator:"
+
+#~ msgid "User name:"
+#~ msgstr "Nume utilizator:"

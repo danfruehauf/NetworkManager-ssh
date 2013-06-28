@@ -10,358 +10,496 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: NetworkManager-ssh master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=NetworkManager&keywords=I18N+L10N&component=VPN: ssh\n"
-"POT-Creation-Date: 2011-03-15 11:34+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-06-29 00:41+1000\n"
 "PO-Revision-Date: 2011-03-18 21:02+0800\n"
 "Last-Translator: chiachen <luojiazhen@gmail.com>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: zh_CN\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../auth-dialog/gnome-two-password-dialog.c:130
-msgid "_Password:"
-msgstr "密码(_P)："
-
-#: ../auth-dialog/gnome-two-password-dialog.c:131
-msgid "_Secondary Password:"
-msgstr "次要密码(_S)："
-
-#: ../auth-dialog/gnome-two-password-dialog.c:248
-msgid "_Username:"
-msgstr "用户名(_U)："
-
-#: ../auth-dialog/gnome-two-password-dialog.c:250
-msgid "_Domain:"
-msgstr "域(_D)："
-
-#: ../auth-dialog/gnome-two-password-dialog.c:348
-msgid "Connect _anonymously"
-msgstr "匿名连接(_A)"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:353
-msgid "Connect as _user:"
-msgstr "连接为用户(_U)："
-
-#: ../auth-dialog/gnome-two-password-dialog.c:458
-msgid "_Remember password for this session"
-msgstr "此会话记住密码(_R)"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:460
-msgid "_Save password in keyring"
-msgstr "在密钥环中保存密码(_S)"
-
-#: ../auth-dialog/main.c:89
+#. Otherwise, we have no saved password, or the password flags indicated
+#. * that the password should never be saved.
+#.
+#: ../auth-dialog/main.c:141
 #, c-format
 msgid "You need to authenticate to access the Virtual Private Network '%s'."
 msgstr "要访问虚拟私网“%s”，您必须进行身份验证。"
 
-#: ../auth-dialog/main.c:90
+#: ../auth-dialog/main.c:150 ../auth-dialog/main.c:170
 msgid "Authenticate VPN"
 msgstr "验证 VPN"
 
-#: ../auth-dialog/main.c:111
-msgid "Certificate pass_word:"
-msgstr "证书密码(_W)："
+#: ../auth-dialog/main.c:152 ../properties/nm-ssh-dialog.ui.h:27
+msgid "Password:"
+msgstr "密码："
 
-#: ../auth-dialog/main.c:125
-msgid "Certificate password:"
-msgstr "证书密码："
+#: ../auth-dialog/main.c:291
+#, c-format
+msgid ""
+"Couldn't find '%s' environment variable.\n"
+"\n"
+"Is ssh-agent running?"
+msgstr ""
 
-#: ../properties/auth-helpers.c:202
-msgid "Choose a Certificate Authority certificate..."
-msgstr "选择一个认证机构证书..."
+#: ../properties/advanced-dialog.c:137
+msgid ""
+"You have chosen not to use 'root' as the remote username.\n"
+"\n"
+"Please make sure the user you specify is allowed to open tun/tap devices on "
+"the remote host."
+msgstr ""
 
-#: ../properties/auth-helpers.c:221
-msgid "Choose your personal certificate..."
-msgstr "选择您的个人证书..."
-
-#: ../properties/auth-helpers.c:239
-msgid "Choose your private key..."
-msgstr "选择您的私钥..."
-
-#: ../properties/auth-helpers.c:297
-msgid "Choose an SSH static key..."
-msgstr "选择一个 SSH 静态密钥..."
-
-#: ../properties/auth-helpers.c:321 ../properties/auth-helpers.c:1104
-#: ../properties/auth-helpers.c:1494
-msgid "None"
-msgstr "无"
-
-#: ../properties/auth-helpers.c:801
-msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
-msgstr "PEM 或者 PKCS#12 证书 (*.pem, *.crt, *.key, *.cer,*.p12)"
-
-#: ../properties/auth-helpers.c:802
-msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
-msgstr "PEM 证书 (*.pem, *.crt, *.key, *.cer)"
-
-#: ../properties/auth-helpers.c:862
-msgid "SSH Static Keys (*.key)"
-msgstr "SSH 静态密钥 (*.key)"
-
-#: ../properties/auth-helpers.c:1021 ../properties/auth-helpers.c:1096
-msgid "Default"
-msgstr "默认"
-
-#: ../properties/auth-helpers.c:1106
-msgid "MD-5"
-msgstr "MD-5"
-
-#: ../properties/auth-helpers.c:1108
-msgid "SHA-1"
-msgstr "SHA-1"
-
-#: ../properties/auth-helpers.c:1110
-msgid "SHA-224"
-msgstr "SHA-224"
-
-#: ../properties/auth-helpers.c:1112
-msgid "SHA-256"
-msgstr "SHA-256"
-
-#: ../properties/auth-helpers.c:1114
-msgid "SHA-384"
-msgstr "SHA-384"
-
-#: ../properties/auth-helpers.c:1116
-msgid "SHA-512"
-msgstr "SHA-512"
-
-#: ../properties/auth-helpers.c:1118
-msgid "RIPEMD-160"
-msgstr "RIPEMD-160"
-
-#: ../properties/auth-helpers.c:1293 ../properties/nm-ssh-dialog.ui.h:16
-msgid "Not required"
-msgstr "可选"
-
-#: ../properties/auth-helpers.c:1295
-msgid "HTTP"
-msgstr "HTTP"
-
-#: ../properties/auth-helpers.c:1297
-msgid "SOCKS"
-msgstr "SOCKS"
-
-#: ../properties/nm-ssh.c:53
+#: ../properties/nm-ssh.c:49
 msgid "SSH"
 msgstr "SSH"
 
-#: ../properties/nm-ssh.c:54
+#: ../properties/nm-ssh.c:50
 msgid "Compatible with the SSH server."
 msgstr "与 SSH 服务器兼容"
 
-#: ../properties/nm-ssh.c:322
-msgid "Certificates (TLS)"
-msgstr "证书 (TLS)"
+#: ../properties/nm-ssh.c:538
+msgid "SSH Agent"
+msgstr ""
 
-#: ../properties/nm-ssh.c:336
+#: ../properties/nm-ssh.c:551
 msgid "Password"
 msgstr "密码"
 
-#: ../properties/nm-ssh.c:353
-msgid "Password with Certificates (TLS)"
-msgstr "带有证书的密码 (TLS)"
-
-#: ../properties/nm-ssh.c:365
-msgid "Static Key"
-msgstr "静态密钥"
+#: ../properties/nm-ssh.c:564
+#, fuzzy
+msgid "Key Authentication"
+msgstr "TLS 认证"
 
 #: ../properties/nm-ssh-dialog.ui.h:1
 msgid " "
 msgstr " "
 
 #: ../properties/nm-ssh-dialog.ui.h:2
-msgid "<b>Authentication</b>"
-msgstr "<b>认证</b>"
+msgid "Not required"
+msgstr "可选"
 
 #: ../properties/nm-ssh-dialog.ui.h:3
-msgid "<b>General</b>"
-msgstr "<b>一般</b>"
+msgid "SSH Advanced Options"
+msgstr "SSH 高级选项"
 
 #: ../properties/nm-ssh-dialog.ui.h:4
-msgid ""
-"<i>Connect only to servers whose certificate matches the given subject.\n"
-"Example: /CN=myvpn.company.com</i>"
-msgstr ""
-"<i>仅连接到证书符合给定主题的服务器\n"
-"例子： /CN=myvpn.company.com</i>"
+#, fuzzy
+msgid "Use custom gateway port:"
+msgstr "使用自定义网关端口(_O)："
+
+#: ../properties/nm-ssh-dialog.ui.h:5
+#, fuzzy
+msgid "Use custom tunnel Maximum Transmission Unit (MTU):"
+msgstr "使用自定义最大传输单元(MTU)(_T)"
 
 #: ../properties/nm-ssh-dialog.ui.h:6
-msgid ""
-"<i>If key direction is used, it must be the opposite of that used on the VPN "
-"peer.  For example, if the peer uses '1', this connection must use '0'.  If "
-"you are unsure what value to use, contact your system administrator.</i>"
+msgid "Extra SSH options:"
 msgstr ""
-"<i>如果启用密钥方向，它必须与 VPN 端使用的密钥方向相反。例如，VPN 端使用 "
-"'1'，此连接必须使用 '0'。如果您不确认您应该使用何值，请联系网络管理员。</i>"
 
 #: ../properties/nm-ssh-dialog.ui.h:7
-msgid ""
-"<i>Select this option if your organization requires the use of a proxy "
-"server to access the Internet.</i>"
-msgstr "<i>如果您的组织要求使用代理服务器来访问互联网，请选择此选项</i>"
+msgid "Remote device number:"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:8
-msgid "Ad_vanced..."
-msgstr "高级(_V)..."
+#, fuzzy
+msgid "Use a TAP device"
+msgstr "便用 TA_P 设备"
 
 #: ../properties/nm-ssh-dialog.ui.h:9
-msgid "CA Certificate:"
-msgstr "CA 认证："
+#, fuzzy
+msgid "Remote username:"
+msgstr "代理用户名："
 
 #: ../properties/nm-ssh-dialog.ui.h:10
-msgid "Cipher:"
-msgstr "加密："
+msgid "Do not replace default route"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:11
 msgid "General"
 msgstr "一般"
 
 #: ../properties/nm-ssh-dialog.ui.h:12
-msgid "HMAC Authentication:"
-msgstr "HMAC 认证："
+msgid "<b>General</b>"
+msgstr "<b>一般</b>"
 
 #: ../properties/nm-ssh-dialog.ui.h:13
-msgid "Key Direction:"
-msgstr "密钥方向："
+#, fuzzy
+msgid "Gateway:"
+msgstr "网关(_G)："
 
 #: ../properties/nm-ssh-dialog.ui.h:14
-msgid "Key File:"
-msgstr "密钥文件："
+msgid "<b>Network Settings</b>"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:15
+msgid "Remote IP Address:"
+msgstr "远程 IP 地址："
+
+#: ../properties/nm-ssh-dialog.ui.h:16
 msgid "Local IP Address:"
 msgstr "本地 IP 地址："
 
 #: ../properties/nm-ssh-dialog.ui.h:17
-msgid "SSH Advanced Options"
-msgstr "SSH 高级选项"
+msgid "Netmask:"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:18
-msgid "Password:"
-msgstr "密码："
+msgid "<b>IPv6 Network Settings</b>"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:19
-msgid "Port:"
-msgstr "端口："
+msgid "Use IPv6"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:20
-msgid "Private Key Password:"
-msgstr "私钥密码："
-
-#: ../properties/nm-ssh-dialog.ui.h:21
-msgid "Private Key:"
-msgstr "私钥："
-
-#: ../properties/nm-ssh-dialog.ui.h:22
-msgid "Proxies"
-msgstr "代理"
-
-#: ../properties/nm-ssh-dialog.ui.h:23
-msgid "Proxy Password:"
-msgstr "代理密码："
-
-#: ../properties/nm-ssh-dialog.ui.h:24
-msgid "Proxy Type:"
-msgstr "代理类型："
-
-#: ../properties/nm-ssh-dialog.ui.h:25
-msgid "Proxy Username:"
-msgstr "代理用户名："
-
-#: ../properties/nm-ssh-dialog.ui.h:26
-msgid "Remote IP Address:"
+#, fuzzy
+msgid "Remote IP Address (IPv6):"
 msgstr "远程 IP 地址："
 
-#: ../properties/nm-ssh-dialog.ui.h:27
-msgid "Restrict tunnel TCP Maximum Segment Size (MSS)"
-msgstr "限制隧道 TCP 最大段长度(MSS)"
+#: ../properties/nm-ssh-dialog.ui.h:21
+#, fuzzy
+msgid "Local IP Address (IPv6):"
+msgstr "本地 IP 地址："
 
-#: ../properties/nm-ssh-dialog.ui.h:28
-msgid "Retry indefinitely when errors occur"
-msgstr "发生错误时重新验证"
+#: ../properties/nm-ssh-dialog.ui.h:22
+msgid "Prefix (IPv6):"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.ui.h:29
-msgid "Security"
-msgstr "安全性"
+#: ../properties/nm-ssh-dialog.ui.h:23
+#, fuzzy
+msgid "Advanced..."
+msgstr "高级(_V)..."
 
-#: ../properties/nm-ssh-dialog.ui.h:30
-msgid "Server Address:"
-msgstr "服务器地址："
+#: ../properties/nm-ssh-dialog.ui.h:24
+msgid "<b>Authentication</b>"
+msgstr "<b>认证</b>"
 
-#: ../properties/nm-ssh-dialog.ui.h:31
-msgid "Show password"
-msgstr "显示密码"
-
-#: ../properties/nm-ssh-dialog.ui.h:32
-msgid "Show passwords"
-msgstr "显示密码"
-
-#: ../properties/nm-ssh-dialog.ui.h:33
-msgid "Static Key:"
-msgstr "静态密钥："
-
-#: ../properties/nm-ssh-dialog.ui.h:34
-msgid "Subject Match:"
-msgstr "主题匹配："
-
-#: ../properties/nm-ssh-dialog.ui.h:35
-msgid "TLS Authentication"
-msgstr "TLS 认证"
-
-#: ../properties/nm-ssh-dialog.ui.h:36
+#: ../properties/nm-ssh-dialog.ui.h:25
 msgid "Type:"
 msgstr "类型："
 
-#: ../properties/nm-ssh-dialog.ui.h:37
-msgid "Use L_ZO data compression"
-msgstr "使用 L_ZO 压缩"
+#: ../properties/nm-ssh-dialog.ui.h:26
+#, fuzzy
+msgid "Select an authentication mode."
+msgstr "TLS 认证"
 
-#: ../properties/nm-ssh-dialog.ui.h:38
-msgid "Use a TA_P device"
-msgstr "便用 TA_P 设备"
+#: ../properties/nm-ssh-dialog.ui.h:28
+#, fuzzy
+msgid "Show Passwords"
+msgstr "显示密码"
 
-#: ../properties/nm-ssh-dialog.ui.h:39
-msgid "Use a _TCP connection"
-msgstr "使用 _TCP 连接"
+#: ../properties/nm-ssh-dialog.ui.h:29
+#, fuzzy
+msgid "SSH Key File:"
+msgstr "密钥文件："
 
-#: ../properties/nm-ssh-dialog.ui.h:40
-msgid "Use additional TLS authentication"
-msgstr "使用附加 TLS 认证"
+#: ../src/nm-ssh-service.c:195
+#, c-format
+msgid "invalid address '%s'"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.ui.h:41
-msgid "Use custom UDP _fragment size:"
-msgstr "使用自定义用户数据报段长度(_F)："
+#: ../src/nm-ssh-service.c:207
+#, c-format
+msgid "invalid integer property '%s' or out of range [%d -> %d]"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.ui.h:42
-msgid "Use custom _renegotiation interval:"
-msgstr "使用自定义重新协商间隔(_R)："
+#: ../src/nm-ssh-service.c:217
+#, c-format
+msgid "invalid boolean property '%s' (not yes or no)"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.ui.h:43
-msgid "Use custom _tunnel Maximum Transmission Unit (MTU):"
-msgstr "使用自定义最大传输单元(MTU)(_T)"
+#: ../src/nm-ssh-service.c:224
+#, c-format
+msgid "unhandled property '%s' type %s"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.ui.h:44
-msgid "Use custom gateway p_ort:"
-msgstr "使用自定义网关端口(_O)："
+#: ../src/nm-ssh-service.c:235
+#, c-format
+msgid "property '%s' invalid or not supported"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.ui.h:45
-msgid "User Certificate:"
-msgstr "用户证书："
+#: ../src/nm-ssh-service.c:252
+msgid "No VPN configuration options."
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.ui.h:46
-msgid "User name:"
-msgstr "用户名："
+#: ../src/nm-ssh-service.c:1010
+msgid "Could not find the ssh binary."
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.ui.h:47
-msgid "_Gateway:"
-msgstr "网关(_G)："
+#: ../src/nm-ssh-service.c:1035
+msgid "Could not find the sshpass binary."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1053
+#, fuzzy
+msgid "No password specified."
+msgstr "显示密码"
+
+#: ../src/nm-ssh-service.c:1090
+msgid "Key authentication selected, but no key file specified."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1110
+msgid "Missing required SSH_AUTH_SOCK."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1124 ../src/nm-ssh-service.c:1585
+#, c-format
+msgid "Unknown authentication type: %s."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1194
+#, c-format
+msgid "Please set remote address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1210
+#, c-format
+msgid "Invalid port number '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1229
+#, c-format
+msgid "Invalid TUN MTU size '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1248
+#, c-format
+msgid "Invalid TUN/TAP device number '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1267
+msgid "Missing required remote IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1281
+msgid "Missing required local IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1297
+msgid "Missing required netmask."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1317
+msgid "Missing required IPv6 remote IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1331
+msgid "Missing required IPv6 local IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1345
+msgid "Missing required IPv6 netmask."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1504 ../src/nm-ssh-service.c:1545
+msgid ""
+"Could not process the request because the VPN connection settings were "
+"invalid."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1709
+msgid "Don't quit when VPN connection terminates"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1710
+msgid "Enable verbose debug logging (may expose passwords)"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1726
+msgid "nm-ssh-service provides integrated SSH capability to NetworkManager."
+msgstr ""
+
+#~ msgid "_Password:"
+#~ msgstr "密码(_P)："
+
+#~ msgid "_Secondary Password:"
+#~ msgstr "次要密码(_S)："
+
+#~ msgid "_Username:"
+#~ msgstr "用户名(_U)："
+
+#~ msgid "_Domain:"
+#~ msgstr "域(_D)："
+
+#~ msgid "Connect _anonymously"
+#~ msgstr "匿名连接(_A)"
+
+#~ msgid "Connect as _user:"
+#~ msgstr "连接为用户(_U)："
+
+#~ msgid "_Remember password for this session"
+#~ msgstr "此会话记住密码(_R)"
+
+#~ msgid "_Save password in keyring"
+#~ msgstr "在密钥环中保存密码(_S)"
+
+#~ msgid "Certificate pass_word:"
+#~ msgstr "证书密码(_W)："
+
+#~ msgid "Certificate password:"
+#~ msgstr "证书密码："
+
+#~ msgid "Choose a Certificate Authority certificate..."
+#~ msgstr "选择一个认证机构证书..."
+
+#~ msgid "Choose your personal certificate..."
+#~ msgstr "选择您的个人证书..."
+
+#~ msgid "Choose your private key..."
+#~ msgstr "选择您的私钥..."
+
+#~ msgid "Choose an SSH static key..."
+#~ msgstr "选择一个 SSH 静态密钥..."
+
+#~ msgid "None"
+#~ msgstr "无"
+
+#~ msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
+#~ msgstr "PEM 或者 PKCS#12 证书 (*.pem, *.crt, *.key, *.cer,*.p12)"
+
+#~ msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
+#~ msgstr "PEM 证书 (*.pem, *.crt, *.key, *.cer)"
+
+#~ msgid "SSH Static Keys (*.key)"
+#~ msgstr "SSH 静态密钥 (*.key)"
+
+#~ msgid "Default"
+#~ msgstr "默认"
+
+#~ msgid "MD-5"
+#~ msgstr "MD-5"
+
+#~ msgid "SHA-1"
+#~ msgstr "SHA-1"
+
+#~ msgid "SHA-224"
+#~ msgstr "SHA-224"
+
+#~ msgid "SHA-256"
+#~ msgstr "SHA-256"
+
+#~ msgid "SHA-384"
+#~ msgstr "SHA-384"
+
+#~ msgid "SHA-512"
+#~ msgstr "SHA-512"
+
+#~ msgid "RIPEMD-160"
+#~ msgstr "RIPEMD-160"
+
+#~ msgid "HTTP"
+#~ msgstr "HTTP"
+
+#~ msgid "SOCKS"
+#~ msgstr "SOCKS"
+
+#~ msgid "Certificates (TLS)"
+#~ msgstr "证书 (TLS)"
+
+#~ msgid "Password with Certificates (TLS)"
+#~ msgstr "带有证书的密码 (TLS)"
+
+#~ msgid "Static Key"
+#~ msgstr "静态密钥"
+
+#~ msgid ""
+#~ "<i>Connect only to servers whose certificate matches the given subject.\n"
+#~ "Example: /CN=myvpn.company.com</i>"
+#~ msgstr ""
+#~ "<i>仅连接到证书符合给定主题的服务器\n"
+#~ "例子： /CN=myvpn.company.com</i>"
+
+#~ msgid ""
+#~ "<i>If key direction is used, it must be the opposite of that used on the "
+#~ "VPN peer.  For example, if the peer uses '1', this connection must use "
+#~ "'0'.  If you are unsure what value to use, contact your system "
+#~ "administrator.</i>"
+#~ msgstr ""
+#~ "<i>如果启用密钥方向，它必须与 VPN 端使用的密钥方向相反。例如，VPN 端使用 "
+#~ "'1'，此连接必须使用 '0'。如果您不确认您应该使用何值，请联系网络管理员。</"
+#~ "i>"
+
+#~ msgid ""
+#~ "<i>Select this option if your organization requires the use of a proxy "
+#~ "server to access the Internet.</i>"
+#~ msgstr "<i>如果您的组织要求使用代理服务器来访问互联网，请选择此选项</i>"
+
+#~ msgid "CA Certificate:"
+#~ msgstr "CA 认证："
+
+#~ msgid "Cipher:"
+#~ msgstr "加密："
+
+#~ msgid "HMAC Authentication:"
+#~ msgstr "HMAC 认证："
+
+#~ msgid "Key Direction:"
+#~ msgstr "密钥方向："
+
+#~ msgid "Port:"
+#~ msgstr "端口："
+
+#~ msgid "Private Key Password:"
+#~ msgstr "私钥密码："
+
+#~ msgid "Private Key:"
+#~ msgstr "私钥："
+
+#~ msgid "Proxies"
+#~ msgstr "代理"
+
+#~ msgid "Proxy Password:"
+#~ msgstr "代理密码："
+
+#~ msgid "Proxy Type:"
+#~ msgstr "代理类型："
+
+#~ msgid "Restrict tunnel TCP Maximum Segment Size (MSS)"
+#~ msgstr "限制隧道 TCP 最大段长度(MSS)"
+
+#~ msgid "Retry indefinitely when errors occur"
+#~ msgstr "发生错误时重新验证"
+
+#~ msgid "Security"
+#~ msgstr "安全性"
+
+#~ msgid "Server Address:"
+#~ msgstr "服务器地址："
+
+#~ msgid "Show password"
+#~ msgstr "显示密码"
+
+#~ msgid "Static Key:"
+#~ msgstr "静态密钥："
+
+#~ msgid "Subject Match:"
+#~ msgstr "主题匹配："
+
+#~ msgid "Use L_ZO data compression"
+#~ msgstr "使用 L_ZO 压缩"
+
+#~ msgid "Use a _TCP connection"
+#~ msgstr "使用 _TCP 连接"
+
+#~ msgid "Use additional TLS authentication"
+#~ msgstr "使用附加 TLS 认证"
+
+#~ msgid "Use custom UDP _fragment size:"
+#~ msgstr "使用自定义用户数据报段长度(_F)："
+
+#~ msgid "Use custom _renegotiation interval:"
+#~ msgstr "使用自定义重新协商间隔(_R)："
+
+#~ msgid "User Certificate:"
+#~ msgstr "用户证书："
+
+#~ msgid "User name:"
+#~ msgstr "用户名："
 
 #~ msgid "Add, Remove, and Edit VPN Connections"
 #~ msgstr "添加、删除和编辑 VPN 连接"

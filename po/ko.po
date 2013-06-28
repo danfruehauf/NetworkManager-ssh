@@ -8,164 +8,397 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: nm-ssh\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=NetworkManager&component=VPN: ssh\n"
-"POT-Creation-Date: 2010-12-20 13:33+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-06-29 00:41+1000\n"
 "PO-Revision-Date: 2011-02-27 15:45+0900\n"
 "Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: GNOME Korea <gnome-kr@googlegroups.com>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../auth-dialog/gnome-two-password-dialog.c:130
-msgid "_Password:"
-msgstr "암호(_P):"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:131
-msgid "_Secondary Password:"
-msgstr "보조 암호(_S):"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:248
-msgid "_Username:"
-msgstr "사용자 이름(_U):"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:250
-msgid "_Domain:"
-msgstr "도메인(_D):"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:346
-msgid "Connect _anonymously"
-msgstr "익명으로 연결(_A)"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:351
-msgid "Connect as _user:"
-msgstr "사용자로 연결(_U):"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:456
-msgid "_Remember password for this session"
-msgstr "이 세션에서 암호 저장(_R)"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:458
-msgid "_Save password in keyring"
-msgstr "키 모음에 암호 저장(_S)"
-
-#: ../auth-dialog/main.c:94
+#. Otherwise, we have no saved password, or the password flags indicated
+#. * that the password should never be saved.
+#.
+#: ../auth-dialog/main.c:141
 #, c-format
 msgid "You need to authenticate to access the Virtual Private Network '%s'."
 msgstr "가상 사설 네트워크 '%s'에 접근할 때 인증이 필요합니다."
 
-#: ../auth-dialog/main.c:95
+#: ../auth-dialog/main.c:150 ../auth-dialog/main.c:170
 msgid "Authenticate VPN"
 msgstr "VPN 인증"
 
-#: ../auth-dialog/main.c:116
-msgid "Certificate pass_word:"
-msgstr "인증서 암호(_W):"
+#: ../auth-dialog/main.c:152 ../properties/nm-ssh-dialog.ui.h:27
+#, fuzzy
+msgid "Password:"
+msgstr "암호(_P):"
 
-#: ../auth-dialog/main.c:130
-msgid "Certificate password:"
-msgstr "인증서 암호:"
+#: ../auth-dialog/main.c:291
+#, c-format
+msgid ""
+"Couldn't find '%s' environment variable.\n"
+"\n"
+"Is ssh-agent running?"
+msgstr ""
 
-#: ../properties/auth-helpers.c:207
-msgid "Choose a Certificate Authority certificate..."
-msgstr "인증 기관 인증서를 선택하십시오..."
+#: ../properties/advanced-dialog.c:137
+msgid ""
+"You have chosen not to use 'root' as the remote username.\n"
+"\n"
+"Please make sure the user you specify is allowed to open tun/tap devices on "
+"the remote host."
+msgstr ""
 
-#: ../properties/auth-helpers.c:226
-msgid "Choose your personal certificate..."
-msgstr "개인 인증서를 선택하십시오..."
-
-#: ../properties/auth-helpers.c:244
-msgid "Choose your private key..."
-msgstr "개인 키를 선택하십시오..."
-
-#: ../properties/auth-helpers.c:302
-msgid "Choose an SSH static key..."
-msgstr "SSH 고정 키를 선택하십시오..."
-
-#: ../properties/auth-helpers.c:326 ../properties/auth-helpers.c:1078
-#: ../properties/auth-helpers.c:1451
-msgid "None"
-msgstr "없음"
-
-#: ../properties/auth-helpers.c:775
-msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
-msgstr "PEM 또는 PKCS#12 인증서 (*.pem, *.crt, *.key, *.cer, *.p12)"
-
-#: ../properties/auth-helpers.c:776
-msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
-msgstr "PEM 인증서 (*.pem, *.crt, *.key, *.cer)"
-
-#: ../properties/auth-helpers.c:836
-msgid "SSH Static Keys (*.key)"
-msgstr "SSH 고정 키 (*.key)"
-
-#: ../properties/auth-helpers.c:995 ../properties/auth-helpers.c:1070
-msgid "Default"
-msgstr "기본값"
-
-#: ../properties/auth-helpers.c:1080
-msgid "MD-5"
-msgstr "MD-5"
-
-#: ../properties/auth-helpers.c:1082
-msgid "SHA-1"
-msgstr "SHA-1"
-
-#: ../properties/auth-helpers.c:1084
-msgid "SHA-224"
-msgstr "SHA-224"
-
-#: ../properties/auth-helpers.c:1086
-msgid "SHA-256"
-msgstr "SHA-256"
-
-#: ../properties/auth-helpers.c:1088
-msgid "SHA-384"
-msgstr "SHA-384"
-
-#: ../properties/auth-helpers.c:1090
-msgid "SHA-512"
-msgstr "SHA-512"
-
-#: ../properties/auth-helpers.c:1092
-msgid "RIPEMD-160"
-msgstr "RIPEMD-160"
-
-#: ../properties/auth-helpers.c:1253
-msgid "Not required"
-msgstr "불필요"
-
-#: ../properties/auth-helpers.c:1255
-msgid "HTTP"
-msgstr "HTTP"
-
-#: ../properties/auth-helpers.c:1257
-msgid "SOCKS"
-msgstr "SOCKS"
-
-#: ../properties/nm-ssh.c:52
+#: ../properties/nm-ssh.c:49
 msgid "SSH"
 msgstr "SSH"
 
-#: ../properties/nm-ssh.c:53
+#: ../properties/nm-ssh.c:50
 msgid "Compatible with the SSH server."
 msgstr "SSH 서버와 호환됩니다."
 
-#: ../properties/nm-ssh.c:321
-msgid "Certificates (TLS)"
-msgstr "인증서 (TLS)"
+#: ../properties/nm-ssh.c:538
+msgid "SSH Agent"
+msgstr ""
 
-#: ../properties/nm-ssh.c:335
+#: ../properties/nm-ssh.c:551
 msgid "Password"
 msgstr "암호"
 
-#: ../properties/nm-ssh.c:352
-msgid "Password with Certificates (TLS)"
-msgstr "암호 및 인증서 (TLS)"
+#: ../properties/nm-ssh.c:564
+#, fuzzy
+msgid "Key Authentication"
+msgstr "VPN 인증"
 
-#: ../properties/nm-ssh.c:364
-msgid "Static Key"
-msgstr "고정 키"
+#: ../properties/nm-ssh-dialog.ui.h:1
+msgid " "
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:2
+msgid "Not required"
+msgstr "불필요"
+
+#: ../properties/nm-ssh-dialog.ui.h:3
+msgid "SSH Advanced Options"
+msgstr "SSH 고급 옵션"
+
+#: ../properties/nm-ssh-dialog.ui.h:4
+#, fuzzy
+msgid "Use custom gateway port:"
+msgstr "게이트웨이 포트(_G):"
+
+#: ../properties/nm-ssh-dialog.ui.h:5
+msgid "Use custom tunnel Maximum Transmission Unit (MTU):"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:6
+msgid "Extra SSH options:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:7
+msgid "Remote device number:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:8
+#, fuzzy
+msgid "Use a TAP device"
+msgstr "TAP 장치 사용(_P)"
+
+#: ../properties/nm-ssh-dialog.ui.h:9
+#, fuzzy
+msgid "Remote username:"
+msgstr "사용자이름:"
+
+#: ../properties/nm-ssh-dialog.ui.h:10
+msgid "Do not replace default route"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:11
+msgid "General"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:12
+msgid "<b>General</b>"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:13
+#, fuzzy
+msgid "Gateway:"
+msgstr "게이트웨이 포트(_G):"
+
+#: ../properties/nm-ssh-dialog.ui.h:14
+msgid "<b>Network Settings</b>"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:15
+#, fuzzy
+msgid "Remote IP Address:"
+msgstr "원격 IP(_R):"
+
+#: ../properties/nm-ssh-dialog.ui.h:16
+#, fuzzy
+msgid "Local IP Address:"
+msgstr "로컬 IP:  %s"
+
+#: ../properties/nm-ssh-dialog.ui.h:17
+msgid "Netmask:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:18
+msgid "<b>IPv6 Network Settings</b>"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:19
+msgid "Use IPv6"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:20
+msgid "Remote IP Address (IPv6):"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:21
+msgid "Local IP Address (IPv6):"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:22
+msgid "Prefix (IPv6):"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:23
+#, fuzzy
+msgid "Advanced..."
+msgstr "고급(_V)"
+
+#: ../properties/nm-ssh-dialog.ui.h:24
+#, fuzzy
+msgid "<b>Authentication</b>"
+msgstr "<b>필수 정보</b>"
+
+#: ../properties/nm-ssh-dialog.ui.h:25
+msgid "Type:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:26
+msgid "Select an authentication mode."
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:28
+#, fuzzy
+msgid "Show Passwords"
+msgstr "암호"
+
+#: ../properties/nm-ssh-dialog.ui.h:29
+msgid "SSH Key File:"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:195
+#, c-format
+msgid "invalid address '%s'"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:207
+#, c-format
+msgid "invalid integer property '%s' or out of range [%d -> %d]"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:217
+#, c-format
+msgid "invalid boolean property '%s' (not yes or no)"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:224
+#, c-format
+msgid "unhandled property '%s' type %s"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:235
+#, c-format
+msgid "property '%s' invalid or not supported"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:252
+msgid "No VPN configuration options."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1010
+msgid "Could not find the ssh binary."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1035
+msgid "Could not find the sshpass binary."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1053
+msgid "No password specified."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1090
+msgid "Key authentication selected, but no key file specified."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1110
+msgid "Missing required SSH_AUTH_SOCK."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1124 ../src/nm-ssh-service.c:1585
+#, c-format
+msgid "Unknown authentication type: %s."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1194
+#, c-format
+msgid "Please set remote address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1210
+#, c-format
+msgid "Invalid port number '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1229
+#, c-format
+msgid "Invalid TUN MTU size '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1248
+#, c-format
+msgid "Invalid TUN/TAP device number '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1267
+msgid "Missing required remote IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1281
+msgid "Missing required local IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1297
+msgid "Missing required netmask."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1317
+msgid "Missing required IPv6 remote IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1331
+msgid "Missing required IPv6 local IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1345
+msgid "Missing required IPv6 netmask."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1504 ../src/nm-ssh-service.c:1545
+#, fuzzy
+msgid ""
+"Could not process the request because the VPN connection settings were "
+"invalid."
+msgstr "VPN 설정 옵션이 잘못되어서 로그인 실패했습니다."
+
+#: ../src/nm-ssh-service.c:1709
+msgid "Don't quit when VPN connection terminates"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1710
+msgid "Enable verbose debug logging (may expose passwords)"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1726
+msgid "nm-ssh-service provides integrated SSH capability to NetworkManager."
+msgstr ""
+
+#~ msgid "_Secondary Password:"
+#~ msgstr "보조 암호(_S):"
+
+#~ msgid "_Username:"
+#~ msgstr "사용자 이름(_U):"
+
+#~ msgid "_Domain:"
+#~ msgstr "도메인(_D):"
+
+#~ msgid "Connect _anonymously"
+#~ msgstr "익명으로 연결(_A)"
+
+#~ msgid "Connect as _user:"
+#~ msgstr "사용자로 연결(_U):"
+
+#~ msgid "_Remember password for this session"
+#~ msgstr "이 세션에서 암호 저장(_R)"
+
+#~ msgid "_Save password in keyring"
+#~ msgstr "키 모음에 암호 저장(_S)"
+
+#~ msgid "Certificate pass_word:"
+#~ msgstr "인증서 암호(_W):"
+
+#~ msgid "Certificate password:"
+#~ msgstr "인증서 암호:"
+
+#~ msgid "Choose a Certificate Authority certificate..."
+#~ msgstr "인증 기관 인증서를 선택하십시오..."
+
+#~ msgid "Choose your personal certificate..."
+#~ msgstr "개인 인증서를 선택하십시오..."
+
+#~ msgid "Choose your private key..."
+#~ msgstr "개인 키를 선택하십시오..."
+
+#~ msgid "Choose an SSH static key..."
+#~ msgstr "SSH 고정 키를 선택하십시오..."
+
+#~ msgid "None"
+#~ msgstr "없음"
+
+#~ msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
+#~ msgstr "PEM 또는 PKCS#12 인증서 (*.pem, *.crt, *.key, *.cer, *.p12)"
+
+#~ msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
+#~ msgstr "PEM 인증서 (*.pem, *.crt, *.key, *.cer)"
+
+#~ msgid "SSH Static Keys (*.key)"
+#~ msgstr "SSH 고정 키 (*.key)"
+
+#~ msgid "Default"
+#~ msgstr "기본값"
+
+#~ msgid "MD-5"
+#~ msgstr "MD-5"
+
+#~ msgid "SHA-1"
+#~ msgstr "SHA-1"
+
+#~ msgid "SHA-224"
+#~ msgstr "SHA-224"
+
+#~ msgid "SHA-256"
+#~ msgstr "SHA-256"
+
+#~ msgid "SHA-384"
+#~ msgstr "SHA-384"
+
+#~ msgid "SHA-512"
+#~ msgstr "SHA-512"
+
+#~ msgid "RIPEMD-160"
+#~ msgstr "RIPEMD-160"
+
+#~ msgid "HTTP"
+#~ msgstr "HTTP"
+
+#~ msgid "SOCKS"
+#~ msgstr "SOCKS"
+
+#~ msgid "Certificates (TLS)"
+#~ msgstr "인증서 (TLS)"
+
+#~ msgid "Password with Certificates (TLS)"
+#~ msgstr "암호 및 인증서 (TLS)"
+
+#~ msgid "Static Key"
+#~ msgstr "고정 키"
 
 #~ msgid "The following SSH connection will be created:"
 #~ msgstr "다음 SSH 연결이 만들어집니다:"
@@ -190,9 +423,6 @@ msgstr "고정 키"
 
 #~ msgid "Shared Key:  %s"
 #~ msgstr "공유키:  %s"
-
-#~ msgid "Local IP:  %s"
-#~ msgstr "로컬 IP:  %s"
 
 #~ msgid "Remote IP:  %s"
 #~ msgstr "원격 IP:  %s"
@@ -293,9 +523,6 @@ msgstr "고정 키"
 #~ msgid "<i>example: 172.16.0.0/16 10.11.12.0/24</i>"
 #~ msgstr "<i>예: 172.16.0.0/16 10.11.12.0/24</i>"
 
-#~ msgid "Ad_vanced"
-#~ msgstr "고급(_V)"
-
 #~ msgid "C_A file:"
 #~ msgstr "CA 파일(_A):"
 
@@ -323,9 +550,6 @@ msgstr "고정 키"
 #~ msgid "Only use _VPN connection for these addresses:"
 #~ msgstr "이 주소에는 VPN 연결 만 사용(_V):"
 
-#~ msgid "SSH Advanced Options"
-#~ msgstr "SSH 고급 옵션"
-
 #~ msgid "SSH Configuration"
 #~ msgstr "SSH 설정"
 
@@ -337,11 +561,11 @@ msgstr "고정 키"
 #~ "를 입력하지 마십시오."
 
 #~ msgid ""
-#~ "Please note that the file you import is not an SSH configuration "
-#~ "file. Ask your administrator for the file."
+#~ "Please note that the file you import is not an SSH configuration file. "
+#~ "Ask your administrator for the file."
 #~ msgstr ""
-#~ "가져올 파일은 SSH 설정파일이 아닙니다.  관리자에게 파일에 대해 문의하"
-#~ "시기 바랍니다."
+#~ "가져올 파일은 SSH 설정파일이 아닙니다.  관리자에게 파일에 대해 문의하시기 "
+#~ "바랍니다."
 
 #~ msgid "Shared _key:"
 #~ msgstr "공유키(_K):"
@@ -351,9 +575,6 @@ msgstr "고정 키"
 
 #~ msgid "Use L_ZO compression"
 #~ msgstr "LZO 압축 사용(_Z)"
-
-#~ msgid "Use TA_P device"
-#~ msgstr "TAP 장치 사용(_P)"
 
 #~ msgid "Use _TCP connection"
 #~ msgstr "TCP 연결 사용(_T)"
@@ -384,17 +605,11 @@ msgstr "고정 키"
 #~ msgid "_Gateway address:"
 #~ msgstr "게이트웨이 주소(_G):"
 
-#~ msgid "_Gateway port:"
-#~ msgstr "게이트웨이 포트(_G):"
-
 #~ msgid "_Key:"
 #~ msgstr "키(_K):"
 
 #~ msgid "_Local IP:"
 #~ msgstr "로컬 IP(_L):"
-
-#~ msgid "_Remote IP:"
-#~ msgstr "원격 IP(_R):"
 
 #~ msgid "_User name:"
 #~ msgstr "사용자 이름(_U):"
@@ -414,17 +629,11 @@ msgstr "고정 키"
 #~ msgid "<b>Optional Information</b>"
 #~ msgstr "<b>기타 정보</b>"
 
-#~ msgid "<b>Required Information</b>"
-#~ msgstr "<b>필수 정보</b>"
-
 #~ msgid "CA  file:"
 #~ msgstr "CA 파일:"
 
 #~ msgid "Shared Key:"
 #~ msgstr "공유키:"
-
-#~ msgid "Username:"
-#~ msgstr "사용자이름:"
 
 #~ msgid "X.509"
 #~ msgstr "X.509"
@@ -442,10 +651,6 @@ msgstr "고정 키"
 #~ "The VPN login failed because the VPN program could not connect to the VPN "
 #~ "server."
 #~ msgstr "VPN 프로그램이 VPN 서버에 연결하지 못해서 로그인 실패했습니다."
-
-#~ msgid ""
-#~ "The VPN login failed because the VPN configuration options were invalid."
-#~ msgstr "VPN 설정 옵션이 잘못되어서 로그인 실패했습니다."
 
 #~ msgid ""
 #~ "The VPN login failed because the VPN program received an invalid "

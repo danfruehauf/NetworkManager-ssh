@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-09 20:59+0200\n"
+"POT-Creation-Date: 2013-06-29 00:41+1000\n"
 "PO-Revision-Date: 2011-04-09 21:04+0200\n"
 "Last-Translator: Fran Diéguez <frandieguez@gnome.org>\n"
 "Language-Team: Galician <gnome-l10n-gl@gnome.org>\n"
@@ -21,437 +21,287 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../auth-dialog/gnome-two-password-dialog.c:130
-msgid "_Password:"
-msgstr "_Contrasinal:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:131
-msgid "_Secondary Password:"
-msgstr "Contrasinal _secundario:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:248
-msgid "_Username:"
-msgstr "Nome de _usuario:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:250
-msgid "_Domain:"
-msgstr "_Dominio:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:348
-msgid "Connect _anonymously"
-msgstr "Conectarse _anonimamente"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:353
-msgid "Connect as _user:"
-msgstr "Conectarse como _usuario:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:458
-msgid "_Remember password for this session"
-msgstr "Lemb_rar o contrasinal para esta sesión"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:460
-msgid "_Save password in keyring"
-msgstr "_Gardar o contrasinal no anel de chaves"
-
-#: ../auth-dialog/main.c:103
+#. Otherwise, we have no saved password, or the password flags indicated
+#. * that the password should never be saved.
+#.
+#: ../auth-dialog/main.c:141
 #, c-format
 msgid "You need to authenticate to access the Virtual Private Network '%s'."
 msgstr "Precisa autenticarse para acceder á rede privada virtual (VPN) '%s'."
 
-#: ../auth-dialog/main.c:104
+#: ../auth-dialog/main.c:150 ../auth-dialog/main.c:170
 msgid "Authenticate VPN"
 msgstr "Autenticar VPN"
 
-#: ../auth-dialog/main.c:125
-msgid "Certificate pass_word:"
-msgstr "_Contrasinal do certificado:"
+#: ../auth-dialog/main.c:152 ../properties/nm-ssh-dialog.ui.h:27
+msgid "Password:"
+msgstr "Contrasinal:"
 
-#: ../auth-dialog/main.c:139
-msgid "Certificate password:"
-msgstr "Contrasinal do certificado:"
+#: ../auth-dialog/main.c:291
+#, c-format
+msgid ""
+"Couldn't find '%s' environment variable.\n"
+"\n"
+"Is ssh-agent running?"
+msgstr ""
 
-#: ../properties/auth-helpers.c:202
-msgid "Choose a Certificate Authority certificate..."
-msgstr "Seleccionar un certificado de Autoridade de Certificación…"
+#: ../properties/advanced-dialog.c:137
+msgid ""
+"You have chosen not to use 'root' as the remote username.\n"
+"\n"
+"Please make sure the user you specify is allowed to open tun/tap devices on "
+"the remote host."
+msgstr ""
 
-#: ../properties/auth-helpers.c:221
-msgid "Choose your personal certificate..."
-msgstr "Seleccione o seu certificado persoal…"
-
-#: ../properties/auth-helpers.c:239
-msgid "Choose your private key..."
-msgstr "Seleccione a súa chave privada…"
-
-#: ../properties/auth-helpers.c:297
-msgid "Choose an SSH static key..."
-msgstr "Seleccionar unha chave estática SSH…"
-
-#: ../properties/auth-helpers.c:321 ../properties/auth-helpers.c:1104
-#: ../properties/auth-helpers.c:1494
-msgid "None"
-msgstr "Ningún"
-
-#: ../properties/auth-helpers.c:801
-msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
-msgstr "Certificados PEM ou PKCS#12 (*.pem, *.crt, *.key, *.cer, *.p12)"
-
-#: ../properties/auth-helpers.c:802
-msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
-msgstr "Certificados PEM (*.pem, *.crt, *.key, *.cer)"
-
-#: ../properties/auth-helpers.c:862
-msgid "SSH Static Keys (*.key)"
-msgstr "Chaves estáticas SSH (*.key)"
-
-#: ../properties/auth-helpers.c:1021 ../properties/auth-helpers.c:1096
-msgid "Default"
-msgstr "Predeterminado"
-
-#: ../properties/auth-helpers.c:1106
-msgid "MD-5"
-msgstr "MD-5"
-
-#: ../properties/auth-helpers.c:1108
-msgid "SHA-1"
-msgstr "SHA-1"
-
-#: ../properties/auth-helpers.c:1110
-msgid "SHA-224"
-msgstr "SHA-224"
-
-#: ../properties/auth-helpers.c:1112
-msgid "SHA-256"
-msgstr "SHA-256"
-
-#: ../properties/auth-helpers.c:1114
-msgid "SHA-384"
-msgstr "SHA-384"
-
-#: ../properties/auth-helpers.c:1116
-msgid "SHA-512"
-msgstr "SHA-512"
-
-#: ../properties/auth-helpers.c:1118
-msgid "RIPEMD-160"
-msgstr "RIPEMD-160"
-
-#: ../properties/auth-helpers.c:1293 ../properties/nm-ssh-dialog.ui.h:16
-msgid "Not required"
-msgstr "Non requirido"
-
-#: ../properties/auth-helpers.c:1295
-msgid "HTTP"
-msgstr "HTTP"
-
-#: ../properties/auth-helpers.c:1297
-msgid "SOCKS"
-msgstr "SOCKS"
-
-#: ../properties/nm-ssh.c:53
+#: ../properties/nm-ssh.c:49
 msgid "SSH"
 msgstr "SSH"
 
-#: ../properties/nm-ssh.c:54
+#: ../properties/nm-ssh.c:50
 msgid "Compatible with the SSH server."
 msgstr "Compatíbel co servidor SSH."
 
-#: ../properties/nm-ssh.c:323
-msgid "Certificates (TLS)"
-msgstr "Certificados (TLS)"
+#: ../properties/nm-ssh.c:538
+msgid "SSH Agent"
+msgstr ""
 
-#: ../properties/nm-ssh.c:337
+#: ../properties/nm-ssh.c:551
 msgid "Password"
 msgstr "Contrasinal"
 
-#: ../properties/nm-ssh.c:354
-msgid "Password with Certificates (TLS)"
-msgstr "Contrasinal con certificados (TLS)"
-
-#: ../properties/nm-ssh.c:366
-msgid "Static Key"
-msgstr "Chave estática"
+#: ../properties/nm-ssh.c:564
+#, fuzzy
+msgid "Key Authentication"
+msgstr "Autenticación TLS"
 
 #: ../properties/nm-ssh-dialog.ui.h:1
 msgid " "
 msgstr " "
 
 #: ../properties/nm-ssh-dialog.ui.h:2
-msgid "<b>Authentication</b>"
-msgstr "<b>Autenticación</b>"
+msgid "Not required"
+msgstr "Non requirido"
 
 #: ../properties/nm-ssh-dialog.ui.h:3
-msgid "<b>General</b>"
-msgstr "<b>Xeral</b>"
+msgid "SSH Advanced Options"
+msgstr "Opcións avanzadas de SSH"
 
 #: ../properties/nm-ssh-dialog.ui.h:4
-msgid ""
-"<i>Connect only to servers whose certificate matches the given subject.\n"
-"Example: /CN=myvpn.company.com</i>"
-msgstr ""
-"<i>Só conectar cos servidores cuxos certificados coincidan co asunto "
-"fornecido.\n"
-"Exemplo: /CN=avpnda.empresa.com</i>"
+#, fuzzy
+msgid "Use custom gateway port:"
+msgstr "Usar un p_orto personalizado de pasarela:"
+
+#: ../properties/nm-ssh-dialog.ui.h:5
+#, fuzzy
+msgid "Use custom tunnel Maximum Transmission Unit (MTU):"
+msgstr "Usar unha Unidade de Transmisión Máxima de _túnel personalizada (MTU)"
 
 #: ../properties/nm-ssh-dialog.ui.h:6
-msgid ""
-"<i>If key direction is used, it must be the opposite of that used on the VPN "
-"peer.  For example, if the peer uses '1', this connection must use '0'.  If "
-"you are unsure what value to use, contact your system administrator.</i>"
+msgid "Extra SSH options:"
 msgstr ""
-"<i>Se se utiliza a dirección da chave, esta debe ser oposta á da utilizada "
-"no peer VPN. Por exemplo, se o peer usa '1', esta conexión debe utilizar "
-"'0'. Se non está seguro de que valor utilizar, contacte co seu administrador "
-"do sistema.</i>"
 
 #: ../properties/nm-ssh-dialog.ui.h:7
-msgid ""
-"<i>Select this option if your organization requires the use of a proxy "
-"server to access the Internet.</i>"
+msgid "Remote device number:"
 msgstr ""
-"<i>Seleccione esta opción se a súa organización lle obriga a usar un "
-"servidor proxy para acceder a Internet.</i>"
 
 #: ../properties/nm-ssh-dialog.ui.h:8
-msgid "Ad_vanced..."
-msgstr "Opcións a_vanzadas..."
+#, fuzzy
+msgid "Use a TAP device"
+msgstr "Usar un dispositivo TA_P"
 
 #: ../properties/nm-ssh-dialog.ui.h:9
-msgid "CA Certificate:"
-msgstr "Certificado CA:"
+#, fuzzy
+msgid "Remote username:"
+msgstr "Usuario do proxy:"
 
 #: ../properties/nm-ssh-dialog.ui.h:10
-msgid "Cipher:"
-msgstr "Cifrado:"
+msgid "Do not replace default route"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:11
 msgid "General"
 msgstr "Xeral"
 
 #: ../properties/nm-ssh-dialog.ui.h:12
-msgid "HMAC Authentication:"
-msgstr "Autenticación HMAC:"
+msgid "<b>General</b>"
+msgstr "<b>Xeral</b>"
 
 #: ../properties/nm-ssh-dialog.ui.h:13
-msgid "Key Direction:"
-msgstr "Dirección da chave:"
+#, fuzzy
+msgid "Gateway:"
+msgstr "_Pasarela:"
 
 #: ../properties/nm-ssh-dialog.ui.h:14
-msgid "Key File:"
-msgstr "Ficheiro de chave:"
+msgid "<b>Network Settings</b>"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:15
+msgid "Remote IP Address:"
+msgstr "Enderezo IP remoto:"
+
+#: ../properties/nm-ssh-dialog.ui.h:16
 msgid "Local IP Address:"
 msgstr "Enderezo IP local:"
 
 #: ../properties/nm-ssh-dialog.ui.h:17
-msgid "SSH Advanced Options"
-msgstr "Opcións avanzadas de SSH"
+msgid "Netmask:"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:18
-msgid "Password:"
-msgstr "Contrasinal:"
+msgid "<b>IPv6 Network Settings</b>"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:19
-msgid "Port:"
-msgstr "Porto:"
+msgid "Use IPv6"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:20
-msgid "Private Key Password:"
-msgstr "Contrasinal de chave privada:"
-
-#: ../properties/nm-ssh-dialog.ui.h:21
-msgid "Private Key:"
-msgstr "Chave privada:"
-
-#: ../properties/nm-ssh-dialog.ui.h:22
-msgid "Proxies"
-msgstr "Proxies"
-
-#: ../properties/nm-ssh-dialog.ui.h:23
-msgid "Proxy Password:"
-msgstr "Contrasinal do proxy:"
-
-#: ../properties/nm-ssh-dialog.ui.h:24
-msgid "Proxy Type:"
-msgstr "Tipo de proxy:"
-
-#: ../properties/nm-ssh-dialog.ui.h:25
-msgid "Proxy Username:"
-msgstr "Usuario do proxy:"
-
-#: ../properties/nm-ssh-dialog.ui.h:26
-msgid "Remote IP Address:"
+#, fuzzy
+msgid "Remote IP Address (IPv6):"
 msgstr "Enderezo IP remoto:"
 
-#: ../properties/nm-ssh-dialog.ui.h:27
-msgid "Restrict tunnel TCP Maximum Segment Size (MSS)"
-msgstr "Restrinxir o tamaño do segmento máximo do túnel TCP (MSS)"
+#: ../properties/nm-ssh-dialog.ui.h:21
+#, fuzzy
+msgid "Local IP Address (IPv6):"
+msgstr "Enderezo IP local:"
 
-#: ../properties/nm-ssh-dialog.ui.h:28
-msgid "Retry indefinitely when errors occur"
-msgstr "Reintentar indefinidamente cando se produzan erros"
+#: ../properties/nm-ssh-dialog.ui.h:22
+msgid "Prefix (IPv6):"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.ui.h:29
-msgid "Security"
-msgstr "Seguranza"
+#: ../properties/nm-ssh-dialog.ui.h:23
+#, fuzzy
+msgid "Advanced..."
+msgstr "Opcións a_vanzadas..."
 
-#: ../properties/nm-ssh-dialog.ui.h:30
-msgid "Server Address:"
-msgstr "Enderezo do servidor:"
+#: ../properties/nm-ssh-dialog.ui.h:24
+msgid "<b>Authentication</b>"
+msgstr "<b>Autenticación</b>"
 
-#: ../properties/nm-ssh-dialog.ui.h:31
-msgid "Show password"
-msgstr "Mostrar contrasinal"
-
-#: ../properties/nm-ssh-dialog.ui.h:32
-msgid "Show passwords"
-msgstr "Mostrar os contrasinais"
-
-#: ../properties/nm-ssh-dialog.ui.h:33
-msgid "Static Key:"
-msgstr "Chave estática:"
-
-#: ../properties/nm-ssh-dialog.ui.h:34
-msgid "Subject Match:"
-msgstr "Coincidir o asunto:"
-
-#: ../properties/nm-ssh-dialog.ui.h:35
-msgid "TLS Authentication"
-msgstr "Autenticación TLS"
-
-#: ../properties/nm-ssh-dialog.ui.h:36
+#: ../properties/nm-ssh-dialog.ui.h:25
 msgid "Type:"
 msgstr "Tipo:"
 
-#: ../properties/nm-ssh-dialog.ui.h:37
-msgid "Use L_ZO data compression"
-msgstr "Usar a compresión de datos L_ZO"
+#: ../properties/nm-ssh-dialog.ui.h:26
+#, fuzzy
+msgid "Select an authentication mode."
+msgstr "Autenticación TLS"
 
-#: ../properties/nm-ssh-dialog.ui.h:38
-msgid "Use a TA_P device"
-msgstr "Usar un dispositivo TA_P"
+#: ../properties/nm-ssh-dialog.ui.h:28
+#, fuzzy
+msgid "Show Passwords"
+msgstr "Mostrar os contrasinais"
 
-#: ../properties/nm-ssh-dialog.ui.h:39
-msgid "Use a _TCP connection"
-msgstr "Usar unha conexión _TCP"
+#: ../properties/nm-ssh-dialog.ui.h:29
+#, fuzzy
+msgid "SSH Key File:"
+msgstr "Ficheiro de chave:"
 
-#: ../properties/nm-ssh-dialog.ui.h:40
-msgid "Use additional TLS authentication"
-msgstr "Usar adicionalmente a autenticación TLS"
-
-#: ../properties/nm-ssh-dialog.ui.h:41
-msgid "Use custom UDP _fragment size:"
-msgstr "Usar un tamaño de _fragmento UDP personalizado:"
-
-#: ../properties/nm-ssh-dialog.ui.h:42
-msgid "Use custom _renegotiation interval:"
-msgstr "Usar un intervalo de _renegociación personalizado:"
-
-#: ../properties/nm-ssh-dialog.ui.h:43
-msgid "Use custom _tunnel Maximum Transmission Unit (MTU):"
-msgstr "Usar unha Unidade de Transmisión Máxima de _túnel personalizada (MTU)"
-
-#: ../properties/nm-ssh-dialog.ui.h:44
-msgid "Use custom gateway p_ort:"
-msgstr "Usar un p_orto personalizado de pasarela:"
-
-#: ../properties/nm-ssh-dialog.ui.h:45
-msgid "User Certificate:"
-msgstr "Certificado de usuario:"
-
-#: ../properties/nm-ssh-dialog.ui.h:46
-msgid "User name:"
-msgstr "Nome de usuario:"
-
-#: ../properties/nm-ssh-dialog.ui.h:47
-msgid "_Gateway:"
-msgstr "_Pasarela:"
-
-#: ../src/nm-ssh-service.c:192
+#: ../src/nm-ssh-service.c:195
 #, c-format
 msgid "invalid address '%s'"
 msgstr "enderezo «%s» non válido"
 
-#: ../src/nm-ssh-service.c:204
+#: ../src/nm-ssh-service.c:207
 #, c-format
 msgid "invalid integer property '%s' or out of range [%d -> %d]"
 msgstr "propiedade enteira «%s» non válida ou fóra de rango [%d -> %d]"
 
-#: ../src/nm-ssh-service.c:214
+#: ../src/nm-ssh-service.c:217
 #, c-format
 msgid "invalid boolean property '%s' (not yes or no)"
 msgstr "propiedade booleana «%s» inválida (non «yes» ou «non»)"
 
-#: ../src/nm-ssh-service.c:221
+#: ../src/nm-ssh-service.c:224
 #, c-format
 msgid "unhandled property '%s' type %s"
 msgstr "propiedade «%s» do tipo %s non se xestiona"
 
-#: ../src/nm-ssh-service.c:232
+#: ../src/nm-ssh-service.c:235
 #, c-format
 msgid "property '%s' invalid or not supported"
 msgstr "a propiedade «%s» non é válida ou non se admite"
 
-#: ../src/nm-ssh-service.c:249
+#: ../src/nm-ssh-service.c:252
 msgid "No VPN configuration options."
 msgstr "Non hai opcións de configuración da VPN."
 
-#: ../src/nm-ssh-service.c:272
-msgid "No VPN secrets!"
-msgstr "Non hai segredos de VPN!"
-
-#: ../src/nm-ssh-service.c:744
+#: ../src/nm-ssh-service.c:1010
 msgid "Could not find the ssh binary."
 msgstr "Non foi posíbel atopar o binario de ssh."
 
-#: ../src/nm-ssh-service.c:755
-msgid "Invalid HMAC auth."
-msgstr "Autenticación HMAC non válida."
+#: ../src/nm-ssh-service.c:1035
+#, fuzzy
+msgid "Could not find the sshpass binary."
+msgstr "Non foi posíbel atopar o binario de ssh."
 
-#: ../src/nm-ssh-service.c:767 ../src/nm-ssh-service.c:1163
-#: ../src/nm-ssh-service.c:1233
-msgid "Invalid connection type."
-msgstr "Tipo de conexión non válido."
+#: ../src/nm-ssh-service.c:1053
+#, fuzzy
+msgid "No password specified."
+msgstr "Mostrar os contrasinais"
 
-#: ../src/nm-ssh-service.c:802
+#: ../src/nm-ssh-service.c:1090
+msgid "Key authentication selected, but no key file specified."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1110
+msgid "Missing required SSH_AUTH_SOCK."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1124 ../src/nm-ssh-service.c:1585
+#, fuzzy, c-format
+msgid "Unknown authentication type: %s."
+msgstr "Tipo de conexión «%s» non válido."
+
+#: ../src/nm-ssh-service.c:1194
 #, c-format
-msgid "Invalid proxy type '%s'."
-msgstr "Tipo de proxy «%s» non válido."
+msgid "Please set remote address."
+msgstr ""
 
-#: ../src/nm-ssh-service.c:838
+#: ../src/nm-ssh-service.c:1210
 #, c-format
 msgid "Invalid port number '%s'."
 msgstr "Número de porto non válido «%s»."
 
-#: ../src/nm-ssh-service.c:888
-#, c-format
-msgid "Invalid reneg seconds '%s'."
-msgstr "Segundos de renegociación «%s» non válidos."
-
-#: ../src/nm-ssh-service.c:912
+#: ../src/nm-ssh-service.c:1229
 #, c-format
 msgid "Invalid TUN MTU size '%s'."
 msgstr "Tamaño MTU do TUN «%s» non válido."
 
-#: ../src/nm-ssh-service.c:927
-#, c-format
-msgid "Invalid fragment size '%s'."
-msgstr "Tamaño do fragmento «%s» non válido."
+#: ../src/nm-ssh-service.c:1248
+#, fuzzy, c-format
+msgid "Invalid TUN/TAP device number '%s'."
+msgstr "Número de porto non válido «%s»."
 
-#: ../src/nm-ssh-service.c:995
-msgid "Missing required local IP address for static key mode."
-msgstr "Falta o enderezo IP local requirido polo modo de chave estática."
-
-#: ../src/nm-ssh-service.c:1008
-msgid "Missing required remote IP address for static key mode."
+#: ../src/nm-ssh-service.c:1267
+#, fuzzy
+msgid "Missing required remote IP address."
 msgstr "Falta o enderezo IP remoto requirido polo modo de chave estático."
 
-#: ../src/nm-ssh-service.c:1033
-#, c-format
-msgid "Unknown connection type '%s'."
-msgstr "Tipo de conexión «%s» non válido."
+#: ../src/nm-ssh-service.c:1281
+#, fuzzy
+msgid "Missing required local IP address."
+msgstr "Falta o enderezo IP local requirido polo modo de chave estática."
 
-#: ../src/nm-ssh-service.c:1152 ../src/nm-ssh-service.c:1223
+#: ../src/nm-ssh-service.c:1297
+msgid "Missing required netmask."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1317
+#, fuzzy
+msgid "Missing required IPv6 remote IP address."
+msgstr "Falta o enderezo IP remoto requirido polo modo de chave estático."
+
+#: ../src/nm-ssh-service.c:1331
+#, fuzzy
+msgid "Missing required IPv6 local IP address."
+msgstr "Falta o enderezo IP local requirido polo modo de chave estática."
+
+#: ../src/nm-ssh-service.c:1345
+msgid "Missing required IPv6 netmask."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1504 ../src/nm-ssh-service.c:1545
 msgid ""
 "Could not process the request because the VPN connection settings were "
 "invalid."
@@ -459,24 +309,232 @@ msgstr ""
 "Non foi posíbel procesar a solicitude debido a que as configuracións da "
 "conexión VPN non son válidos."
 
-#: ../src/nm-ssh-service.c:1177
-msgid "Could not process the request because no username was provided."
-msgstr ""
-"Non foi posíbel procesar a solicitude debido a que non se forneceu un nome "
-"de usuario."
-
-#: ../src/nm-ssh-service.c:1367
+#: ../src/nm-ssh-service.c:1709
 msgid "Don't quit when VPN connection terminates"
 msgstr "Non saír cando unha conexión VPN remata."
 
-#: ../src/nm-ssh-service.c:1368
+#: ../src/nm-ssh-service.c:1710
 msgid "Enable verbose debug logging (may expose passwords)"
 msgstr ""
 "Activar o modo detallado de rexistro de depuración (pode mostrar "
 "contrasinais en claro)."
 
-#: ../src/nm-ssh-service.c:1382
-msgid ""
-"nm-vpnc-service provides integrated SSH capability to NetworkManager."
+#: ../src/nm-ssh-service.c:1726
+#, fuzzy
+msgid "nm-ssh-service provides integrated SSH capability to NetworkManager."
 msgstr ""
 "nm-vpnc-service fornece a capacidade de integrar SSH con NetworkManager."
+
+#~ msgid "_Password:"
+#~ msgstr "_Contrasinal:"
+
+#~ msgid "_Secondary Password:"
+#~ msgstr "Contrasinal _secundario:"
+
+#~ msgid "_Username:"
+#~ msgstr "Nome de _usuario:"
+
+#~ msgid "_Domain:"
+#~ msgstr "_Dominio:"
+
+#~ msgid "Connect _anonymously"
+#~ msgstr "Conectarse _anonimamente"
+
+#~ msgid "Connect as _user:"
+#~ msgstr "Conectarse como _usuario:"
+
+#~ msgid "_Remember password for this session"
+#~ msgstr "Lemb_rar o contrasinal para esta sesión"
+
+#~ msgid "_Save password in keyring"
+#~ msgstr "_Gardar o contrasinal no anel de chaves"
+
+#~ msgid "Certificate pass_word:"
+#~ msgstr "_Contrasinal do certificado:"
+
+#~ msgid "Certificate password:"
+#~ msgstr "Contrasinal do certificado:"
+
+#~ msgid "Choose a Certificate Authority certificate..."
+#~ msgstr "Seleccionar un certificado de Autoridade de Certificación…"
+
+#~ msgid "Choose your personal certificate..."
+#~ msgstr "Seleccione o seu certificado persoal…"
+
+#~ msgid "Choose your private key..."
+#~ msgstr "Seleccione a súa chave privada…"
+
+#~ msgid "Choose an SSH static key..."
+#~ msgstr "Seleccionar unha chave estática SSH…"
+
+#~ msgid "None"
+#~ msgstr "Ningún"
+
+#~ msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
+#~ msgstr "Certificados PEM ou PKCS#12 (*.pem, *.crt, *.key, *.cer, *.p12)"
+
+#~ msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
+#~ msgstr "Certificados PEM (*.pem, *.crt, *.key, *.cer)"
+
+#~ msgid "SSH Static Keys (*.key)"
+#~ msgstr "Chaves estáticas SSH (*.key)"
+
+#~ msgid "Default"
+#~ msgstr "Predeterminado"
+
+#~ msgid "MD-5"
+#~ msgstr "MD-5"
+
+#~ msgid "SHA-1"
+#~ msgstr "SHA-1"
+
+#~ msgid "SHA-224"
+#~ msgstr "SHA-224"
+
+#~ msgid "SHA-256"
+#~ msgstr "SHA-256"
+
+#~ msgid "SHA-384"
+#~ msgstr "SHA-384"
+
+#~ msgid "SHA-512"
+#~ msgstr "SHA-512"
+
+#~ msgid "RIPEMD-160"
+#~ msgstr "RIPEMD-160"
+
+#~ msgid "HTTP"
+#~ msgstr "HTTP"
+
+#~ msgid "SOCKS"
+#~ msgstr "SOCKS"
+
+#~ msgid "Certificates (TLS)"
+#~ msgstr "Certificados (TLS)"
+
+#~ msgid "Password with Certificates (TLS)"
+#~ msgstr "Contrasinal con certificados (TLS)"
+
+#~ msgid "Static Key"
+#~ msgstr "Chave estática"
+
+#~ msgid ""
+#~ "<i>Connect only to servers whose certificate matches the given subject.\n"
+#~ "Example: /CN=myvpn.company.com</i>"
+#~ msgstr ""
+#~ "<i>Só conectar cos servidores cuxos certificados coincidan co asunto "
+#~ "fornecido.\n"
+#~ "Exemplo: /CN=avpnda.empresa.com</i>"
+
+#~ msgid ""
+#~ "<i>If key direction is used, it must be the opposite of that used on the "
+#~ "VPN peer.  For example, if the peer uses '1', this connection must use "
+#~ "'0'.  If you are unsure what value to use, contact your system "
+#~ "administrator.</i>"
+#~ msgstr ""
+#~ "<i>Se se utiliza a dirección da chave, esta debe ser oposta á da "
+#~ "utilizada no peer VPN. Por exemplo, se o peer usa '1', esta conexión debe "
+#~ "utilizar '0'. Se non está seguro de que valor utilizar, contacte co seu "
+#~ "administrador do sistema.</i>"
+
+#~ msgid ""
+#~ "<i>Select this option if your organization requires the use of a proxy "
+#~ "server to access the Internet.</i>"
+#~ msgstr ""
+#~ "<i>Seleccione esta opción se a súa organización lle obriga a usar un "
+#~ "servidor proxy para acceder a Internet.</i>"
+
+#~ msgid "CA Certificate:"
+#~ msgstr "Certificado CA:"
+
+#~ msgid "Cipher:"
+#~ msgstr "Cifrado:"
+
+#~ msgid "HMAC Authentication:"
+#~ msgstr "Autenticación HMAC:"
+
+#~ msgid "Key Direction:"
+#~ msgstr "Dirección da chave:"
+
+#~ msgid "Port:"
+#~ msgstr "Porto:"
+
+#~ msgid "Private Key Password:"
+#~ msgstr "Contrasinal de chave privada:"
+
+#~ msgid "Private Key:"
+#~ msgstr "Chave privada:"
+
+#~ msgid "Proxies"
+#~ msgstr "Proxies"
+
+#~ msgid "Proxy Password:"
+#~ msgstr "Contrasinal do proxy:"
+
+#~ msgid "Proxy Type:"
+#~ msgstr "Tipo de proxy:"
+
+#~ msgid "Restrict tunnel TCP Maximum Segment Size (MSS)"
+#~ msgstr "Restrinxir o tamaño do segmento máximo do túnel TCP (MSS)"
+
+#~ msgid "Retry indefinitely when errors occur"
+#~ msgstr "Reintentar indefinidamente cando se produzan erros"
+
+#~ msgid "Security"
+#~ msgstr "Seguranza"
+
+#~ msgid "Server Address:"
+#~ msgstr "Enderezo do servidor:"
+
+#~ msgid "Show password"
+#~ msgstr "Mostrar contrasinal"
+
+#~ msgid "Static Key:"
+#~ msgstr "Chave estática:"
+
+#~ msgid "Subject Match:"
+#~ msgstr "Coincidir o asunto:"
+
+#~ msgid "Use L_ZO data compression"
+#~ msgstr "Usar a compresión de datos L_ZO"
+
+#~ msgid "Use a _TCP connection"
+#~ msgstr "Usar unha conexión _TCP"
+
+#~ msgid "Use additional TLS authentication"
+#~ msgstr "Usar adicionalmente a autenticación TLS"
+
+#~ msgid "Use custom UDP _fragment size:"
+#~ msgstr "Usar un tamaño de _fragmento UDP personalizado:"
+
+#~ msgid "Use custom _renegotiation interval:"
+#~ msgstr "Usar un intervalo de _renegociación personalizado:"
+
+#~ msgid "User Certificate:"
+#~ msgstr "Certificado de usuario:"
+
+#~ msgid "User name:"
+#~ msgstr "Nome de usuario:"
+
+#~ msgid "No VPN secrets!"
+#~ msgstr "Non hai segredos de VPN!"
+
+#~ msgid "Invalid HMAC auth."
+#~ msgstr "Autenticación HMAC non válida."
+
+#~ msgid "Invalid connection type."
+#~ msgstr "Tipo de conexión non válido."
+
+#~ msgid "Invalid proxy type '%s'."
+#~ msgstr "Tipo de proxy «%s» non válido."
+
+#~ msgid "Invalid reneg seconds '%s'."
+#~ msgstr "Segundos de renegociación «%s» non válidos."
+
+#~ msgid "Invalid fragment size '%s'."
+#~ msgstr "Tamaño do fragmento «%s» non válido."
+
+#~ msgid "Could not process the request because no username was provided."
+#~ msgstr ""
+#~ "Non foi posíbel procesar a solicitude debido a que non se forneceu un "
+#~ "nome de usuario."

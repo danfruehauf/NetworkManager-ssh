@@ -7,452 +7,593 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NetworkManager-ssh HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-23 00:35+0900\n"
+"POT-Creation-Date: 2013-06-29 00:41+1000\n"
 "PO-Revision-Date: 2007-07-23 00:56+0900\n"
 "Last-Translator: Satoru SATOH <ss@gnome.gr.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
+"Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../auth-dialog/gnome-two-password-dialog.c:145
-msgid "_Password:"
-msgstr "パスワード(_P):"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:146
-msgid "_Secondary Password:"
-msgstr "第二パスワード(_S):"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:263
-msgid "_Username:"
-msgstr "ユーザ名(_U):"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:265
-msgid "_Domain:"
-msgstr "ドメイン(_D):"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:357
-msgid "Connect _anonymously"
-msgstr "匿名で接続(_A)"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:362
-msgid "Connect as _user:"
-msgstr "ユーザで接続(_U):"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:471
-msgid "_Remember password for this session"
-msgstr "このセッションのパスワードを記憶する(_R)"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:473
-msgid "_Save password in keyring"
-msgstr "パスワードをキーリングに保存する(_S)"
-
-#: ../auth-dialog/main.c:214
+#. Otherwise, we have no saved password, or the password flags indicated
+#. * that the password should never be saved.
+#.
+#: ../auth-dialog/main.c:141
 #, c-format
 msgid "You need to authenticate to access the Virtual Private Network '%s'."
 msgstr "仮想プライベートネットワーク '%s' にアクセスするには認証が必要です。"
 
-#: ../auth-dialog/main.c:215
+#: ../auth-dialog/main.c:150 ../auth-dialog/main.c:170
 msgid "Authenticate VPN"
 msgstr "VPN 認証"
 
-#: ../auth-dialog/main.c:227
-msgid "Certificate pass_word:"
-msgstr "証明パスワード(_W):"
+#: ../auth-dialog/main.c:152 ../properties/nm-ssh-dialog.ui.h:27
+#, fuzzy
+msgid "Password:"
+msgstr "パスワード(_P):"
 
-#: ../auth-dialog/main.c:252
-msgid "Certificate password:"
-msgstr "証明パスワード:"
+#: ../auth-dialog/main.c:291
+#, c-format
+msgid ""
+"Couldn't find '%s' environment variable.\n"
+"\n"
+"Is ssh-agent running?"
+msgstr ""
 
-#: ../nm-ssh.desktop.in.h:1
-msgid "Add, Remove, and Edit VPN Connections"
-msgstr "VPN 接続を追加、削除または編集"
+#: ../properties/advanced-dialog.c:137
+msgid ""
+"You have chosen not to use 'root' as the remote username.\n"
+"\n"
+"Please make sure the user you specify is allowed to open tun/tap devices on "
+"the remote host."
+msgstr ""
 
-#: ../nm-ssh.desktop.in.h:2
-msgid "VPN Connection Manager (SSH)"
-msgstr "VPN 接続マネージャ (SSH)"
+#: ../properties/nm-ssh.c:49
+msgid "SSH"
+msgstr ""
 
-#: ../properties/nm-ssh.c:146
-msgid "SSH Client"
+#: ../properties/nm-ssh.c:50
+msgid "Compatible with the SSH server."
+msgstr ""
+
+#: ../properties/nm-ssh.c:538
+#, fuzzy
+msgid "SSH Agent"
 msgstr "SSH クライアント"
 
-#: ../properties/nm-ssh.c:803
-msgid "The following SSH connection will be created:"
-msgstr "次の SSH 接続を作成します:"
+#: ../properties/nm-ssh.c:551
+msgid "Password"
+msgstr "パスワード"
 
-#: ../properties/nm-ssh.c:805
-#, c-format
-msgid "Name:  %s"
-msgstr "名前:  %s"
+#: ../properties/nm-ssh.c:564
+#, fuzzy
+msgid "Key Authentication"
+msgstr "VPN 認証"
 
-#: ../properties/nm-ssh.c:813
-msgid "Connection Type: X.509 Certificates"
-msgstr "接続タイプ: X.509 証明"
-
-#: ../properties/nm-ssh.c:816 ../properties/nm-ssh.c:843
-#: ../properties/nm-ssh.c:855
-#, c-format
-msgid "CA:  %s"
-msgstr "認証局:  %s"
-
-#: ../properties/nm-ssh.c:819 ../properties/nm-ssh.c:858
-#, c-format
-msgid "Cert:  %s"
-msgstr "証明:  %s"
-
-#: ../properties/nm-ssh.c:822 ../properties/nm-ssh.c:861
-#, c-format
-msgid "Key:  %s"
-msgstr "鍵:   %s"
-
-#: ../properties/nm-ssh.c:826
-msgid "Connection Type: Shared Key"
-msgstr "接続タイプ: 共有鍵"
-
-#: ../properties/nm-ssh.c:829
-#, c-format
-msgid "Shared Key:  %s"
-msgstr "共有鍵:      %s"
-
-#: ../properties/nm-ssh.c:832
-#, c-format
-msgid "Local IP:  %s"
-msgstr "ローカル IP:  %s"
-
-#: ../properties/nm-ssh.c:835
-#, c-format
-msgid "Remote IP:  %s"
-msgstr "リモート IP:  %s"
-
-#: ../properties/nm-ssh.c:840
-msgid "Connection Type: Password"
-msgstr "接続タイプ: パスワード"
-
-#: ../properties/nm-ssh.c:846 ../properties/nm-ssh.c:864
-#, c-format
-msgid "Username:  %s"
-msgstr "ユーザ名:  %s"
-
-#: ../properties/nm-ssh.c:852
-msgid "Connection Type: X.509 with Password Authentication"
-msgstr "接続タイプ: X.509 + パスワード認証"
-
-#: ../properties/nm-ssh.c:870
-#, c-format
-msgid "Remote:  %s"
-msgstr "リモート:   %s"
-
-#: ../properties/nm-ssh.c:873
-#, c-format
-msgid "Port:  %s"
-msgstr "ポート:  %s"
-
-#: ../properties/nm-ssh.c:876
-#, c-format
-msgid "Device: %s"
-msgstr "デバイス: %s"
-
-#: ../properties/nm-ssh.c:876
-msgid "TAP"
-msgstr "TAP"
-
-#: ../properties/nm-ssh.c:876
-msgid "TUN"
-msgstr "TUN"
-
-#: ../properties/nm-ssh.c:879
-#, c-format
-msgid "Protocol: %s"
-msgstr "プロトコル: %s"
-
-#: ../properties/nm-ssh.c:879
-msgid "TCP"
-msgstr "TCP"
-
-#: ../properties/nm-ssh.c:879
-msgid "UDP"
-msgstr "UDP"
-
-#: ../properties/nm-ssh.c:883
-#, c-format
-msgid "Routes:  %s"
-msgstr "ルート:  %s"
-
-#: ../properties/nm-ssh.c:887
-#, c-format
-msgid "Use LZO Compression: %s"
-msgstr "LZO 圧縮の使用: %s"
-
-#: ../properties/nm-ssh.c:887
-msgid "Yes"
-msgstr "はい"
-
-#: ../properties/nm-ssh.c:887
-msgid "No"
-msgstr "いいえ"
-
-#: ../properties/nm-ssh.c:891
-#, c-format
-msgid "Cipher:  %s"
-msgstr "暗号:    %s"
-
-#: ../properties/nm-ssh.c:896
-#, c-format
-msgid "TLS auth:  %s %s"
-msgstr "TLS 認証:  %s %s"
-
-#: ../properties/nm-ssh.c:900
-msgid "The connection details can be changed using the \"Edit\" button."
-msgstr "接続の詳細は\"編集\"ボタンで変更できます。"
-
-#: ../properties/nm-ssh.c:1124
-msgid "Cannot import settings"
-msgstr "設定をインポートできません"
-
-#: ../properties/nm-ssh.c:1126
-#, c-format
-msgid "The VPN settings file '%s' does not contain valid data."
-msgstr "VPN 設定ファイル '%s' には適切なデータが含まれていません。"
-
-#: ../properties/nm-ssh.c:1173
-msgid "Select file to import"
-msgstr "インポートするファイルを選択"
-
-#: ../properties/nm-ssh.c:1232 ../properties/nm-ssh.c:1244
-#: ../properties/nm-ssh.c:1247
-msgid "Select CA to use"
-msgstr "利用する認証局を選択"
-
-#: ../properties/nm-ssh.c:1235 ../properties/nm-ssh.c:1250
-msgid "Select certificate to use"
-msgstr "利用する証明を選択"
-
-#: ../properties/nm-ssh.c:1238 ../properties/nm-ssh.c:1253
-msgid "Select key to use"
-msgstr "利用する鍵を選択"
-
-#: ../properties/nm-ssh.c:1241
-msgid "Select shared key to use"
-msgstr "利用する共有鍵を選択"
-
-#: ../properties/nm-ssh.c:1256
-msgid "Select TA to use"
-msgstr "利用する TA を選択"
-
-#. printf ("in impl_export\n");
-#: ../properties/nm-ssh.c:1450
-msgid "Save as..."
-msgstr "別名で保存..."
-
-#: ../properties/nm-ssh.c:1480
-#, c-format
-msgid "A file named \"%s\" already exists."
-msgstr "ファイル \"%s\" は既にあります。"
-
-#: ../properties/nm-ssh.c:1483
-msgid "Do you want to replace it with the one you are saving?"
-msgstr "保存しようとしているファイルで上書きしますか?"
-
-#: ../properties/nm-ssh.c:1497
-msgid "Failed to export configuration"
-msgstr "設定のエクスポートに失敗"
-
-#: ../properties/nm-ssh.c:1499
-#, c-format
-msgid "Failed to save file %s"
-msgstr "ファイル %s の保存に失敗"
-
-#: ../properties/nm-ssh-dialog.glade.h:1
-msgid "(Default: 1194)"
-msgstr "(デフォルト: 1194)"
-
-#: ../properties/nm-ssh-dialog.glade.h:2
-msgid "65536"
-msgstr "65536"
-
-#: ../properties/nm-ssh-dialog.glade.h:3
-msgid "<i>example: 172.16.0.0/16 10.11.12.0/24</i>"
-msgstr "<i>例: 172.16.0.0/16 10.11.12.0/24</i>"
-
-#: ../properties/nm-ssh-dialog.glade.h:4
-msgid "Ad_vanced"
-msgstr "詳細(_V)"
-
-#: ../properties/nm-ssh-dialog.glade.h:5
-msgid "C_A file:"
-msgstr "認証局ファイル(_A):"
-
-#: ../properties/nm-ssh-dialog.glade.h:6
-msgid "C_ertificate:"
-msgstr "証明書(_E):"
-
-#: ../properties/nm-ssh-dialog.glade.h:7
-msgid "Co_nnection type:"
-msgstr "接続タイプ(_N):"
-
-#: ../properties/nm-ssh-dialog.glade.h:8
-msgid "Connection na_me:"
-msgstr "接続名(_M):"
-
-#: ../properties/nm-ssh-dialog.glade.h:9
-msgid "Direction:"
-msgstr "方向:"
-
-#: ../properties/nm-ssh-dialog.glade.h:10
-msgid "Import _Saved Configuration..."
-msgstr "保存した設定をインポート(_S)..."
-
-#: ../properties/nm-ssh-dialog.glade.h:11
-msgid ""
-"Name used to identify the connection to the private network, e.g. \"Campus "
-"VPN\" or \"Corporate Network\""
+#: ../properties/nm-ssh-dialog.ui.h:1
+msgid " "
 msgstr ""
-"プライベートネットワークへの接続を識別する名前。例えば\"キャンパス VPN\" や"
-" \"社内ネットワーク\" など。"
 
-#: ../properties/nm-ssh-dialog.glade.h:12
-msgid "Network"
-msgstr "ネットワーク"
+#: ../properties/nm-ssh-dialog.ui.h:2
+msgid "Not required"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:13
-msgid "Only use _VPN connection for these addresses:"
-msgstr "これらのアドレスについてのみ VPN 接続を利用(_V)"
-
-#: ../properties/nm-ssh-dialog.glade.h:14
+#: ../properties/nm-ssh-dialog.ui.h:3
 msgid "SSH Advanced Options"
 msgstr "Options の詳細オプション"
 
-#: ../properties/nm-ssh-dialog.glade.h:15
-msgid "SSH Configuration"
-msgstr "SSH 設定"
-
-#: ../properties/nm-ssh-dialog.glade.h:16
-msgid ""
-"Please enter the information provided by your system administrator below. Do "
-"not enter your password here as you will be prompted when connecting."
-msgstr ""
-"システム管理者が提供した情報を下に入力してください。接続時にきかれるまではパ"
-"スワードは入力しないでください。"
-
-#: ../properties/nm-ssh-dialog.glade.h:17
-msgid ""
-"Please note that the file you import is not an SSH configuration file. "
-"Ask your administrator for the file."
-msgstr ""
-"インポートしたファイルは SSH の設定ファイルではありません。"
-"システム管理者にファイルについて尋ねてください。"
-
-#: ../properties/nm-ssh-dialog.glade.h:18
-msgid "Shared _key:"
-msgstr "共有鍵(_K):"
-
-#: ../properties/nm-ssh-dialog.glade.h:19
-msgid "TLS-Auth"
-msgstr "TLS 認証"
-
-#: ../properties/nm-ssh-dialog.glade.h:20
-msgid "Use L_ZO compression"
-msgstr "LZO 圧縮を使用(_Z)"
-
-#: ../properties/nm-ssh-dialog.glade.h:21
-msgid "Use TA_P device"
-msgstr "TAP デバイスを使用 (_P)"
-
-#: ../properties/nm-ssh-dialog.glade.h:22
-msgid "Use _TCP connection"
-msgstr "TCP 接続を使用 (_T)"
-
-#: ../properties/nm-ssh-dialog.glade.h:23
-msgid "Use _TLS auth:"
-msgstr "TLS 認証を使用 (_T):"
-
-#: ../properties/nm-ssh-dialog.glade.h:24
-msgid "Use cip_her:"
-msgstr "暗号を使用 (_H):"
-
-#: ../properties/nm-ssh-dialog.glade.h:25
-msgid ""
-"X.509 Certificates\n"
-"Pre-shared key\n"
-"Password Authentication\n"
-"X.509 with Password Authentication"
-msgstr ""
-"X.509 証明\n"
-"事前共有鍵\n"
-"パスワード認証\n"
-"X.509 + パスワード認証"
-
-#: ../properties/nm-ssh-dialog.glade.h:29
-msgid "_0"
-msgstr "0(_0)"
-
-#: ../properties/nm-ssh-dialog.glade.h:30
-msgid "_1"
-msgstr "1(_1)"
-
-#: ../properties/nm-ssh-dialog.glade.h:31
-msgid "_Gateway address:"
-msgstr "ゲートウェイアドレス (_G):"
-
-#: ../properties/nm-ssh-dialog.glade.h:32
-msgid "_Gateway port:"
+#: ../properties/nm-ssh-dialog.ui.h:4
+#, fuzzy
+msgid "Use custom gateway port:"
 msgstr "ゲートウェイポート (_G):"
 
-#: ../properties/nm-ssh-dialog.glade.h:33
-msgid "_Key:"
-msgstr "鍵(_K):"
+#: ../properties/nm-ssh-dialog.ui.h:5
+msgid "Use custom tunnel Maximum Transmission Unit (MTU):"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:34
-msgid "_Local IP:"
-msgstr "ローカル IP (_L):"
+#: ../properties/nm-ssh-dialog.ui.h:6
+msgid "Extra SSH options:"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:35
-msgid "_Remote IP:"
+#: ../properties/nm-ssh-dialog.ui.h:7
+msgid "Remote device number:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:8
+#, fuzzy
+msgid "Use a TAP device"
+msgstr "TAP デバイスを使用 (_P)"
+
+#: ../properties/nm-ssh-dialog.ui.h:9
+#, fuzzy
+msgid "Remote username:"
+msgstr "ユーザ名:"
+
+#: ../properties/nm-ssh-dialog.ui.h:10
+msgid "Do not replace default route"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:11
+msgid "General"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:12
+msgid "<b>General</b>"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:13
+#, fuzzy
+msgid "Gateway:"
+msgstr "ゲートウェイポート (_G):"
+
+#: ../properties/nm-ssh-dialog.ui.h:14
+msgid "<b>Network Settings</b>"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:15
+#, fuzzy
+msgid "Remote IP Address:"
 msgstr "リモート IP (_R):"
 
-#: ../properties/nm-ssh-dialog.glade.h:36
-msgid "_User name:"
-msgstr "ユーザ名 (_U):"
+#: ../properties/nm-ssh-dialog.ui.h:16
+#, fuzzy
+msgid "Local IP Address:"
+msgstr "ローカル IP:  %s"
 
-#: ../properties/nm-ssh-dialog.glade.h:37
-msgid "_none"
-msgstr "なし (_N)"
-
-#: ../src/nm-ssh-service.c:127
-msgid ""
-"The VPN login failed because the user name and password were not accepted or "
-"the certificate password was wrong."
+#: ../properties/nm-ssh-dialog.ui.h:17
+msgid "Netmask:"
 msgstr ""
-"VPN ログインに失敗。ユーザ名、パスワードあるいは証明パスワードが間違っていま"
-"す。"
 
-#: ../src/nm-ssh-service.c:129
-msgid "The VPN login failed because the VPN program could not be started."
-msgstr "VPN ログインに失敗。VPN プログラムを起動できませんでした。"
-
-#: ../src/nm-ssh-service.c:131
-msgid ""
-"The VPN login failed because the VPN program could not connect to the VPN "
-"server."
+#: ../properties/nm-ssh-dialog.ui.h:18
+msgid "<b>IPv6 Network Settings</b>"
 msgstr ""
-"VPN ログインに失敗。VPN プログラムは VPN サーバに接続できませんでした。"
 
-#: ../src/nm-ssh-service.c:133
+#: ../properties/nm-ssh-dialog.ui.h:19
+msgid "Use IPv6"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:20
+msgid "Remote IP Address (IPv6):"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:21
+msgid "Local IP Address (IPv6):"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:22
+msgid "Prefix (IPv6):"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:23
+#, fuzzy
+msgid "Advanced..."
+msgstr "詳細(_V)"
+
+#: ../properties/nm-ssh-dialog.ui.h:24
+#, fuzzy
+msgid "<b>Authentication</b>"
+msgstr "<b>必須情報</b>"
+
+#: ../properties/nm-ssh-dialog.ui.h:25
+msgid "Type:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:26
+msgid "Select an authentication mode."
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:28
+#, fuzzy
+msgid "Show Passwords"
+msgstr "パスワード"
+
+#: ../properties/nm-ssh-dialog.ui.h:29
+msgid "SSH Key File:"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:195
+#, c-format
+msgid "invalid address '%s'"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:207
+#, c-format
+msgid "invalid integer property '%s' or out of range [%d -> %d]"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:217
+#, c-format
+msgid "invalid boolean property '%s' (not yes or no)"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:224
+#, c-format
+msgid "unhandled property '%s' type %s"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:235
+#, c-format
+msgid "property '%s' invalid or not supported"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:252
+msgid "No VPN configuration options."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1010
+msgid "Could not find the ssh binary."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1035
+msgid "Could not find the sshpass binary."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1053
+msgid "No password specified."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1090
+msgid "Key authentication selected, but no key file specified."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1110
+msgid "Missing required SSH_AUTH_SOCK."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1124 ../src/nm-ssh-service.c:1585
+#, c-format
+msgid "Unknown authentication type: %s."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1194
+#, c-format
+msgid "Please set remote address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1210
+#, c-format
+msgid "Invalid port number '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1229
+#, c-format
+msgid "Invalid TUN MTU size '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1248
+#, c-format
+msgid "Invalid TUN/TAP device number '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1267
+msgid "Missing required remote IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1281
+msgid "Missing required local IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1297
+msgid "Missing required netmask."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1317
+msgid "Missing required IPv6 remote IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1331
+msgid "Missing required IPv6 local IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1345
+msgid "Missing required IPv6 netmask."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1504 ../src/nm-ssh-service.c:1545
+#, fuzzy
 msgid ""
-"The VPN login failed because the VPN configuration options were invalid."
+"Could not process the request because the VPN connection settings were "
+"invalid."
 msgstr "VPN ログインに失敗。VPN 設定オプションが間違っています。"
 
-#: ../src/nm-ssh-service.c:135
-msgid ""
-"The VPN login failed because the VPN program received an invalid "
-"configuration from the VPN server."
+#: ../src/nm-ssh-service.c:1709
+msgid "Don't quit when VPN connection terminates"
 msgstr ""
-"VPN ログインに失敗。VPN プログラムが VPN サーバから受け取った設定は適切なもの"
-"ではありません。"
 
-#: ../src/nm-ssh-service.c:137
-msgid "VPN connection failed"
-msgstr "VPN 接続に失敗"
+#: ../src/nm-ssh-service.c:1710
+msgid "Enable verbose debug logging (may expose passwords)"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1726
+msgid "nm-ssh-service provides integrated SSH capability to NetworkManager."
+msgstr ""
+
+#~ msgid "_Secondary Password:"
+#~ msgstr "第二パスワード(_S):"
+
+#~ msgid "_Username:"
+#~ msgstr "ユーザ名(_U):"
+
+#~ msgid "_Domain:"
+#~ msgstr "ドメイン(_D):"
+
+#~ msgid "Connect _anonymously"
+#~ msgstr "匿名で接続(_A)"
+
+#~ msgid "Connect as _user:"
+#~ msgstr "ユーザで接続(_U):"
+
+#~ msgid "_Remember password for this session"
+#~ msgstr "このセッションのパスワードを記憶する(_R)"
+
+#~ msgid "_Save password in keyring"
+#~ msgstr "パスワードをキーリングに保存する(_S)"
+
+#~ msgid "Certificate pass_word:"
+#~ msgstr "証明パスワード(_W):"
+
+#~ msgid "Certificate password:"
+#~ msgstr "証明パスワード:"
+
+#~ msgid "Add, Remove, and Edit VPN Connections"
+#~ msgstr "VPN 接続を追加、削除または編集"
+
+#~ msgid "VPN Connection Manager (SSH)"
+#~ msgstr "VPN 接続マネージャ (SSH)"
+
+#~ msgid "The following SSH connection will be created:"
+#~ msgstr "次の SSH 接続を作成します:"
+
+#~ msgid "Name:  %s"
+#~ msgstr "名前:  %s"
+
+#~ msgid "Connection Type: X.509 Certificates"
+#~ msgstr "接続タイプ: X.509 証明"
+
+#~ msgid "CA:  %s"
+#~ msgstr "認証局:  %s"
+
+#~ msgid "Cert:  %s"
+#~ msgstr "証明:  %s"
+
+#~ msgid "Key:  %s"
+#~ msgstr "鍵:   %s"
+
+#~ msgid "Connection Type: Shared Key"
+#~ msgstr "接続タイプ: 共有鍵"
+
+#~ msgid "Shared Key:  %s"
+#~ msgstr "共有鍵:      %s"
+
+#~ msgid "Remote IP:  %s"
+#~ msgstr "リモート IP:  %s"
+
+#~ msgid "Connection Type: Password"
+#~ msgstr "接続タイプ: パスワード"
+
+#~ msgid "Username:  %s"
+#~ msgstr "ユーザ名:  %s"
+
+#~ msgid "Connection Type: X.509 with Password Authentication"
+#~ msgstr "接続タイプ: X.509 + パスワード認証"
+
+#~ msgid "Remote:  %s"
+#~ msgstr "リモート:   %s"
+
+#~ msgid "Port:  %s"
+#~ msgstr "ポート:  %s"
+
+#~ msgid "Device: %s"
+#~ msgstr "デバイス: %s"
+
+#~ msgid "TAP"
+#~ msgstr "TAP"
+
+#~ msgid "TUN"
+#~ msgstr "TUN"
+
+#~ msgid "Protocol: %s"
+#~ msgstr "プロトコル: %s"
+
+#~ msgid "TCP"
+#~ msgstr "TCP"
+
+#~ msgid "UDP"
+#~ msgstr "UDP"
+
+#~ msgid "Routes:  %s"
+#~ msgstr "ルート:  %s"
+
+#~ msgid "Use LZO Compression: %s"
+#~ msgstr "LZO 圧縮の使用: %s"
+
+#~ msgid "Yes"
+#~ msgstr "はい"
+
+#~ msgid "No"
+#~ msgstr "いいえ"
+
+#~ msgid "Cipher:  %s"
+#~ msgstr "暗号:    %s"
+
+#~ msgid "TLS auth:  %s %s"
+#~ msgstr "TLS 認証:  %s %s"
+
+#~ msgid "The connection details can be changed using the \"Edit\" button."
+#~ msgstr "接続の詳細は\"編集\"ボタンで変更できます。"
+
+#~ msgid "Cannot import settings"
+#~ msgstr "設定をインポートできません"
+
+#~ msgid "The VPN settings file '%s' does not contain valid data."
+#~ msgstr "VPN 設定ファイル '%s' には適切なデータが含まれていません。"
+
+#~ msgid "Select file to import"
+#~ msgstr "インポートするファイルを選択"
+
+#~ msgid "Select CA to use"
+#~ msgstr "利用する認証局を選択"
+
+#~ msgid "Select certificate to use"
+#~ msgstr "利用する証明を選択"
+
+#~ msgid "Select key to use"
+#~ msgstr "利用する鍵を選択"
+
+#~ msgid "Select shared key to use"
+#~ msgstr "利用する共有鍵を選択"
+
+#~ msgid "Select TA to use"
+#~ msgstr "利用する TA を選択"
+
+#~ msgid "Save as..."
+#~ msgstr "別名で保存..."
+
+#~ msgid "A file named \"%s\" already exists."
+#~ msgstr "ファイル \"%s\" は既にあります。"
+
+#~ msgid "Do you want to replace it with the one you are saving?"
+#~ msgstr "保存しようとしているファイルで上書きしますか?"
+
+#~ msgid "Failed to export configuration"
+#~ msgstr "設定のエクスポートに失敗"
+
+#~ msgid "Failed to save file %s"
+#~ msgstr "ファイル %s の保存に失敗"
+
+#~ msgid "(Default: 1194)"
+#~ msgstr "(デフォルト: 1194)"
+
+#~ msgid "65536"
+#~ msgstr "65536"
+
+#~ msgid "<i>example: 172.16.0.0/16 10.11.12.0/24</i>"
+#~ msgstr "<i>例: 172.16.0.0/16 10.11.12.0/24</i>"
+
+#~ msgid "C_A file:"
+#~ msgstr "認証局ファイル(_A):"
+
+#~ msgid "C_ertificate:"
+#~ msgstr "証明書(_E):"
+
+#~ msgid "Co_nnection type:"
+#~ msgstr "接続タイプ(_N):"
+
+#~ msgid "Connection na_me:"
+#~ msgstr "接続名(_M):"
+
+#~ msgid "Direction:"
+#~ msgstr "方向:"
+
+#~ msgid "Import _Saved Configuration..."
+#~ msgstr "保存した設定をインポート(_S)..."
+
+#~ msgid ""
+#~ "Name used to identify the connection to the private network, e.g. "
+#~ "\"Campus VPN\" or \"Corporate Network\""
+#~ msgstr ""
+#~ "プライベートネットワークへの接続を識別する名前。例えば\"キャンパス VPN\" "
+#~ "や \"社内ネットワーク\" など。"
+
+#~ msgid "Network"
+#~ msgstr "ネットワーク"
+
+#~ msgid "Only use _VPN connection for these addresses:"
+#~ msgstr "これらのアドレスについてのみ VPN 接続を利用(_V)"
+
+#~ msgid "SSH Configuration"
+#~ msgstr "SSH 設定"
+
+#~ msgid ""
+#~ "Please enter the information provided by your system administrator below. "
+#~ "Do not enter your password here as you will be prompted when connecting."
+#~ msgstr ""
+#~ "システム管理者が提供した情報を下に入力してください。接続時にきかれるまでは"
+#~ "パスワードは入力しないでください。"
+
+#~ msgid ""
+#~ "Please note that the file you import is not an SSH configuration file. "
+#~ "Ask your administrator for the file."
+#~ msgstr ""
+#~ "インポートしたファイルは SSH の設定ファイルではありません。システム管理者"
+#~ "にファイルについて尋ねてください。"
+
+#~ msgid "Shared _key:"
+#~ msgstr "共有鍵(_K):"
+
+#~ msgid "TLS-Auth"
+#~ msgstr "TLS 認証"
+
+#~ msgid "Use L_ZO compression"
+#~ msgstr "LZO 圧縮を使用(_Z)"
+
+#~ msgid "Use _TCP connection"
+#~ msgstr "TCP 接続を使用 (_T)"
+
+#~ msgid "Use _TLS auth:"
+#~ msgstr "TLS 認証を使用 (_T):"
+
+#~ msgid "Use cip_her:"
+#~ msgstr "暗号を使用 (_H):"
+
+#~ msgid ""
+#~ "X.509 Certificates\n"
+#~ "Pre-shared key\n"
+#~ "Password Authentication\n"
+#~ "X.509 with Password Authentication"
+#~ msgstr ""
+#~ "X.509 証明\n"
+#~ "事前共有鍵\n"
+#~ "パスワード認証\n"
+#~ "X.509 + パスワード認証"
+
+#~ msgid "_0"
+#~ msgstr "0(_0)"
+
+#~ msgid "_1"
+#~ msgstr "1(_1)"
+
+#~ msgid "_Gateway address:"
+#~ msgstr "ゲートウェイアドレス (_G):"
+
+#~ msgid "_Key:"
+#~ msgstr "鍵(_K):"
+
+#~ msgid "_Local IP:"
+#~ msgstr "ローカル IP (_L):"
+
+#~ msgid "_User name:"
+#~ msgstr "ユーザ名 (_U):"
+
+#~ msgid "_none"
+#~ msgstr "なし (_N)"
+
+#~ msgid ""
+#~ "The VPN login failed because the user name and password were not accepted "
+#~ "or the certificate password was wrong."
+#~ msgstr ""
+#~ "VPN ログインに失敗。ユーザ名、パスワードあるいは証明パスワードが間違ってい"
+#~ "ます。"
+
+#~ msgid "The VPN login failed because the VPN program could not be started."
+#~ msgstr "VPN ログインに失敗。VPN プログラムを起動できませんでした。"
+
+#~ msgid ""
+#~ "The VPN login failed because the VPN program could not connect to the VPN "
+#~ "server."
+#~ msgstr ""
+#~ "VPN ログインに失敗。VPN プログラムは VPN サーバに接続できませんでした。"
+
+#~ msgid ""
+#~ "The VPN login failed because the VPN program received an invalid "
+#~ "configuration from the VPN server."
+#~ msgstr ""
+#~ "VPN ログインに失敗。VPN プログラムが VPN サーバから受け取った設定は適切な"
+#~ "ものではありません。"
+
+#~ msgid "VPN connection failed"
+#~ msgstr "VPN 接続に失敗"
 
 #~ msgid "<b>Connection Name</b>"
 #~ msgstr "<b>接続名</b>"
@@ -460,17 +601,8 @@ msgstr "VPN 接続に失敗"
 #~ msgid "<b>Optional Information</b>"
 #~ msgstr "<b>オプション情報</b>"
 
-#~ msgid "<b>Required Information</b>"
-#~ msgstr "<b>必須情報</b>"
-
-#~ msgid "Password"
-#~ msgstr "パスワード"
-
 #~ msgid "Shared Key:"
 #~ msgstr "共有鍵:"
-
-#~ msgid "Username:"
-#~ msgstr "ユーザ名:"
 
 #~ msgid "X.509"
 #~ msgstr "X.509"
