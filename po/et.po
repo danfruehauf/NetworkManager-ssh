@@ -10,9 +10,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: NetworkManager-ssh\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=NetworkManager&keywords=I18N+L10N&component=VPN: ssh\n"
-"POT-Creation-Date: 2011-03-15 04:22+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-06-29 00:41+1000\n"
 "PO-Revision-Date: 2011-03-15 08:45+0300\n"
 "Last-Translator: Mattias Põldaru <mahfiaz@gmail.com>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
@@ -21,264 +20,486 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "_Password:"
-msgstr "_Parool:"
-
-msgid "_Secondary Password:"
-msgstr "Parool _uuesti:"
-
-msgid "_Username:"
-msgstr "_Kasutajanimi:"
-
-msgid "_Domain:"
-msgstr "_Domeen:"
-
-msgid "Connect _anonymously"
-msgstr "Ühendu _anonüümselt"
-
-msgid "Connect as _user:"
-msgstr "Ühendu ka_sutajana:"
-
-msgid "_Remember password for this session"
-msgstr "_Jäta parool selle sessiooni ajaks meelde"
-
-msgid "_Save password in keyring"
-msgstr "Parooli salvestamine _võtmerõngasse"
-
+#. Otherwise, we have no saved password, or the password flags indicated
+#. * that the password should never be saved.
+#.
+#: ../auth-dialog/main.c:141
 #, c-format
 msgid "You need to authenticate to access the Virtual Private Network '%s'."
 msgstr "VPN-võrgule '%s' ligipääsuks pead end autentima."
 
+#: ../auth-dialog/main.c:150 ../auth-dialog/main.c:170
 msgid "Authenticate VPN"
 msgstr "VPN-i autentimine"
 
-msgid "Certificate pass_word:"
-msgstr "Sertifikaadi _parool:"
-
-msgid "Certificate password:"
-msgstr "Sertifikaadi parool:"
-
-msgid "Choose a Certificate Authority certificate..."
-msgstr "Vali sertifikaadikeskuse serdifail..."
-
-msgid "Choose your personal certificate..."
-msgstr "Vali isiklik sertifikaat..."
-
-msgid "Choose your private key..."
-msgstr "Vali privaatvõti..."
-
-msgid "Choose an SSH static key..."
-msgstr "Vali SSH püsivõti..."
-
-msgid "None"
-msgstr "Pole"
-
-msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
-msgstr "PEM või PKCS#12 sertifikaadid (*.pem, *.crt, *.key, *.cer, *.p12)"
-
-msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
-msgstr "PEM sertifikaadid (*.pem, *.crt, *.key, *.cer)"
-
-msgid "SSH Static Keys (*.key)"
-msgstr "SSH püsivõtmed (*.key)"
-
-msgid "Default"
-msgstr "Vaikimisi"
-
-msgid "MD-5"
-msgstr "MD-5"
-
-msgid "SHA-1"
-msgstr "SHA-1"
-
-msgid "SHA-224"
-msgstr "SHA-224"
-
-msgid "SHA-256"
-msgstr "SHA-256"
-
-msgid "SHA-384"
-msgstr "SHA-384"
-
-msgid "SHA-512"
-msgstr "SHA-512"
-
-msgid "RIPEMD-160"
-msgstr "RIPEMD-160"
-
-msgid "Not required"
-msgstr "Pole vajalik"
-
-msgid "HTTP"
-msgstr "HTTP"
-
-msgid "SOCKS"
-msgstr "SOCKS"
-
-msgid "SSH"
-msgstr "SSH"
-
-msgid "Compatible with the SSH server."
-msgstr "Ühildub SSH serveriga."
-
-msgid "Certificates (TLS)"
-msgstr "Sertifikaadid (TLS)"
-
-msgid "Password"
-msgstr "Parool"
-
-msgid "Password with Certificates (TLS)"
-msgstr "Parool koos sertifikaatidega (TLS)"
-
-msgid "Static Key"
-msgstr "Püsivõti"
-
-msgid " "
-msgstr " "
-
-msgid "<b>Authentication</b>"
-msgstr "<b>Autentimine</b>"
-
-msgid "<b>General</b>"
-msgstr "<b>Üldine</b>"
-
-msgid ""
-"<i>Connect only to servers whose certificate matches the given subject.\n"
-"Example: /CN=myvpn.company.com</i>"
-msgstr ""
-"<i>Ühendus luuakse ainult serveriga, mille sertifikaat kattub määratud "
-"nimega.\n"
-"Näiteks: /CN=myvpn.kompanii.com</i>"
-
-msgid ""
-"<i>If key direction is used, it must be the opposite of that used on the VPN "
-"peer.  For example, if the peer uses '1', this connection must use '0'.  If "
-"you are unsure what value to use, contact your system administrator.</i>"
-msgstr ""
-"<i>Kui kasutatakse võtme suunda, peab see olema vastupidine teise VPN'i "
-"võtme suunale. Näitaks, kui teine masin kasutab '1', peab siin olema '0'. "
-"Kui sa ei tea, millist väärtust kasutada, küsi süsteemiadministraatorilt.</i>"
-
-msgid ""
-"<i>Select this option if your organization requires the use of a proxy "
-"server to access the Internet.</i>"
-msgstr ""
-"<i>Vali see, kui sinu organisatsioon nõuab interneti kasutamist "
-"proksiserveri kaudu.</i>"
-
-msgid "Ad_vanced..."
-msgstr "_Laiendatud..."
-
-msgid "CA Certificate:"
-msgstr "Sertifikaadikeskuse serdifail:"
-
-msgid "Cipher:"
-msgstr "Šiffer:"
-
-msgid "General"
-msgstr "Üldine"
-
-msgid "HMAC Authentication:"
-msgstr "HMAC'iga autentimine"
-
-msgid "Key Direction:"
-msgstr "Võtme suund:"
-
-msgid "Key File:"
-msgstr "Võtmefail:"
-
-msgid "Local IP Address:"
-msgstr "Kohalik IP-aadress:"
-
-msgid "SSH Advanced Options"
-msgstr "SSH laiendatud sätted"
-
+#: ../auth-dialog/main.c:152 ../properties/nm-ssh-dialog.ui.h:27
 msgid "Password:"
 msgstr "Parool:"
 
-msgid "Port:"
-msgstr "Port:"
+#: ../auth-dialog/main.c:291
+#, c-format
+msgid ""
+"Couldn't find '%s' environment variable.\n"
+"\n"
+"Is ssh-agent running?"
+msgstr ""
 
-msgid "Private Key Password:"
-msgstr "Privaatvõtme parool:"
+#: ../properties/advanced-dialog.c:137
+msgid ""
+"You have chosen not to use 'root' as the remote username.\n"
+"\n"
+"Please make sure the user you specify is allowed to open tun/tap devices on "
+"the remote host."
+msgstr ""
 
-msgid "Private Key:"
-msgstr "Privaatvõti:"
+#: ../properties/nm-ssh.c:49
+msgid "SSH"
+msgstr "SSH"
 
-msgid "Proxies"
-msgstr "Proksid"
+#: ../properties/nm-ssh.c:50
+msgid "Compatible with the SSH server."
+msgstr "Ühildub SSH serveriga."
 
-msgid "Proxy Password:"
-msgstr "Proksi parool:"
+#: ../properties/nm-ssh.c:538
+msgid "SSH Agent"
+msgstr ""
 
-msgid "Proxy Type:"
-msgstr "Proksi liik:"
+#: ../properties/nm-ssh.c:551
+msgid "Password"
+msgstr "Parool"
 
-msgid "Proxy Username:"
+#: ../properties/nm-ssh.c:564
+#, fuzzy
+msgid "Key Authentication"
+msgstr "TLS'iga autentimine"
+
+#: ../properties/nm-ssh-dialog.ui.h:1
+msgid " "
+msgstr " "
+
+#: ../properties/nm-ssh-dialog.ui.h:2
+msgid "Not required"
+msgstr "Pole vajalik"
+
+#: ../properties/nm-ssh-dialog.ui.h:3
+msgid "SSH Advanced Options"
+msgstr "SSH laiendatud sätted"
+
+#: ../properties/nm-ssh-dialog.ui.h:4
+#, fuzzy
+msgid "Use custom gateway port:"
+msgstr "Kasuta muud gateway _porti:"
+
+#: ../properties/nm-ssh-dialog.ui.h:5
+#, fuzzy
+msgid "Use custom tunnel Maximum Transmission Unit (MTU):"
+msgstr "Kohandatud _tunneli suurima edastusühiku suurus (MTU):"
+
+#: ../properties/nm-ssh-dialog.ui.h:6
+msgid "Extra SSH options:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:7
+msgid "Remote device number:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:8
+#, fuzzy
+msgid "Use a TAP device"
+msgstr "TA_P-seadme kasutamine"
+
+#: ../properties/nm-ssh-dialog.ui.h:9
+#, fuzzy
+msgid "Remote username:"
 msgstr "_Proksi kasutajanimi:"
 
+#: ../properties/nm-ssh-dialog.ui.h:10
+msgid "Do not replace default route"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:11
+msgid "General"
+msgstr "Üldine"
+
+#: ../properties/nm-ssh-dialog.ui.h:12
+msgid "<b>General</b>"
+msgstr "<b>Üldine</b>"
+
+#: ../properties/nm-ssh-dialog.ui.h:13
+#, fuzzy
+msgid "Gateway:"
+msgstr "_Gateway:"
+
+#: ../properties/nm-ssh-dialog.ui.h:14
+msgid "<b>Network Settings</b>"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:15
 msgid "Remote IP Address:"
 msgstr "Kaugmasina IP-aadress:"
 
-msgid "Restrict tunnel TCP Maximum Segment Size (MSS)"
-msgstr "Tunneli TCP maksimaalse segmendi suurus piiratud (MSS)"
+#: ../properties/nm-ssh-dialog.ui.h:16
+msgid "Local IP Address:"
+msgstr "Kohalik IP-aadress:"
 
-msgid "Retry indefinitely when errors occur"
-msgstr "Vigade korral proovitakse lõpmatuseni uuesti"
+#: ../properties/nm-ssh-dialog.ui.h:17
+msgid "Netmask:"
+msgstr ""
 
-msgid "Security"
-msgstr "Turvalisus"
+#: ../properties/nm-ssh-dialog.ui.h:18
+msgid "<b>IPv6 Network Settings</b>"
+msgstr ""
 
-msgid "Server Address:"
-msgstr "Serveri aadress:"
+#: ../properties/nm-ssh-dialog.ui.h:19
+msgid "Use IPv6"
+msgstr ""
 
-msgid "Show password"
-msgstr "Näita parooli"
+#: ../properties/nm-ssh-dialog.ui.h:20
+#, fuzzy
+msgid "Remote IP Address (IPv6):"
+msgstr "Kaugmasina IP-aadress:"
 
-msgid "Show passwords"
-msgstr "Näita paroole"
+#: ../properties/nm-ssh-dialog.ui.h:21
+#, fuzzy
+msgid "Local IP Address (IPv6):"
+msgstr "Kohalik IP-aadress:"
 
-msgid "Static Key:"
-msgstr "Püsivõti:"
+#: ../properties/nm-ssh-dialog.ui.h:22
+msgid "Prefix (IPv6):"
+msgstr ""
 
-msgid "Subject Match:"
-msgstr "Kattuv nimi:"
+#: ../properties/nm-ssh-dialog.ui.h:23
+#, fuzzy
+msgid "Advanced..."
+msgstr "_Laiendatud..."
 
-msgid "TLS Authentication"
-msgstr "TLS'iga autentimine"
+#: ../properties/nm-ssh-dialog.ui.h:24
+msgid "<b>Authentication</b>"
+msgstr "<b>Autentimine</b>"
 
+#: ../properties/nm-ssh-dialog.ui.h:25
 msgid "Type:"
 msgstr "Tüüp:"
 
-msgid "Use L_ZO data compression"
-msgstr "L_ZO-pakkimise kasutamine"
+#: ../properties/nm-ssh-dialog.ui.h:26
+#, fuzzy
+msgid "Select an authentication mode."
+msgstr "TLS'iga autentimine"
 
-msgid "Use a TA_P device"
-msgstr "TA_P-seadme kasutamine"
+#: ../properties/nm-ssh-dialog.ui.h:28
+#, fuzzy
+msgid "Show Passwords"
+msgstr "Näita paroole"
 
-msgid "Use a _TCP connection"
-msgstr "_TCP-ühenduse kasutamine"
+#: ../properties/nm-ssh-dialog.ui.h:29
+#, fuzzy
+msgid "SSH Key File:"
+msgstr "Võtmefail:"
 
-msgid "Use additional TLS authentication"
-msgstr "Lisaks TLS-autentimise kasutamine"
+#: ../src/nm-ssh-service.c:195
+#, c-format
+msgid "invalid address '%s'"
+msgstr ""
 
-msgid "Use custom UDP _fragment size:"
-msgstr "Kohandatud UDP-_fragmendi suurus:"
+#: ../src/nm-ssh-service.c:207
+#, c-format
+msgid "invalid integer property '%s' or out of range [%d -> %d]"
+msgstr ""
 
-msgid "Use custom _renegotiation interval:"
-msgstr "Kohandatud _kordusläbirääkimiste intervall:"
+#: ../src/nm-ssh-service.c:217
+#, c-format
+msgid "invalid boolean property '%s' (not yes or no)"
+msgstr ""
 
-msgid "Use custom _tunnel Maximum Transmission Unit (MTU):"
-msgstr "Kohandatud _tunneli suurima edastusühiku suurus (MTU):"
+#: ../src/nm-ssh-service.c:224
+#, c-format
+msgid "unhandled property '%s' type %s"
+msgstr ""
 
-msgid "Use custom gateway p_ort:"
-msgstr "Kasuta muud gateway _porti:"
+#: ../src/nm-ssh-service.c:235
+#, c-format
+msgid "property '%s' invalid or not supported"
+msgstr ""
 
-msgid "User Certificate:"
-msgstr "Kasutaja sertifikaat:"
+#: ../src/nm-ssh-service.c:252
+msgid "No VPN configuration options."
+msgstr ""
 
-msgid "User name:"
-msgstr "Kasutajanimi:"
+#: ../src/nm-ssh-service.c:1010
+msgid "Could not find the ssh binary."
+msgstr ""
 
-msgid "_Gateway:"
-msgstr "_Gateway:"
+#: ../src/nm-ssh-service.c:1035
+msgid "Could not find the sshpass binary."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1053
+#, fuzzy
+msgid "No password specified."
+msgstr "Näita paroole"
+
+#: ../src/nm-ssh-service.c:1090
+msgid "Key authentication selected, but no key file specified."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1110
+msgid "Missing required SSH_AUTH_SOCK."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1124 ../src/nm-ssh-service.c:1585
+#, c-format
+msgid "Unknown authentication type: %s."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1194
+#, c-format
+msgid "Please set remote address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1210
+#, c-format
+msgid "Invalid port number '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1229
+#, c-format
+msgid "Invalid TUN MTU size '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1248
+#, c-format
+msgid "Invalid TUN/TAP device number '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1267
+msgid "Missing required remote IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1281
+msgid "Missing required local IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1297
+msgid "Missing required netmask."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1317
+msgid "Missing required IPv6 remote IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1331
+msgid "Missing required IPv6 local IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1345
+msgid "Missing required IPv6 netmask."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1504 ../src/nm-ssh-service.c:1545
+msgid ""
+"Could not process the request because the VPN connection settings were "
+"invalid."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1709
+msgid "Don't quit when VPN connection terminates"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1710
+msgid "Enable verbose debug logging (may expose passwords)"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1726
+msgid "nm-ssh-service provides integrated SSH capability to NetworkManager."
+msgstr ""
+
+#~ msgid "_Password:"
+#~ msgstr "_Parool:"
+
+#~ msgid "_Secondary Password:"
+#~ msgstr "Parool _uuesti:"
+
+#~ msgid "_Username:"
+#~ msgstr "_Kasutajanimi:"
+
+#~ msgid "_Domain:"
+#~ msgstr "_Domeen:"
+
+#~ msgid "Connect _anonymously"
+#~ msgstr "Ühendu _anonüümselt"
+
+#~ msgid "Connect as _user:"
+#~ msgstr "Ühendu ka_sutajana:"
+
+#~ msgid "_Remember password for this session"
+#~ msgstr "_Jäta parool selle sessiooni ajaks meelde"
+
+#~ msgid "_Save password in keyring"
+#~ msgstr "Parooli salvestamine _võtmerõngasse"
+
+#~ msgid "Certificate pass_word:"
+#~ msgstr "Sertifikaadi _parool:"
+
+#~ msgid "Certificate password:"
+#~ msgstr "Sertifikaadi parool:"
+
+#~ msgid "Choose a Certificate Authority certificate..."
+#~ msgstr "Vali sertifikaadikeskuse serdifail..."
+
+#~ msgid "Choose your personal certificate..."
+#~ msgstr "Vali isiklik sertifikaat..."
+
+#~ msgid "Choose your private key..."
+#~ msgstr "Vali privaatvõti..."
+
+#~ msgid "Choose an SSH static key..."
+#~ msgstr "Vali SSH püsivõti..."
+
+#~ msgid "None"
+#~ msgstr "Pole"
+
+#~ msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
+#~ msgstr "PEM või PKCS#12 sertifikaadid (*.pem, *.crt, *.key, *.cer, *.p12)"
+
+#~ msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
+#~ msgstr "PEM sertifikaadid (*.pem, *.crt, *.key, *.cer)"
+
+#~ msgid "SSH Static Keys (*.key)"
+#~ msgstr "SSH püsivõtmed (*.key)"
+
+#~ msgid "Default"
+#~ msgstr "Vaikimisi"
+
+#~ msgid "MD-5"
+#~ msgstr "MD-5"
+
+#~ msgid "SHA-1"
+#~ msgstr "SHA-1"
+
+#~ msgid "SHA-224"
+#~ msgstr "SHA-224"
+
+#~ msgid "SHA-256"
+#~ msgstr "SHA-256"
+
+#~ msgid "SHA-384"
+#~ msgstr "SHA-384"
+
+#~ msgid "SHA-512"
+#~ msgstr "SHA-512"
+
+#~ msgid "RIPEMD-160"
+#~ msgstr "RIPEMD-160"
+
+#~ msgid "HTTP"
+#~ msgstr "HTTP"
+
+#~ msgid "SOCKS"
+#~ msgstr "SOCKS"
+
+#~ msgid "Certificates (TLS)"
+#~ msgstr "Sertifikaadid (TLS)"
+
+#~ msgid "Password with Certificates (TLS)"
+#~ msgstr "Parool koos sertifikaatidega (TLS)"
+
+#~ msgid "Static Key"
+#~ msgstr "Püsivõti"
+
+#~ msgid ""
+#~ "<i>Connect only to servers whose certificate matches the given subject.\n"
+#~ "Example: /CN=myvpn.company.com</i>"
+#~ msgstr ""
+#~ "<i>Ühendus luuakse ainult serveriga, mille sertifikaat kattub määratud "
+#~ "nimega.\n"
+#~ "Näiteks: /CN=myvpn.kompanii.com</i>"
+
+#~ msgid ""
+#~ "<i>If key direction is used, it must be the opposite of that used on the "
+#~ "VPN peer.  For example, if the peer uses '1', this connection must use "
+#~ "'0'.  If you are unsure what value to use, contact your system "
+#~ "administrator.</i>"
+#~ msgstr ""
+#~ "<i>Kui kasutatakse võtme suunda, peab see olema vastupidine teise VPN'i "
+#~ "võtme suunale. Näitaks, kui teine masin kasutab '1', peab siin olema '0'. "
+#~ "Kui sa ei tea, millist väärtust kasutada, küsi süsteemiadministraatorilt."
+#~ "</i>"
+
+#~ msgid ""
+#~ "<i>Select this option if your organization requires the use of a proxy "
+#~ "server to access the Internet.</i>"
+#~ msgstr ""
+#~ "<i>Vali see, kui sinu organisatsioon nõuab interneti kasutamist "
+#~ "proksiserveri kaudu.</i>"
+
+#~ msgid "CA Certificate:"
+#~ msgstr "Sertifikaadikeskuse serdifail:"
+
+#~ msgid "Cipher:"
+#~ msgstr "Šiffer:"
+
+#~ msgid "HMAC Authentication:"
+#~ msgstr "HMAC'iga autentimine"
+
+#~ msgid "Key Direction:"
+#~ msgstr "Võtme suund:"
+
+#~ msgid "Port:"
+#~ msgstr "Port:"
+
+#~ msgid "Private Key Password:"
+#~ msgstr "Privaatvõtme parool:"
+
+#~ msgid "Private Key:"
+#~ msgstr "Privaatvõti:"
+
+#~ msgid "Proxies"
+#~ msgstr "Proksid"
+
+#~ msgid "Proxy Password:"
+#~ msgstr "Proksi parool:"
+
+#~ msgid "Proxy Type:"
+#~ msgstr "Proksi liik:"
+
+#~ msgid "Restrict tunnel TCP Maximum Segment Size (MSS)"
+#~ msgstr "Tunneli TCP maksimaalse segmendi suurus piiratud (MSS)"
+
+#~ msgid "Retry indefinitely when errors occur"
+#~ msgstr "Vigade korral proovitakse lõpmatuseni uuesti"
+
+#~ msgid "Security"
+#~ msgstr "Turvalisus"
+
+#~ msgid "Server Address:"
+#~ msgstr "Serveri aadress:"
+
+#~ msgid "Show password"
+#~ msgstr "Näita parooli"
+
+#~ msgid "Static Key:"
+#~ msgstr "Püsivõti:"
+
+#~ msgid "Subject Match:"
+#~ msgstr "Kattuv nimi:"
+
+#~ msgid "Use L_ZO data compression"
+#~ msgstr "L_ZO-pakkimise kasutamine"
+
+#~ msgid "Use a _TCP connection"
+#~ msgstr "_TCP-ühenduse kasutamine"
+
+#~ msgid "Use additional TLS authentication"
+#~ msgstr "Lisaks TLS-autentimise kasutamine"
+
+#~ msgid "Use custom UDP _fragment size:"
+#~ msgstr "Kohandatud UDP-_fragmendi suurus:"
+
+#~ msgid "Use custom _renegotiation interval:"
+#~ msgstr "Kohandatud _kordusläbirääkimiste intervall:"
+
+#~ msgid "User Certificate:"
+#~ msgstr "Kasutaja sertifikaat:"
+
+#~ msgid "User name:"
+#~ msgstr "Kasutajanimi:"

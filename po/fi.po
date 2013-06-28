@@ -8,230 +8,415 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NetworkManager-ssh\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-29 20:22+0300\n"
+"POT-Creation-Date: 2013-06-29 00:41+1000\n"
 "PO-Revision-Date: 2008-11-29 20:00+0300\n"
 "Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
+"Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../auth-dialog/gnome-two-password-dialog.c:145
-msgid "_Password:"
-msgstr "_Salasana:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:146
-msgid "_Secondary Password:"
-msgstr "_Toissijainen salasana:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:263
-msgid "_Username:"
-msgstr "_Käyttäjätunnus:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:265
-msgid "_Domain:"
-msgstr "_Toimialue:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:357
-msgid "Connect _anonymously"
-msgstr "Yhdistä _anonyymisti"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:362
-msgid "Connect as _user:"
-msgstr "Yhdistä _käyttäjänä:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:471
-msgid "_Remember password for this session"
-msgstr "_Muista salasana istunnon ajan"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:473
-msgid "_Save password in keyring"
-msgstr "_Tallenna salasana avainrenkaaseen"
-
-#: ../auth-dialog/main.c:127
+#. Otherwise, we have no saved password, or the password flags indicated
+#. * that the password should never be saved.
+#.
+#: ../auth-dialog/main.c:141
 #, c-format
 msgid "You need to authenticate to access the Virtual Private Network '%s'."
 msgstr "Yhteydenotto VPN-verkkoon \"%s\" vaatii kirjautumista."
 
-#: ../auth-dialog/main.c:128
+#: ../auth-dialog/main.c:150 ../auth-dialog/main.c:170
 msgid "Authenticate VPN"
 msgstr "Todenna VPN-yhteyden avaus"
 
-#: ../auth-dialog/main.c:149
-msgid "Certificate pass_word:"
-msgstr "Varmenteen _salasana:"
-
-#: ../auth-dialog/main.c:163
-msgid "Certificate password:"
-msgstr "Varmennettu salasana:"
-
-#: ../properties/auth-helpers.c:160
-msgid "Choose a Certificate Authority certificate..."
-msgstr "Valitse CA-varmenne..."
-
-#: ../properties/auth-helpers.c:179
-msgid "Choose your personal certificate..."
-msgstr "Valitse oma varmenteesi..."
-
-#: ../properties/auth-helpers.c:197
-msgid "Choose your private key..."
-msgstr "Valitse salainen avaimesi..."
-
-#: ../properties/auth-helpers.c:250
-msgid "Choose an SSH static key..."
-msgstr "Valitse OpenPVN:n staattinen avain..."
-
-#: ../properties/auth-helpers.c:274 ../properties/auth-helpers.c:992
-msgid "None"
-msgstr "Ei mitään"
-
-#: ../properties/auth-helpers.c:654
-msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
-msgstr "PEM-varmenteet (*.pem, *.crt, *.key tai *.cer)"
-
-#: ../properties/auth-helpers.c:714
-msgid "SSH Static Keys (*.key)"
-msgstr "Pysyvät SSH-avaimet (*.key)"
-
-#: ../properties/auth-helpers.c:822
-msgid "Default"
-msgstr "Oletus"
-
-#: ../properties/nm-ssh.c:53
-msgid "SSH"
-msgstr "SSH"
-
-#: ../properties/nm-ssh.c:54
-msgid "Compatible with the SSH server."
-msgstr "Yhteensopiva SSH-palvelimen kanssa."
-
-#: ../properties/nm-ssh.c:322 ../properties/nm-ssh-dialog.glade.h:7
-msgid "Certificates (TLS)"
-msgstr "Varmenteet (TLS)"
-
-#: ../properties/nm-ssh.c:336
-msgid "Password"
-msgstr "Salasana"
-
-#: ../properties/nm-ssh.c:353
-msgid "Password with Certificates (TLS)"
-msgstr "Salasana varmenteiden kanssa (TLS)"
-
-#: ../properties/nm-ssh.c:365
-msgid "Static Key"
-msgstr "Staattinen avain"
-
-#: ../properties/nm-ssh-dialog.glade.h:1
-msgid " "
-msgstr " "
-
-#: ../properties/nm-ssh-dialog.glade.h:2
-msgid "<b>Authentication</b>"
-msgstr "<b>Tunnistautuminen</b>"
-
-#: ../properties/nm-ssh-dialog.glade.h:3
-msgid "<b>General</b>"
-msgstr "<b>Yleisasetukset</b>"
-
-#: ../properties/nm-ssh-dialog.glade.h:4
-msgid ""
-"<i>If key direction is used, it must be the opposite of that used on the VPN "
-"peer.  For example, if the peer uses '1', this connection must use '0'.  If "
-"you are unsure what value to use, contact your system administrator.</i>"
-msgstr ""
-"<i>Jos avaimen suuntaa käytetään, täytyy annetun arvon olla vastkkainen kuin "
-"VPN-yhteyden toisessa päässä. Jos esimerkiksi vastapäässä on arvo 1, tämän "
-"täytyy olla 0. Jos et tiedä mitä tässä pitäisi olla, kysy VPN-yhteytesi "
-"ylläpitäjältä lisätietoja.</i>"
-
-#: ../properties/nm-ssh-dialog.glade.h:5
-msgid "Ad_vanced..."
-msgstr "_Lisäasetukset..."
-
-#: ../properties/nm-ssh-dialog.glade.h:6
-msgid "CA Certificate:"
-msgstr "CA-varmenne:"
-
-#: ../properties/nm-ssh-dialog.glade.h:8
-msgid "Cipher:"
-msgstr "Salausmenetelmä:"
-
-#: ../properties/nm-ssh-dialog.glade.h:9
-msgid "General"
-msgstr "Yleisasetukset"
-
-#: ../properties/nm-ssh-dialog.glade.h:10
-msgid "Key Direction:"
-msgstr "Avaimen suunta:"
-
-#: ../properties/nm-ssh-dialog.glade.h:11
-msgid "Key File:"
-msgstr "Avaintiedosto:"
-
-#: ../properties/nm-ssh-dialog.glade.h:12
-msgid "Local IP Address:"
-msgstr "Oma IP-osoite:"
-
-#: ../properties/nm-ssh-dialog.glade.h:13
-msgid "SSH Advanced Options"
-msgstr "SSH-lisäasetukset"
-
-#: ../properties/nm-ssh-dialog.glade.h:14
+#: ../auth-dialog/main.c:152 ../properties/nm-ssh-dialog.ui.h:27
 msgid "Password:"
 msgstr "Salasana:"
 
-#: ../properties/nm-ssh-dialog.glade.h:15
-msgid "Private Key Password:"
-msgstr "Salaisen avaimen salasana:"
+#: ../auth-dialog/main.c:291
+#, c-format
+msgid ""
+"Couldn't find '%s' environment variable.\n"
+"\n"
+"Is ssh-agent running?"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:16
-msgid "Private Key:"
-msgstr "Salainen avain:"
+#: ../properties/advanced-dialog.c:137
+msgid ""
+"You have chosen not to use 'root' as the remote username.\n"
+"\n"
+"Please make sure the user you specify is allowed to open tun/tap devices on "
+"the remote host."
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:17
-msgid "Show passwords"
-msgstr "Näytä salasanat"
+#: ../properties/nm-ssh.c:49
+msgid "SSH"
+msgstr "SSH"
 
-#: ../properties/nm-ssh-dialog.glade.h:18
-msgid "Static Key:"
-msgstr "Kiinteä avain:"
+#: ../properties/nm-ssh.c:50
+msgid "Compatible with the SSH server."
+msgstr "Yhteensopiva SSH-palvelimen kanssa."
 
-#: ../properties/nm-ssh-dialog.glade.h:19
+#: ../properties/nm-ssh.c:538
+msgid "SSH Agent"
+msgstr ""
+
+#: ../properties/nm-ssh.c:551
+msgid "Password"
+msgstr "Salasana"
+
+#: ../properties/nm-ssh.c:564
+#, fuzzy
+msgid "Key Authentication"
+msgstr "<b>Tunnistautuminen</b>"
+
+#: ../properties/nm-ssh-dialog.ui.h:1
+msgid " "
+msgstr " "
+
+#: ../properties/nm-ssh-dialog.ui.h:2
+msgid "Not required"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:3
+msgid "SSH Advanced Options"
+msgstr "SSH-lisäasetukset"
+
+#: ../properties/nm-ssh-dialog.ui.h:4
+#, fuzzy
+msgid "Use custom gateway port:"
+msgstr "Käytä _muuta yhdyskäytävän porttia:"
+
+#: ../properties/nm-ssh-dialog.ui.h:5
+msgid "Use custom tunnel Maximum Transmission Unit (MTU):"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:6
+msgid "Extra SSH options:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:7
+msgid "Remote device number:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:8
+#, fuzzy
+msgid "Use a TAP device"
+msgstr "Käytä TA_P-laitetta"
+
+#: ../properties/nm-ssh-dialog.ui.h:9
+#, fuzzy
+msgid "Remote username:"
+msgstr "Käyttäjätunnus:"
+
+#: ../properties/nm-ssh-dialog.ui.h:10
+msgid "Do not replace default route"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:11
+msgid "General"
+msgstr "Yleisasetukset"
+
+#: ../properties/nm-ssh-dialog.ui.h:12
+msgid "<b>General</b>"
+msgstr "<b>Yleisasetukset</b>"
+
+#: ../properties/nm-ssh-dialog.ui.h:13
+#, fuzzy
+msgid "Gateway:"
+msgstr "_Yhdyskäytävä:"
+
+#: ../properties/nm-ssh-dialog.ui.h:14
+msgid "<b>Network Settings</b>"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:15
+#, fuzzy
+msgid "Remote IP Address:"
+msgstr "Oma IP-osoite:"
+
+#: ../properties/nm-ssh-dialog.ui.h:16
+msgid "Local IP Address:"
+msgstr "Oma IP-osoite:"
+
+#: ../properties/nm-ssh-dialog.ui.h:17
+msgid "Netmask:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:18
+msgid "<b>IPv6 Network Settings</b>"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:19
+msgid "Use IPv6"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:20
+#, fuzzy
+msgid "Remote IP Address (IPv6):"
+msgstr "Oma IP-osoite:"
+
+#: ../properties/nm-ssh-dialog.ui.h:21
+#, fuzzy
+msgid "Local IP Address (IPv6):"
+msgstr "Oma IP-osoite:"
+
+#: ../properties/nm-ssh-dialog.ui.h:22
+msgid "Prefix (IPv6):"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:23
+#, fuzzy
+msgid "Advanced..."
+msgstr "_Lisäasetukset..."
+
+#: ../properties/nm-ssh-dialog.ui.h:24
+msgid "<b>Authentication</b>"
+msgstr "<b>Tunnistautuminen</b>"
+
+#: ../properties/nm-ssh-dialog.ui.h:25
 msgid "Type:"
 msgstr "Tyyppi:"
 
-#: ../properties/nm-ssh-dialog.glade.h:20
-msgid "Use L_ZO data compression"
-msgstr "Käytä L_ZO-pakkausta"
-
-#: ../properties/nm-ssh-dialog.glade.h:21
-msgid "Use a TA_P device"
-msgstr "Käytä TA_P-laitetta"
-
-#: ../properties/nm-ssh-dialog.glade.h:22
-msgid "Use a _TCP connection"
-msgstr "Käytä _TCP-yhteyttä"
-
-#: ../properties/nm-ssh-dialog.glade.h:23
-msgid "Use additional TLS authentication"
+#: ../properties/nm-ssh-dialog.ui.h:26
+#, fuzzy
+msgid "Select an authentication mode."
 msgstr "Käytä lisäksi TLS-tunnistatumista"
 
-#: ../properties/nm-ssh-dialog.glade.h:24
-msgid "Use custom gateway p_ort:"
-msgstr "Käytä _muuta yhdyskäytävän porttia:"
+#: ../properties/nm-ssh-dialog.ui.h:28
+#, fuzzy
+msgid "Show Passwords"
+msgstr "Näytä salasanat"
 
-#: ../properties/nm-ssh-dialog.glade.h:25
-msgid "User Certificate:"
-msgstr "Käyttäjän varmenne:"
+#: ../properties/nm-ssh-dialog.ui.h:29
+#, fuzzy
+msgid "SSH Key File:"
+msgstr "Avaintiedosto:"
 
-#: ../properties/nm-ssh-dialog.glade.h:26
-msgid "User name:"
-msgstr "Käyttäjätunnus:"
+#: ../src/nm-ssh-service.c:195
+#, c-format
+msgid "invalid address '%s'"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.glade.h:27
-msgid "_Gateway:"
-msgstr "_Yhdyskäytävä:"
+#: ../src/nm-ssh-service.c:207
+#, c-format
+msgid "invalid integer property '%s' or out of range [%d -> %d]"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:217
+#, c-format
+msgid "invalid boolean property '%s' (not yes or no)"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:224
+#, c-format
+msgid "unhandled property '%s' type %s"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:235
+#, c-format
+msgid "property '%s' invalid or not supported"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:252
+msgid "No VPN configuration options."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1010
+msgid "Could not find the ssh binary."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1035
+msgid "Could not find the sshpass binary."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1053
+#, fuzzy
+msgid "No password specified."
+msgstr "Näytä salasanat"
+
+#: ../src/nm-ssh-service.c:1090
+msgid "Key authentication selected, but no key file specified."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1110
+msgid "Missing required SSH_AUTH_SOCK."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1124 ../src/nm-ssh-service.c:1585
+#, c-format
+msgid "Unknown authentication type: %s."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1194
+#, c-format
+msgid "Please set remote address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1210
+#, c-format
+msgid "Invalid port number '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1229
+#, c-format
+msgid "Invalid TUN MTU size '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1248
+#, c-format
+msgid "Invalid TUN/TAP device number '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1267
+msgid "Missing required remote IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1281
+msgid "Missing required local IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1297
+msgid "Missing required netmask."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1317
+msgid "Missing required IPv6 remote IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1331
+msgid "Missing required IPv6 local IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1345
+msgid "Missing required IPv6 netmask."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1504 ../src/nm-ssh-service.c:1545
+#, fuzzy
+msgid ""
+"Could not process the request because the VPN connection settings were "
+"invalid."
+msgstr ""
+"VPN-kirjautuminen epäonnistui, koska VPN-asetuksten valinnat olivat "
+"virheelliset."
+
+#: ../src/nm-ssh-service.c:1709
+msgid "Don't quit when VPN connection terminates"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1710
+msgid "Enable verbose debug logging (may expose passwords)"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1726
+msgid "nm-ssh-service provides integrated SSH capability to NetworkManager."
+msgstr ""
+
+#~ msgid "_Password:"
+#~ msgstr "_Salasana:"
+
+#~ msgid "_Secondary Password:"
+#~ msgstr "_Toissijainen salasana:"
+
+#~ msgid "_Username:"
+#~ msgstr "_Käyttäjätunnus:"
+
+#~ msgid "_Domain:"
+#~ msgstr "_Toimialue:"
+
+#~ msgid "Connect _anonymously"
+#~ msgstr "Yhdistä _anonyymisti"
+
+#~ msgid "Connect as _user:"
+#~ msgstr "Yhdistä _käyttäjänä:"
+
+#~ msgid "_Remember password for this session"
+#~ msgstr "_Muista salasana istunnon ajan"
+
+#~ msgid "_Save password in keyring"
+#~ msgstr "_Tallenna salasana avainrenkaaseen"
+
+#~ msgid "Certificate pass_word:"
+#~ msgstr "Varmenteen _salasana:"
+
+#~ msgid "Certificate password:"
+#~ msgstr "Varmennettu salasana:"
+
+#~ msgid "Choose a Certificate Authority certificate..."
+#~ msgstr "Valitse CA-varmenne..."
+
+#~ msgid "Choose your personal certificate..."
+#~ msgstr "Valitse oma varmenteesi..."
+
+#~ msgid "Choose your private key..."
+#~ msgstr "Valitse salainen avaimesi..."
+
+#~ msgid "Choose an SSH static key..."
+#~ msgstr "Valitse OpenPVN:n staattinen avain..."
+
+#~ msgid "None"
+#~ msgstr "Ei mitään"
+
+#~ msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
+#~ msgstr "PEM-varmenteet (*.pem, *.crt, *.key tai *.cer)"
+
+#~ msgid "SSH Static Keys (*.key)"
+#~ msgstr "Pysyvät SSH-avaimet (*.key)"
+
+#~ msgid "Default"
+#~ msgstr "Oletus"
+
+#~ msgid "Certificates (TLS)"
+#~ msgstr "Varmenteet (TLS)"
+
+#~ msgid "Password with Certificates (TLS)"
+#~ msgstr "Salasana varmenteiden kanssa (TLS)"
+
+#~ msgid "Static Key"
+#~ msgstr "Staattinen avain"
+
+#~ msgid ""
+#~ "<i>If key direction is used, it must be the opposite of that used on the "
+#~ "VPN peer.  For example, if the peer uses '1', this connection must use "
+#~ "'0'.  If you are unsure what value to use, contact your system "
+#~ "administrator.</i>"
+#~ msgstr ""
+#~ "<i>Jos avaimen suuntaa käytetään, täytyy annetun arvon olla vastkkainen "
+#~ "kuin VPN-yhteyden toisessa päässä. Jos esimerkiksi vastapäässä on arvo 1, "
+#~ "tämän täytyy olla 0. Jos et tiedä mitä tässä pitäisi olla, kysy VPN-"
+#~ "yhteytesi ylläpitäjältä lisätietoja.</i>"
+
+#~ msgid "CA Certificate:"
+#~ msgstr "CA-varmenne:"
+
+#~ msgid "Cipher:"
+#~ msgstr "Salausmenetelmä:"
+
+#~ msgid "Key Direction:"
+#~ msgstr "Avaimen suunta:"
+
+#~ msgid "Private Key Password:"
+#~ msgstr "Salaisen avaimen salasana:"
+
+#~ msgid "Private Key:"
+#~ msgstr "Salainen avain:"
+
+#~ msgid "Static Key:"
+#~ msgstr "Kiinteä avain:"
+
+#~ msgid "Use L_ZO data compression"
+#~ msgstr "Käytä L_ZO-pakkausta"
+
+#~ msgid "Use a _TCP connection"
+#~ msgstr "Käytä _TCP-yhteyttä"
+
+#~ msgid "User Certificate:"
+#~ msgstr "Käyttäjän varmenne:"
+
+#~ msgid "User name:"
+#~ msgstr "Käyttäjätunnus:"
 
 #~ msgid "Certificate Password:"
 #~ msgstr "Varmenteen salasana:"
@@ -410,8 +595,8 @@ msgstr "_Yhdyskäytävä:"
 #~ "syötä tähän salasanaasi, sillä se kysytään vasta otettaessa yhteyttä."
 
 #~ msgid ""
-#~ "Please note that the file you import is not an SSH configuration "
-#~ "file. Ask your administrator for the file."
+#~ "Please note that the file you import is not an SSH configuration file. "
+#~ "Ask your administrator for the file."
 #~ msgstr ""
 #~ "Huomaa, että tuotava tiedosto ei ole SSH-asetustiedosto. Kysy "
 #~ "ylläpitäjältäsi oikeaa tiedostoa."
@@ -485,12 +670,6 @@ msgstr "_Yhdyskäytävä:"
 #~ "palvelimeen."
 
 #~ msgid ""
-#~ "The VPN login failed because the VPN configuration options were invalid."
-#~ msgstr ""
-#~ "VPN-kirjautuminen epäonnistui, koska VPN-asetuksten valinnat olivat "
-#~ "virheelliset."
-
-#~ msgid ""
 #~ "The VPN login failed because the VPN program received an invalid "
 #~ "configuration from the VPN server."
 #~ msgstr ""
@@ -508,9 +687,6 @@ msgstr "_Yhdyskäytävä:"
 
 #~ msgid "Optional"
 #~ msgstr "Valinnaiset tiedot"
-
-#~ msgid "Username:"
-#~ msgstr "Käyttäjätunnus:"
 
 #~ msgid "X.509"
 #~ msgstr "X.509"

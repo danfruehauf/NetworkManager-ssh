@@ -11,175 +11,406 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: NetworkManager VERSION\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=NetworkManager&component=VPN: ssh\n"
-"POT-Creation-Date: 2010-12-20 13:33+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-06-29 00:41+1000\n"
 "PO-Revision-Date: 2010-12-04 23:37+0100\n"
 "Last-Translator: Jordi Estrada <jordi.estrada@gmail.com>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: ../auth-dialog/gnome-two-password-dialog.c:130
-msgid "_Password:"
-msgstr "_Contrasenya:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:131
-msgid "_Secondary Password:"
-msgstr "Contrasenya _secundària:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:248
-msgid "_Username:"
-msgstr "Nom d'_usuari:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:250
-msgid "_Domain:"
-msgstr "_Domini:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:346
-msgid "Connect _anonymously"
-msgstr "Connecta _anònimament"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:351
-msgid "Connect as _user:"
-msgstr "Connecta com a _usuari:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:456
-msgid "_Remember password for this session"
-msgstr "_Recorda la contrasenya per aquesta sessió"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:458
-msgid "_Save password in keyring"
-msgstr "_Desa la contrasenya a l'anell de claus"
-
-#: ../auth-dialog/main.c:94
+#. Otherwise, we have no saved password, or the password flags indicated
+#. * that the password should never be saved.
+#.
+#: ../auth-dialog/main.c:141
 #, c-format
 msgid "You need to authenticate to access the Virtual Private Network '%s'."
 msgstr "Us heu d'autenticar per poder accedir a la xarxa privada virtual «%s»."
 
-#: ../auth-dialog/main.c:95
+#: ../auth-dialog/main.c:150 ../auth-dialog/main.c:170
 msgid "Authenticate VPN"
 msgstr "Autentica la VPN"
 
-#: ../auth-dialog/main.c:116
-msgid "Certificate pass_word:"
-msgstr "Contrasenya del _certificat:"
+#: ../auth-dialog/main.c:152 ../properties/nm-ssh-dialog.ui.h:27
+msgid "Password:"
+msgstr "Contrasenya:"
 
-#: ../auth-dialog/main.c:130
-msgid "Certificate password:"
-msgstr "Contrasenya del certificat:"
+#: ../auth-dialog/main.c:291
+#, c-format
+msgid ""
+"Couldn't find '%s' environment variable.\n"
+"\n"
+"Is ssh-agent running?"
+msgstr ""
 
-#: ../properties/auth-helpers.c:207
-msgid "Choose a Certificate Authority certificate..."
-msgstr "Trieu un certificat d'autoritat de certificació..."
+#: ../properties/advanced-dialog.c:137
+msgid ""
+"You have chosen not to use 'root' as the remote username.\n"
+"\n"
+"Please make sure the user you specify is allowed to open tun/tap devices on "
+"the remote host."
+msgstr ""
 
-#: ../properties/auth-helpers.c:226
-msgid "Choose your personal certificate..."
-msgstr "Trieu el vostre certificat personal..."
-
-#: ../properties/auth-helpers.c:244
-msgid "Choose your private key..."
-msgstr "Trieu la vostra clau privada..."
-
-#: ../properties/auth-helpers.c:302
-msgid "Choose an SSH static key..."
-msgstr "Trieu una clau estàtica SSH..."
-
-#: ../properties/auth-helpers.c:326 ../properties/auth-helpers.c:1078
-#: ../properties/auth-helpers.c:1451
-msgid "None"
-msgstr "Cap"
-
-#: ../properties/auth-helpers.c:775
-msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
-msgstr "Certificats PEM o PKCS#12 (*.pem, *.crt, *.key, *.cer, *.p12)"
-
-#: ../properties/auth-helpers.c:776
-msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
-msgstr "Certificats PEM (*.pem, *.crt, *.key, *.cer)"
-
-#: ../properties/auth-helpers.c:836
-msgid "SSH Static Keys (*.key)"
-msgstr "Claus estàtiques SSH (*.key)"
-
-#: ../properties/auth-helpers.c:995 ../properties/auth-helpers.c:1070
-msgid "Default"
-msgstr "Predeterminat"
-
-#: ../properties/auth-helpers.c:1080
-msgid "MD-5"
-msgstr "MD-5"
-
-#: ../properties/auth-helpers.c:1082
-msgid "SHA-1"
-msgstr "SHA-1"
-
-#: ../properties/auth-helpers.c:1084
-msgid "SHA-224"
-msgstr "SHA-224"
-
-#: ../properties/auth-helpers.c:1086
-msgid "SHA-256"
-msgstr "SHA-256"
-
-#: ../properties/auth-helpers.c:1088
-msgid "SHA-384"
-msgstr "SHA-384"
-
-#: ../properties/auth-helpers.c:1090
-msgid "SHA-512"
-msgstr "SHA-512"
-
-#: ../properties/auth-helpers.c:1092
-msgid "RIPEMD-160"
-msgstr "RIPEMD-160"
-
-#: ../properties/auth-helpers.c:1253
-msgid "Not required"
-msgstr "No necessari"
-
-#: ../properties/auth-helpers.c:1255
-msgid "HTTP"
-msgstr "HTTP"
-
-#: ../properties/auth-helpers.c:1257
-msgid "SOCKS"
-msgstr "SOCKS"
-
-#: ../properties/nm-ssh.c:52
+#: ../properties/nm-ssh.c:49
 msgid "SSH"
 msgstr "SSH"
 
-#: ../properties/nm-ssh.c:53
+#: ../properties/nm-ssh.c:50
 msgid "Compatible with the SSH server."
 msgstr "Compatible amb el servidor SSH."
 
-#: ../properties/nm-ssh.c:321
-msgid "Certificates (TLS)"
-msgstr "Certificats (TLS)"
+#: ../properties/nm-ssh.c:538
+msgid "SSH Agent"
+msgstr ""
 
-#: ../properties/nm-ssh.c:335
+#: ../properties/nm-ssh.c:551
 msgid "Password"
 msgstr "Contrasenya"
 
-#: ../properties/nm-ssh.c:352
-msgid "Password with Certificates (TLS)"
-msgstr "Contrasenya amb certificats (TLS)"
+#: ../properties/nm-ssh.c:564
+#, fuzzy
+msgid "Key Authentication"
+msgstr "Autenticació TLS"
 
-#: ../properties/nm-ssh.c:364
-msgid "Static Key"
-msgstr "Clau estàtica"
+#: ../properties/nm-ssh-dialog.ui.h:1
+msgid " "
+msgstr " "
 
-#~ msgid " "
-#~ msgstr " "
+#: ../properties/nm-ssh-dialog.ui.h:2
+msgid "Not required"
+msgstr "No necessari"
 
-#~ msgid "<b>Authentication</b>"
-#~ msgstr "<b>Autenticació</b>"
+#: ../properties/nm-ssh-dialog.ui.h:3
+msgid "SSH Advanced Options"
+msgstr "Opcions avançades de l'SSH"
 
-#~ msgid "<b>General</b>"
-#~ msgstr "<b>General</b>"
+#: ../properties/nm-ssh-dialog.ui.h:4
+#, fuzzy
+msgid "Use custom gateway port:"
+msgstr "Utilitza un _port de passarel·la personalitzat:"
+
+#: ../properties/nm-ssh-dialog.ui.h:5
+#, fuzzy
+msgid "Use custom tunnel Maximum Transmission Unit (MTU):"
+msgstr ""
+"Utilitza una unitat de transmissió màxima del túnel (MTU) personalitzada:"
+
+#: ../properties/nm-ssh-dialog.ui.h:6
+msgid "Extra SSH options:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:7
+msgid "Remote device number:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:8
+#, fuzzy
+msgid "Use a TAP device"
+msgstr "Utilitza un dispositiu TA_P"
+
+#: ../properties/nm-ssh-dialog.ui.h:9
+#, fuzzy
+msgid "Remote username:"
+msgstr "Nom d'usuari del servidor intermediari:"
+
+#: ../properties/nm-ssh-dialog.ui.h:10
+msgid "Do not replace default route"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:11
+msgid "General"
+msgstr "General"
+
+#: ../properties/nm-ssh-dialog.ui.h:12
+msgid "<b>General</b>"
+msgstr "<b>General</b>"
+
+#: ../properties/nm-ssh-dialog.ui.h:13
+#, fuzzy
+msgid "Gateway:"
+msgstr "Pas_sarel·la:"
+
+#: ../properties/nm-ssh-dialog.ui.h:14
+msgid "<b>Network Settings</b>"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:15
+msgid "Remote IP Address:"
+msgstr "Adreça IP remota:"
+
+#: ../properties/nm-ssh-dialog.ui.h:16
+msgid "Local IP Address:"
+msgstr "Adreça IP local:"
+
+#: ../properties/nm-ssh-dialog.ui.h:17
+msgid "Netmask:"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:18
+msgid "<b>IPv6 Network Settings</b>"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:19
+msgid "Use IPv6"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:20
+#, fuzzy
+msgid "Remote IP Address (IPv6):"
+msgstr "Adreça IP remota:"
+
+#: ../properties/nm-ssh-dialog.ui.h:21
+#, fuzzy
+msgid "Local IP Address (IPv6):"
+msgstr "Adreça IP local:"
+
+#: ../properties/nm-ssh-dialog.ui.h:22
+msgid "Prefix (IPv6):"
+msgstr ""
+
+#: ../properties/nm-ssh-dialog.ui.h:23
+#, fuzzy
+msgid "Advanced..."
+msgstr "A_vançat..."
+
+#: ../properties/nm-ssh-dialog.ui.h:24
+msgid "<b>Authentication</b>"
+msgstr "<b>Autenticació</b>"
+
+#: ../properties/nm-ssh-dialog.ui.h:25
+msgid "Type:"
+msgstr "Tipus:"
+
+#: ../properties/nm-ssh-dialog.ui.h:26
+#, fuzzy
+msgid "Select an authentication mode."
+msgstr "Autenticació TLS"
+
+#: ../properties/nm-ssh-dialog.ui.h:28
+#, fuzzy
+msgid "Show Passwords"
+msgstr "Mostra les contrasenyes"
+
+#: ../properties/nm-ssh-dialog.ui.h:29
+#, fuzzy
+msgid "SSH Key File:"
+msgstr "Fitxer de clau:"
+
+#: ../src/nm-ssh-service.c:195
+#, c-format
+msgid "invalid address '%s'"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:207
+#, c-format
+msgid "invalid integer property '%s' or out of range [%d -> %d]"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:217
+#, c-format
+msgid "invalid boolean property '%s' (not yes or no)"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:224
+#, c-format
+msgid "unhandled property '%s' type %s"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:235
+#, c-format
+msgid "property '%s' invalid or not supported"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:252
+msgid "No VPN configuration options."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1010
+msgid "Could not find the ssh binary."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1035
+msgid "Could not find the sshpass binary."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1053
+#, fuzzy
+msgid "No password specified."
+msgstr "Mostra les contrasenyes"
+
+#: ../src/nm-ssh-service.c:1090
+msgid "Key authentication selected, but no key file specified."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1110
+msgid "Missing required SSH_AUTH_SOCK."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1124 ../src/nm-ssh-service.c:1585
+#, c-format
+msgid "Unknown authentication type: %s."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1194
+#, c-format
+msgid "Please set remote address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1210
+#, c-format
+msgid "Invalid port number '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1229
+#, c-format
+msgid "Invalid TUN MTU size '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1248
+#, c-format
+msgid "Invalid TUN/TAP device number '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1267
+msgid "Missing required remote IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1281
+msgid "Missing required local IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1297
+msgid "Missing required netmask."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1317
+msgid "Missing required IPv6 remote IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1331
+msgid "Missing required IPv6 local IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1345
+msgid "Missing required IPv6 netmask."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1504 ../src/nm-ssh-service.c:1545
+#, fuzzy
+msgid ""
+"Could not process the request because the VPN connection settings were "
+"invalid."
+msgstr ""
+"No s'ha pogut connectar a la VPN perquè les opcions de configuració de la "
+"VPN eren erronis."
+
+#: ../src/nm-ssh-service.c:1709
+msgid "Don't quit when VPN connection terminates"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1710
+msgid "Enable verbose debug logging (may expose passwords)"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1726
+msgid "nm-ssh-service provides integrated SSH capability to NetworkManager."
+msgstr ""
+
+#~ msgid "_Password:"
+#~ msgstr "_Contrasenya:"
+
+#~ msgid "_Secondary Password:"
+#~ msgstr "Contrasenya _secundària:"
+
+#~ msgid "_Username:"
+#~ msgstr "Nom d'_usuari:"
+
+#~ msgid "_Domain:"
+#~ msgstr "_Domini:"
+
+#~ msgid "Connect _anonymously"
+#~ msgstr "Connecta _anònimament"
+
+#~ msgid "Connect as _user:"
+#~ msgstr "Connecta com a _usuari:"
+
+#~ msgid "_Remember password for this session"
+#~ msgstr "_Recorda la contrasenya per aquesta sessió"
+
+#~ msgid "_Save password in keyring"
+#~ msgstr "_Desa la contrasenya a l'anell de claus"
+
+#~ msgid "Certificate pass_word:"
+#~ msgstr "Contrasenya del _certificat:"
+
+#~ msgid "Certificate password:"
+#~ msgstr "Contrasenya del certificat:"
+
+#~ msgid "Choose a Certificate Authority certificate..."
+#~ msgstr "Trieu un certificat d'autoritat de certificació..."
+
+#~ msgid "Choose your personal certificate..."
+#~ msgstr "Trieu el vostre certificat personal..."
+
+#~ msgid "Choose your private key..."
+#~ msgstr "Trieu la vostra clau privada..."
+
+#~ msgid "Choose an SSH static key..."
+#~ msgstr "Trieu una clau estàtica SSH..."
+
+#~ msgid "None"
+#~ msgstr "Cap"
+
+#~ msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
+#~ msgstr "Certificats PEM o PKCS#12 (*.pem, *.crt, *.key, *.cer, *.p12)"
+
+#~ msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
+#~ msgstr "Certificats PEM (*.pem, *.crt, *.key, *.cer)"
+
+#~ msgid "SSH Static Keys (*.key)"
+#~ msgstr "Claus estàtiques SSH (*.key)"
+
+#~ msgid "Default"
+#~ msgstr "Predeterminat"
+
+#~ msgid "MD-5"
+#~ msgstr "MD-5"
+
+#~ msgid "SHA-1"
+#~ msgstr "SHA-1"
+
+#~ msgid "SHA-224"
+#~ msgstr "SHA-224"
+
+#~ msgid "SHA-256"
+#~ msgstr "SHA-256"
+
+#~ msgid "SHA-384"
+#~ msgstr "SHA-384"
+
+#~ msgid "SHA-512"
+#~ msgstr "SHA-512"
+
+#~ msgid "RIPEMD-160"
+#~ msgstr "RIPEMD-160"
+
+#~ msgid "HTTP"
+#~ msgstr "HTTP"
+
+#~ msgid "SOCKS"
+#~ msgstr "SOCKS"
+
+#~ msgid "Certificates (TLS)"
+#~ msgstr "Certificats (TLS)"
+
+#~ msgid "Password with Certificates (TLS)"
+#~ msgstr "Contrasenya amb certificats (TLS)"
+
+#~ msgid "Static Key"
+#~ msgstr "Clau estàtica"
 
 #~ msgid ""
 #~ "<i>Connect only to servers whose certificate matches the given subject.\n"
@@ -207,35 +438,17 @@ msgstr "Clau estàtica"
 #~ "<i>Seleccioneu aquesta opció si la vostra organització requereix l'ús "
 #~ "d'un servidor intermediari per accedir a Internet.</i>"
 
-#~ msgid "Ad_vanced..."
-#~ msgstr "A_vançat..."
-
 #~ msgid "CA Certificate:"
 #~ msgstr "Certificat de CA:"
 
 #~ msgid "Cipher:"
 #~ msgstr "Criptògraf:"
 
-#~ msgid "General"
-#~ msgstr "General"
-
 #~ msgid "HMAC Authentication:"
 #~ msgstr "Autenticació HMAC:"
 
 #~ msgid "Key Direction:"
 #~ msgstr "Direcció de la clau:"
-
-#~ msgid "Key File:"
-#~ msgstr "Fitxer de clau:"
-
-#~ msgid "Local IP Address:"
-#~ msgstr "Adreça IP local:"
-
-#~ msgid "SSH Advanced Options"
-#~ msgstr "Opcions avançades de l'SSH"
-
-#~ msgid "Password:"
-#~ msgstr "Contrasenya:"
 
 #~ msgid "Port:"
 #~ msgstr "Port:"
@@ -256,12 +469,6 @@ msgstr "Clau estàtica"
 #~ msgid "Proxy Type:"
 #~ msgstr "Tipus de servidor intermediari:"
 
-#~ msgid "Proxy Username:"
-#~ msgstr "Nom d'usuari del servidor intermediari:"
-
-#~ msgid "Remote IP Address:"
-#~ msgstr "Adreça IP remota:"
-
 #~ msgid "Restrict tunnel TCP Maximum Segment Size (MSS)"
 #~ msgstr "Restringeix la mida de segment màxima del túnel TCP (MSS)"
 
@@ -274,26 +481,14 @@ msgstr "Clau estàtica"
 #~ msgid "Server Address:"
 #~ msgstr "Adreça del servidor:"
 
-#~ msgid "Show passwords"
-#~ msgstr "Mostra les contrasenyes"
-
 #~ msgid "Static Key:"
 #~ msgstr "Clau estàtica:"
 
 #~ msgid "Subject Match:"
 #~ msgstr "Assumpte a coinxidir:"
 
-#~ msgid "TLS Authentication"
-#~ msgstr "Autenticació TLS"
-
-#~ msgid "Type:"
-#~ msgstr "Tipus:"
-
 #~ msgid "Use L_ZO data compression"
 #~ msgstr "Utilitza la compressió de dades L_ZO"
-
-#~ msgid "Use a TA_P device"
-#~ msgstr "Utilitza un dispositiu TA_P"
 
 #~ msgid "Use a _TCP connection"
 #~ msgstr "Utilitza una connexió _TCP"
@@ -307,21 +502,11 @@ msgstr "Clau estàtica"
 #~ msgid "Use custom _renegotiation interval:"
 #~ msgstr "Utilitza un interval de _renegociació personalitzat:"
 
-#~ msgid "Use custom _tunnel Maximum Transmission Unit (MTU):"
-#~ msgstr ""
-#~ "Utilitza una unitat de transmissió màxima del túnel (MTU) personalitzada:"
-
-#~ msgid "Use custom gateway p_ort:"
-#~ msgstr "Utilitza un _port de passarel·la personalitzat:"
-
 #~ msgid "User Certificate:"
 #~ msgstr "Certificat d'usuari:"
 
 #~ msgid "User name:"
 #~ msgstr "Nom d'usuari:"
-
-#~ msgid "_Gateway:"
-#~ msgstr "Pas_sarel·la:"
 
 #~ msgid "The following SSH connection will be created:"
 #~ msgstr "Es crearà la següent connexió SSH:"
@@ -476,11 +661,11 @@ msgstr "Clau estàtica"
 #~ "No hi entreu la vostra contrasenya, ja es demanarà en connectar."
 
 #~ msgid ""
-#~ "Please note that the file you import is not an SSH configuration "
-#~ "file. Ask your administrator for the file."
+#~ "Please note that the file you import is not an SSH configuration file. "
+#~ "Ask your administrator for the file."
 #~ msgstr ""
-#~ "El fitxer que heu importat no és un fitxer de configuració SSH. "
-#~ "Demaneu-li el fitxer a l'administrador."
+#~ "El fitxer que heu importat no és un fitxer de configuració SSH. Demaneu-"
+#~ "li el fitxer a l'administrador."
 
 #~ msgid "Shared _key:"
 #~ msgstr "_Clau compartida:"
@@ -550,12 +735,6 @@ msgstr "Clau estàtica"
 #~ msgstr ""
 #~ "No s'ha pogut connectar a la VPN perquè l'aplicació VPN no s'ha pogut "
 #~ "connectar al servidor VPN."
-
-#~ msgid ""
-#~ "The VPN login failed because the VPN configuration options were invalid."
-#~ msgstr ""
-#~ "No s'ha pogut connectar a la VPN perquè les opcions de configuració de la "
-#~ "VPN eren erronis."
 
 #~ msgid ""
 #~ "The VPN login failed because the VPN program received an invalid "

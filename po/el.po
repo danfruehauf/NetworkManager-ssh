@@ -7,9 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: NetworkManager-ssh.HEAD\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=Networ"
-"kManager&keywords=I18N+L10N&component=VPN: ssh\n"
-"POT-Creation-Date: 2011-03-14 18:00+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-06-29 00:41+1000\n"
 "PO-Revision-Date: 2011-03-16 11:59+0300\n"
 "Last-Translator: Michael Kotsarinis <mk73628@gmail.com>\n"
 "Language-Team: team@gnome.gr\n"
@@ -20,356 +19,493 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Virtaal 0.6.1\n"
 
-#: ../auth-dialog/gnome-two-password-dialog.c:130
-msgid "_Password:"
-msgstr "_Συνθηματικό:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:131
-msgid "_Secondary Password:"
-msgstr "_Δευτερεύον συνθηματικό:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:248
-msgid "_Username:"
-msgstr "Ό_νομα χρήστη:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:250
-msgid "_Domain:"
-msgstr "_Τομέας:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:348
-msgid "Connect _anonymously"
-msgstr "_Ανώνυμη σύνδεση"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:353
-msgid "Connect as _user:"
-msgstr "Σύνδεση ως _χρήστης:"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:458
-msgid "_Remember password for this session"
-msgstr "Απομνη_μόνευση συνθηματικού για αυτή τη συνεδρία"
-
-#: ../auth-dialog/gnome-two-password-dialog.c:460
-msgid "_Save password in keyring"
-msgstr "Απο_θήκευση συνθηματικού στην κλειδοθήκη"
-
-#: ../auth-dialog/main.c:89
+#. Otherwise, we have no saved password, or the password flags indicated
+#. * that the password should never be saved.
+#.
+#: ../auth-dialog/main.c:141
 #, c-format
 msgid "You need to authenticate to access the Virtual Private Network '%s'."
 msgstr ""
 "Χρειάζεστε πιστοποίηση για να αποκτήσετε πρόσβαση στο Ιδιωτικό Εικονικό "
 "Δίκτυο (VPN) '%s'."
 
-#: ../auth-dialog/main.c:90
+#: ../auth-dialog/main.c:150 ../auth-dialog/main.c:170
 msgid "Authenticate VPN"
 msgstr "Πιστοποίηση VPN"
 
-#: ../auth-dialog/main.c:111
-msgid "Certificate pass_word:"
-msgstr "Σ_υνθηματικό πιστοποιητικού:"
+#: ../auth-dialog/main.c:152 ../properties/nm-ssh-dialog.ui.h:27
+msgid "Password:"
+msgstr "Συνθηματικό:"
 
-#: ../auth-dialog/main.c:125
-msgid "Certificate password:"
-msgstr "Συνθηματικό πιστοποιητικού:"
+#: ../auth-dialog/main.c:291
+#, c-format
+msgid ""
+"Couldn't find '%s' environment variable.\n"
+"\n"
+"Is ssh-agent running?"
+msgstr ""
 
-#: ../properties/auth-helpers.c:202
-msgid "Choose a Certificate Authority certificate..."
-msgstr "Επιλέξτε πιστοποιητικό Αρχής Πιστοποίησης..."
+#: ../properties/advanced-dialog.c:137
+msgid ""
+"You have chosen not to use 'root' as the remote username.\n"
+"\n"
+"Please make sure the user you specify is allowed to open tun/tap devices on "
+"the remote host."
+msgstr ""
 
-#: ../properties/auth-helpers.c:221
-msgid "Choose your personal certificate..."
-msgstr "Επιλέξτε το προσωπικό σας πιστοποιητικό..."
-
-#: ../properties/auth-helpers.c:239
-msgid "Choose your private key..."
-msgstr "Επιλέξτε το ιδιωτικό σας κλειδί..."
-
-#: ../properties/auth-helpers.c:297
-msgid "Choose an SSH static key..."
-msgstr "Επιλέξτε στατικό κλειδί SSH..."
-
-#: ../properties/auth-helpers.c:321 ../properties/auth-helpers.c:1104
-#: ../properties/auth-helpers.c:1494
-msgid "None"
-msgstr "Χωρίς"
-
-#: ../properties/auth-helpers.c:801
-msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
-msgstr "Πιστοποιητικά PEM ή PKCS#12 (*.pem, *.crt, *.key, *.cer, *.p12)"
-
-#: ../properties/auth-helpers.c:802
-msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
-msgstr "Πιστοποιητικά PEM (*.pem, *.crt, *.key, *.cer)"
-
-#: ../properties/auth-helpers.c:862
-msgid "SSH Static Keys (*.key)"
-msgstr "Στατικά κλειδιά SSH (*.key)"
-
-#: ../properties/auth-helpers.c:1021 ../properties/auth-helpers.c:1096
-msgid "Default"
-msgstr "Προεπιλεγμένο"
-
-#: ../properties/auth-helpers.c:1106
-msgid "MD-5"
-msgstr "MD-5"
-
-#: ../properties/auth-helpers.c:1108
-msgid "SHA-1"
-msgstr "SHA-1"
-
-#: ../properties/auth-helpers.c:1110
-msgid "SHA-224"
-msgstr "SHA-224"
-
-#: ../properties/auth-helpers.c:1112
-msgid "SHA-256"
-msgstr "SHA-256"
-
-#: ../properties/auth-helpers.c:1114
-msgid "SHA-384"
-msgstr "SHA-384"
-
-#: ../properties/auth-helpers.c:1116
-msgid "SHA-512"
-msgstr "SHA-512"
-
-#: ../properties/auth-helpers.c:1118
-msgid "RIPEMD-160"
-msgstr "RIPEMD-160"
-
-#: ../properties/auth-helpers.c:1293 ../properties/nm-ssh-dialog.ui.h:16
-msgid "Not required"
-msgstr "Δεν απαιτείται"
-
-#: ../properties/auth-helpers.c:1295
-msgid "HTTP"
-msgstr "HTTP"
-
-#: ../properties/auth-helpers.c:1297
-msgid "SOCKS"
-msgstr "SOCKS"
-
-#: ../properties/nm-ssh.c:53
+#: ../properties/nm-ssh.c:49
 msgid "SSH"
 msgstr "SSH"
 
-#: ../properties/nm-ssh.c:54
+#: ../properties/nm-ssh.c:50
 msgid "Compatible with the SSH server."
 msgstr "Συμβατό με τον εξυπηρετητή SSH."
 
-#: ../properties/nm-ssh.c:322
-msgid "Certificates (TLS)"
-msgstr "Πιστοποιητικά (TLS)"
+#: ../properties/nm-ssh.c:538
+msgid "SSH Agent"
+msgstr ""
 
-#: ../properties/nm-ssh.c:336
+#: ../properties/nm-ssh.c:551
 msgid "Password"
 msgstr "Συνθηματικό"
 
-#: ../properties/nm-ssh.c:353
-msgid "Password with Certificates (TLS)"
-msgstr "Συνθηματικό με πιστοποιητικά (TLS)"
-
-#: ../properties/nm-ssh.c:365
-msgid "Static Key"
-msgstr "Στατικό Κλειδί"
+#: ../properties/nm-ssh.c:564
+#, fuzzy
+msgid "Key Authentication"
+msgstr "Πιστοποίηση TLS:"
 
 #: ../properties/nm-ssh-dialog.ui.h:1
 msgid " "
 msgstr " "
 
 #: ../properties/nm-ssh-dialog.ui.h:2
-msgid "<b>Authentication</b>"
-msgstr "<b>Πιστοποίηση</b>"
+msgid "Not required"
+msgstr "Δεν απαιτείται"
 
 #: ../properties/nm-ssh-dialog.ui.h:3
-msgid "<b>General</b>"
-msgstr "<b>Γενικά</b>"
+msgid "SSH Advanced Options"
+msgstr "Προχωρημένες επιλογές SSH"
 
 #: ../properties/nm-ssh-dialog.ui.h:4
-msgid ""
-"<i>Connect only to servers whose certificate matches the given subject.\n"
-"Example: /CN=myvpn.company.com</i>"
-msgstr ""
-"<i>Σύνδεση μόνοι σε εξυπηρετητές με τους που το πιστοποιητικό τους ταιριάζει "
-"με το δοθέν θέμα.\n"
-"Παράδειγμα: /CN=myvpn.company.com</i>"
+#, fuzzy
+msgid "Use custom gateway port:"
+msgstr "Χρήση προσαρμοσμένης _θύρας gateway :"
+
+#: ../properties/nm-ssh-dialog.ui.h:5
+#, fuzzy
+msgid "Use custom tunnel Maximum Transmission Unit (MTU):"
+msgstr "Χρήση προσαρμοσμένου _tunnel Maximum Transmission Unit (MTU):"
 
 #: ../properties/nm-ssh-dialog.ui.h:6
-msgid ""
-"<i>If key direction is used, it must be the opposite of that used on the VPN "
-"peer.  For example, if the peer uses '1', this connection must use '0'.  If "
-"you are unsure what value to use, contact your system administrator.</i>"
+msgid "Extra SSH options:"
 msgstr ""
-"<i>Αν χρησιμοποιηθεί η κατεύθυνση του κλειδιού, θα πρέπει να είναι αντίθετη "
-"από την κατεύθυνση του άλλου υπολογιστή. Για παράδειγμα, αν ο άλλος "
-"υπολογιστής χρησιμοποιεί '1', αυτή η σύνδεση θα πρέπει να χρησιμοποιεί '0'. "
-"Αν δεν είστε βέβαιοι για το ποια τιμή πρέπει να χρησιμοποιήσετε, "
-"επικοινωνήστε με το διαχειριστή του συστήματος.</i>"
 
 #: ../properties/nm-ssh-dialog.ui.h:7
-msgid ""
-"<i>Select this option if your organization requires the use of a proxy "
-"server to access the Internet.</i>"
+msgid "Remote device number:"
 msgstr ""
-"<i>Επιλέξτε αν ο οργανισμός σας απαιτεί τη χρήση διαμεσολαβητή για πρόσβαση "
-"στο διαδίκτυο.</i>"
 
 #: ../properties/nm-ssh-dialog.ui.h:8
-msgid "Ad_vanced..."
-msgstr "Για προ_χωρημένους..."
+#, fuzzy
+msgid "Use a TAP device"
+msgstr "Χρήση συσκευής TA_P"
 
 #: ../properties/nm-ssh-dialog.ui.h:9
-msgid "CA Certificate:"
-msgstr "Πι_στοποιητικό CA:"
+#, fuzzy
+msgid "Remote username:"
+msgstr "Όνομα χρήστη διαμεσολαβητή:"
 
 #: ../properties/nm-ssh-dialog.ui.h:10
-msgid "Cipher:"
-msgstr "Αλγόριθμος κρυπτογράφησης:"
+msgid "Do not replace default route"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:11
 msgid "General"
 msgstr "Γενικά"
 
 #: ../properties/nm-ssh-dialog.ui.h:12
-msgid "HMAC Authentication:"
-msgstr "Πιστοποίηση HMAC:"
+msgid "<b>General</b>"
+msgstr "<b>Γενικά</b>"
 
 #: ../properties/nm-ssh-dialog.ui.h:13
-msgid "Key Direction:"
-msgstr "Κατεύθυνση κλειδιού:"
+#, fuzzy
+msgid "Gateway:"
+msgstr "_Gateway:"
 
 #: ../properties/nm-ssh-dialog.ui.h:14
-msgid "Key File:"
-msgstr "Αρχείο κλειδιού:"
+msgid "<b>Network Settings</b>"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:15
+msgid "Remote IP Address:"
+msgstr "Απομακρυσμένη διεύθυνση IP:"
+
+#: ../properties/nm-ssh-dialog.ui.h:16
 msgid "Local IP Address:"
 msgstr "Τοπική διεύθυνση IP:"
 
 #: ../properties/nm-ssh-dialog.ui.h:17
-msgid "SSH Advanced Options"
-msgstr "Προχωρημένες επιλογές SSH"
+msgid "Netmask:"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:18
-msgid "Password:"
-msgstr "Συνθηματικό:"
+msgid "<b>IPv6 Network Settings</b>"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:19
-msgid "Port:"
-msgstr "Θύρα:"
+msgid "Use IPv6"
+msgstr ""
 
 #: ../properties/nm-ssh-dialog.ui.h:20
-msgid "Private Key Password:"
-msgstr "Συνθηματικό ιδιωτικού κλειδιού:"
-
-#: ../properties/nm-ssh-dialog.ui.h:21
-msgid "Private Key:"
-msgstr "Ιδιωτικό κλειδί:"
-
-#: ../properties/nm-ssh-dialog.ui.h:22
-msgid "Proxies"
-msgstr "Διαμεσολαβητές"
-
-#: ../properties/nm-ssh-dialog.ui.h:23
-#| msgid "Password:"
-msgid "Proxy Password:"
-msgstr "Συνθηματικό διαμεσολαβητή:"
-
-#: ../properties/nm-ssh-dialog.ui.h:24
-#| msgid "Type:"
-msgid "Proxy Type:"
-msgstr "Τύπος διαμεσολαβητή:"
-
-#: ../properties/nm-ssh-dialog.ui.h:25
-#| msgid "_Username:"
-msgid "Proxy Username:"
-msgstr "Όνομα χρήστη διαμεσολαβητή:"
-
-#: ../properties/nm-ssh-dialog.ui.h:26
-msgid "Remote IP Address:"
+#, fuzzy
+msgid "Remote IP Address (IPv6):"
 msgstr "Απομακρυσμένη διεύθυνση IP:"
 
-#: ../properties/nm-ssh-dialog.ui.h:27
-msgid "Restrict tunnel TCP Maximum Segment Size (MSS)"
-msgstr "Περιορισμός tunnel TCP Maximum Segment Size (MSS)"
+#: ../properties/nm-ssh-dialog.ui.h:21
+#, fuzzy
+msgid "Local IP Address (IPv6):"
+msgstr "Τοπική διεύθυνση IP:"
 
-#: ../properties/nm-ssh-dialog.ui.h:28
-msgid "Retry indefinitely when errors occur"
-msgstr "Επανάληψη επ' άπειρον όταν προκύπτουν σφάλματα"
+#: ../properties/nm-ssh-dialog.ui.h:22
+msgid "Prefix (IPv6):"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.ui.h:29
-msgid "Security"
-msgstr "Ασφάλεια"
+#: ../properties/nm-ssh-dialog.ui.h:23
+#, fuzzy
+msgid "Advanced..."
+msgstr "Για προ_χωρημένους..."
 
-#: ../properties/nm-ssh-dialog.ui.h:30
-#| msgid "Remote IP Address:"
-msgid "Server Address:"
-msgstr "Διεύθυνση διακομιστή:"
+#: ../properties/nm-ssh-dialog.ui.h:24
+msgid "<b>Authentication</b>"
+msgstr "<b>Πιστοποίηση</b>"
 
-#: ../properties/nm-ssh-dialog.ui.h:31
-#| msgid "Show passwords"
-msgid "Show password"
-msgstr "Εμφάνιση συνθηματικού"
-
-#: ../properties/nm-ssh-dialog.ui.h:32
-msgid "Show passwords"
-msgstr "Εμφάνιση συνθηματικών"
-
-#: ../properties/nm-ssh-dialog.ui.h:33
-msgid "Static Key:"
-msgstr "Στατικό Κλειδί:"
-
-#: ../properties/nm-ssh-dialog.ui.h:34
-msgid "Subject Match:"
-msgstr "Ταίριασμα θέματος:"
-
-#: ../properties/nm-ssh-dialog.ui.h:35
-msgid "TLS Authentication"
-msgstr "Πιστοποίηση TLS:"
-
-#: ../properties/nm-ssh-dialog.ui.h:36
+#: ../properties/nm-ssh-dialog.ui.h:25
 msgid "Type:"
 msgstr "Τύπος:"
 
-#: ../properties/nm-ssh-dialog.ui.h:37
-msgid "Use L_ZO data compression"
-msgstr "Χρήση συμπίεσης L_ZO"
+#: ../properties/nm-ssh-dialog.ui.h:26
+#, fuzzy
+msgid "Select an authentication mode."
+msgstr "Πιστοποίηση TLS:"
 
-#: ../properties/nm-ssh-dialog.ui.h:38
-msgid "Use a TA_P device"
-msgstr "Χρήση συσκευής TA_P"
+#: ../properties/nm-ssh-dialog.ui.h:28
+#, fuzzy
+msgid "Show Passwords"
+msgstr "Εμφάνιση συνθηματικών"
 
-#: ../properties/nm-ssh-dialog.ui.h:39
-msgid "Use a _TCP connection"
-msgstr "Χρήση σύνδεσης _TCP"
+#: ../properties/nm-ssh-dialog.ui.h:29
+#, fuzzy
+msgid "SSH Key File:"
+msgstr "Αρχείο κλειδιού:"
 
-#: ../properties/nm-ssh-dialog.ui.h:40
-msgid "Use additional TLS authentication"
-msgstr "Χρήση επιπλέον πιστοποίησης TLS"
+#: ../src/nm-ssh-service.c:195
+#, c-format
+msgid "invalid address '%s'"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.ui.h:41
-msgid "Use custom UDP _fragment size:"
-msgstr "Χρήση προσαρμοσμένου μεγέθους UDP _fragment:"
+#: ../src/nm-ssh-service.c:207
+#, c-format
+msgid "invalid integer property '%s' or out of range [%d -> %d]"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.ui.h:42
-msgid "Use custom _renegotiation interval:"
-msgstr "Χρήση προσαρμοσμένου χρονικού διαστήματος επανα_διαπραγμάτευσης:"
+#: ../src/nm-ssh-service.c:217
+#, c-format
+msgid "invalid boolean property '%s' (not yes or no)"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.ui.h:43
-msgid "Use custom _tunnel Maximum Transmission Unit (MTU):"
-msgstr "Χρήση προσαρμοσμένου _tunnel Maximum Transmission Unit (MTU):"
+#: ../src/nm-ssh-service.c:224
+#, c-format
+msgid "unhandled property '%s' type %s"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.ui.h:44
-msgid "Use custom gateway p_ort:"
-msgstr "Χρήση προσαρμοσμένης _θύρας gateway :"
+#: ../src/nm-ssh-service.c:235
+#, c-format
+msgid "property '%s' invalid or not supported"
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.ui.h:45
-msgid "User Certificate:"
-msgstr "Πιστοποιητικό χρήστη:"
+#: ../src/nm-ssh-service.c:252
+msgid "No VPN configuration options."
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.ui.h:46
-msgid "User name:"
-msgstr "Όνομα χρήστη:"
+#: ../src/nm-ssh-service.c:1010
+msgid "Could not find the ssh binary."
+msgstr ""
 
-#: ../properties/nm-ssh-dialog.ui.h:47
-msgid "_Gateway:"
-msgstr "_Gateway:"
+#: ../src/nm-ssh-service.c:1035
+msgid "Could not find the sshpass binary."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1053
+#, fuzzy
+msgid "No password specified."
+msgstr "Εμφάνιση συνθηματικών"
+
+#: ../src/nm-ssh-service.c:1090
+msgid "Key authentication selected, but no key file specified."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1110
+msgid "Missing required SSH_AUTH_SOCK."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1124 ../src/nm-ssh-service.c:1585
+#, c-format
+msgid "Unknown authentication type: %s."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1194
+#, c-format
+msgid "Please set remote address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1210
+#, c-format
+msgid "Invalid port number '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1229
+#, c-format
+msgid "Invalid TUN MTU size '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1248
+#, c-format
+msgid "Invalid TUN/TAP device number '%s'."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1267
+msgid "Missing required remote IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1281
+msgid "Missing required local IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1297
+msgid "Missing required netmask."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1317
+msgid "Missing required IPv6 remote IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1331
+msgid "Missing required IPv6 local IP address."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1345
+msgid "Missing required IPv6 netmask."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1504 ../src/nm-ssh-service.c:1545
+msgid ""
+"Could not process the request because the VPN connection settings were "
+"invalid."
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1709
+msgid "Don't quit when VPN connection terminates"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1710
+msgid "Enable verbose debug logging (may expose passwords)"
+msgstr ""
+
+#: ../src/nm-ssh-service.c:1726
+msgid "nm-ssh-service provides integrated SSH capability to NetworkManager."
+msgstr ""
+
+#~ msgid "_Password:"
+#~ msgstr "_Συνθηματικό:"
+
+#~ msgid "_Secondary Password:"
+#~ msgstr "_Δευτερεύον συνθηματικό:"
+
+#~ msgid "_Username:"
+#~ msgstr "Ό_νομα χρήστη:"
+
+#~ msgid "_Domain:"
+#~ msgstr "_Τομέας:"
+
+#~ msgid "Connect _anonymously"
+#~ msgstr "_Ανώνυμη σύνδεση"
+
+#~ msgid "Connect as _user:"
+#~ msgstr "Σύνδεση ως _χρήστης:"
+
+#~ msgid "_Remember password for this session"
+#~ msgstr "Απομνη_μόνευση συνθηματικού για αυτή τη συνεδρία"
+
+#~ msgid "_Save password in keyring"
+#~ msgstr "Απο_θήκευση συνθηματικού στην κλειδοθήκη"
+
+#~ msgid "Certificate pass_word:"
+#~ msgstr "Σ_υνθηματικό πιστοποιητικού:"
+
+#~ msgid "Certificate password:"
+#~ msgstr "Συνθηματικό πιστοποιητικού:"
+
+#~ msgid "Choose a Certificate Authority certificate..."
+#~ msgstr "Επιλέξτε πιστοποιητικό Αρχής Πιστοποίησης..."
+
+#~ msgid "Choose your personal certificate..."
+#~ msgstr "Επιλέξτε το προσωπικό σας πιστοποιητικό..."
+
+#~ msgid "Choose your private key..."
+#~ msgstr "Επιλέξτε το ιδιωτικό σας κλειδί..."
+
+#~ msgid "Choose an SSH static key..."
+#~ msgstr "Επιλέξτε στατικό κλειδί SSH..."
+
+#~ msgid "None"
+#~ msgstr "Χωρίς"
+
+#~ msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
+#~ msgstr "Πιστοποιητικά PEM ή PKCS#12 (*.pem, *.crt, *.key, *.cer, *.p12)"
+
+#~ msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
+#~ msgstr "Πιστοποιητικά PEM (*.pem, *.crt, *.key, *.cer)"
+
+#~ msgid "SSH Static Keys (*.key)"
+#~ msgstr "Στατικά κλειδιά SSH (*.key)"
+
+#~ msgid "Default"
+#~ msgstr "Προεπιλεγμένο"
+
+#~ msgid "MD-5"
+#~ msgstr "MD-5"
+
+#~ msgid "SHA-1"
+#~ msgstr "SHA-1"
+
+#~ msgid "SHA-224"
+#~ msgstr "SHA-224"
+
+#~ msgid "SHA-256"
+#~ msgstr "SHA-256"
+
+#~ msgid "SHA-384"
+#~ msgstr "SHA-384"
+
+#~ msgid "SHA-512"
+#~ msgstr "SHA-512"
+
+#~ msgid "RIPEMD-160"
+#~ msgstr "RIPEMD-160"
+
+#~ msgid "HTTP"
+#~ msgstr "HTTP"
+
+#~ msgid "SOCKS"
+#~ msgstr "SOCKS"
+
+#~ msgid "Certificates (TLS)"
+#~ msgstr "Πιστοποιητικά (TLS)"
+
+#~ msgid "Password with Certificates (TLS)"
+#~ msgstr "Συνθηματικό με πιστοποιητικά (TLS)"
+
+#~ msgid "Static Key"
+#~ msgstr "Στατικό Κλειδί"
+
+#~ msgid ""
+#~ "<i>Connect only to servers whose certificate matches the given subject.\n"
+#~ "Example: /CN=myvpn.company.com</i>"
+#~ msgstr ""
+#~ "<i>Σύνδεση μόνοι σε εξυπηρετητές με τους που το πιστοποιητικό τους "
+#~ "ταιριάζει με το δοθέν θέμα.\n"
+#~ "Παράδειγμα: /CN=myvpn.company.com</i>"
+
+#~ msgid ""
+#~ "<i>If key direction is used, it must be the opposite of that used on the "
+#~ "VPN peer.  For example, if the peer uses '1', this connection must use "
+#~ "'0'.  If you are unsure what value to use, contact your system "
+#~ "administrator.</i>"
+#~ msgstr ""
+#~ "<i>Αν χρησιμοποιηθεί η κατεύθυνση του κλειδιού, θα πρέπει να είναι "
+#~ "αντίθετη από την κατεύθυνση του άλλου υπολογιστή. Για παράδειγμα, αν ο "
+#~ "άλλος υπολογιστής χρησιμοποιεί '1', αυτή η σύνδεση θα πρέπει να "
+#~ "χρησιμοποιεί '0'. Αν δεν είστε βέβαιοι για το ποια τιμή πρέπει να "
+#~ "χρησιμοποιήσετε, επικοινωνήστε με το διαχειριστή του συστήματος.</i>"
+
+#~ msgid ""
+#~ "<i>Select this option if your organization requires the use of a proxy "
+#~ "server to access the Internet.</i>"
+#~ msgstr ""
+#~ "<i>Επιλέξτε αν ο οργανισμός σας απαιτεί τη χρήση διαμεσολαβητή για "
+#~ "πρόσβαση στο διαδίκτυο.</i>"
+
+#~ msgid "CA Certificate:"
+#~ msgstr "Πι_στοποιητικό CA:"
+
+#~ msgid "Cipher:"
+#~ msgstr "Αλγόριθμος κρυπτογράφησης:"
+
+#~ msgid "HMAC Authentication:"
+#~ msgstr "Πιστοποίηση HMAC:"
+
+#~ msgid "Key Direction:"
+#~ msgstr "Κατεύθυνση κλειδιού:"
+
+#~ msgid "Port:"
+#~ msgstr "Θύρα:"
+
+#~ msgid "Private Key Password:"
+#~ msgstr "Συνθηματικό ιδιωτικού κλειδιού:"
+
+#~ msgid "Private Key:"
+#~ msgstr "Ιδιωτικό κλειδί:"
+
+#~ msgid "Proxies"
+#~ msgstr "Διαμεσολαβητές"
+
+#~| msgid "Password:"
+#~ msgid "Proxy Password:"
+#~ msgstr "Συνθηματικό διαμεσολαβητή:"
+
+#~| msgid "Type:"
+#~ msgid "Proxy Type:"
+#~ msgstr "Τύπος διαμεσολαβητή:"
+
+#~ msgid "Restrict tunnel TCP Maximum Segment Size (MSS)"
+#~ msgstr "Περιορισμός tunnel TCP Maximum Segment Size (MSS)"
+
+#~ msgid "Retry indefinitely when errors occur"
+#~ msgstr "Επανάληψη επ' άπειρον όταν προκύπτουν σφάλματα"
+
+#~ msgid "Security"
+#~ msgstr "Ασφάλεια"
+
+#~| msgid "Remote IP Address:"
+#~ msgid "Server Address:"
+#~ msgstr "Διεύθυνση διακομιστή:"
+
+#~| msgid "Show passwords"
+#~ msgid "Show password"
+#~ msgstr "Εμφάνιση συνθηματικού"
+
+#~ msgid "Static Key:"
+#~ msgstr "Στατικό Κλειδί:"
+
+#~ msgid "Subject Match:"
+#~ msgstr "Ταίριασμα θέματος:"
+
+#~ msgid "Use L_ZO data compression"
+#~ msgstr "Χρήση συμπίεσης L_ZO"
+
+#~ msgid "Use a _TCP connection"
+#~ msgstr "Χρήση σύνδεσης _TCP"
+
+#~ msgid "Use additional TLS authentication"
+#~ msgstr "Χρήση επιπλέον πιστοποίησης TLS"
+
+#~ msgid "Use custom UDP _fragment size:"
+#~ msgstr "Χρήση προσαρμοσμένου μεγέθους UDP _fragment:"
+
+#~ msgid "Use custom _renegotiation interval:"
+#~ msgstr "Χρήση προσαρμοσμένου χρονικού διαστήματος επανα_διαπραγμάτευσης:"
+
+#~ msgid "User Certificate:"
+#~ msgstr "Πιστοποιητικό χρήστη:"
+
+#~ msgid "User name:"
+#~ msgstr "Όνομα χρήστη:"
