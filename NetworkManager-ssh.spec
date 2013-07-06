@@ -5,7 +5,7 @@
 Summary:   NetworkManager VPN plugin for SSH
 Name:      NetworkManager-ssh
 Version:   ___version___
-Release:   0.1.%{checkout}%{?dist}
+Release:   0.9.%{checkout}%{?dist}
 License:   GPLv2+
 URL:       https://github.com/danfruehauf/NetworkManager-ssh
 Group:     System Environment/Base
@@ -80,7 +80,10 @@ rm -f %{buildroot}%{_libdir}/NetworkManager/lib*.la
 %{_datadir}/gnome-vpn-properties/ssh/nm-ssh-dialog.ui
 
 %changelog
-* ___changelog_date___ Dan Fruehauf <malkodan@gmail.com> - 0.0.9-0.1.___checkout______shortcommit___
+* Sat Jul 06 2013 Dan Fruehauf <malkodan@gmail.com> - 0.9.1-0.1.20130706git92ea78a
+- Fixed password saving
+
+* Thu Jun 27 2013 Dan Fruehauf <malkodan@gmail.com> - 0.9.0-0.1.20130627git9bf3b80
 - Support for password and plain key authentication
 
 * Tue Jun 25 2013 Dan Fruehauf <malkodan@gmail.com> - 0.0.4-0.1.20130625git241fee0
