@@ -80,37 +80,4 @@ rm -f %{buildroot}%{_libdir}/NetworkManager/lib*.la
 %{_datadir}/gnome-vpn-properties/ssh/nm-ssh-dialog.ui
 
 %changelog
-* Sat Jul 06 2013 Dan Fruehauf <malkodan@gmail.com> - 0.9.1-0.1.20130706git92ea78a
-- Fixed password saving
 
-* Thu Jun 27 2013 Dan Fruehauf <malkodan@gmail.com> - 0.9.0-0.1.20130627git9bf3b80
-- Support for password and plain key authentication
-
-* Tue Jun 25 2013 Dan Fruehauf <malkodan@gmail.com> - 0.0.4-0.1.20130625git241fee0
-- Can choose to not set VPN as default route
-
-* Fri Apr 19 2013 Dan Fruehauf <malkodan@gmail.com> - 0.0.3-0.8.20130419git3d5321b
-- DBUS and NetworkManager files in /etc are no longer config files
-- Other refactoring to conform with other NetworkManager VPN plugins
-
-* Fri Apr 19 2013 Dan Fruehauf <malkodan@gmail.com> - 0.0.3-0.8.20130419git3d5321b
-- Added sub package for NetworkManager-ssh-gnome
-
-* Tue Apr 02 2013 Dan Fruehauf <malkodan@gmail.com> - 0.0.3-0.6.20130402git6ba59c4
-- Fixed dependencies (openssh-clients
-- Added private libs
-
-* Sat Mar 30 2013 Dan Fruehauf <malkodan@gmail.com> - 0.0.3-0.5.20130330git9afb20
-- Removed macros from changelog
-
-* Thu Mar 28 2013 Dan Fruehauf <malkodan@gmail.com> - 0.0.3-0.4.20130328gita2add30
-- Fixed more issues in spec to conform with Fedora Packaging standards
-
-* Tue Mar 26 2013 Dan Fruehauf <malkodan@gmail.com> - 0.0.3-0.3.20130326git7549f1d
-- More changes to conform with Fedora packaging standards
-
-* Fri Mar 22 2013 Dan Fruehauf <malkodan@gmail.com> - 0.0.3-0.2.20130322git8767415
-- Changes to conform with Fedora packaging standards
-
-* Wed Mar 20 2013 Dan Fruehauf <malkodan@gmail.com> - 0.0.3-0.1.20130320gitcf6c00f
-- Initial spec release
