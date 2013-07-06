@@ -268,7 +268,7 @@ main (int argc, char *argv[])
 	auth_type = g_hash_table_lookup (data, NM_SSH_KEY_AUTH_TYPE);
 	if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_PASSWORD)) {
 		/* FIXME one day... */
-		//nm_vpn_plugin_utils_get_secret_flags (secrets, NM_SSH_KEY_PASSWORD, &pw_flags);
+		nm_vpn_plugin_utils_get_secret_flags (secrets, NM_SSH_KEY_PASSWORD, &pw_flags);
 		password_key = NM_SSH_KEY_PASSWORD;
 		if (!get_secrets (vpn_uuid, vpn_name, retry, allow_interaction, external_ui_mode,
 			g_hash_table_lookup (secrets, NM_SSH_KEY_PASSWORD),

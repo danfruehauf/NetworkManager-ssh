@@ -50,6 +50,9 @@
 #define SSH_PLUGIN_DESC    _("Compatible with the SSH server.")
 #define SSH_PLUGIN_SERVICE NM_DBUS_SERVICE_SSH 
 
+#define PW_TYPE_SAVE   0
+#define PW_TYPE_ASK    1
+
 #define PARSE_IMPORT_KEY(IMPORT_KEY, NM_SSH_KEY, ITEMS, VPN_CONN) \
 if (!strncmp (ITEMS[0], IMPORT_KEY, strlen (ITEMS[0]))) { \
 	nm_setting_vpn_add_data_item (VPN_CONN, NM_SSH_KEY, ITEMS[1]); \
@@ -394,6 +397,85 @@ init_auth_widget (GtkBuilder *builder,
 	}
 }
 
+static void
+pw_type_combo_changed_cb (GtkWidget *combo, gpointer user_data)
+{
+	SshPluginUiWidget *self = SSH_PLUGIN_UI_WIDGET (user_data);
+	SshPluginUiWidgetPrivate *priv = SSH_PLUGIN_UI_WIDGET_GET_PRIVATE (self);
+	GtkWidget *entry;
+
+	entry = GTK_WIDGET (gtk_builder_get_object (priv->builder, "auth_password_entry"));
+	g_assert (entry);
+
+	/* If the user chose "Not required", desensitize and clear the correct
+	 * password entry.
+	 */
+	switch (gtk_combo_box_get_active (GTK_COMBO_BOX (combo))) {
+	case PW_TYPE_ASK:
+		gtk_entry_set_text (GTK_ENTRY (entry), "");
+		gtk_widget_set_sensitive (entry, FALSE);
+		break;
+	default:
+		gtk_widget_set_sensitive (entry, TRUE);
+		break;
+	}
+
+	stuff_changed_cb (combo, self);
+}
+
+static void
+init_one_pw_combo (
+	SshPluginUiWidget *self,
+	NMSettingVPN *s_vpn,
+	const char *combo_name,
+	const char *secret_key,
+	const char *entry_name)
+{
+	SshPluginUiWidgetPrivate *priv = SSH_PLUGIN_UI_WIDGET_GET_PRIVATE (self);
+	int active = -1;
+	GtkWidget *widget;
+	GtkListStore *store;
+	GtkTreeIter iter;
+	const char *value = NULL;
+	guint32 default_idx = 1;
+	NMSettingSecretFlags pw_flags = NM_SETTING_SECRET_FLAG_NONE;
+
+	/* If there's already a password and the password type can't be found in
+	 * the VPN settings, default to saving it.  Otherwise, always ask for it.
+	 */
+	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, entry_name));
+	g_assert (widget);
+	value = gtk_entry_get_text (GTK_ENTRY (widget));
+	if (value && strlen (value))
+		default_idx = 0;
+
+	store = gtk_list_store_new (1, G_TYPE_STRING);
+	if (s_vpn)
+		nm_setting_get_secret_flags (NM_SETTING (s_vpn), secret_key, &pw_flags, NULL);
+
+	gtk_list_store_append (store, &iter);
+	gtk_list_store_set (store, &iter, 0, _("Saved"), -1);
+	if (   (active < 0)
+	    && !(pw_flags & NM_SETTING_SECRET_FLAG_NOT_SAVED)) {
+		active = PW_TYPE_SAVE;
+	}
+
+	gtk_list_store_append (store, &iter);
+	gtk_list_store_set (store, &iter, 0, _("Always Ask"), -1);
+	if ((active < 0) && (pw_flags & NM_SETTING_SECRET_FLAG_NOT_SAVED))
+		active = PW_TYPE_ASK;
+
+	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, combo_name));
+	g_assert (widget);
+	gtk_combo_box_set_model (GTK_COMBO_BOX (widget), GTK_TREE_MODEL (store));
+	g_object_unref (store);
+	gtk_combo_box_set_active (GTK_COMBO_BOX (widget), active < 0 ? default_idx : active);
+
+	pw_type_combo_changed_cb (widget, self);
+	g_signal_connect (G_OBJECT (widget), "changed", G_CALLBACK (pw_type_combo_changed_cb), self);
+}
+
+/* FIXME break into smaller functions */
 static gboolean
 init_plugin_ui (SshPluginUiWidget *self, NMConnection *connection, GError **error)
 {
@@ -573,6 +655,15 @@ init_plugin_ui (SshPluginUiWidget *self, NMConnection *connection, GError **erro
 	g_signal_connect (widget, "changed", G_CALLBACK (auth_combo_changed_cb), self);
 	gtk_combo_box_set_active (GTK_COMBO_BOX (widget), active < 0 ? 0 : active);
 
+	/* Combo box for save/don't save password */
+	init_one_pw_combo (
+		self,
+		s_vpn,
+		"auth_password_save_password_combobox",
+		NM_SSH_KEY_PASSWORD,
+		"auth_password_entry");
+
+
 	/* Advanced button */
 	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "advanced_button"));
 	g_signal_connect (G_OBJECT (widget), "clicked", G_CALLBACK (advanced_button_clicked_cb), self);
@@ -606,6 +697,7 @@ static gboolean auth_widget_update_connection (
 {
 	/* This function populates s_vpn with the auth properties */
 	GtkWidget *widget;
+	GtkWidget *combo_password;
 	GtkComboBox *combo;
 	GtkTreeModel *model;
 	GtkTreeIter iter;
@@ -627,13 +719,26 @@ static gboolean auth_widget_update_connection (
 		const gchar *password;
 		NMSettingSecretFlags pw_flags = NM_SETTING_SECRET_FLAG_NONE;
 
+		/* Grab original password flags */
 		widget = GTK_WIDGET (gtk_builder_get_object (builder, "auth_password_entry"));
-		password = gtk_entry_get_text (GTK_ENTRY (widget));
-		/* Store password */
-		if (password && strlen (password)) {
-			nm_setting_vpn_add_secret (s_vpn, NM_SSH_KEY_PASSWORD, password);
-			nm_setting_set_secret_flags (NM_SETTING (s_vpn), NM_SSH_KEY_PASSWORD, pw_flags, NULL);
+		pw_flags = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (widget), "flags"));
+		combo_password = GTK_WIDGET (gtk_builder_get_object (builder, "auth_password_save_password_combobox"));
+
+		/* And set new ones based on the type combo */
+		switch (gtk_combo_box_get_active (GTK_COMBO_BOX (combo_password))) {
+		case PW_TYPE_SAVE:
+			password = gtk_entry_get_text (GTK_ENTRY (widget));
+			if (password && strlen (password))
+				nm_setting_vpn_add_secret (s_vpn, NM_SSH_KEY_PASSWORD, password);
+			break;
+		case PW_TYPE_ASK:
+		default:
+			pw_flags |= NM_SETTING_SECRET_FLAG_NOT_SAVED;
+			break;
 		}
+
+		/* Set new secret flags */
+		nm_setting_set_secret_flags (NM_SETTING (s_vpn), NM_SSH_KEY_PASSWORD, pw_flags, NULL);
 	}
 	else if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_KEY)) {
 		/* Key auth */
