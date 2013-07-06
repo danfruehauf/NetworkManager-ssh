@@ -52,7 +52,6 @@
 
 #define PW_TYPE_SAVE   0
 #define PW_TYPE_ASK    1
-#define PW_TYPE_UNUSED 2
 
 #define PARSE_IMPORT_KEY(IMPORT_KEY, NM_SSH_KEY, ITEMS, VPN_CONN) \
 if (!strncmp (ITEMS[0], IMPORT_KEY, strlen (ITEMS[0]))) { \
@@ -413,7 +412,6 @@ pw_type_combo_changed_cb (GtkWidget *combo, gpointer user_data)
 	 */
 	switch (gtk_combo_box_get_active (GTK_COMBO_BOX (combo))) {
 	case PW_TYPE_ASK:
-	case PW_TYPE_UNUSED:
 		gtk_entry_set_text (GTK_ENTRY (entry), "");
 		gtk_widget_set_sensitive (entry, FALSE);
 		break;
@@ -458,8 +456,7 @@ init_one_pw_combo (
 	gtk_list_store_append (store, &iter);
 	gtk_list_store_set (store, &iter, 0, _("Saved"), -1);
 	if (   (active < 0)
-	    && !(pw_flags & NM_SETTING_SECRET_FLAG_NOT_SAVED)
-	    && !(pw_flags & NM_SETTING_SECRET_FLAG_NOT_REQUIRED)) {
+	    && !(pw_flags & NM_SETTING_SECRET_FLAG_NOT_SAVED)) {
 		active = PW_TYPE_SAVE;
 	}
 
@@ -467,11 +464,6 @@ init_one_pw_combo (
 	gtk_list_store_set (store, &iter, 0, _("Always Ask"), -1);
 	if ((active < 0) && (pw_flags & NM_SETTING_SECRET_FLAG_NOT_SAVED))
 		active = PW_TYPE_ASK;
-
-	gtk_list_store_append (store, &iter);
-	gtk_list_store_set (store, &iter, 0, _("Not Required"), -1);
-	if ((active < 0) && (pw_flags & NM_SETTING_SECRET_FLAG_NOT_REQUIRED))
-		active = PW_TYPE_UNUSED;
 
 	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, combo_name));
 	g_assert (widget);
@@ -738,9 +730,6 @@ static gboolean auth_widget_update_connection (
 			password = gtk_entry_get_text (GTK_ENTRY (widget));
 			if (password && strlen (password))
 				nm_setting_vpn_add_secret (s_vpn, NM_SSH_KEY_PASSWORD, password);
-			break;
-		case PW_TYPE_UNUSED:
-			pw_flags |= NM_SETTING_SECRET_FLAG_NOT_REQUIRED;
 			break;
 		case PW_TYPE_ASK:
 		default:

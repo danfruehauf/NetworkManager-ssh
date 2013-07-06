@@ -1527,6 +1527,7 @@ real_need_secrets (NMVPNPlugin *plugin,
 	NMSettingVPN *s_vpn;
 	gboolean need_secrets = FALSE;
 	const char *auth_type = NULL;
+	NMSettingSecretFlags flags = NM_SETTING_SECRET_FLAG_NONE;
 
 	g_return_val_if_fail (NM_IS_VPN_PLUGIN (plugin), FALSE);
 	g_return_val_if_fail (NM_IS_CONNECTION (connection), FALSE);
@@ -1554,15 +1555,13 @@ real_need_secrets (NMVPNPlugin *plugin,
 	/* Lets see if we need some passwords... */
 	if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_PASSWORD)) {
 		/* Password auth */
-		const gchar* password = NULL;
-		password = nm_setting_vpn_get_secret (s_vpn, NM_SSH_KEY_PASSWORD);
-		need_secrets = password == NULL;
-		/* FIXME integrate with gnome keyring or whatever */
-		/*if (nm_setting_get_secret_flags (NM_SETTING (s_vpn), NM_OPENVPN_KEY_PASSWORD, &secret_flags, NULL)) {
-			if (secret_flags & NM_SETTING_SECRET_FLAG_NOT_REQUIRED)
-				*need_secrets = FALSE;
-			}
-		}*/
+		need_secrets = TRUE;
+		nm_setting_get_secret_flags (NM_SETTING (s_vpn), NM_SSH_KEY_PASSWORD, &flags, NULL);
+
+		/* If the password is saved and we can retrieve it, it's not required */
+		if (nm_setting_vpn_get_secret (NM_SETTING_VPN (s_vpn), NM_SSH_KEY_PASSWORD)) {
+			need_secrets = FALSE;
+		}
 	} else if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_KEY)) {
 		/* FIXME check if key file needs a password */
 		need_secrets = FALSE;
