@@ -705,6 +705,7 @@ static gboolean auth_widget_update_connection (
 {
 	/* This function populates s_vpn with the auth properties */
 	GtkWidget *widget;
+	GtkWidget *combo_password;
 	GtkComboBox *combo;
 	GtkTreeModel *model;
 	GtkTreeIter iter;
@@ -726,13 +727,29 @@ static gboolean auth_widget_update_connection (
 		const gchar *password;
 		NMSettingSecretFlags pw_flags = NM_SETTING_SECRET_FLAG_NONE;
 
+		/* Grab original password flags */
 		widget = GTK_WIDGET (gtk_builder_get_object (builder, "auth_password_entry"));
-		password = gtk_entry_get_text (GTK_ENTRY (widget));
-		/* Store password */
-		if (password && strlen (password)) {
-			nm_setting_vpn_add_secret (s_vpn, NM_SSH_KEY_PASSWORD, password);
-			nm_setting_set_secret_flags (NM_SETTING (s_vpn), NM_SSH_KEY_PASSWORD, pw_flags, NULL);
+		pw_flags = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (widget), "flags"));
+		combo_password = GTK_WIDGET (gtk_builder_get_object (builder, "auth_password_save_password_combobox"));
+
+		/* And set new ones based on the type combo */
+		switch (gtk_combo_box_get_active (GTK_COMBO_BOX (combo_password))) {
+		case PW_TYPE_SAVE:
+			password = gtk_entry_get_text (GTK_ENTRY (widget));
+			if (password && strlen (password))
+				nm_setting_vpn_add_secret (s_vpn, NM_SSH_KEY_PASSWORD, password);
+			break;
+		case PW_TYPE_UNUSED:
+			pw_flags |= NM_SETTING_SECRET_FLAG_NOT_REQUIRED;
+			break;
+		case PW_TYPE_ASK:
+		default:
+			pw_flags |= NM_SETTING_SECRET_FLAG_NOT_SAVED;
+			break;
 		}
+
+		/* Set new secret flags */
+		nm_setting_set_secret_flags (NM_SETTING (s_vpn), NM_SSH_KEY_PASSWORD, pw_flags, NULL);
 	}
 	else if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_KEY)) {
 		/* Key auth */
