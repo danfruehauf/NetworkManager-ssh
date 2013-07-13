@@ -848,6 +848,9 @@ ssh_watch_cb (GPid pid, gint status, gpointer user_data)
 	g_source_remove(priv->io_data->socket_channel_stderr_eventid);
 	close (g_io_channel_unix_get_fd(priv->io_data->ssh_stderr_channel));
 
+	/* Close STDIN channel */
+	close (g_io_channel_unix_get_fd(priv->io_data->ssh_stdin_channel));
+
 	if (!good_exit)
 		nm_vpn_plugin_failure (plugin, failure);
 
