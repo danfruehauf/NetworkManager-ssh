@@ -432,6 +432,7 @@ send_network_config (NMSshPlugin *plugin)
 	GValue             *val;
 	GError             *err = NULL;
 	char               *device;
+	char               *mtu;
 	char               *resolved_hostname;
 
 	connection = dbus_g_bus_get (DBUS_BUS_SYSTEM, &err);
@@ -497,8 +498,10 @@ send_network_config (NMSshPlugin *plugin)
 	/* mtu */
 	if (io_data->mtu > 0)
 	{
-		val = str_to_gvalue (g_strdup_printf("%d", io_data->mtu), FALSE);
+		mtu = g_strdup_printf("%d", io_data->mtu);
+		val = str_to_gvalue (mtu, FALSE);
 		g_hash_table_insert (config, NM_VPN_PLUGIN_CONFIG_MTU, val);
+		g_free(mtu);
 	}
 	else
 		g_warning ("local_dev_number unset.");
@@ -830,9 +833,6 @@ ssh_watch_cb (GPid pid, gint status, gpointer user_data)
 			}
 		}
 	}
-	g_source_remove(priv->io_data->socket_channel_stdout_eventid);
-	close (g_io_channel_unix_get_fd(priv->io_data->ssh_stdout_channel));
-
 	/* Try to get the last bits of data from ssh */
 	if (priv->io_data && priv->io_data->ssh_stderr_channel) {
 		GIOChannel *channel = priv->io_data->ssh_stderr_channel;
@@ -845,11 +845,6 @@ ssh_watch_cb (GPid pid, gint status, gpointer user_data)
 			}
 		}
 	}
-	g_source_remove(priv->io_data->socket_channel_stderr_eventid);
-	close (g_io_channel_unix_get_fd(priv->io_data->ssh_stderr_channel));
-
-	/* Close STDIN channel */
-	close (g_io_channel_unix_get_fd(priv->io_data->ssh_stdin_channel));
 
 	if (!good_exit)
 		nm_vpn_plugin_failure (plugin, failure);
@@ -1036,6 +1031,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		                 NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
 		                 "%s",
 		                 _("Could not find the sshpass binary."));
+			free_ssh_args (args);
 			return FALSE;
 		}
 
@@ -1185,6 +1181,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	{
 		g_warning("Could not assign a free tun/tap device.");
 		nm_vpn_plugin_set_state ((NMVPNPlugin*)plugin, NM_VPN_SERVICE_STATE_STOPPED);
+		free_ssh_args (args);
 		return FALSE;
 	}
 
@@ -1215,11 +1212,13 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 			free_ssh_args (args);
 			return FALSE;
 		}
-		add_ssh_arg (args, (gpointer) g_strdup_printf ("Port=%d", (guint32) tmp_int));
+		tmp_arg = g_strdup_printf ("Port=%d", (guint32) tmp_int);
 	} else {
 		/* Default to SSH port 22 */
-		add_ssh_arg (args, (gpointer) g_strdup_printf("Port=%d", (guint32) NM_SSH_DEFAULT_PORT));
+		tmp_arg = g_strdup_printf ("Port=%d", (guint32) NM_SSH_DEFAULT_PORT);
 	}
+	add_ssh_arg (args, tmp_arg);
+	g_free(tmp_arg);
 
 	/* TUN MTU size */
 	mtu = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_TUNNEL_MTU);
@@ -1643,6 +1642,46 @@ nm_ssh_plugin_class_init (NMSshPluginClass *plugin_class)
 }
 
 static void
+cleanup (NMSshPlugin *plugin)
+{
+	NMSshPluginPrivate *priv = NM_SSH_PLUGIN_GET_PRIVATE (plugin);
+	NMSshPluginIOData *io_data = priv->io_data;
+
+	if(!io_data)
+		return;
+
+	if (io_data->ssh_stdout_channel) {
+		g_io_channel_shutdown (io_data->ssh_stdout_channel, TRUE, NULL);
+		g_source_remove (io_data->socket_channel_stdout_eventid);
+		g_io_channel_unref (io_data->ssh_stdout_channel);
+	}
+
+	if (io_data->ssh_stderr_channel) {
+		g_io_channel_shutdown (io_data->ssh_stderr_channel, TRUE, NULL);
+		g_source_remove (io_data->socket_channel_stderr_eventid);
+		g_io_channel_unref (io_data->ssh_stderr_channel);
+	}
+
+	if (io_data->ssh_stdin_channel) {
+		g_io_channel_shutdown (io_data->ssh_stdin_channel, TRUE, NULL);
+		g_io_channel_unref (io_data->ssh_stdin_channel);
+	}
+
+	g_free (io_data->username);
+	g_free (io_data->password);
+	g_free (io_data->remote_gw);
+	g_free (io_data->local_addr);
+	g_free (io_data->remote_addr);
+	g_free (io_data->netmask);
+	g_free (io_data->local_addr_6);
+	g_free (io_data->remote_addr_6);
+	g_free (io_data->netmask_6);
+
+	g_free(priv->io_data);
+	priv->io_data = NULL;
+}
+
+static void
 plugin_state_changed (NMSshPlugin *plugin,
 	NMVPNServiceState state,
 	gpointer user_data)
@@ -1653,6 +1692,7 @@ plugin_state_changed (NMSshPlugin *plugin,
 	case NM_VPN_SERVICE_STATE_SHUTDOWN:
 	case NM_VPN_SERVICE_STATE_STOPPING:
 	case NM_VPN_SERVICE_STATE_STOPPED:
+		cleanup (plugin);
 	default:
 		break;
 	}
