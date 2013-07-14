@@ -489,8 +489,8 @@ send_network_config (NMSshPlugin *plugin)
 		device =
 			(gpointer) g_strdup_printf ("%s%d", io_data->dev_type, io_data->local_dev_number);
 		val = str_to_gvalue (device, FALSE);
-		g_free(device);
 		g_hash_table_insert (config, NM_VPN_PLUGIN_CONFIG_TUNDEV, val);
+		g_free (device);
 	}
 	else
 		g_warning ("local_dev_number unset.");
@@ -501,7 +501,7 @@ send_network_config (NMSshPlugin *plugin)
 		mtu = g_strdup_printf("%d", io_data->mtu);
 		val = str_to_gvalue (mtu, FALSE);
 		g_hash_table_insert (config, NM_VPN_PLUGIN_CONFIG_MTU, val);
-		g_free(mtu);
+		g_free (mtu);
 	}
 	else
 		g_warning ("local_dev_number unset.");
@@ -512,12 +512,14 @@ send_network_config (NMSshPlugin *plugin)
 
 	/* IPv4 specific (local_addr, remote_addr, netmask) */
 #if defined(IPV6)
-	g_hash_table_insert (config, NM_VPN_PLUGIN_CONFIG_HAS_IP4, bool_to_gvalue (TRUE));
+	val = bool_to_gvalue (TRUE);
+	g_hash_table_insert (config, NM_VPN_PLUGIN_CONFIG_HAS_IP4, val);
 #endif
 
 	/* replace default route? */
 	if (io_data->no_default_route) {
-		g_hash_table_insert (config, NM_VPN_PLUGIN_IP4_CONFIG_NEVER_DEFAULT, bool_to_gvalue (TRUE));
+		val = bool_to_gvalue (TRUE);
+		g_hash_table_insert (config, NM_VPN_PLUGIN_IP4_CONFIG_NEVER_DEFAULT, val);
 	}
 
 	/* local_address */
@@ -619,6 +621,7 @@ send_network_config (NMSshPlugin *plugin)
 			G_TYPE_INVALID,
 			G_TYPE_INVALID);
 	}
+
 #endif
 	/* Send IPv4 config */
 	dbus_g_proxy_call_no_reply (
@@ -627,7 +630,6 @@ send_network_config (NMSshPlugin *plugin)
 		ip4config,
 		G_TYPE_INVALID,
 		G_TYPE_INVALID);
-
 
 	g_object_unref (proxy);
 
@@ -1151,8 +1153,10 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		if (debug)
 			g_message("Using known_hosts at: '%s'", known_hosts_file);
 		add_ssh_arg (args, "-o");
-		add_ssh_arg (args, g_strdup_printf("UserKnownHostsFile=%s", known_hosts_file) );
-		g_free(known_hosts_file);
+		tmp_arg = g_strdup_printf("UserKnownHostsFile=%s", known_hosts_file);
+		add_ssh_arg (args, tmp_arg);
+		g_free (tmp_arg);
+		g_free (known_hosts_file);
 	}
 
 	/* Extra SSH options */
@@ -1428,6 +1432,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		free_ssh_args (args);
 		return FALSE;
 	}
+	g_free(envp[0]);
 	free_ssh_args (args);
 
 	g_message ("ssh started with pid %d", pid);
@@ -1470,23 +1475,26 @@ validate_ssh_agent_socket(const char* ssh_agent_socket, GError **error)
 {
 	GFile           *gfile = NULL;
 	GFileInfo       *info = NULL;
+	gboolean        retval = FALSE;
 	if (debug)
 		g_message ("Inspecing ssh agent socket at: '%s'\n", ssh_agent_socket);
 
 	if (!g_file_test (ssh_agent_socket, G_FILE_TEST_EXISTS))
-		return FALSE;
+		return retval;
 
-	gfile = g_file_new_for_path(ssh_agent_socket);
+	gfile = g_file_new_for_path (ssh_agent_socket);
 	if (!gfile)
-		return FALSE;
+		return retval;
 
 	info = g_file_query_info (gfile, "standard::*,owner::user", 0, NULL, error);
 	if (info && G_FILE_TYPE_SPECIAL == g_file_info_get_file_type (info)) {
 		g_message ("Found ssh agent socket at: '%s'\n", ssh_agent_socket);
-		return TRUE;
+		retval = TRUE;
 	}
+	g_object_unref (info);
+	g_object_unref (gfile);
 
-	return FALSE;
+	return retval;
 }
 
 static gboolean
