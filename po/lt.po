@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NetworkManager-ssh HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-29 00:41+1000\n"
+"POT-Creation-Date: 2013-07-15 17:00+1000\n"
 "PO-Revision-Date: 2011-07-16 16:15+0300\n"
 "Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
 "Language-Team: Lithuanian <gnome-lt@lists.akl.lt>\n"
@@ -45,6 +45,18 @@ msgid ""
 "Is ssh-agent running?"
 msgstr ""
 
+#: ../auth-dialog/vpn-password-dialog.c:95
+msgid "_Password:"
+msgstr "_Slaptažodis:"
+
+#: ../auth-dialog/vpn-password-dialog.c:97
+msgid "_Secondary Password:"
+msgstr "_Antrinis slaptažodis:"
+
+#: ../auth-dialog/vpn-password-dialog.c:240
+msgid "Sh_ow passwords"
+msgstr "_Rodyti slaptažodžius"
+
 #: ../properties/advanced-dialog.c:137
 msgid ""
 "You have chosen not to use 'root' as the remote username.\n"
@@ -61,15 +73,23 @@ msgstr "SSH"
 msgid "Compatible with the SSH server."
 msgstr "Suderinamas su SSH serveriu."
 
-#: ../properties/nm-ssh.c:538
+#: ../properties/nm-ssh.c:457
+msgid "Saved"
+msgstr "Išsaugota"
+
+#: ../properties/nm-ssh.c:464
+msgid "Always Ask"
+msgstr "Visada klausti"
+
+#: ../properties/nm-ssh.c:620
 msgid "SSH Agent"
 msgstr ""
 
-#: ../properties/nm-ssh.c:551
+#: ../properties/nm-ssh.c:633
 msgid "Password"
 msgstr "Slaptažodis"
 
-#: ../properties/nm-ssh.c:564
+#: ../properties/nm-ssh.c:646
 #, fuzzy
 msgid "Key Authentication"
 msgstr "TLS tapatybės nustatymas"
@@ -248,7 +268,7 @@ msgstr ""
 msgid "Missing required SSH_AUTH_SOCK."
 msgstr ""
 
-#: ../src/nm-ssh-service.c:1124 ../src/nm-ssh-service.c:1585
+#: ../src/nm-ssh-service.c:1124 ../src/nm-ssh-service.c:1584
 #, fuzzy, c-format
 msgid "Unknown authentication type: %s."
 msgstr "Nežinomas ryšio tipas „%s“."
@@ -301,35 +321,25 @@ msgstr "Trūkstamas būtinas vietinis IP adresas statinio rakto veiksenai."
 msgid "Missing required IPv6 netmask."
 msgstr ""
 
-#: ../src/nm-ssh-service.c:1504 ../src/nm-ssh-service.c:1545
+#: ../src/nm-ssh-service.c:1504 ../src/nm-ssh-service.c:1546
 msgid ""
 "Could not process the request because the VPN connection settings were "
 "invalid."
 msgstr ""
 "Nepavyko apdoroti užklausos, nes VPN prisijungimo nustatymai buvo netinkami."
 
-#: ../src/nm-ssh-service.c:1709
+#: ../src/nm-ssh-service.c:1708
 msgid "Don't quit when VPN connection terminates"
 msgstr "Neišjungti, kai VPN ryšys baigiasi"
 
-#: ../src/nm-ssh-service.c:1710
+#: ../src/nm-ssh-service.c:1709
 msgid "Enable verbose debug logging (may expose passwords)"
 msgstr "Įjungti išsamų derinimo žurnalą (gali parodyti slaptažodžius)"
 
-#: ../src/nm-ssh-service.c:1726
+#: ../src/nm-ssh-service.c:1725
 #, fuzzy
 msgid "nm-ssh-service provides integrated SSH capability to NetworkManager."
 msgstr "nm-vpnc-service suteikia NetworkManager integruotą SSH galimybę."
-
-#~ msgid "_Password:"
-#~ msgstr "_Slaptažodis:"
-
-#~ msgid "_Secondary Password:"
-#~ msgstr "_Antrinis slaptažodis:"
-
-#~| msgid "Show passwords"
-#~ msgid "Sh_ow passwords"
-#~ msgstr "_Rodyti slaptažodžius"
 
 #~ msgid "Certificate pass_word:"
 #~ msgstr "Liudijimo slaptažo_dis:"
@@ -342,12 +352,6 @@ msgstr "nm-vpnc-service suteikia NetworkManager integruotą SSH galimybę."
 
 #~ msgid "Choose your private key..."
 #~ msgstr "Pasirinkite savo asmeninį raktą..."
-
-#~ msgid "Saved"
-#~ msgstr "Išsaugota"
-
-#~ msgid "Always Ask"
-#~ msgstr "Visada klausti"
 
 #~| msgid "Not required"
 #~ msgid "Not Required"

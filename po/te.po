@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: network-manager-ssh.master.te\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-29 00:41+1000\n"
+"POT-Creation-Date: 2013-07-15 17:00+1000\n"
 "PO-Revision-Date: 2009-10-27 19:25+0530\n"
 "Last-Translator: Krishna Babu K <kkrothap@redhat.com>\n"
 "Language-Team: Telugu <en@li.org>\n"
@@ -45,6 +45,19 @@ msgid ""
 "Is ssh-agent running?"
 msgstr ""
 
+#: ../auth-dialog/vpn-password-dialog.c:95
+msgid "_Password:"
+msgstr "సంకేతపదము (_P):"
+
+#: ../auth-dialog/vpn-password-dialog.c:97
+msgid "_Secondary Password:"
+msgstr "రెండవ సంకేతపదము (_S):"
+
+#: ../auth-dialog/vpn-password-dialog.c:240
+#, fuzzy
+msgid "Sh_ow passwords"
+msgstr "సంకేతపదములను చూపుము"
+
 #: ../properties/advanced-dialog.c:137
 msgid ""
 "You have chosen not to use 'root' as the remote username.\n"
@@ -61,15 +74,23 @@ msgstr "SSH"
 msgid "Compatible with the SSH server."
 msgstr "SSH సేవికతో సారూప్యం."
 
-#: ../properties/nm-ssh.c:538
+#: ../properties/nm-ssh.c:457
+msgid "Saved"
+msgstr ""
+
+#: ../properties/nm-ssh.c:464
+msgid "Always Ask"
+msgstr ""
+
+#: ../properties/nm-ssh.c:620
 msgid "SSH Agent"
 msgstr ""
 
-#: ../properties/nm-ssh.c:551
+#: ../properties/nm-ssh.c:633
 msgid "Password"
 msgstr "సంకేతపదము"
 
-#: ../properties/nm-ssh.c:564
+#: ../properties/nm-ssh.c:646
 #, fuzzy
 msgid "Key Authentication"
 msgstr "TLS దృవీకరణ"
@@ -246,7 +267,7 @@ msgstr ""
 msgid "Missing required SSH_AUTH_SOCK."
 msgstr ""
 
-#: ../src/nm-ssh-service.c:1124 ../src/nm-ssh-service.c:1585
+#: ../src/nm-ssh-service.c:1124 ../src/nm-ssh-service.c:1584
 #, c-format
 msgid "Unknown authentication type: %s."
 msgstr ""
@@ -295,29 +316,23 @@ msgstr ""
 msgid "Missing required IPv6 netmask."
 msgstr ""
 
-#: ../src/nm-ssh-service.c:1504 ../src/nm-ssh-service.c:1545
+#: ../src/nm-ssh-service.c:1504 ../src/nm-ssh-service.c:1546
 msgid ""
 "Could not process the request because the VPN connection settings were "
 "invalid."
 msgstr ""
 
-#: ../src/nm-ssh-service.c:1709
+#: ../src/nm-ssh-service.c:1708
 msgid "Don't quit when VPN connection terminates"
 msgstr ""
 
-#: ../src/nm-ssh-service.c:1710
+#: ../src/nm-ssh-service.c:1709
 msgid "Enable verbose debug logging (may expose passwords)"
 msgstr ""
 
-#: ../src/nm-ssh-service.c:1726
+#: ../src/nm-ssh-service.c:1725
 msgid "nm-ssh-service provides integrated SSH capability to NetworkManager."
 msgstr ""
-
-#~ msgid "_Password:"
-#~ msgstr "సంకేతపదము (_P):"
-
-#~ msgid "_Secondary Password:"
-#~ msgstr "రెండవ సంకేతపదము (_S):"
 
 #~ msgid "_Domain:"
 #~ msgstr "డొమైన్ (_D):"

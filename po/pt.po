@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.26\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-29 00:41+1000\n"
+"POT-Creation-Date: 2013-07-15 17:00+1000\n"
 "PO-Revision-Date: 2011-03-16 21:04+0000\n"
 "Last-Translator: Filipe Gomes <filipefgomes@gmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
@@ -41,6 +41,19 @@ msgid ""
 "Is ssh-agent running?"
 msgstr ""
 
+#: ../auth-dialog/vpn-password-dialog.c:95
+msgid "_Password:"
+msgstr "_Senha:"
+
+#: ../auth-dialog/vpn-password-dialog.c:97
+msgid "_Secondary Password:"
+msgstr "S_enha Secundária:"
+
+#: ../auth-dialog/vpn-password-dialog.c:240
+#, fuzzy
+msgid "Sh_ow passwords"
+msgstr "Apresentar senha"
+
 #: ../properties/advanced-dialog.c:137
 msgid ""
 "You have chosen not to use 'root' as the remote username.\n"
@@ -57,15 +70,23 @@ msgstr "SSH"
 msgid "Compatible with the SSH server."
 msgstr "Compatível com o servidor SSH."
 
-#: ../properties/nm-ssh.c:538
+#: ../properties/nm-ssh.c:457
+msgid "Saved"
+msgstr ""
+
+#: ../properties/nm-ssh.c:464
+msgid "Always Ask"
+msgstr ""
+
+#: ../properties/nm-ssh.c:620
 msgid "SSH Agent"
 msgstr ""
 
-#: ../properties/nm-ssh.c:551
+#: ../properties/nm-ssh.c:633
 msgid "Password"
 msgstr "Senha"
 
-#: ../properties/nm-ssh.c:564
+#: ../properties/nm-ssh.c:646
 #, fuzzy
 msgid "Key Authentication"
 msgstr "Autenticação TLS"
@@ -243,7 +264,7 @@ msgstr ""
 msgid "Missing required SSH_AUTH_SOCK."
 msgstr ""
 
-#: ../src/nm-ssh-service.c:1124 ../src/nm-ssh-service.c:1585
+#: ../src/nm-ssh-service.c:1124 ../src/nm-ssh-service.c:1584
 #, c-format
 msgid "Unknown authentication type: %s."
 msgstr ""
@@ -292,7 +313,7 @@ msgstr ""
 msgid "Missing required IPv6 netmask."
 msgstr ""
 
-#: ../src/nm-ssh-service.c:1504 ../src/nm-ssh-service.c:1545
+#: ../src/nm-ssh-service.c:1504 ../src/nm-ssh-service.c:1546
 #, fuzzy
 msgid ""
 "Could not process the request because the VPN connection settings were "
@@ -300,23 +321,17 @@ msgid ""
 msgstr ""
 "O início de sessão VPN falhou porque as opções de configuração são inválidas."
 
-#: ../src/nm-ssh-service.c:1709
+#: ../src/nm-ssh-service.c:1708
 msgid "Don't quit when VPN connection terminates"
 msgstr ""
 
-#: ../src/nm-ssh-service.c:1710
+#: ../src/nm-ssh-service.c:1709
 msgid "Enable verbose debug logging (may expose passwords)"
 msgstr ""
 
-#: ../src/nm-ssh-service.c:1726
+#: ../src/nm-ssh-service.c:1725
 msgid "nm-ssh-service provides integrated SSH capability to NetworkManager."
 msgstr ""
-
-#~ msgid "_Password:"
-#~ msgstr "_Senha:"
-
-#~ msgid "_Secondary Password:"
-#~ msgstr "S_enha Secundária:"
 
 #~ msgid "_Username:"
 #~ msgstr "_Utilizador:"
@@ -472,9 +487,6 @@ msgstr ""
 
 #~ msgid "Server Address:"
 #~ msgstr "Endereço do Servidor:"
-
-#~ msgid "Show password"
-#~ msgstr "Apresentar senha"
 
 #~ msgid "Static Key:"
 #~ msgstr "Chave Estática:"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: network-manager-ssh\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-29 00:41+1000\n"
+"POT-Creation-Date: 2013-07-15 17:00+1000\n"
 "PO-Revision-Date: 2011-04-02 17:05+0100\n"
 "Last-Translator: Zdeněk Hataš <zdenek.hatas@gmail.com>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
@@ -47,6 +47,19 @@ msgid ""
 "Is ssh-agent running?"
 msgstr ""
 
+#: ../auth-dialog/vpn-password-dialog.c:95
+msgid "_Password:"
+msgstr "_Heslo:"
+
+#: ../auth-dialog/vpn-password-dialog.c:97
+msgid "_Secondary Password:"
+msgstr "_Sekundární heslo:"
+
+#: ../auth-dialog/vpn-password-dialog.c:240
+#, fuzzy
+msgid "Sh_ow passwords"
+msgstr "Zobrazit heslo"
+
 #: ../properties/advanced-dialog.c:137
 msgid ""
 "You have chosen not to use 'root' as the remote username.\n"
@@ -63,15 +76,23 @@ msgstr "SSH"
 msgid "Compatible with the SSH server."
 msgstr "Kompatibilní s SSH serverem."
 
-#: ../properties/nm-ssh.c:538
+#: ../properties/nm-ssh.c:457
+msgid "Saved"
+msgstr ""
+
+#: ../properties/nm-ssh.c:464
+msgid "Always Ask"
+msgstr ""
+
+#: ../properties/nm-ssh.c:620
 msgid "SSH Agent"
 msgstr ""
 
-#: ../properties/nm-ssh.c:551
+#: ../properties/nm-ssh.c:633
 msgid "Password"
 msgstr "Heslo"
 
-#: ../properties/nm-ssh.c:564
+#: ../properties/nm-ssh.c:646
 #, fuzzy
 msgid "Key Authentication"
 msgstr "Autentizace TLS"
@@ -250,7 +271,7 @@ msgstr ""
 msgid "Missing required SSH_AUTH_SOCK."
 msgstr ""
 
-#: ../src/nm-ssh-service.c:1124 ../src/nm-ssh-service.c:1585
+#: ../src/nm-ssh-service.c:1124 ../src/nm-ssh-service.c:1584
 #, fuzzy, c-format
 msgid "Unknown authentication type: %s."
 msgstr "Neznámý typ připojení „%s“."
@@ -303,32 +324,26 @@ msgstr "Chybí požadovaná místní adresa IP pro mód se statickým klíčem."
 msgid "Missing required IPv6 netmask."
 msgstr ""
 
-#: ../src/nm-ssh-service.c:1504 ../src/nm-ssh-service.c:1545
+#: ../src/nm-ssh-service.c:1504 ../src/nm-ssh-service.c:1546
 msgid ""
 "Could not process the request because the VPN connection settings were "
 "invalid."
 msgstr "Nelze zpracovat požadavek, protože nastavení VPN nejsou platná."
 
-#: ../src/nm-ssh-service.c:1709
+#: ../src/nm-ssh-service.c:1708
 msgid "Don't quit when VPN connection terminates"
 msgstr "Nevypínat, když se spojení VPN ukončuje"
 
-#: ../src/nm-ssh-service.c:1710
+#: ../src/nm-ssh-service.c:1709
 msgid "Enable verbose debug logging (may expose passwords)"
 msgstr "Povolit podrobný ladicí výpis (může prozradit hesla)"
 
-#: ../src/nm-ssh-service.c:1726
+#: ../src/nm-ssh-service.c:1725
 #, fuzzy
 msgid "nm-ssh-service provides integrated SSH capability to NetworkManager."
 msgstr ""
 "nm-vpnc-service poskytuje podporu SSH integrovanou do aplikace "
 "NetworkManager."
-
-#~ msgid "_Password:"
-#~ msgstr "_Heslo:"
-
-#~ msgid "_Secondary Password:"
-#~ msgstr "_Sekundární heslo:"
 
 #~ msgid "_Username:"
 #~ msgstr "_Uživ. jméno:"
@@ -484,10 +499,6 @@ msgstr ""
 
 #~ msgid "Server Address:"
 #~ msgstr "Adresa serveru:"
-
-#~| msgid "Show passwords"
-#~ msgid "Show password"
-#~ msgstr "Zobrazit heslo"
 
 #~ msgid "Static Key:"
 #~ msgstr "Statický klíč:"

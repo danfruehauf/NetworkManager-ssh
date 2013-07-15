@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: network-manager-ssh master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-29 00:41+1000\n"
+"POT-Creation-Date: 2013-07-15 17:00+1000\n"
 "PO-Revision-Date: 2011-07-14 08:13+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
@@ -47,6 +47,18 @@ msgid ""
 "Is ssh-agent running?"
 msgstr ""
 
+#: ../auth-dialog/vpn-password-dialog.c:95
+msgid "_Password:"
+msgstr "_Geslo:"
+
+#: ../auth-dialog/vpn-password-dialog.c:97
+msgid "_Secondary Password:"
+msgstr "_Drugotno geslo:"
+
+#: ../auth-dialog/vpn-password-dialog.c:240
+msgid "Sh_ow passwords"
+msgstr "_Pokaži gesla"
+
 #: ../properties/advanced-dialog.c:137
 msgid ""
 "You have chosen not to use 'root' as the remote username.\n"
@@ -63,15 +75,23 @@ msgstr "SSH"
 msgid "Compatible with the SSH server."
 msgstr "Združljivo s strežnikom SSH."
 
-#: ../properties/nm-ssh.c:538
+#: ../properties/nm-ssh.c:457
+msgid "Saved"
+msgstr "Shranjeno"
+
+#: ../properties/nm-ssh.c:464
+msgid "Always Ask"
+msgstr "Vedno vprašaj"
+
+#: ../properties/nm-ssh.c:620
 msgid "SSH Agent"
 msgstr ""
 
-#: ../properties/nm-ssh.c:551
+#: ../properties/nm-ssh.c:633
 msgid "Password"
 msgstr "Geslo"
 
-#: ../properties/nm-ssh.c:564
+#: ../properties/nm-ssh.c:646
 #, fuzzy
 msgid "Key Authentication"
 msgstr "Overitev TLS"
@@ -251,7 +271,7 @@ msgstr ""
 msgid "Missing required SSH_AUTH_SOCK."
 msgstr ""
 
-#: ../src/nm-ssh-service.c:1124 ../src/nm-ssh-service.c:1585
+#: ../src/nm-ssh-service.c:1124 ../src/nm-ssh-service.c:1584
 #, fuzzy, c-format
 msgid "Unknown authentication type: %s."
 msgstr "Neznana vrsta povezave '%s'."
@@ -304,34 +324,25 @@ msgstr "Manjka zahtevan naslov IP za statični način ključa."
 msgid "Missing required IPv6 netmask."
 msgstr ""
 
-#: ../src/nm-ssh-service.c:1504 ../src/nm-ssh-service.c:1545
+#: ../src/nm-ssh-service.c:1504 ../src/nm-ssh-service.c:1546
 msgid ""
 "Could not process the request because the VPN connection settings were "
 "invalid."
 msgstr "Zahteve ni mogoče izvesti, ker so nastavitve povezave VPN neveljavne."
 
-#: ../src/nm-ssh-service.c:1709
+#: ../src/nm-ssh-service.c:1708
 msgid "Don't quit when VPN connection terminates"
 msgstr "Ne končaj, ko se povezava VPN zaustavi"
 
-#: ../src/nm-ssh-service.c:1710
+#: ../src/nm-ssh-service.c:1709
 msgid "Enable verbose debug logging (may expose passwords)"
 msgstr "Omogoči podrobno beleženje razhroščevanja (lahko razkrije gesla)"
 
-#: ../src/nm-ssh-service.c:1726
+#: ../src/nm-ssh-service.c:1725
 #, fuzzy
 msgid "nm-ssh-service provides integrated SSH capability to NetworkManager."
 msgstr ""
 "Storitev nm-vpnc-service omoboča podporo SSH znotraj programa NetworkManager."
-
-#~ msgid "_Password:"
-#~ msgstr "_Geslo:"
-
-#~ msgid "_Secondary Password:"
-#~ msgstr "_Drugotno geslo:"
-
-#~ msgid "Sh_ow passwords"
-#~ msgstr "_Pokaži gesla"
 
 #~ msgid "Certificate pass_word:"
 #~ msgstr "G_eslo potrdila:"
@@ -344,12 +355,6 @@ msgstr ""
 
 #~ msgid "Choose your private key..."
 #~ msgstr "Izbor osebnega ključa ..."
-
-#~ msgid "Saved"
-#~ msgstr "Shranjeno"
-
-#~ msgid "Always Ask"
-#~ msgstr "Vedno vprašaj"
 
 #~ msgid "Not Required"
 #~ msgstr "Ni zahtevano"

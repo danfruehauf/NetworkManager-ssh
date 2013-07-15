@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NetworkManager SSH plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-29 00:41+1000\n"
+"POT-Creation-Date: 2013-07-15 17:00+1000\n"
 "PO-Revision-Date: 2011-03-31 02:43+0300\n"
 "Last-Translator: Rūdofls Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
@@ -47,6 +47,19 @@ msgid ""
 "Is ssh-agent running?"
 msgstr ""
 
+#: ../auth-dialog/vpn-password-dialog.c:95
+msgid "_Password:"
+msgstr "_Parole:"
+
+#: ../auth-dialog/vpn-password-dialog.c:97
+msgid "_Secondary Password:"
+msgstr "_Sekundārā parole:"
+
+#: ../auth-dialog/vpn-password-dialog.c:240
+#, fuzzy
+msgid "Sh_ow passwords"
+msgstr "Rādīt paroli"
+
 #: ../properties/advanced-dialog.c:137
 msgid ""
 "You have chosen not to use 'root' as the remote username.\n"
@@ -63,15 +76,23 @@ msgstr "SSH"
 msgid "Compatible with the SSH server."
 msgstr "Savietojams ar SSH serveri."
 
-#: ../properties/nm-ssh.c:538
+#: ../properties/nm-ssh.c:457
+msgid "Saved"
+msgstr ""
+
+#: ../properties/nm-ssh.c:464
+msgid "Always Ask"
+msgstr ""
+
+#: ../properties/nm-ssh.c:620
 msgid "SSH Agent"
 msgstr ""
 
-#: ../properties/nm-ssh.c:551
+#: ../properties/nm-ssh.c:633
 msgid "Password"
 msgstr "Parole"
 
-#: ../properties/nm-ssh.c:564
+#: ../properties/nm-ssh.c:646
 #, fuzzy
 msgid "Key Authentication"
 msgstr "TLS autentifikācija"
@@ -250,7 +271,7 @@ msgstr ""
 msgid "Missing required SSH_AUTH_SOCK."
 msgstr ""
 
-#: ../src/nm-ssh-service.c:1124 ../src/nm-ssh-service.c:1585
+#: ../src/nm-ssh-service.c:1124 ../src/nm-ssh-service.c:1584
 #, fuzzy, c-format
 msgid "Unknown authentication type: %s."
 msgstr "Nezināms savienojuma tips '%s'."
@@ -303,7 +324,7 @@ msgstr "Trūkst vajadzīgā lokālā IP adrese statiskās atslēgas režīmam."
 msgid "Missing required IPv6 netmask."
 msgstr ""
 
-#: ../src/nm-ssh-service.c:1504 ../src/nm-ssh-service.c:1545
+#: ../src/nm-ssh-service.c:1504 ../src/nm-ssh-service.c:1546
 msgid ""
 "Could not process the request because the VPN connection settings were "
 "invalid."
@@ -311,24 +332,18 @@ msgstr ""
 "Neizdevās apstrādāt pieprasījumu, jo VPN savienojuma iestatījumi bija "
 "nederīgi."
 
-#: ../src/nm-ssh-service.c:1709
+#: ../src/nm-ssh-service.c:1708
 msgid "Don't quit when VPN connection terminates"
 msgstr "Neiziet, kad tiek pārtraukts VPN savienojums"
 
-#: ../src/nm-ssh-service.c:1710
+#: ../src/nm-ssh-service.c:1709
 msgid "Enable verbose debug logging (may expose passwords)"
 msgstr "Aktivēt detalizētu atkļūdošanas reģistrēšanu (var atklāt paroles)"
 
-#: ../src/nm-ssh-service.c:1726
+#: ../src/nm-ssh-service.c:1725
 #, fuzzy
 msgid "nm-ssh-service provides integrated SSH capability to NetworkManager."
 msgstr "nm-vpnc-service nodrošina NetworkManager integrētu SSH iespēju."
-
-#~ msgid "_Password:"
-#~ msgstr "_Parole:"
-
-#~ msgid "_Secondary Password:"
-#~ msgstr "_Sekundārā parole:"
 
 #~ msgid "_Username:"
 #~ msgstr "_Lietotājvārds:"
@@ -488,10 +503,6 @@ msgstr "nm-vpnc-service nodrošina NetworkManager integrētu SSH iespēju."
 #~| msgid "Remote IP Address:"
 #~ msgid "Server Address:"
 #~ msgstr "Servera adrese:"
-
-#~| msgid "Show passwords"
-#~ msgid "Show password"
-#~ msgstr "Rādīt paroli"
 
 #~ msgid "Static Key:"
 #~ msgstr "Statiskās atslēgas:"
