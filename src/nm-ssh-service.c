@@ -277,17 +277,6 @@ uint_to_gvalue (guint32 num)
 }
 
 static GValue *
-bool_to_gvalue (gboolean b)
-{
-	GValue *val;
-
-	val = g_slice_new0 (GValue);
-	g_value_init (val, G_TYPE_BOOLEAN);
-	g_value_set_boolean (val, b);
-	return val;
-}
-
-static GValue *
 addr6_to_gvalue (const char *str)
 {
 	struct in6_addr temp_addr;
@@ -310,6 +299,17 @@ addr6_to_gvalue (const char *str)
 }
 
 #endif
+
+static GValue *
+bool_to_gvalue (gboolean b)
+{
+	GValue *val;
+
+	val = g_slice_new0 (GValue);
+	g_value_init (val, G_TYPE_BOOLEAN);
+	g_value_set_boolean (val, b);
+	return val;
+}
 
 static GValue *
 str_to_gvalue (const char *str, gboolean try_convert)
