@@ -1042,7 +1042,11 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		/* Get password */
 		password = nm_setting_vpn_get_secret (s_vpn, NM_SSH_KEY_PASSWORD);
 		if (password && strlen(password)) {
-			add_ssh_arg (args, "-p");
+			add_ssh_arg (args, "-e");
+			envp[0] = (gpointer) g_strdup_printf ("%s=%s", NM_SSH_SSH_PASS_ENVIRONMENT_VAR, password);
+			envp[1] = NULL;
+			if (debug)
+				g_message ("Setting environment variable %s='%s'", NM_SSH_SSH_PASS_ENVIRONMENT_VAR, envp[0]);
 		} else {
 			/* No password specified? Exit! */
 			g_set_error (
@@ -1054,9 +1058,6 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 			free_ssh_args (args);
 			return FALSE;
 		}
-
-		/* Use password from config */
-		add_ssh_arg (args, password);
 
 		/* And add the ssh_binary */
 		add_ssh_arg (args, ssh_binary);
