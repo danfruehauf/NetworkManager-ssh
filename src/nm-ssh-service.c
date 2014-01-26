@@ -208,7 +208,7 @@ validate_one_property (const char *key, const char *value, gpointer user_data)
 			             key, prop.int_min, prop.int_max);
 			break;
 		case G_TYPE_BOOLEAN:
-			if (!strncmp (value, YES, strlen(YES)) || !strncmp (value, NO, strlen(NO)))
+			if (IS_YES(value) || !strncmp (value, NO, strlen(NO)))
 				return; /* valid */
 
 			g_set_error (info->error,
@@ -1132,7 +1132,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 
 	/* Dictate whether to replace the default route or not */
 	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_NO_DEFAULT_ROUTE);
-	if (tmp && !strncmp (tmp, YES, strlen(YES))) {
+	if (tmp && IS_YES(tmp)) {
 		priv->io_data->no_default_route = TRUE;
 	} else {
 		/* That's the default - to replace the default route
@@ -1168,7 +1168,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	/* Device, either tun or tap */
 	add_ssh_arg (args, "-o");
 	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_TAP_DEV);
-	if (tmp && !strncmp (tmp, YES, strlen(YES))) {
+	if (tmp && IS_YES(tmp)) {
 		add_ssh_arg (args, "Tunnel=ethernet");
 		g_strlcpy ((gchar *) &priv->io_data->dev_type, "tap", 4);
 	} else {
@@ -1302,7 +1302,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 
 	/* IPv6 enabled? */
 	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_IP_6);
-	if (tmp && !strncmp (tmp, YES, strlen(YES))) {
+	if (tmp && IS_YES(tmp)) {
 		/* IPv6 is enabled */
 		priv->io_data->ipv6 = TRUE;
 		

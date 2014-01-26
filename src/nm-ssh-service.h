@@ -39,6 +39,7 @@
 
 #define	YES "yes"
 #define	NO "no"
+#define IS_YES(x) (!strncmp (x, YES, strlen(YES)))
 
 #define	NM_SSH_KEY_REMOTE "remote"
 #define	NM_SSH_KEY_REMOTE_IP "remote-ip"

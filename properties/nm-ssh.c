@@ -573,7 +573,7 @@ init_plugin_ui (SshPluginUiWidget *self, NMConnection *connection, GError **erro
 	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "ipv6_checkbutton"));
 	g_assert (widget);
 	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_IP_6);
-	if (value && !strncmp(value, YES, strlen(YES))) {
+	if (value && IS_YES(value)) {
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), TRUE);
 	} else {
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), FALSE);
@@ -1229,7 +1229,7 @@ export (NMVpnPluginUiInterface *iface,
 		remote_username = g_strdup(NM_SSH_DEFAULT_REMOTE_USERNAME);
 
 	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_TAP_DEV);
-	if (value && !strncmp (value, YES, strlen(YES))) {
+	if (value && IS_YES(value)) {
 		device_type = g_strdup("tap");
 		tunnel_type = g_strdup("ethernet");
 	} else {
@@ -1238,12 +1238,12 @@ export (NMVpnPluginUiInterface *iface,
 	}
 
 	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_NO_DEFAULT_ROUTE);
-	if (value && !strncmp (value, YES, strlen(YES))) {
+	if (value && IS_YES(value)) {
 		no_default_route = TRUE;
 	}
 
 	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_IP_6);
-	if (value && !strncmp (value, YES, strlen(YES))) {
+	if (value && IS_YES(value)) {
 		ipv6 = TRUE;
 
 		value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_REMOTE_IP_6);

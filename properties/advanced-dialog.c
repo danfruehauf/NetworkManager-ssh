@@ -269,13 +269,13 @@ advanced_dialog_new (GHashTable *hash)
 	}
 
 	value = g_hash_table_lookup (hash, NM_SSH_KEY_TAP_DEV);
-	if (value && !strncmp (value, YES, strlen(YES))) {
+	if (value && IS_YES(value)) {
 		widget = GTK_WIDGET (gtk_builder_get_object (builder, "tap_checkbutton"));
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), TRUE);
 	}
 
 	value = g_hash_table_lookup (hash, NM_SSH_KEY_NO_DEFAULT_ROUTE);
-	if (value && !strncmp (value, YES, strlen(YES))) {
+	if (value && IS_YES(value)) {
 		widget = GTK_WIDGET (gtk_builder_get_object (builder, "no_default_route_checkbutton"));
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), TRUE);
 	}
