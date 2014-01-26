@@ -64,7 +64,7 @@ if (!strncmp (ITEMS[0], IMPORT_KEY, strlen (ITEMS[0]))) { \
 if (!strncmp (ITEMS[0], IMPORT_KEY, strlen (ITEMS[0]))) { \
 	if (!strncmp(ITEMS[1], VALUE, strlen(ITEMS[1]))) { \
 		g_message("%s=%s", NM_SSH_KEY, ITEMS[1]); \
-		nm_setting_vpn_add_data_item (VPN_CONN, NM_SSH_KEY, "yes"); \
+		nm_setting_vpn_add_data_item (VPN_CONN, NM_SSH_KEY, YES); \
 	} \
 	g_free (ITEMS); \
 	continue; \
@@ -353,7 +353,7 @@ init_auth_widget (GtkBuilder *builder,
 	g_return_if_fail (prefix != NULL);
 
 	/* Three major connection types here: ssh-agent, key file, password */
-	if (!strcmp (contype, NM_SSH_AUTH_TYPE_PASSWORD)) {
+	if (!strncmp (contype, NM_SSH_AUTH_TYPE_PASSWORD, strlen(NM_SSH_AUTH_TYPE_PASSWORD))) {
 		const gchar* password;
 		NMSettingSecretFlags pw_flags = NM_SETTING_SECRET_FLAG_NONE;
 		/* Show password button - by default don't show the password */
@@ -376,7 +376,7 @@ init_auth_widget (GtkBuilder *builder,
 			//g_object_set_data (G_OBJECT (widget2), "flags", GUINT_TO_POINTER (pw_flags));
 		}
 	}
-	else if (!strcmp (contype, NM_SSH_AUTH_TYPE_KEY)) {
+	else if (!strncmp (contype, NM_SSH_AUTH_TYPE_KEY, strlen(NM_SSH_AUTH_TYPE_KEY))) {
 		/* Get key filename and set it */
 		const gchar *filename;
 		widget = GTK_WIDGET (gtk_builder_get_object (builder, "auth_keyfile_filechooserbutton"));
@@ -389,7 +389,7 @@ init_auth_widget (GtkBuilder *builder,
 				gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (widget), filename);
 		}
 		g_signal_connect (G_OBJECT (widget), "selection-changed", G_CALLBACK (changed_cb), user_data);
-	} else if (!strcmp (contype, NM_SSH_AUTH_TYPE_SSH_AGENT)) {
+	} else if (!strncmp (contype, NM_SSH_AUTH_TYPE_SSH_AGENT, strlen(NM_SSH_AUTH_TYPE_SSH_AGENT))) {
 		/* ssh-agent is the default */
 		/* Not much to do here! No options for ssh-agent :) */
 	} else {
@@ -573,7 +573,7 @@ init_plugin_ui (SshPluginUiWidget *self, NMConnection *connection, GError **erro
 	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "ipv6_checkbutton"));
 	g_assert (widget);
 	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_IP_6);
-	if (value && !strcmp(value, "yes")) {
+	if (value && !strncmp(value, YES, strlen(YES))) {
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), TRUE);
 	} else {
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), FALSE);
@@ -603,9 +603,9 @@ init_plugin_ui (SshPluginUiWidget *self, NMConnection *connection, GError **erro
 	if (s_vpn) {
 		auth_type = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_AUTH_TYPE);
 		if (auth_type) {
-			if (strcmp (auth_type, NM_SSH_AUTH_TYPE_SSH_AGENT)
-			    && strcmp (auth_type, NM_SSH_AUTH_TYPE_PASSWORD)
-			    && strcmp (auth_type, NM_SSH_AUTH_TYPE_KEY))
+			if (strncmp (auth_type, NM_SSH_AUTH_TYPE_SSH_AGENT, strlen(NM_SSH_AUTH_TYPE_SSH_AGENT))
+			    && strncmp (auth_type, NM_SSH_AUTH_TYPE_PASSWORD, strlen(NM_SSH_AUTH_TYPE_PASSWORD))
+			    && strncmp (auth_type, NM_SSH_AUTH_TYPE_KEY, strlen(NM_SSH_AUTH_TYPE_KEY)))
 				auth_type = NM_SSH_AUTH_TYPE_SSH_AGENT;
 		} else
 			auth_type = NM_SSH_AUTH_TYPE_SSH_AGENT;
@@ -621,7 +621,7 @@ init_plugin_ui (SshPluginUiWidget *self, NMConnection *connection, GError **erro
 		COL_AUTH_PAGE, 0,
 		COL_AUTH_TYPE, NM_SSH_AUTH_TYPE_SSH_AGENT,
 		-1);
-	if ((active < 0) && !strcmp (auth_type, NM_SSH_AUTH_TYPE_SSH_AGENT))
+	if ((active < 0) && !strncmp (auth_type, NM_SSH_AUTH_TYPE_SSH_AGENT, strlen(NM_SSH_AUTH_TYPE_SSH_AGENT)))
 		active = 0;
 
 	/* Password auth widget */
@@ -634,7 +634,7 @@ init_plugin_ui (SshPluginUiWidget *self, NMConnection *connection, GError **erro
 		COL_AUTH_PAGE, 1,
 		COL_AUTH_TYPE, NM_SSH_AUTH_TYPE_PASSWORD,
 		-1);
-	if ((active < 0) && !strcmp (auth_type, NM_SSH_AUTH_TYPE_PASSWORD))
+	if ((active < 0) && !strncmp (auth_type, NM_SSH_AUTH_TYPE_PASSWORD, strlen(NM_SSH_AUTH_TYPE_PASSWORD)))
 		active = 1;
 
 	/* Key auth widget */
@@ -647,7 +647,7 @@ init_plugin_ui (SshPluginUiWidget *self, NMConnection *connection, GError **erro
 		COL_AUTH_PAGE, 2,
 		COL_AUTH_TYPE, NM_SSH_AUTH_TYPE_KEY,
 		-1);
-	if ((active < 0) && !strcmp (auth_type, NM_SSH_AUTH_TYPE_KEY))
+	if ((active < 0) && !strncmp (auth_type, NM_SSH_AUTH_TYPE_KEY, strlen(NM_SSH_AUTH_TYPE_KEY)))
 		active = 2;
 
 	gtk_combo_box_set_model (GTK_COMBO_BOX (widget), GTK_TREE_MODEL (store));
@@ -714,7 +714,7 @@ static gboolean auth_widget_update_connection (
 	/* Set auth type */
 	nm_setting_vpn_add_data_item (s_vpn, NM_SSH_KEY_AUTH_TYPE, auth_type);
 
-	if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_PASSWORD)) {
+	if (!strncmp (auth_type, NM_SSH_AUTH_TYPE_PASSWORD, strlen(NM_SSH_AUTH_TYPE_PASSWORD))) {
 		/* Password auth */
 		const gchar *password;
 		NMSettingSecretFlags pw_flags = NM_SETTING_SECRET_FLAG_NONE;
@@ -740,7 +740,7 @@ static gboolean auth_widget_update_connection (
 		/* Set new secret flags */
 		nm_setting_set_secret_flags (NM_SETTING (s_vpn), NM_SSH_KEY_PASSWORD, pw_flags, NULL);
 	}
-	else if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_KEY)) {
+	else if (!strncmp (auth_type, NM_SSH_AUTH_TYPE_KEY, strlen(NM_SSH_AUTH_TYPE_KEY))) {
 		/* Key auth */
 		gchar *filename;
 		widget = GTK_WIDGET (gtk_builder_get_object (builder, "auth_keyfile_filechooserbutton"));
@@ -750,7 +750,7 @@ static gboolean auth_widget_update_connection (
 		}
 		g_free (filename);
 	}
-	else if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_SSH_AGENT)) {
+	else if (!strncmp (auth_type, NM_SSH_AUTH_TYPE_SSH_AGENT, strlen(NM_SSH_AUTH_TYPE_SSH_AGENT))) {
 		/* SSH AGENT auth */
 		/* Nothing to set here, honestly!! It's here just for the sake of order */
 	}
@@ -808,7 +808,7 @@ update_connection (NMVpnPluginUiWidgetInterface *iface,
 	/* IPv6 enabled */
 	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "ipv6_checkbutton"));
 	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget))) {
-		nm_setting_vpn_add_data_item (s_vpn, NM_SSH_KEY_IP_6, "yes");
+		nm_setting_vpn_add_data_item (s_vpn, NM_SSH_KEY_IP_6, YES);
 
 		/* Remote IP IPv6 */
 		widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "remote_ip_6_entry"));
@@ -984,7 +984,7 @@ import (NMVpnPluginUiInterface *iface, const char *path, GError **error)
 		goto out;
 	}
 
-	if (strcmp (ext, ".sh")) {
+	if (strncmp (ext, ".sh", strlen(".sh"))) {
 		g_set_error (error,
 		             SSH_PLUGIN_UI_ERROR,
 		             SSH_PLUGIN_UI_ERROR_FILE_NOT_SSH,
@@ -1064,7 +1064,7 @@ import (NMVpnPluginUiInterface *iface, const char *path, GError **error)
 		PARSE_IMPORT_KEY_WITH_DEFAULT_VALUE_INT (MTU_KEY, NM_SSH_KEY_TUNNEL_MTU, items, s_vpn, NM_SSH_DEFAULT_MTU)
 		PARSE_IMPORT_KEY_WITH_DEFAULT_VALUE_INT (REMOTE_DEV_KEY, NM_SSH_KEY_REMOTE_DEV, items, s_vpn, NM_SSH_DEFAULT_REMOTE_DEV)
 		PARSE_IMPORT_KEY_BOOL (DEV_TYPE_KEY, NM_SSH_KEY_TAP_DEV, items, s_vpn, "tap")
-		PARSE_IMPORT_KEY_BOOL (NO_DEFAULT_ROUTE_KEY, NM_SSH_KEY_NO_DEFAULT_ROUTE, items, s_vpn, "yes")
+		PARSE_IMPORT_KEY_BOOL (NO_DEFAULT_ROUTE_KEY, NM_SSH_KEY_NO_DEFAULT_ROUTE, items, s_vpn, YES)
 
 		/* Some extra care required with extra_opts as we need to:
 		 * 1. Use the whole line (might contain = chars in it)
@@ -1184,13 +1184,13 @@ export (NMVpnPluginUiInterface *iface,
 	/* Auth type */
 	auth_type = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_AUTH_TYPE);
 	if (auth_type) {
-		if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_PASSWORD)) {
+		if (!strncmp (auth_type, NM_SSH_AUTH_TYPE_PASSWORD, strlen(NM_SSH_AUTH_TYPE_PASSWORD))) {
 			password_prompt_nr = 1;
 			preferred_authentication = g_strdup("password");
-		} else if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_KEY)) {
+		} else if (!strncmp (auth_type, NM_SSH_AUTH_TYPE_KEY, strlen(NM_SSH_AUTH_TYPE_KEY))) {
 			key_file = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_KEY_FILE);
 			preferred_authentication = g_strdup("publickey");
-		} else { // (!strcmp (auth_type, NM_SSH_AUTH_TYPE_SSH_AGENT)) {
+		} else { // (!strncmp (auth_type, NM_SSH_AUTH_TYPE_SSH_AGENT, strlen(NM_SSH_AUTH_TYPE_SSH_AGENT))) {
 			// Nothing to be done for ssh-agent, the wise choice...
 			preferred_authentication = g_strdup("publickey");
 		}
@@ -1229,7 +1229,7 @@ export (NMVpnPluginUiInterface *iface,
 		remote_username = g_strdup(NM_SSH_DEFAULT_REMOTE_USERNAME);
 
 	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_TAP_DEV);
-	if (value && !strcmp (value, "yes")) {
+	if (value && !strncmp (value, YES, strlen(YES))) {
 		device_type = g_strdup("tap");
 		tunnel_type = g_strdup("ethernet");
 	} else {
@@ -1238,12 +1238,12 @@ export (NMVpnPluginUiInterface *iface,
 	}
 
 	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_NO_DEFAULT_ROUTE);
-	if (value && !strcmp (value, "yes")) {
+	if (value && !strncmp (value, YES, strlen(YES))) {
 		no_default_route = TRUE;
 	}
 
 	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_IP_6);
-	if (value && !strcmp (value, "yes")) {
+	if (value && !strncmp (value, YES, strlen(YES))) {
 		ipv6 = TRUE;
 
 		value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_REMOTE_IP_6);
@@ -1293,7 +1293,7 @@ export (NMVpnPluginUiInterface *iface,
 	fprintf (f, "%s=%s\n", LOCAL_IP_KEY, local_ip);
 	fprintf (f, "%s=%s\n", NETMASK_KEY, netmask);
 	if (ipv6) {
-		fprintf (f, "%s=%s\n", IP_6_KEY, "yes");
+		fprintf (f, "%s=%s\n", IP_6_KEY, YES);
 		fprintf (f, "%s=%s\n", REMOTE_IP_6_KEY, remote_ip_6);
 		fprintf (f, "%s=%s\n", LOCAL_IP_6_KEY, local_ip_6);
 		fprintf (f, "%s=%s\n", NETMASK_6_KEY, netmask_6);
@@ -1307,7 +1307,7 @@ export (NMVpnPluginUiInterface *iface,
 	fprintf (f, "%s=%s\n", DEV_TYPE_KEY, device_type);
 	fprintf (f, "%s=%s\n", TUNNEL_TYPE_KEY, tunnel_type);
 	fprintf (f, "%s=%s\n\n", NO_DEFAULT_ROUTE_KEY,
-		no_default_route == TRUE ? "yes" : "no");
+		no_default_route == TRUE ? YES : NO);
 
 	/* Add a little of bash script to probe for a free tun/tap device */
 	fprintf (f, "for i in `seq 0 255`; do ! %s $DEV_TYPE$i >& /dev/null && LOCAL_DEV=$i && break; done", IFCONFIG);
