@@ -253,7 +253,7 @@ main (int argc, char *argv[])
 		return 1;
 	}
 
-	if (strcmp (vpn_service, NM_DBUS_SERVICE_SSH) != 0) {
+	if (strncmp (vpn_service, NM_DBUS_SERVICE_SSH, strlen(NM_DBUS_SERVICE_SSH)) != 0) {
 		fprintf (stderr, "This dialog only works with the '%s' service\n", NM_DBUS_SERVICE_SSH);
 		return 1;
 	}
@@ -264,9 +264,16 @@ main (int argc, char *argv[])
 		return 1;
 	}
 
-	/* Depending on auth type see if we need a password */
+	/* Avoid awkwardness if auth_type equals NULL, which can happen:
+	 * https://bugzilla.redhat.com/show_bug.cgi?id=1056810 */
 	auth_type = g_hash_table_lookup (data, NM_SSH_KEY_AUTH_TYPE);
-	if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_PASSWORD)) {
+	if (!auth_type) {
+		fprintf (stderr, "Authentication type not specified in configuration\n");
+		return 1;
+	}
+
+	/* Depending on auth type see if we need a password */
+	if (strncmp (auth_type, NM_SSH_AUTH_TYPE_PASSWORD, strlen(NM_SSH_AUTH_TYPE_PASSWORD)) != 0) {
 		/* FIXME one day... */
 		nm_vpn_plugin_utils_get_secret_flags (secrets, NM_SSH_KEY_PASSWORD, &pw_flags);
 		password_key = NM_SSH_KEY_PASSWORD;
@@ -275,9 +282,9 @@ main (int argc, char *argv[])
 			&password,
 			pw_flags))
 		return 1;
-	} else if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_KEY)) {
+	} else if (strncmp (auth_type, NM_SSH_AUTH_TYPE_KEY, strlen(NM_SSH_AUTH_TYPE_KEY)) != 0) {
 		/* FIXME ask for password if key is encrypted */
-	} else if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_SSH_AGENT)) {
+	} else if (strncmp (auth_type, NM_SSH_AUTH_TYPE_SSH_AGENT, strlen(NM_SSH_AUTH_TYPE_SSH_AGENT)) != 0) {
 		/* Probe the SSH agent socket */
 		password = g_strdup (getenv (SSH_AUTH_SOCK));
 		if (password && strlen (password)) {

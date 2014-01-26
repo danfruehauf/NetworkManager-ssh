@@ -174,14 +174,14 @@ validate_one_property (const char *key, const char *value, gpointer user_data)
 	info->have_items = TRUE;
 
 	/* 'name' is the setting name; always allowed but unused */
-	if (!strcmp (key, NM_SETTING_NAME))
+	if (!strncmp (key, NM_SETTING_NAME, strlen(NM_SETTING_NAME)))
 		return;
 
 	for (i = 0; info->table[i].name; i++) {
 		ValidProperty prop = info->table[i];
 		long int tmp;
 
-		if (strcmp (prop.name, key))
+		if (strncmp (prop.name, key, strlen(prop.name)))
 			continue;
 
 		switch (prop.type) {
@@ -208,7 +208,7 @@ validate_one_property (const char *key, const char *value, gpointer user_data)
 			             key, prop.int_min, prop.int_max);
 			break;
 		case G_TYPE_BOOLEAN:
-			if (!strcmp (value, "yes") || !strcmp (value, "no"))
+			if (IS_YES(value) || !strncmp (value, NO, strlen(NO)))
 				return; /* valid */
 
 			g_set_error (info->error,
@@ -1020,7 +1020,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	auth_type = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_AUTH_TYPE);
 
 	/* Handle different behaviour for different auth types */
-	if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_PASSWORD)) {
+	if (!strncmp (auth_type, NM_SSH_AUTH_TYPE_PASSWORD, strlen(NM_SSH_AUTH_TYPE_PASSWORD))) {
 		/* If the user wishes to supply a password */
 		const gchar *password = NULL;
 
@@ -1075,7 +1075,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		add_ssh_arg (args, "-o"); add_ssh_arg (args, "PreferredAuthentications=publickey");
 
 		/* Passing a id_dsa/id_rsa key as an argument to ssh */
-		if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_KEY)) {
+		if (!strncmp (auth_type, NM_SSH_AUTH_TYPE_KEY, strlen(NM_SSH_AUTH_TYPE_KEY))) {
 			tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_KEY_FILE);
 			if (tmp && strlen (tmp)) {
 				/* Specify key file */
@@ -1091,7 +1091,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 				free_ssh_args (args);
 				return FALSE;
 			}
-		} else if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_SSH_AGENT)) {
+		} else if (!strncmp (auth_type, NM_SSH_AUTH_TYPE_SSH_AGENT, strlen(NM_SSH_AUTH_TYPE_SSH_AGENT))) {
 			/* Last but not least, the original nm-ssh default behaviour which
 		 	* which is the sanest of all - SSH_AGENT socket */
 			/* FIXME add all the ssh agent logic here */
@@ -1132,7 +1132,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 
 	/* Dictate whether to replace the default route or not */
 	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_NO_DEFAULT_ROUTE);
-	if (tmp && !strcmp (tmp, "yes")) {
+	if (tmp && IS_YES(tmp)) {
 		priv->io_data->no_default_route = TRUE;
 	} else {
 		/* That's the default - to replace the default route
@@ -1168,7 +1168,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	/* Device, either tun or tap */
 	add_ssh_arg (args, "-o");
 	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_TAP_DEV);
-	if (tmp && !strcmp (tmp, "yes")) {
+	if (tmp && IS_YES(tmp)) {
 		add_ssh_arg (args, "Tunnel=ethernet");
 		g_strlcpy ((gchar *) &priv->io_data->dev_type, "tap", 4);
 	} else {
@@ -1302,7 +1302,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 
 	/* IPv6 enabled? */
 	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_IP_6);
-	if (tmp && !strcmp (tmp, "yes")) {
+	if (tmp && IS_YES(tmp)) {
 		/* IPv6 is enabled */
 		priv->io_data->ipv6 = TRUE;
 		
@@ -1553,7 +1553,7 @@ real_need_secrets (NMVPNPlugin *plugin,
 		auth_type = NM_SSH_AUTH_TYPE_SSH_AGENT;
 
 	/* Lets see if we need some passwords... */
-	if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_PASSWORD)) {
+	if (!strncmp (auth_type, NM_SSH_AUTH_TYPE_PASSWORD, strlen(NM_SSH_AUTH_TYPE_PASSWORD))) {
 		/* Password auth */
 		need_secrets = TRUE;
 		nm_setting_get_secret_flags (NM_SETTING (s_vpn), NM_SSH_KEY_PASSWORD, &flags, NULL);
@@ -1562,10 +1562,10 @@ real_need_secrets (NMVPNPlugin *plugin,
 		if (nm_setting_vpn_get_secret (NM_SETTING_VPN (s_vpn), NM_SSH_KEY_PASSWORD)) {
 			need_secrets = FALSE;
 		}
-	} else if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_KEY)) {
+	} else if (!strncmp (auth_type, NM_SSH_AUTH_TYPE_KEY, strlen(NM_SSH_AUTH_TYPE_KEY))) {
 		/* FIXME check if key file needs a password */
 		need_secrets = FALSE;
-	} else if (!strcmp (auth_type, NM_SSH_AUTH_TYPE_SSH_AGENT)) {
+	} else if (!strncmp (auth_type, NM_SSH_AUTH_TYPE_SSH_AGENT, strlen(NM_SSH_AUTH_TYPE_SSH_AGENT))) {
 		/* If we don't have our SSH_AUTH_SOCK set, we need it
 		 * SSH_AUTH_SOCK is passed as a secret only because it has to come
 		 * from a user's context and this plugin will run as root... */

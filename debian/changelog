@@ -1,3 +1,9 @@
+network-manager-ssh (0.9.2-0ubuntu2) precise; urgency=high
+
+  * Replaced strcmp with strncmp
+
+ -- Dan Fruehauf <malkodan@gmail.com>  Sun, 26 Jan 2014 00:00:00 +1000
+
 network-manager-ssh (0.9.1-0ubuntu2) precise; urgency=low
 
   * Fixed password saving
