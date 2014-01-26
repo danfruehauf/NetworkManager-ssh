@@ -264,8 +264,15 @@ main (int argc, char *argv[])
 		return 1;
 	}
 
-	/* Depending on auth type see if we need a password */
+	/* Avoid awkwardness if auth_type equals NULL, which can happen:
+	 * https://bugzilla.redhat.com/show_bug.cgi?id=1056810 */
 	auth_type = g_hash_table_lookup (data, NM_SSH_KEY_AUTH_TYPE);
+	if (!auth_type) {
+		fprintf (stderr, "Authentication type not specified in configuration\n");
+		return 1;
+	}
+
+	/* Depending on auth type see if we need a password */
 	if (strncmp (auth_type, NM_SSH_AUTH_TYPE_PASSWORD, strlen(NM_SSH_AUTH_TYPE_PASSWORD)) != 0) {
 		/* FIXME one day... */
 		nm_vpn_plugin_utils_get_secret_flags (secrets, NM_SSH_KEY_PASSWORD, &pw_flags);
