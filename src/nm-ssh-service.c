@@ -1442,8 +1442,19 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 
 	/* Write password to fd, so sshpass can pick it up */
 	if (!strncmp (auth_type, NM_SSH_AUTH_TYPE_PASSWORD, strlen(NM_SSH_AUTH_TYPE_PASSWORD))) {
-		write(sshpass_pipe[1], password, strlen(password));
-		write(sshpass_pipe[1], "\n", 1);
+		tmp_arg = g_strdup_printf ("%s\n", password);
+		if (write(sshpass_pipe[1], tmp_arg, strlen(tmp_arg)) != strlen(tmp_arg)) {
+			g_set_error (error,
+			             NM_VPN_PLUGIN_ERROR,
+			             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
+			             "%s",
+			             _("Could not pass password to sshpass."));
+			free_ssh_args (args);
+			g_free(tmp_arg);
+			return FALSE;
+		}
+
+		g_free(tmp_arg);
 		close(sshpass_pipe[0]);
 		close(sshpass_pipe[1]);
 	}
