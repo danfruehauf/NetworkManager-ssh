@@ -273,7 +273,7 @@ main (int argc, char *argv[])
 	}
 
 	/* Depending on auth type see if we need a password */
-	if (strncmp (auth_type, NM_SSH_AUTH_TYPE_PASSWORD, strlen(NM_SSH_AUTH_TYPE_PASSWORD)) != 0) {
+	if (strncmp (auth_type, NM_SSH_AUTH_TYPE_PASSWORD, strlen(NM_SSH_AUTH_TYPE_PASSWORD)) == 0) {
 		/* FIXME one day... */
 		nm_vpn_plugin_utils_get_secret_flags (secrets, NM_SSH_KEY_PASSWORD, &pw_flags);
 		password_key = NM_SSH_KEY_PASSWORD;
@@ -282,9 +282,9 @@ main (int argc, char *argv[])
 			&password,
 			pw_flags))
 		return 1;
-	} else if (strncmp (auth_type, NM_SSH_AUTH_TYPE_KEY, strlen(NM_SSH_AUTH_TYPE_KEY)) != 0) {
+	} else if (strncmp (auth_type, NM_SSH_AUTH_TYPE_KEY, strlen(NM_SSH_AUTH_TYPE_KEY)) == 0) {
 		/* FIXME ask for password if key is encrypted */
-	} else if (strncmp (auth_type, NM_SSH_AUTH_TYPE_SSH_AGENT, strlen(NM_SSH_AUTH_TYPE_SSH_AGENT)) != 0) {
+	} else if (strncmp (auth_type, NM_SSH_AUTH_TYPE_SSH_AGENT, strlen(NM_SSH_AUTH_TYPE_SSH_AGENT)) == 0) {
 		/* Probe the SSH agent socket */
 		password = g_strdup (getenv (SSH_AUTH_SOCK));
 		if (password && strlen (password)) {
