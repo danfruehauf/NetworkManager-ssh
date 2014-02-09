@@ -999,6 +999,8 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	GSource *ssh_watch;
 	GPid pid;
 	gint ssh_stdin_fd, ssh_stdout_fd, ssh_stderr_fd;
+	int sshpass_pipe[2];
+	const gchar *password = NULL;
 
 	/* Find ssh */
 	ssh_binary = nm_find_ssh ();
@@ -1020,9 +1022,9 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	auth_type = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_AUTH_TYPE);
 
 	/* Handle different behaviour for different auth types */
+	envp[0] = NULL;
 	if (!strncmp (auth_type, NM_SSH_AUTH_TYPE_PASSWORD, strlen(NM_SSH_AUTH_TYPE_PASSWORD))) {
 		/* If the user wishes to supply a password */
-		const gchar *password = NULL;
 
 		/* Find sshpass, we'll use it to wrap ssh and provide a password from
 	 	* the command line */
@@ -1042,11 +1044,20 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		/* Get password */
 		password = nm_setting_vpn_get_secret (s_vpn, NM_SSH_KEY_PASSWORD);
 		if (password && strlen(password)) {
-			add_ssh_arg (args, "-e");
-			envp[0] = (gpointer) g_strdup_printf ("%s=%s", NM_SSH_SSH_PASS_ENVIRONMENT_VAR, password);
-			envp[1] = NULL;
-			if (debug)
-				g_message ("Setting environment variable %s='%s'", NM_SSH_SSH_PASS_ENVIRONMENT_VAR, envp[0]);
+			if (pipe(sshpass_pipe))
+			{
+				g_set_error (
+					error,
+					NM_VPN_PLUGIN_ERROR,
+					NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
+					"%s",
+					_("Failed creating pipe."));
+				free_ssh_args (args);
+				return FALSE;
+			}
+			tmp = (gpointer) g_strdup_printf ("-d%d", sshpass_pipe[0]);
+			add_ssh_arg (args, tmp);
+			g_free((gpointer) tmp);
 		} else {
 			/* No password specified? Exit! */
 			g_set_error (
@@ -1421,13 +1432,21 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 
 	/* Spawn with pipes */
 	if (!g_spawn_async_with_pipes (NULL, (char **) args->pdata, envp,
-						G_SPAWN_DO_NOT_REAP_CHILD, NULL, NULL, &pid,
+						G_SPAWN_DO_NOT_REAP_CHILD | G_SPAWN_LEAVE_DESCRIPTORS_OPEN, NULL, NULL, &pid,
 						&ssh_stdin_fd, &ssh_stdout_fd, &ssh_stderr_fd,
 						error)) {
 		free_ssh_args (args);
 		return FALSE;
 	}
 	free_ssh_args (args);
+
+	/* Write password to fd, so sshpass can pick it up */
+	if (!strncmp (auth_type, NM_SSH_AUTH_TYPE_PASSWORD, strlen(NM_SSH_AUTH_TYPE_PASSWORD))) {
+		write(sshpass_pipe[1], password, strlen(password));
+		write(sshpass_pipe[1], "\n", 1);
+		close(sshpass_pipe[0]);
+		close(sshpass_pipe[1]);
+	}
 
 	g_message ("ssh started with pid %d", pid);
 
