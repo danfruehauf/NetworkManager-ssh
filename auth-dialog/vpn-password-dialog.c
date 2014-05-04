@@ -196,8 +196,8 @@ vpn_password_dialog_new (const char *title,
 	gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
 	gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-	                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-	                        GTK_STOCK_OK, GTK_RESPONSE_OK,
+	                        _("_Cancel"), GTK_RESPONSE_CANCEL,
+	                        _("_OK"), GTK_RESPONSE_OK,
 	                        NULL);
 	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
@@ -267,7 +267,7 @@ vpn_password_dialog_new (const char *title,
 	hbox = gtk_hbox_new (FALSE, 12);
 #endif
  	gtk_container_set_border_width (GTK_CONTAINER (hbox), 5);
-	dialog_icon = gtk_image_new_from_stock (GTK_STOCK_DIALOG_AUTHENTICATION, GTK_ICON_SIZE_DIALOG);
+	dialog_icon = gtk_image_new_from_icon_name (_("dialog-password"), GTK_ICON_SIZE_DIALOG);
 	gtk_misc_set_alignment (GTK_MISC (dialog_icon), 0.5, 0.0);
 	gtk_box_pack_start (GTK_BOX (hbox), dialog_icon, FALSE, FALSE, 0);
 
