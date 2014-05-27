@@ -267,7 +267,7 @@ vpn_password_dialog_new (const char *title,
 	hbox = gtk_hbox_new (FALSE, 12);
 #endif
  	gtk_container_set_border_width (GTK_CONTAINER (hbox), 5);
-	dialog_icon = gtk_image_new_from_icon_name (_("dialog-password"), GTK_ICON_SIZE_DIALOG);
+	dialog_icon = gtk_image_new_from_icon_name ("dialog-password", GTK_ICON_SIZE_DIALOG);
 	gtk_misc_set_alignment (GTK_MISC (dialog_icon), 0.5, 0.0);
 	gtk_box_pack_start (GTK_BOX (hbox), dialog_icon, FALSE, FALSE, 0);
 
