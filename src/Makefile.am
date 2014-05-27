@@ -11,6 +11,7 @@ AM_CPPFLAGS = \
 	-DLIBEXECDIR=\""$(libexecdir)"\" \
 	-DLOCALSTATEDIR=\""$(localstatedir)"\" \
 	-DDATADIR=\"$(datadir)\" \
+	-DNM_SSH_LOCALEDIR=\"$(datadir)/locale\" \
 	-I$(top_srcdir)
 
 libexec_PROGRAMS = nm-ssh-service
