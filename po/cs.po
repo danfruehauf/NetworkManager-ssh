@@ -5,14 +5,15 @@
 # Jakub Friedl <jfriedl@suse.cz>, 2006.
 # Jiří Eischmann <jiri@eischmann.cz>, 2008.
 # Zdeněk Hataš <zdenek.hatas@gmail.com>, 2009, 2010, 2011.
+# Jiří Klimeš <jklimes@redhat.com>, 2014.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: network-manager-ssh\n"
+"Project-Id-Version: NetworkManager-ssh\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-15 17:00+1000\n"
-"PO-Revision-Date: 2011-04-02 17:05+0100\n"
-"Last-Translator: Zdeněk Hataš <zdenek.hatas@gmail.com>\n"
+"POT-Creation-Date: 2014-05-27 12:28+0200\n"
+"PO-Revision-Date: 2014-05-27 12:41+0200\n"
+"Last-Translator: Jiří Klimeš <jklimes@redhat.com>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -33,19 +34,22 @@ msgstr "Pro přístup do VPN „%s“ se musíte autentizovat."
 
 #: ../auth-dialog/main.c:150 ../auth-dialog/main.c:170
 msgid "Authenticate VPN"
-msgstr "Ověřování VPN"
+msgstr "Ověření identity uživatele VPN"
 
 #: ../auth-dialog/main.c:152 ../properties/nm-ssh-dialog.ui.h:27
 msgid "Password:"
 msgstr "Heslo:"
 
-#: ../auth-dialog/main.c:291
+#: ../auth-dialog/main.c:298
 #, c-format
 msgid ""
 "Couldn't find '%s' environment variable.\n"
 "\n"
 "Is ssh-agent running?"
 msgstr ""
+"Nelze nalézt proměnnou prostředí „%s“.\n"
+"\n"
+"Je ssh-agent spuštěn?"
 
 #: ../auth-dialog/vpn-password-dialog.c:95
 msgid "_Password:"
@@ -55,10 +59,17 @@ msgstr "_Heslo:"
 msgid "_Secondary Password:"
 msgstr "_Sekundární heslo:"
 
+#: ../auth-dialog/vpn-password-dialog.c:199
+msgid "_Cancel"
+msgstr "_Zrušit"
+
+#: ../auth-dialog/vpn-password-dialog.c:200
+msgid "_OK"
+msgstr "_OK"
+
 #: ../auth-dialog/vpn-password-dialog.c:240
-#, fuzzy
 msgid "Sh_ow passwords"
-msgstr "Zobrazit heslo"
+msgstr "Zo_brazit hesla"
 
 #: ../properties/advanced-dialog.c:137
 msgid ""
@@ -67,6 +78,10 @@ msgid ""
 "Please make sure the user you specify is allowed to open tun/tap devices on "
 "the remote host."
 msgstr ""
+"Rozhodli jste se nepoužít uživatele 'root' pro vzdálený počítač.\n"
+"\n"
+"Ujistěte se, že uživatel, kterého používáte má oprávnění otevírat tun/tap zařízení na"
+"vzdáleném počítači."
 
 #: ../properties/nm-ssh.c:49
 msgid "SSH"
@@ -78,24 +93,23 @@ msgstr "Kompatibilní s SSH serverem."
 
 #: ../properties/nm-ssh.c:457
 msgid "Saved"
-msgstr ""
+msgstr "Uložit"
 
 #: ../properties/nm-ssh.c:464
 msgid "Always Ask"
-msgstr ""
+msgstr "Vždy se ptát"
 
 #: ../properties/nm-ssh.c:620
 msgid "SSH Agent"
-msgstr ""
+msgstr "SSH Agent"
 
 #: ../properties/nm-ssh.c:633
 msgid "Password"
 msgstr "Heslo"
 
 #: ../properties/nm-ssh.c:646
-#, fuzzy
 msgid "Key Authentication"
-msgstr "Autentizace TLS"
+msgstr "Klíč"
 
 #: ../properties/nm-ssh-dialog.ui.h:1
 msgid " "
@@ -110,36 +124,32 @@ msgid "SSH Advanced Options"
 msgstr "Pokročilé volby SSH"
 
 #: ../properties/nm-ssh-dialog.ui.h:4
-#, fuzzy
 msgid "Use custom gateway port:"
-msgstr "P_oužít vlastní port brány:"
+msgstr "Použít vlastní port _brány:"
 
 #: ../properties/nm-ssh-dialog.ui.h:5
-#, fuzzy
 msgid "Use custom tunnel Maximum Transmission Unit (MTU):"
-msgstr "Použí_t vlastní maximální velikost přenosové jednotky (MTU):"
+msgstr "Použít vlastní maximální velikost přenosové jednotky (_MTU):"
 
 #: ../properties/nm-ssh-dialog.ui.h:6
 msgid "Extra SSH options:"
-msgstr ""
+msgstr "_Dodatečné volby SSH:"
 
 #: ../properties/nm-ssh-dialog.ui.h:7
 msgid "Remote device number:"
-msgstr ""
+msgstr "Index vzdáleného _zařízení:"
 
 #: ../properties/nm-ssh-dialog.ui.h:8
-#, fuzzy
 msgid "Use a TAP device"
-msgstr "Použít TA_P zařízení"
+msgstr "Použít _TAP zařízení"
 
 #: ../properties/nm-ssh-dialog.ui.h:9
-#, fuzzy
 msgid "Remote username:"
-msgstr "Uživatelské jméno proxy:"
+msgstr "Vzdálené _uživatelské jméno:"
 
 #: ../properties/nm-ssh-dialog.ui.h:10
 msgid "Do not replace default route"
-msgstr ""
+msgstr "_Nenahrazovat implicitní cestu směrování"
 
 #: ../properties/nm-ssh-dialog.ui.h:11
 msgid "General"
@@ -150,13 +160,12 @@ msgid "<b>General</b>"
 msgstr "<b>Obecné</b>"
 
 #: ../properties/nm-ssh-dialog.ui.h:13
-#, fuzzy
 msgid "Gateway:"
 msgstr "_Brána:"
 
 #: ../properties/nm-ssh-dialog.ui.h:14
 msgid "<b>Network Settings</b>"
-msgstr ""
+msgstr "<b>Síťová nastavení</b>"
 
 #: ../properties/nm-ssh-dialog.ui.h:15
 msgid "Remote IP Address:"
@@ -168,32 +177,29 @@ msgstr "Místní adresa IP:"
 
 #: ../properties/nm-ssh-dialog.ui.h:17
 msgid "Netmask:"
-msgstr ""
+msgstr "Síťová maska:"
 
 #: ../properties/nm-ssh-dialog.ui.h:18
 msgid "<b>IPv6 Network Settings</b>"
-msgstr ""
+msgstr "<b>Síťová nastavení pro IPv6</b>"
 
 #: ../properties/nm-ssh-dialog.ui.h:19
 msgid "Use IPv6"
-msgstr ""
+msgstr "Použít IPv6"
 
 #: ../properties/nm-ssh-dialog.ui.h:20
-#, fuzzy
 msgid "Remote IP Address (IPv6):"
-msgstr "Vzdálená adresa IP:"
+msgstr "Vzdálená adresa IPv6:"
 
 #: ../properties/nm-ssh-dialog.ui.h:21
-#, fuzzy
 msgid "Local IP Address (IPv6):"
-msgstr "Místní adresa IP:"
+msgstr "Místní adresa IPv6:"
 
 #: ../properties/nm-ssh-dialog.ui.h:22
 msgid "Prefix (IPv6):"
-msgstr ""
+msgstr "Prefix (IPv6):"
 
 #: ../properties/nm-ssh-dialog.ui.h:23
-#, fuzzy
 msgid "Advanced..."
 msgstr "P_okročilé…"
 
@@ -206,17 +212,14 @@ msgid "Type:"
 msgstr "Typ:"
 
 #: ../properties/nm-ssh-dialog.ui.h:26
-#, fuzzy
 msgid "Select an authentication mode."
-msgstr "Autentizace TLS"
+msgstr "Zvolte mód autentizace."
 
 #: ../properties/nm-ssh-dialog.ui.h:28
-#, fuzzy
 msgid "Show Passwords"
 msgstr "Zobrazit hesla"
 
 #: ../properties/nm-ssh-dialog.ui.h:29
-#, fuzzy
 msgid "SSH Key File:"
 msgstr "Soubor klíče:"
 
@@ -249,302 +252,98 @@ msgstr "volba „%s“ není platná nebo podporovaná"
 msgid "No VPN configuration options."
 msgstr "Žádné volby nastavení VPN."
 
-#: ../src/nm-ssh-service.c:1010
+#: ../src/nm-ssh-service.c:1012
 msgid "Could not find the ssh binary."
 msgstr "Nelze nalézt program ssh."
 
-#: ../src/nm-ssh-service.c:1035
-#, fuzzy
+#: ../src/nm-ssh-service.c:1037
 msgid "Could not find the sshpass binary."
-msgstr "Nelze nalézt program ssh."
+msgstr "Nelze nalézt program sshpass."
 
-#: ../src/nm-ssh-service.c:1053
-#, fuzzy
+#: ../src/nm-ssh-service.c:1054
+msgid "Failed creating pipe."
+msgstr "Nelze vytvořit rouru."
+
+#: ../src/nm-ssh-service.c:1068
 msgid "No password specified."
-msgstr "Zobrazit hesla"
+msgstr "Heslo nebylo zadáno."
 
-#: ../src/nm-ssh-service.c:1090
+#: ../src/nm-ssh-service.c:1102
 msgid "Key authentication selected, but no key file specified."
-msgstr ""
+msgstr "Vybrána autentizace klíčem, ale nebyl zadán žádný soubor klíče."
 
-#: ../src/nm-ssh-service.c:1110
+#: ../src/nm-ssh-service.c:1122
 msgid "Missing required SSH_AUTH_SOCK."
-msgstr ""
+msgstr "Chybějící SSH_AUTH_SOCK, který je vyžadován."
 
-#: ../src/nm-ssh-service.c:1124 ../src/nm-ssh-service.c:1584
-#, fuzzy, c-format
+#: ../src/nm-ssh-service.c:1136 ../src/nm-ssh-service.c:1615
+#, c-format
 msgid "Unknown authentication type: %s."
-msgstr "Neznámý typ připojení „%s“."
+msgstr "Neznámý typ autentizace „%s“."
 
-#: ../src/nm-ssh-service.c:1194
+#: ../src/nm-ssh-service.c:1206
 #, c-format
 msgid "Please set remote address."
-msgstr ""
+msgstr "Zadejte prosím vzdálenou adresu."
 
-#: ../src/nm-ssh-service.c:1210
+#: ../src/nm-ssh-service.c:1222
 #, c-format
 msgid "Invalid port number '%s'."
 msgstr "Neplatné číslo portu „%s“."
 
-#: ../src/nm-ssh-service.c:1229
+#: ../src/nm-ssh-service.c:1241
 #, c-format
 msgid "Invalid TUN MTU size '%s'."
 msgstr "Neplatná velikost TUN MTU „%s“."
 
-#: ../src/nm-ssh-service.c:1248
-#, fuzzy, c-format
+#: ../src/nm-ssh-service.c:1260
+#, c-format
 msgid "Invalid TUN/TAP device number '%s'."
-msgstr "Neplatné číslo portu „%s“."
+msgstr "Neplatný index zařízení TUN/TAP"
 
-#: ../src/nm-ssh-service.c:1267
-#, fuzzy
+#: ../src/nm-ssh-service.c:1279
 msgid "Missing required remote IP address."
-msgstr "Chybí požadovaná vzdálená adresa IP pro mód se statickým klíčem."
+msgstr "Chybí požadovaná vzdálená adresa IP."
 
-#: ../src/nm-ssh-service.c:1281
-#, fuzzy
+#: ../src/nm-ssh-service.c:1293
 msgid "Missing required local IP address."
-msgstr "Chybí požadovaná místní adresa IP pro mód se statickým klíčem."
+msgstr "Chybí požadovaná místní adresa IP."
 
-#: ../src/nm-ssh-service.c:1297
+#: ../src/nm-ssh-service.c:1309
 msgid "Missing required netmask."
-msgstr ""
+msgstr "Chybí požadovaná maska sítě."
 
-#: ../src/nm-ssh-service.c:1317
-#, fuzzy
+#: ../src/nm-ssh-service.c:1329
 msgid "Missing required IPv6 remote IP address."
-msgstr "Chybí požadovaná vzdálená adresa IP pro mód se statickým klíčem."
+msgstr "Chybí požadovaná vzdálená adresa IPv6."
 
-#: ../src/nm-ssh-service.c:1331
-#, fuzzy
+#: ../src/nm-ssh-service.c:1343
 msgid "Missing required IPv6 local IP address."
-msgstr "Chybí požadovaná místní adresa IP pro mód se statickým klíčem."
+msgstr "Chybí požadovaná místní adresa IPv6."
 
-#: ../src/nm-ssh-service.c:1345
+#: ../src/nm-ssh-service.c:1357
 msgid "Missing required IPv6 netmask."
-msgstr ""
+msgstr "Chybí požadovaná maska sítě."
 
-#: ../src/nm-ssh-service.c:1504 ../src/nm-ssh-service.c:1546
+#: ../src/nm-ssh-service.c:1451
+msgid "Could not pass password to sshpass."
+msgstr "Nelze předat heslo do programu sshpass."
+
+#: ../src/nm-ssh-service.c:1535 ../src/nm-ssh-service.c:1577
 msgid ""
 "Could not process the request because the VPN connection settings were "
 "invalid."
 msgstr "Nelze zpracovat požadavek, protože nastavení VPN nejsou platná."
 
-#: ../src/nm-ssh-service.c:1708
+#: ../src/nm-ssh-service.c:1739
 msgid "Don't quit when VPN connection terminates"
-msgstr "Nevypínat, když se spojení VPN ukončuje"
+msgstr "Neukončovat při uzavření spojení VPN"
 
-#: ../src/nm-ssh-service.c:1709
+#: ../src/nm-ssh-service.c:1740
 msgid "Enable verbose debug logging (may expose passwords)"
 msgstr "Povolit podrobný ladicí výpis (může prozradit hesla)"
 
-#: ../src/nm-ssh-service.c:1725
-#, fuzzy
+#: ../src/nm-ssh-service.c:1763
 msgid "nm-ssh-service provides integrated SSH capability to NetworkManager."
-msgstr ""
-"nm-vpnc-service poskytuje podporu SSH integrovanou do aplikace "
-"NetworkManager."
+msgstr "nm-ssh-service umožňuje NetworkManageru poskytovat služby pro připojování k SSH."
 
-#~ msgid "_Username:"
-#~ msgstr "_Uživ. jméno:"
-
-#~ msgid "_Domain:"
-#~ msgstr "_Doména:"
-
-#~ msgid "Connect _anonymously"
-#~ msgstr "Připojit _anonymně"
-
-#~ msgid "Connect as _user:"
-#~ msgstr "Připojit jako _uživatel:"
-
-#~ msgid "_Remember password for this session"
-#~ msgstr "_Zapamatovat heslo pro toto sezení"
-
-#~ msgid "_Save password in keyring"
-#~ msgstr "_Uložit heslo do klíčenky"
-
-#~ msgid "Certificate pass_word:"
-#~ msgstr "Heslo _certifikátu:"
-
-#~ msgid "Certificate password:"
-#~ msgstr "Heslo certifikátu:"
-
-#~ msgid "Choose a Certificate Authority certificate..."
-#~ msgstr "Zvolit certifikát certifikační autority…"
-
-#~ msgid "Choose your personal certificate..."
-#~ msgstr "Zvolit svůj osobní certifikát…"
-
-#~ msgid "Choose your private key..."
-#~ msgstr "Zvolit svůj osobní klíč…"
-
-#~ msgid "Choose an SSH static key..."
-#~ msgstr "Zvolit statický klíč SSH…"
-
-#~ msgid "None"
-#~ msgstr "Žádný"
-
-#~ msgid "PEM or PKCS#12 certificates (*.pem, *.crt, *.key, *.cer, *.p12)"
-#~ msgstr "Certifikáty PEM nebo PKCS#12 (*.pem, *.crt, *.key, *.cer, *.p12)"
-
-#~ msgid "PEM certificates (*.pem, *.crt, *.key, *.cer)"
-#~ msgstr "Certifikáty PEM (*.pem, *.crt, *.key, *.cer)"
-
-#~ msgid "SSH Static Keys (*.key)"
-#~ msgstr "Statické klíče SSH (*.key)"
-
-#~ msgid "Default"
-#~ msgstr "Výchozí"
-
-#~ msgid "MD-5"
-#~ msgstr "MD-5"
-
-#~ msgid "SHA-1"
-#~ msgstr "SHA-1"
-
-#~ msgid "SHA-224"
-#~ msgstr "SHA-224"
-
-#~ msgid "SHA-256"
-#~ msgstr "SHA-256"
-
-#~ msgid "SHA-384"
-#~ msgstr "SHA-384"
-
-#~ msgid "SHA-512"
-#~ msgstr "SHA-512"
-
-#~ msgid "RIPEMD-160"
-#~ msgstr "RIPEMD-160"
-
-#~ msgid "HTTP"
-#~ msgstr "HTTP"
-
-#~ msgid "SOCKS"
-#~ msgstr "SOCKS"
-
-#~ msgid "Certificates (TLS)"
-#~ msgstr "Certifikáty (TLS)"
-
-#~ msgid "Password with Certificates (TLS)"
-#~ msgstr "Heslo s certifikáty (TLS)"
-
-#~ msgid "Static Key"
-#~ msgstr "Statický klíč"
-
-#~ msgid ""
-#~ "<i>Connect only to servers whose certificate matches the given subject.\n"
-#~ "Example: /CN=myvpn.company.com</i>"
-#~ msgstr ""
-#~ "<i>Připojit pouze k serverům, jejichž certifikát odpovídá danému "
-#~ "subjektu.\n"
-#~ "Příklad: /CN=mojevpn.firma.cz</i>"
-
-#~ msgid ""
-#~ "<i>If key direction is used, it must be the opposite of that used on the "
-#~ "VPN peer.  For example, if the peer uses '1', this connection must use "
-#~ "'0'.  If you are unsure what value to use, contact your system "
-#~ "administrator.</i>"
-#~ msgstr ""
-#~ "<i>Pokud se používá směr klíče, musí být opačný k protějšku VPN. "
-#~ "Například, když protějšek používá „1“, toto připojení musí použít „0“. "
-#~ "Pokud si nejste jisti, jakou hodnotu použít, kontaktujte správce svého "
-#~ "systému.</i>"
-
-#~ msgid ""
-#~ "<i>Select this option if your organization requires the use of a proxy "
-#~ "server to access the Internet.</i>"
-#~ msgstr ""
-#~ "<i>Zvolte tuto možnost, pokud vaše organizace používá pro přístup do "
-#~ "Internetu server proxy.</i>"
-
-#~ msgid "CA Certificate:"
-#~ msgstr "Certifikát CA:"
-
-#~ msgid "Cipher:"
-#~ msgstr "Šifra:"
-
-#~ msgid "HMAC Authentication:"
-#~ msgstr "Autentizace HMAC:"
-
-#~ msgid "Key Direction:"
-#~ msgstr "Směr klíče:"
-
-#~ msgid "Port:"
-#~ msgstr "Port:"
-
-#~ msgid "Private Key Password:"
-#~ msgstr "Heslo soukromého klíče:"
-
-#~ msgid "Private Key:"
-#~ msgstr "Soukromý klíč:"
-
-#~ msgid "Proxies"
-#~ msgstr "Servery proxy"
-
-#~ msgid "Proxy Password:"
-#~ msgstr "Heslo proxy:"
-
-#~ msgid "Proxy Type:"
-#~ msgstr "Typ proxy:"
-
-#~ msgid "Restrict tunnel TCP Maximum Segment Size (MSS)"
-#~ msgstr "Omezit maximální velikost segmentu TCP u tunelu (MSS)"
-
-#~ msgid "Retry indefinitely when errors occur"
-#~ msgstr "Pokud nastane chyba, opakovat"
-
-#~ msgid "Security"
-#~ msgstr "Zabezpečení"
-
-#~ msgid "Server Address:"
-#~ msgstr "Adresa serveru:"
-
-#~ msgid "Static Key:"
-#~ msgstr "Statický klíč:"
-
-#~ msgid "Subject Match:"
-#~ msgstr "Subjekt odpovídá:"
-
-#~ msgid "Use L_ZO data compression"
-#~ msgstr "Použít komprimaci L_ZO"
-
-#~ msgid "Use a _TCP connection"
-#~ msgstr "Použít spojení _TCP"
-
-#~ msgid "Use additional TLS authentication"
-#~ msgstr "Použít dodatečnou autentizaci TLS"
-
-#~ msgid "Use custom UDP _fragment size:"
-#~ msgstr "Použít vlastní velikost UDP _fragmentu:"
-
-#~ msgid "Use custom _renegotiation interval:"
-#~ msgstr "Použít vlastní interval opětovného _připojení:"
-
-#~ msgid "User Certificate:"
-#~ msgstr "Uživatelský certifikát:"
-
-#~ msgid "User name:"
-#~ msgstr "Uživatelské jméno:"
-
-#~ msgid "No VPN secrets!"
-#~ msgstr "Žádná hesla VPN!"
-
-#~ msgid "Invalid HMAC auth."
-#~ msgstr "Neplatná autentizace HMAC."
-
-#~ msgid "Invalid connection type."
-#~ msgstr "Neplatný typ připojení."
-
-#~ msgid "Invalid proxy type '%s'."
-#~ msgstr "Neplatný typ proxy „%s“."
-
-#~ msgid "Invalid reneg seconds '%s'."
-#~ msgstr "Neplatná doba opětovného vyjednávání „%s“."
-
-#~ msgid "Invalid fragment size '%s'."
-#~ msgstr "Neplatná velikost fragmentu „%s“."
-
-#~ msgid "Could not process the request because no username was provided."
-#~ msgstr ""
-#~ "Nelze zpracovat požadavek, protože nebylo poskytnuto uživatelské jméno."
