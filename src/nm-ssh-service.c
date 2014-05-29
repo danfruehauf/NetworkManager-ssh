@@ -47,6 +47,7 @@
 #include <ctype.h>
 #include <errno.h>
 #include <pwd.h>
+#include <locale.h>
 
 #include <NetworkManager.h>
 #include <NetworkManagerVPN.h>
