@@ -1,7 +1,6 @@
 libexec_PROGRAMS = nm-ssh-auth-dialog
 
 nm_ssh_auth_dialog_CPPFLAGS =			\
-	$(GTHREAD_CFLAGS)			\
 	$(GTK_CFLAGS)				\
 	$(NM_CFLAGS)		\
 	$(LIBSECRET_CFLAGS) \
