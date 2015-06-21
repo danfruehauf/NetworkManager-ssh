@@ -23,7 +23,6 @@
  */
 
 #include <config.h>
-#include <gnome-keyring-memory.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 

@@ -4,7 +4,7 @@ nm_ssh_auth_dialog_CPPFLAGS =			\
 	$(GTHREAD_CFLAGS)			\
 	$(GTK_CFLAGS)				\
 	$(NM_CFLAGS)		\
-	$(GNOMEKEYRING_CFLAGS) \
+	$(LIBSECRET_CFLAGS) \
 	-I$(top_srcdir)/
 	-DICONDIR=\""$(datadir)/pixmaps"\"	\
 	-DUIDIR=\""$(uidir)"\"		\
@@ -23,6 +23,6 @@ nm_ssh_auth_dialog_SOURCES = \
 nm_ssh_auth_dialog_LDADD = \
 	$(GTK_LIBS) \
 	$(NM_LIBS) \
-	$(GNOMEKEYRING_LIBS)
+	$(LIBSECRET_LIBS)
 
 CLEANFILES = *~
