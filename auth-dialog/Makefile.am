@@ -5,6 +5,7 @@ nm_ssh_auth_dialog_CPPFLAGS =			\
 	$(GTK_CFLAGS)				\
 	$(NM_CFLAGS)		\
 	$(LIBSECRET_CFLAGS) \
+	$(NMGTK_CFLAGS) \
 	-I$(top_srcdir)/
 	-DICONDIR=\""$(datadir)/pixmaps"\"	\
 	-DUIDIR=\""$(uidir)"\"		\
@@ -16,13 +17,12 @@ nm_ssh_auth_dialog_CPPFLAGS =			\
 	-DVERSION=\"$(VERSION)\"
 
 nm_ssh_auth_dialog_SOURCES = \
-	main.c \
-	vpn-password-dialog.c \
-	vpn-password-dialog.h
+	main.c
 
 nm_ssh_auth_dialog_LDADD = \
 	$(GTK_LIBS) \
 	$(NM_LIBS) \
-	$(LIBSECRET_LIBS)
+	$(LIBSECRET_LIBS) \
+	$(NMGTK_LIBS)
 
 CLEANFILES = *~

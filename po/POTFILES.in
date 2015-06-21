@@ -2,7 +2,6 @@
 # Please keep this file sorted alphabetically.
 nm-ssh.desktop.in
 auth-dialog/main.c
-auth-dialog/vpn-password-dialog.c
 properties/advanced-dialog.c
 properties/nm-ssh.c
 [type: gettext/glade]properties/nm-ssh-dialog.ui
