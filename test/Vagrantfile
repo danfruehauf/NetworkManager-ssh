@@ -1,0 +1,14 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+ssh_key = `cat $HOME/.ssh/id_rsa.pub`
+
+Vagrant.configure("2") do |config|
+  config.vm.hostname = "nm-ssh-server"
+  config.vm.box = "CentOS-7.1-x86_64"
+  config.vm.box_url = "https://github.com/holms/vagrant-centos7-box/releases/download/7.1.1503.001/CentOS-7.1.1503-x86_64-netboot.box"
+  config.vm.network :private_network, ip: "33.33.33.10"
+
+  config.vm.provision "shell", path: "nm-ssh-server.sh"
+  config.vm.provision "shell", inline: "sudo mkdir -p /root/.ssh && echo '#{ssh_key}' | sudo tee /root/.ssh/authorized_keys"
+end
