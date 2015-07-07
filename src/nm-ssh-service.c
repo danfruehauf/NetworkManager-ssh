@@ -515,7 +515,7 @@ send_network_config (NMSshPlugin *plugin)
 
 	/* replace default route? */
 	if (io_data->no_default_route) {
-		g_hash_table_insert (config, NM_VPN_PLUGIN_IP4_CONFIG_NEVER_DEFAULT, bool_to_gvalue (TRUE));
+		g_hash_table_insert (ip4config, NM_VPN_PLUGIN_IP4_CONFIG_NEVER_DEFAULT, bool_to_gvalue (TRUE));
 	}
 
 	/* local_address */
