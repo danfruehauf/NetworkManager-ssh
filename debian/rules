@@ -12,6 +12,7 @@ DEB_SOURCE := $(shell dpkg-parsechangelog | grep Source: | sed -e 's/Source: //'
 DEB_VERSION := $(shell dpkg-parsechangelog | grep Version: | sed -e 's/Version: //')
 DEB_UPSTREAM_VERSION := $(shell echo $(DEB_VERSION) | sed -e 's/-[^-]*$$//')
 DEB_MAJOR_VERSION := $(shell echo $(DEB_UPSTREAM_VERSION) | sed -e 's/git.*//')
+export DEB_CFLAGS_MAINT_APPEND  = -Wno-deprecated-declarations
 
 DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/buildflags.mk
