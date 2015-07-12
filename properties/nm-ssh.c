@@ -583,15 +583,12 @@ init_plugin_ui (SshPluginUiWidget *self, NMConnection *connection, GError **erro
 	g_signal_connect (G_OBJECT (widget), "toggled", G_CALLBACK (ipv6_toggled_cb), priv->builder);
 	g_signal_connect (G_OBJECT (widget), "toggled", G_CALLBACK (stuff_changed_cb), self);
 
-	/* If IPV6 is defined, we'll show the whole IPV6 alignment shenanigans */
-#if defined(IPV6)
 	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "ipv6_label"));
 	g_assert (widget);
 	gtk_widget_show (widget);
 	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "ipv6_alignment"));
 	g_assert (widget);
 	gtk_widget_show (widget);
-#endif
 
 	/* Authentication combo box */
 	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "auth_auth_type_combobox"));
@@ -1355,7 +1352,7 @@ get_suggested_name (NMVpnPluginUiInterface *iface, NMConnection *connection)
 static guint32
 get_capabilities (NMVpnPluginUiInterface *iface)
 {
-	return (NM_VPN_PLUGIN_UI_CAPABILITY_IMPORT | NM_VPN_PLUGIN_UI_CAPABILITY_EXPORT);
+	return (NM_VPN_PLUGIN_UI_CAPABILITY_IMPORT | NM_VPN_PLUGIN_UI_CAPABILITY_EXPORT | NM_VPN_PLUGIN_UI_CAPABILITY_IPV6);
 }
 
 static NMVpnPluginUiWidgetInterface *

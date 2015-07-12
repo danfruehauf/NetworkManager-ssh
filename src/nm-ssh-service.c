@@ -261,7 +261,6 @@ nm_ssh_properties_validate (NMSettingVPN *s_vpn, GError **error)
 	return TRUE;
 }
 
-#if defined(IPV6)
 static GValue *
 uint_to_gvalue (guint32 num)
 {
@@ -298,8 +297,6 @@ addr6_to_gvalue (const char *str)
 	g_value_take_boxed (val, ba);
 	return val;
 }
-
-#endif
 
 static GValue *
 bool_to_gvalue (gboolean b)
@@ -443,14 +440,8 @@ send_network_config (NMSshPlugin *plugin)
 	}
 
 	config = g_hash_table_new (g_str_hash, g_str_equal);
-	ip6config = g_hash_table_new (g_str_hash, g_str_equal);
-	/* If IPV6 is not supported, all settings have to go via the
-	 * SetIp4Config command */
-#if defined(IPV6)
 	ip4config = g_hash_table_new (g_str_hash, g_str_equal);
-#else
-	ip4config = config;
-#endif
+	ip6config = g_hash_table_new (g_str_hash, g_str_equal);
 
 	if (debug) {
 		g_message ("Local device: '%s%d'", io_data->dev_type, io_data->local_dev_number);
@@ -509,9 +500,7 @@ send_network_config (NMSshPlugin *plugin)
 	/* ---------------------------------------------------- */
 
 	/* IPv4 specific (local_addr, remote_addr, netmask) */
-#if defined(IPV6)
 	g_hash_table_insert (config, NM_VPN_PLUGIN_CONFIG_HAS_IP4, bool_to_gvalue (TRUE));
-#endif
 
 	/* replace default route? */
 	if (io_data->no_default_route) {
@@ -549,7 +538,6 @@ send_network_config (NMSshPlugin *plugin)
 
 	/* End IPv4 specific (local_addr, remote_addr, netmask) */
 
-#if defined(IPV6)
 	/* ---------------------------------------------------- */
 
 	/* IPv6 specific (local_addr_6, remote_addr_6, netmask_6) */
@@ -589,7 +577,6 @@ send_network_config (NMSshPlugin *plugin)
 	}
 	
 	/* End IPv6 specific (local_addr_6, remote_addr_6, netmask_6) */
-#endif
 
 	/* ---------------------------------------------------- */
 
@@ -599,7 +586,6 @@ send_network_config (NMSshPlugin *plugin)
 		NM_VPN_DBUS_PLUGIN_PATH,
 		NM_VPN_DBUS_PLUGIN_INTERFACE);
 
-#if defined(IPV6)
 	/* Send general config */
 	dbus_g_proxy_call_no_reply (
 		proxy, "SetConfig",
@@ -617,7 +603,7 @@ send_network_config (NMSshPlugin *plugin)
 			G_TYPE_INVALID,
 			G_TYPE_INVALID);
 	}
-#endif
+
 	/* Send IPv4 config */
 	dbus_g_proxy_call_no_reply (
 		proxy, "SetIp4Config",
