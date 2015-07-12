@@ -150,7 +150,7 @@ validate_address (const char *address)
 
 	/* Ensure it's a valid DNS name or IP address */
 	while (*p) {
-		if (!isalnum (*p) && (*p != '-') && (*p != '.'))
+		if (!isalnum (*p) && (*p != '-') && (*p != '.') && (*p != ':'))
 			return FALSE;
 		p++;
 	}
