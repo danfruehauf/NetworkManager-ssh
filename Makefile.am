@@ -32,12 +32,12 @@ nm-ssh-service.name: $(srcdir)/nm-ssh-service.name.in
 DISTCHECK_CONFIGURE_FLAGS = --with-tests=yes
 
 EXTRA_DIST = nm-ssh-service.name.in \
-             $(dbusservice_DATA)  \
-             $(desktopfile) \
-             $(iconfile) \
-             intltool-extract.in  \
-             intltool-merge.in    \
-             intltool-update.in
+	$(dbusservice_DATA) \
+	$(desktopfile) \
+	$(iconfile) \
+	intltool-extract.in \
+	intltool-merge.in \
+	intltool-update.in
 
 CLEANFILES = $(nmvpnservice_DATA) $(desktop_DATA) *~
 DISTCLEANFILES = intltool-extract intltool-merge intltool-update

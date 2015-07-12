@@ -60,84 +60,31 @@ AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [Gettext package])
 IT_PROG_INTLTOOL([0.35])
 AM_GLIB_GNU_GETTEXT
 
-PKG_CHECK_MODULES(GTHREAD, gthread-2.0)
-AC_SUBST(GTHREAD_CFLAGS)
-AC_SUBST(GTHREAD_LIBS)
-
-PKG_CHECK_MODULES(DBUS, dbus-glib-1 >= 0.74)
-AC_SUBST(DBUS_CFLAGS)
-AC_SUBST(DBUS_LIBS)
-
 PKG_CHECK_MODULES(GIO, gio-unix-2.0)
 AC_SUBST(GIO_CFLAGS)
 AC_SUBST(GIO_LIBS)
 
+PKG_CHECK_MODULES(NM,
+	NetworkManager >= 0.9.10
+	libnm-util >= 0.9.10
+	libnm-glib >= 0.9.10
+	libnm-glib-vpn >= 0.9.10)
+NM_CFLAGS="$NM_CFLAGS -DNM_VERSION_MIN_REQUIRED=NM_VERSION_0_9_10"
+NM_CFLAGS="$NM_CFLAGS -DNM_VERSION_MAX_ALLOWED=NM_VERSION_1_1_0"
+
 if test x"$with_gnome" != xno; then
-	AC_ARG_WITH([gtkver], AS_HELP_STRING([--with-gtkver], [The major version of GTK+ to build with]),
-	            with_gtkver="$withval",with_gtkver=0)
+	PKG_CHECK_MODULES(GTK, gtk+-3.0 >= 3.4)
+	GTK_CFLAGS="$GTK_CFLAGS -DGDK_VERSION_MIN_REQUIRED=GDK_VERSION_3_4"
 
-	gtk2_req=2.20
-	gtk3_req=2.91.4
-	case "${with_gtkver}" in
-	       0) PKG_CHECK_MODULES(GTK, gtk+-3.0 > $gtk3_req, ,
-	                            [PKG_CHECK_MODULES(GTK, gtk+-2.0 > $gtk2_req)])
-		  ;;
-	       2) PKG_CHECK_MODULES(GTK, gtk+-2.0 >= $gtk2_req)
-	          ;;
-	       3) PKG_CHECK_MODULES(GTK, gtk+-3.0 >= $gtk3_req)
-	          ;;
-	       *) AC_MSG_ERROR(unknown GTK+ version $with_gtkver!)
-	          ;;
-	esac
-	AC_SUBST(GTK_CFLAGS)
-	AC_SUBST(GTK_LIBS)
-
-	PKG_CHECK_MODULES(GNOMEKEYRING, gnome-keyring-1)
-	AC_SUBST(GNOMEKEYRING_CFLAGS)
-	AC_SUBST(GNOMEKEYRING_LIBS)
-
-	dnl maintainer mode stuff
-	if test $USE_MAINTAINER_MODE = yes; then
-		DISABLE_DEPRECATED="-DG_DISABLE_DEPRECATED -DGCONF_DISABLE_DEPRECATED"
-	else
-		DISABLE_DEPRECATED=""
-	fi
-	AC_SUBST(DISABLE_DEPRECATED)
+	PKG_CHECK_MODULES(NMGTK, libnm-gtk >= 0.9.10)
+	PKG_CHECK_MODULES(LIBSECRET, libsecret-1)
 fi
 
 if test x"$with_ipv6" != xno; then
-	dnl We need at least NetworkManager 0.9.6 for ipv6 support
-	PKG_CHECK_MODULES(NM,
-		NetworkManager >= 0.9.6
-		libnm-util >= 0.9.6
-		libnm-glib >= 0.9.6
-		libnm-glib-vpn >= 0.9.6, [], AC_MSG_ERROR([NetworkManager >= 0.9.6 required for IPv6 support. Try with '--without-ipv6']))
 	AC_DEFINE(IPV6, "yes", ipv6 support)
-else
-	PKG_CHECK_MODULES(NM,
-		NetworkManager >= 0.8.998
-		libnm-util >= 0.8.998
-		libnm-glib >= 0.8.998
-		libnm-glib-vpn >= 0.8.998)
 fi
-AC_SUBST(NM_CFLAGS)
-AC_SUBST(NM_LIBS)
 
 NM_COMPILER_WARNINGS
-
-dnl
-dnl Tests
-dnl
-AC_ARG_WITH(tests, AS_HELP_STRING([--with-tests], [Build NetworkManager tests]))
-AM_CONDITIONAL(WITH_TESTS, test "x$with_tests" = "xyes")
-case $with_tests in
-    yes)
-        with_tests=yes
-        ;;
-    *)
-        with_tests=no
-        ;;
-esac
 
 dnl
 dnl Constants
