@@ -35,7 +35,6 @@ override_dh_auto_clean:
 
 override_dh_autoreconf:
 	intltoolize -f -c
-	dh_autoreconf
 
 # stuff for get-orig-source / git snapshot handling
 
