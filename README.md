@@ -27,7 +27,7 @@ If you're using Fedora 18 or later, you can simply run:
 # yum install NetworkManager-ssh-gnome
 ```
 
-That will set you up with NetworkManager and the traditional GNOME interface.
+That will set you up with NetworkManager and the traditional GNOME interface. I am the current maintainer of the package for Fedora.
 
 On older versions of Fedora or CentOS, you can run the following after cloning the repository:
 ```
@@ -38,12 +38,22 @@ Enjoy your new RPM.
 
 ### Ubuntu/Debian
 
-Building a .deb should be straight forward with (Tested on Ubuntu 12.10):
+Building a .deb should be straight forward with (Tested on Ubuntu 15.04):
 ```
 $ autoreconf -fvi && ./configure && make deb
 ```
 
 Enjoy your new .deb.
+
+I am still looking for someone to maintain this package for Ubuntu as it seems like there is a demand.
+
+### Older Distributions
+
+On old distributions with NetworkManager < 0.9.10, such as Ubuntu 14.04, use the 0.9.3 tag:
+```
+$ git checkout 0.9.3
+$ autoreconf -fvi && ./configure && make deb
+```
 
 ## Running
 
