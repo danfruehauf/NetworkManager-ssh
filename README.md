@@ -22,9 +22,9 @@ Basically NetworkManager-ssh integrates OpenSSH tunnel capabilities with Network
 
 ### Fedora/CentOS
 
-If you're using Fedora 18 or later, you can simply run:
+If you're using Fedora 22 or later, you can simply run:
 ```
-# yum install NetworkManager-ssh-gnome
+# dnf install NetworkManager-ssh-gnome
 ```
 
 That will set you up with NetworkManager and the traditional GNOME interface. I am the current maintainer of the package for Fedora.
