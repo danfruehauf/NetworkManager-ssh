@@ -40,10 +40,11 @@ Enjoy your new RPM.
 
 Building a .deb should be straight forward with (Tested on Ubuntu 15.04):
 ```
+# apt-get install libnm-glib-dev libnm-glib-vpn-dev libnm-util-dev libgnome-keyring-dev libdbus-glib-1-dev dh-autoreconf libgtk-3-dev sshpass
 $ autoreconf -fvi && ./configure && make deb
 ```
 
-Enjoy your new .deb.
+Enjoy your new .deb. (It should show up in the directory you `git clone`d from.)
 
 I am still looking for someone to maintain this package for Ubuntu as it seems like there is a demand.
 
