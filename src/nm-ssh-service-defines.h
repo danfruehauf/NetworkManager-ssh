@@ -60,18 +60,4 @@
 #define	NM_SSH_AUTH_TYPE_PASSWORD "password"
 #define	NM_SSH_AUTH_TYPE_KEY "key"
 
-/* Backward compatibility with NetworkManager < 0.9.6 when no IPv6 is supported */
-#if !defined(NM_VPN_PLUGIN_CONFIG_EXT_GATEWAY)
-#	define NM_VPN_PLUGIN_CONFIG_EXT_GATEWAY NM_VPN_PLUGIN_IP4_CONFIG_EXT_GATEWAY
-#endif
-
-#if !defined(NM_VPN_PLUGIN_CONFIG_TUNDEV)
-#	define NM_VPN_PLUGIN_CONFIG_TUNDEV NM_VPN_PLUGIN_IP4_CONFIG_TUNDEV
-#endif
-
-#if !defined(NM_VPN_PLUGIN_CONFIG_MTU)
-#	define NM_VPN_PLUGIN_CONFIG_MTU NM_VPN_PLUGIN_IP4_CONFIG_MTU
-#endif
-/* End backward compatibility */
-
 #endif /* NM_SSH_SERVICE_DEFINES_H */
