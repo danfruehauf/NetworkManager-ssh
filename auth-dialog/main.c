@@ -36,7 +36,7 @@
 #include <nm-vpn-plugin-utils.h>
 #include <nm-vpn-password-dialog.h>
 
-#include "src/nm-ssh-service.h"
+#include "src/nm-ssh-service-defines.h"
 
 #define KEYRING_UUID_TAG "connection-uuid"
 #define KEYRING_SN_TAG "setting-name"

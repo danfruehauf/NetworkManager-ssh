@@ -18,7 +18,8 @@ libexec_PROGRAMS = nm-ssh-service
 
 nm_ssh_service_SOURCES = \
 	nm-ssh-service.c \
-	nm-ssh-service.h
+	nm-ssh-service.h \
+	nm-ssh-service-defines.h
 
 nm_ssh_service_LDADD = \
 	$(NM_LIBS) $(DBUS_LIBS) $(GIO_LIBS)

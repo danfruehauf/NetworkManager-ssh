@@ -38,7 +38,7 @@
 
 #include "advanced-dialog.h"
 #include "nm-ssh.h"
-#include "src/nm-ssh-service.h"
+#include "src/nm-ssh-service-defines.h"
 
 static const char *advanced_keys[] = {
 	NM_SSH_KEY_PORT,

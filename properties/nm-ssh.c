@@ -42,7 +42,7 @@
 #include <nm-setting-connection.h>
 #include <nm-setting-ip4-config.h>
 
-#include "src/nm-ssh-service.h"
+#include "src/nm-ssh-service-defines.h"
 #include "nm-ssh.h"
 #include "advanced-dialog.h"
 
