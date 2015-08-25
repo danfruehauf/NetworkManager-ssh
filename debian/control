@@ -13,6 +13,7 @@ Build-Depends:
  libnm-glib-dev (>= 1.1.0),
  libnm-glib-vpn-dev (>= 1.1.0),
  libnm-dev (>= 1.1.0),
+ libnma-dev (>= 1.1.0),
  intltool,
  libdbus-glib-1-dev (>= 0.74),
  libgnome-keyring-dev,

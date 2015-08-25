@@ -76,6 +76,7 @@ if test x"$with_gnome" != xno; then
 	GTK_CFLAGS="$GTK_CFLAGS -DGDK_VERSION_MIN_REQUIRED=GDK_VERSION_3_4"
 
 	PKG_CHECK_MODULES(LIBNM_GTK, libnm-gtk >= 1.1.0)
+	PKG_CHECK_MODULES(LIBNMA, libnma >= 1.1.0)
 	PKG_CHECK_MODULES(LIBSECRET, libsecret-1)
 fi
 

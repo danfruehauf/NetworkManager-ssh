@@ -32,9 +32,9 @@
 
 #include <libsecret/secret.h>
 
-#include <nm-setting-vpn.h>
-#include <nm-vpn-plugin-utils.h>
-#include <nm-vpn-password-dialog.h>
+#include <NetworkManager.h>
+#include <nma-vpn-password-dialog.h>
+#include <nm-vpn-service-plugin.h>
 
 #include "src/nm-ssh-service-defines.h"
 
@@ -273,7 +273,7 @@ main (int argc, char *argv[])
 		return 1;
 	}
 
-	if (!nm_vpn_plugin_utils_read_vpn_details (0, &data, &secrets)) {
+	if (!nm_vpn_service_plugin_read_vpn_details (0, &data, &secrets)) {
 		fprintf (stderr, "Failed to read '%s' (%s) data and secrets from stdin.\n",
 		         vpn_name, vpn_uuid);
 		return 1;
@@ -290,7 +290,7 @@ main (int argc, char *argv[])
 	/* Depending on auth type see if we need a password */
 	if (strncmp (auth_type, NM_SSH_AUTH_TYPE_PASSWORD, strlen(NM_SSH_AUTH_TYPE_PASSWORD)) == 0) {
 		/* FIXME one day... */
-		nm_vpn_plugin_utils_get_secret_flags (secrets, NM_SSH_KEY_PASSWORD, &pw_flags);
+		nm_vpn_service_plugin_get_secret_flags (secrets, NM_SSH_KEY_PASSWORD, &pw_flags);
 		password_key = NM_SSH_KEY_PASSWORD;
 		if (!get_secrets (vpn_uuid, vpn_name, retry, allow_interaction, external_ui_mode,
 			g_hash_table_lookup (secrets, NM_SSH_KEY_PASSWORD),
