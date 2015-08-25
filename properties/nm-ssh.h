@@ -88,7 +88,7 @@ typedef void (*ChangedCallback) (GtkWidget *widget, gpointer user_data);
 
 void init_auth_widget (GtkBuilder *builder,
                        GtkSizeGroup *group,
-                       NMSettingVPN *s_vpn,
+                       NMSettingVpn *s_vpn,
                        const char *contype,
                        const char *prefix,
                        ChangedCallback changed_cb,

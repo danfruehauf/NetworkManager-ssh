@@ -30,7 +30,7 @@ common_CFLAGS = \
 
 libnm_vpn_plugin_ssh_la_CFLAGS = \
         $(common_CFLAGS) \
-        $(LIBNM_GLIB_CFLAGS)
+        $(LIBNM_CFLAGS)
 
 libnm_ssh_properties_la_CFLAGS = \
         -DNM_SSH_OLD \
@@ -39,7 +39,7 @@ libnm_ssh_properties_la_CFLAGS = \
 
 libnm_vpn_plugin_ssh_la_LIBADD = \
         $(GTK_LIBS) \
-        $(LIBNM_GLIB_LIBS)
+        $(LIBNM_LIBS)
 
 libnm_ssh_properties_la_LIBADD = \
         $(GTK_LIBS) \
