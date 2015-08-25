@@ -1,5 +1,5 @@
 AM_CPPFLAGS = \
-	$(NM_CFLAGS) \
+	$(LIBNM_GLIB_CFLAGS) \
 	$(DBUS_CFLAGS) \
 	$(GIO_CFLAGS) \
 	-DG_DISABLE_DEPRECATED \
@@ -22,6 +22,6 @@ nm_ssh_service_SOURCES = \
 	nm-ssh-service-defines.h
 
 nm_ssh_service_LDADD = \
-	$(NM_LIBS) $(DBUS_LIBS) $(GIO_LIBS)
+	$(LIBNM_GLIB_LIBS) $(DBUS_LIBS) $(GIO_LIBS)
 
 CLEANFILES = *~
