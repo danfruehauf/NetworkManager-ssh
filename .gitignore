@@ -31,3 +31,5 @@ ltmain.sh
 missing
 nm-ssh-service.name
 stamp-h1
+
+/NetworkManager-ssh-*.tar*

@@ -1,7 +1,7 @@
 AC_PREREQ(2.52)
 
 AC_INIT(NetworkManager-ssh, 1.1.0, malkodan@gmail.com, NetworkManager-ssh)
-AM_INIT_AUTOMAKE([1.9 subdir-objects tar-ustar no-dist-gzip dist-bzip2])
+AM_INIT_AUTOMAKE([1.9 subdir-objects tar-ustar no-dist-gzip dist-xz])
 AM_MAINTAINER_MODE
 
 AC_CONFIG_MACRO_DIR([m4])
