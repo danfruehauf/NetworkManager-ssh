@@ -28,9 +28,6 @@
 
 #include <glib/gi18n.h>
 #include <gio/gio.h>
-#include <dbus/dbus.h>
-#include <dbus/dbus-glib-lowlevel.h>
-#include <dbus/dbus-glib.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -259,27 +256,12 @@ nm_ssh_properties_validate (NMSettingVpn *s_vpn, GError **error)
 	return TRUE;
 }
 
-static GValue *
-uint_to_gvalue (guint32 num)
-{
-	GValue *val;
-
-	if (num == 0)
-		return NULL;
-
-	val = g_slice_new0 (GValue);
-	g_value_init (val, G_TYPE_UINT);
-	g_value_set_uint (val, num);
-
-	return val;
-}
-
-static GValue *
-addr6_to_gvalue (const char *str)
+static GVariant *
+addr6_to_gvariant (const char *str)
 {
 	struct in6_addr temp_addr;
-	GValue *val;
-	GByteArray *ba;
+	GVariantBuilder builder;
+	int i;
 
 	/* Empty */
 	if (!str || strlen (str) < 1)
@@ -288,30 +270,15 @@ addr6_to_gvalue (const char *str)
 	if (inet_pton (AF_INET6, str, &temp_addr) <= 0)
 		return NULL;
 
-	val = g_slice_new0 (GValue);
-	g_value_init (val, DBUS_TYPE_G_UCHAR_ARRAY);
-	ba = g_byte_array_new ();
-	g_byte_array_append (ba, (guint8 *) &temp_addr, sizeof (temp_addr));
-	g_value_take_boxed (val, ba);
-	return val;
+	g_variant_builder_init (&builder, G_VARIANT_TYPE ("ay"));
+	for (i = 0; i < sizeof (temp_addr); i++)
+		g_variant_builder_add (&builder, "y", ((guint8 *) &temp_addr)[i]);
+	return g_variant_builder_end (&builder);
 }
 
-static GValue *
-bool_to_gvalue (gboolean b)
+static GVariant *
+str_to_gvariant (const char *str, gboolean try_convert)
 {
-	GValue *val;
-
-	val = g_slice_new0 (GValue);
-	g_value_init (val, G_TYPE_BOOLEAN);
-	g_value_set_boolean (val, b);
-	return val;
-}
-
-static GValue *
-str_to_gvalue (const char *str, gboolean try_convert)
-{
-	GValue *val;
-
 	/* Empty */
 	if (!str || strlen (str) < 1)
 		return NULL;
@@ -325,18 +292,13 @@ str_to_gvalue (const char *str, gboolean try_convert)
 			return NULL;
 	}
 
-	val = g_slice_new0 (GValue);
-	g_value_init (val, G_TYPE_STRING);
-	g_value_set_string (val, str);
-
-	return val;
+	return g_variant_new_string (str);
 }
 
-static GValue *
-addr_to_gvalue (const char *str)
+static GVariant *
+addr4_to_gvariant (const char *str)
 {
 	struct in_addr	temp_addr;
-	GValue *val;
 
 	/* Empty */
 	if (!str || strlen (str) < 1)
@@ -345,11 +307,7 @@ addr_to_gvalue (const char *str)
 	if (inet_pton (AF_INET, str, &temp_addr) <= 0)
 		return NULL;
 
-	val = g_slice_new0 (GValue);
-	g_value_init (val, G_TYPE_UINT);
-	g_value_set_uint (val, temp_addr.s_addr);
-
-	return val;
+	return g_variant_new_uint32 (temp_addr.s_addr);
 }
 
 static char *
@@ -422,24 +380,14 @@ send_network_config (NMSshPlugin *plugin)
 {
 	NMSshPluginPrivate *priv = NM_SSH_PLUGIN_GET_PRIVATE (plugin);
 	NMSshPluginIOData  *io_data = priv->io_data;
-	DBusGConnection    *connection;
-	DBusGProxy         *proxy;
-	GHashTable         *config, *ip4config, *ip6config;
-	GValue             *val;
-	GError             *err = NULL;
+	GVariantBuilder     config, ip4config, ip6config;
+	GVariant           *val;
 	char               *device;
 	char               *resolved_hostname;
 
-	connection = dbus_g_bus_get (DBUS_BUS_SYSTEM, &err);
-	if (!connection) {
-		g_warning ("Could not get the system bus: %s", err->message);
-		nm_vpn_service_plugin_set_state ((NMVpnServicePlugin*)plugin, NM_VPN_SERVICE_STATE_STOPPED);
-		return FALSE;
-	}
-
-	config = g_hash_table_new (g_str_hash, g_str_equal);
-	ip4config = g_hash_table_new (g_str_hash, g_str_equal);
-	ip6config = g_hash_table_new (g_str_hash, g_str_equal);
+	g_variant_builder_init (&config, G_VARIANT_TYPE_VARDICT);
+	g_variant_builder_init (&ip4config, G_VARIANT_TYPE_VARDICT);
+	g_variant_builder_init (&ip6config, G_VARIANT_TYPE_VARDICT);
 
 	if (debug) {
 		g_message ("Local device: '%s%d'", io_data->dev_type, io_data->local_dev_number);
@@ -462,8 +410,8 @@ send_network_config (NMSshPlugin *plugin)
 		/* We might have to resolve that */
 		resolved_hostname = resolve_hostname (io_data->remote_gw);
 		if (resolved_hostname) {
-			val = addr_to_gvalue (resolved_hostname);
-			g_hash_table_insert (config, NM_VPN_PLUGIN_CONFIG_EXT_GATEWAY, val);
+			val = addr4_to_gvariant (resolved_hostname);
+			g_variant_builder_add (&config, "{sv}", NM_VPN_PLUGIN_CONFIG_EXT_GATEWAY, val);
 			g_free (resolved_hostname);
 		} else {
 			g_warning ("Could not resolve remote_gw.");
@@ -477,9 +425,9 @@ send_network_config (NMSshPlugin *plugin)
 	{
 		device =
 			(gpointer) g_strdup_printf ("%s%d", io_data->dev_type, io_data->local_dev_number);
-		val = str_to_gvalue (device, FALSE);
+		val = str_to_gvariant (device, FALSE);
 		g_free(device);
-		g_hash_table_insert (config, NM_VPN_PLUGIN_CONFIG_TUNDEV, val);
+		g_variant_builder_add (&config, "{sv}", NM_VPN_PLUGIN_CONFIG_TUNDEV, val);
 	}
 	else
 		g_warning ("local_dev_number unset.");
@@ -487,8 +435,8 @@ send_network_config (NMSshPlugin *plugin)
 	/* mtu */
 	if (io_data->mtu > 0)
 	{
-		val = str_to_gvalue (g_strdup_printf("%d", io_data->mtu), FALSE);
-		g_hash_table_insert (config, NM_VPN_PLUGIN_CONFIG_MTU, val);
+		val = str_to_gvariant (g_strdup_printf("%d", io_data->mtu), FALSE);
+		g_variant_builder_add (&config, "{sv}", NM_VPN_PLUGIN_CONFIG_MTU, val);
 	}
 	else
 		g_warning ("local_dev_number unset.");
@@ -498,18 +446,18 @@ send_network_config (NMSshPlugin *plugin)
 	/* ---------------------------------------------------- */
 
 	/* IPv4 specific (local_addr, remote_addr, netmask) */
-	g_hash_table_insert (config, NM_VPN_PLUGIN_CONFIG_HAS_IP4, bool_to_gvalue (TRUE));
+	g_variant_builder_add (&config, "{sv}", NM_VPN_PLUGIN_CONFIG_HAS_IP4, g_variant_new_boolean (TRUE));
 
 	/* replace default route? */
 	if (io_data->no_default_route) {
-		g_hash_table_insert (config, NM_VPN_PLUGIN_IP4_CONFIG_NEVER_DEFAULT, bool_to_gvalue (TRUE));
+		g_variant_builder_add (&config, "{sv}", NM_VPN_PLUGIN_IP4_CONFIG_NEVER_DEFAULT, g_variant_new_boolean (TRUE));
 	}
 
 	/* local_address */
 	if (io_data->local_addr)
 	{
-		val = addr_to_gvalue (io_data->local_addr);
-		g_hash_table_insert (ip4config, NM_VPN_PLUGIN_IP4_CONFIG_ADDRESS, val);
+		val = addr4_to_gvariant (io_data->local_addr);
+		g_variant_builder_add (&ip4config, "{sv}", NM_VPN_PLUGIN_IP4_CONFIG_ADDRESS, val);
 	}
 	else
 		g_warning ("local_addr unset.");
@@ -517,9 +465,9 @@ send_network_config (NMSshPlugin *plugin)
 	/* remote_addr */
 	if (io_data->remote_addr)
 	{
-		val = addr_to_gvalue (io_data->remote_addr);
-		g_hash_table_insert (ip4config, NM_VPN_PLUGIN_IP4_CONFIG_INT_GATEWAY, val);
-		g_hash_table_insert (ip4config, NM_VPN_PLUGIN_IP4_CONFIG_PTP, val);
+		val = addr4_to_gvariant (io_data->remote_addr);
+		g_variant_builder_add (&ip4config, "{sv}", NM_VPN_PLUGIN_IP4_CONFIG_INT_GATEWAY, val);
+		g_variant_builder_add (&ip4config, "{sv}", NM_VPN_PLUGIN_IP4_CONFIG_PTP, val);
 	}
 	else
 		g_warning ("remote_addr unset.");
@@ -527,10 +475,11 @@ send_network_config (NMSshPlugin *plugin)
 	/* netmask */
 	if (io_data->netmask && g_str_has_prefix (io_data->netmask, "255.")) {
 			guint32 addr;
-			val = addr_to_gvalue(io_data->netmask);
-			addr = g_value_get_uint (val);
-			g_value_set_uint (val, nm_utils_ip4_netmask_to_prefix (addr));
-			g_hash_table_insert (ip4config, NM_VPN_PLUGIN_IP4_CONFIG_PREFIX, val);
+			val = addr4_to_gvariant(io_data->netmask);
+			addr = g_variant_get_uint32 (val);
+			g_variant_unref (val);
+			val = g_variant_new_uint32 (nm_utils_ip4_netmask_to_prefix (addr));
+			g_variant_builder_add (&ip4config, "{sv}", NM_VPN_PLUGIN_IP4_CONFIG_PREFIX, val);
 	} else
 		g_warning ("netmask unset.");
 
@@ -540,18 +489,18 @@ send_network_config (NMSshPlugin *plugin)
 
 	/* IPv6 specific (local_addr_6, remote_addr_6, netmask_6) */
 	if (io_data->ipv6) {
-		g_hash_table_insert (config, NM_VPN_PLUGIN_CONFIG_HAS_IP6, bool_to_gvalue (TRUE));
+		g_variant_builder_add (&config, "{sv}", NM_VPN_PLUGIN_CONFIG_HAS_IP6, g_variant_new_boolean (TRUE));
 
 		/* replace default route? */
 		if (io_data->no_default_route) {
-			g_hash_table_insert (config, NM_VPN_PLUGIN_IP6_CONFIG_NEVER_DEFAULT, bool_to_gvalue (TRUE));
+			g_variant_builder_add (&config, "{sv}", NM_VPN_PLUGIN_IP6_CONFIG_NEVER_DEFAULT, g_variant_new_boolean (TRUE));
 		}
 
 		/* local_addr_6 */
 		if (io_data->local_addr_6)
 		{
-			val = addr6_to_gvalue (io_data->local_addr_6);
-			g_hash_table_insert (ip6config, NM_VPN_PLUGIN_IP6_CONFIG_ADDRESS, val);
+			val = addr6_to_gvariant (io_data->local_addr_6);
+			g_variant_builder_add (&ip6config, "{sv}", NM_VPN_PLUGIN_IP6_CONFIG_ADDRESS, val);
 		}
 		else
 			g_warning ("local_addr_6 unset.");
@@ -559,17 +508,17 @@ send_network_config (NMSshPlugin *plugin)
 		/* remote_addr_6 */
 		if (io_data->remote_addr_6)
 		{
-			val = addr6_to_gvalue (io_data->remote_addr_6);
-			g_hash_table_insert (ip6config, NM_VPN_PLUGIN_IP6_CONFIG_INT_GATEWAY, val);
-			g_hash_table_insert (ip6config, NM_VPN_PLUGIN_IP6_CONFIG_PTP, val);
+			val = addr6_to_gvariant (io_data->remote_addr_6);
+			g_variant_builder_add (&ip6config, "{sv}", NM_VPN_PLUGIN_IP6_CONFIG_INT_GATEWAY, val);
+			g_variant_builder_add (&ip6config, "{sv}", NM_VPN_PLUGIN_IP6_CONFIG_PTP, val);
 		}
 		else
 			g_warning ("remote_addr_6 unset.");
 	
 		/* netmask_6 */
 		if (io_data->netmask_6) {
-			val = uint_to_gvalue (strtol (io_data->netmask_6, NULL, 10));
-			g_hash_table_insert (ip6config, NM_VPN_PLUGIN_IP6_CONFIG_PREFIX, val);
+			val = g_variant_new_uint32 (strtol (io_data->netmask_6, NULL, 10));
+			g_variant_builder_add (&ip6config, "{sv}", NM_VPN_PLUGIN_IP6_CONFIG_PREFIX, val);
 		} else
 			g_warning ("netmask_6 unset.");
 	}
@@ -578,40 +527,19 @@ send_network_config (NMSshPlugin *plugin)
 
 	/* ---------------------------------------------------- */
 
-	proxy = dbus_g_proxy_new_for_name (
-		connection,
-		NM_DBUS_SERVICE_SSH,
-		NM_VPN_DBUS_PLUGIN_PATH,
-		NM_VPN_DBUS_PLUGIN_INTERFACE);
 
 	/* Send general config */
-	dbus_g_proxy_call_no_reply (
-		proxy, "SetConfig",
-		dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE),
-		config,
-		G_TYPE_INVALID,
-		G_TYPE_INVALID);
+	nm_vpn_service_plugin_set_config ((NMVpnServicePlugin*) plugin,
+	                                  g_variant_builder_end (&config));
 
 	/* Send IPv6 config */
-	if (io_data->ipv6) {
-		dbus_g_proxy_call_no_reply (
-			proxy, "SetIp6Config",
-			dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE),
-			ip6config,
-			G_TYPE_INVALID,
-			G_TYPE_INVALID);
-	}
+	if (io_data->ipv6)
+		nm_vpn_service_plugin_set_ip6_config ((NMVpnServicePlugin*) plugin,
+		                                      g_variant_builder_end (&ip6config));
 
 	/* Send IPv4 config */
-	dbus_g_proxy_call_no_reply (
-		proxy, "SetIp4Config",
-		dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE),
-		ip4config,
-		G_TYPE_INVALID,
-		G_TYPE_INVALID);
-
-
-	g_object_unref (proxy);
+	nm_vpn_service_plugin_set_ip4_config ((NMVpnServicePlugin*) plugin,
+	                                      g_variant_builder_end (&ip4config));
 
 	return TRUE;
 }

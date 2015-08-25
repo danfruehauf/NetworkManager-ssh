@@ -40,7 +40,7 @@ Enjoy your new RPM.
 
 Building a .deb should be straight forward with:
 ```
-# apt-get install libnm-glib-dev libnm-glib-vpn-dev libnm-util-dev libnm-dev libnma-dev libgnome-keyring-dev libdbus-glib-1-dev dh-autoreconf libgtk-3-dev sshpass
+# apt-get install libnm-glib-dev libnm-glib-vpn-dev libnm-util-dev libnm-dev libnma-dev libgnome-keyring-dev dh-autoreconf libgtk-3-dev sshpass
 $ autoreconf -fvi && ./configure && make deb
 ```
 

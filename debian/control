@@ -15,7 +15,6 @@ Build-Depends:
  libnm-dev (>= 1.1.0),
  libnma-dev (>= 1.1.0),
  intltool,
- libdbus-glib-1-dev (>= 0.74),
  libgnome-keyring-dev,
  libgtk-3-dev (>= 3.0),
  libglib2.0-dev
