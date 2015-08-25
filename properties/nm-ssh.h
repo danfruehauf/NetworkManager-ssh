@@ -26,23 +26,6 @@
 
 #include <glib-object.h>
 
-typedef enum
-{
-	SSH_PLUGIN_UI_ERROR_UNKNOWN = 0,
-	SSH_PLUGIN_UI_ERROR_INVALID_CONNECTION,
-	SSH_PLUGIN_UI_ERROR_INVALID_PROPERTY,
-	SSH_PLUGIN_UI_ERROR_MISSING_PROPERTY,
-	SSH_PLUGIN_UI_ERROR_FILE_NOT_READABLE,
-	SSH_PLUGIN_UI_ERROR_FILE_NOT_SSH
-} SshPluginUiError;
-
-#define SSH_TYPE_PLUGIN_UI_ERROR (ssh_plugin_ui_error_get_type ()) 
-GType ssh_plugin_ui_error_get_type (void);
-
-#define SSH_PLUGIN_UI_ERROR (ssh_plugin_ui_error_quark ())
-GQuark ssh_plugin_ui_error_quark (void);
-
-
 #define SSH_TYPE_PLUGIN_UI            (ssh_plugin_ui_get_type ())
 #define SSH_PLUGIN_UI(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SSH_TYPE_PLUGIN_UI, SshPluginUi))
 #define SSH_PLUGIN_UI_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SSH_TYPE_PLUGIN_UI, SshPluginUiClass))
