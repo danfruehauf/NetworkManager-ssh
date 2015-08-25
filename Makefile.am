@@ -27,7 +27,9 @@ if WITH_GNOME
 endif
 
 nm-ssh-service.name: $(srcdir)/nm-ssh-service.name.in
-	sed -e 's|[@]LIBEXECDIR[@]|$(libexecdir)|g' $< >$@
+	sed -e 's|[@]LIBEXECDIR[@]|$(libexecdir)|g' \
+	    -e 's|[@]PLUGINDIR[@]|$(libdir)/NetworkManager|g' \
+	    $< >$@
 
 DISTCHECK_CONFIGURE_FLAGS = --with-tests=yes
 

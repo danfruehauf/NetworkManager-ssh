@@ -3,7 +3,10 @@ name=ssh
 service=org.freedesktop.NetworkManager.ssh
 program=@LIBEXECDIR@/nm-ssh-service
 
+[libnm]
+plugin=@PLUGINDIR@/libnm-vpn-plugin-ssh.so
+
 [GNOME]
 auth-dialog=@LIBEXECDIR@/nm-ssh-auth-dialog
-properties=libnm-ssh-properties
+properties=@PLUGINDIR@/libnm-ssh-properties
 
