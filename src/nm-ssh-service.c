@@ -50,8 +50,6 @@
 #include <locale.h>
 
 #include <NetworkManager.h>
-#include <NetworkManagerVPN.h>
-#include <nm-setting-vpn.h>
 
 #include "nm-ssh-service.h"
 #include "nm-utils.h"
@@ -63,7 +61,7 @@
 static gboolean debug = FALSE;
 static GMainLoop *loop = NULL;
 
-G_DEFINE_TYPE (NMSshPlugin, nm_ssh_plugin, NM_TYPE_VPN_PLUGIN)
+G_DEFINE_TYPE (NMSshPlugin, nm_ssh_plugin, NM_TYPE_VPN_SERVICE_PLUGIN)
 
 #define NM_SSH_PLUGIN_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), NM_TYPE_SSH_PLUGIN, NMSshPluginPrivate))
 
@@ -239,7 +237,7 @@ validate_one_property (const char *key, const char *value, gpointer user_data)
 }
 
 static gboolean
-nm_ssh_properties_validate (NMSettingVPN *s_vpn, GError **error)
+nm_ssh_properties_validate (NMSettingVpn *s_vpn, GError **error)
 {
 	GError *validate_error = NULL;
 	ValidateInfo info = { &valid_properties[0], &validate_error, FALSE };
@@ -435,7 +433,7 @@ send_network_config (NMSshPlugin *plugin)
 	connection = dbus_g_bus_get (DBUS_BUS_SYSTEM, &err);
 	if (!connection) {
 		g_warning ("Could not get the system bus: %s", err->message);
-		nm_vpn_plugin_set_state ((NMVPNPlugin*)plugin, NM_VPN_SERVICE_STATE_STOPPED);
+		nm_vpn_service_plugin_set_state ((NMVpnServicePlugin*)plugin, NM_VPN_SERVICE_STATE_STOPPED);
 		return FALSE;
 	}
 
@@ -691,7 +689,7 @@ nm_ssh_schedule_ifconfig_timer (NMSshPlugin *plugin)
 static gboolean
 nm_ssh_stdout_cb (GIOChannel *source, GIOCondition condition, gpointer user_data)
 {
-	NMVPNPlugin *plugin = NM_VPN_PLUGIN (user_data);
+	NMVpnServicePlugin *plugin = NM_VPN_SERVICE_PLUGIN (user_data);
 	char *str = NULL;
 
 	if (!(condition & G_IO_IN))
@@ -715,12 +713,12 @@ nm_ssh_stdout_cb (GIOChannel *source, GIOCondition condition, gpointer user_data
 	} else if (g_str_has_prefix (str, "Tunnel device open failed.")) {
 		/* Opening of local tun device failed... :( */
 		g_warning("Tunnel device open failed.");
-		nm_vpn_plugin_set_state (plugin, NM_VPN_SERVICE_STATE_STOPPED);
+		nm_vpn_service_plugin_set_state (plugin, NM_VPN_SERVICE_STATE_STOPPED);
 	} else if (g_str_has_prefix (str, "debug1: Sending command:")) {
 		/* If we got to sending the command, it means that things are
 		 * established, we should start the timer to get the local
 		 * interface up... */
-		if (NM_VPN_SERVICE_STATE_STOPPED != nm_vpn_plugin_get_state (plugin))
+		if (NM_VPN_SERVICE_STATE_STOPPED != nm_vpn_service_plugin_get_state (plugin))
 			nm_ssh_schedule_ifconfig_timer ((NMSshPlugin*)plugin);
 		else if(debug)
 			g_message("Not starting local timer because plugin is in STOPPED state");
@@ -728,16 +726,16 @@ nm_ssh_stdout_cb (GIOChannel *source, GIOCondition condition, gpointer user_data
 		/* Opening of remote tun device failed... :( */
 		g_warning("Tunnel device open failed on remote server.");
 		g_warning("Make sure you have privileges to open tun/tap devices and that your SSH server is configured with 'PermitTunnel=yes'");
-		nm_vpn_plugin_set_state (plugin, NM_VPN_SERVICE_STATE_STOPPED);
+		nm_vpn_service_plugin_set_state (plugin, NM_VPN_SERVICE_STATE_STOPPED);
 	} else if (g_str_has_prefix (str, "debug1: Remote: Failed to open the tunnel device.")) {
 		/* Opening of remote tun device failed... device busy? */
 		g_warning("Tunnel device open failed on remote server.");
 		g_warning("Is this device free on the remote host?");
-		nm_vpn_plugin_set_state (plugin, NM_VPN_SERVICE_STATE_STOPPED);
+		nm_vpn_service_plugin_set_state (plugin, NM_VPN_SERVICE_STATE_STOPPED);
 	} else if (strncmp (str, "The authenticity of host", 24) == 0) {
 		/* User will have to accept this new host with its fingerprint */
 		g_warning("It is not a known host, continue connecting?");
-		nm_vpn_plugin_set_state (plugin, NM_VPN_SERVICE_STATE_STOPPED);
+		nm_vpn_service_plugin_set_state (plugin, NM_VPN_SERVICE_STATE_STOPPED);
 	}
 
 	g_message("%s", str);
@@ -768,9 +766,9 @@ nm_ssh_get_free_device (const char *device_type)
 static void
 ssh_watch_cb (GPid pid, gint status, gpointer user_data)
 {
-	NMVPNPlugin *plugin = NM_VPN_PLUGIN (user_data);
+	NMVpnServicePlugin *plugin = NM_VPN_SERVICE_PLUGIN (user_data);
 	NMSshPluginPrivate *priv = NM_SSH_PLUGIN_GET_PRIVATE (plugin);
-	NMVPNPluginFailure failure = NM_VPN_PLUGIN_FAILURE_CONNECT_FAILED;
+	NMVpnPluginFailure failure = NM_VPN_PLUGIN_FAILURE_CONNECT_FAILED;
 	guint error = 0;
 	gboolean good_exit = FALSE;
 
@@ -836,9 +834,9 @@ ssh_watch_cb (GPid pid, gint status, gpointer user_data)
 	close (g_io_channel_unix_get_fd(priv->io_data->ssh_stderr_channel));
 
 	if (!good_exit)
-		nm_vpn_plugin_failure (plugin, failure);
+		nm_vpn_service_plugin_failure (plugin, failure);
 
-	nm_vpn_plugin_set_state (plugin, NM_VPN_SERVICE_STATE_STOPPED);
+	nm_vpn_service_plugin_set_state (plugin, NM_VPN_SERVICE_STATE_STOPPED);
 }
 
 static const char *
@@ -968,7 +966,7 @@ get_known_hosts_file(const char *username,
 
 static gboolean
 nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
-	NMSettingVPN *s_vpn,
+	NMSettingVpn *s_vpn,
 	const char *default_username,
 	GError **error)
 {
@@ -1180,7 +1178,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	if (priv->io_data->local_dev_number == -1)
 	{
 		g_warning("Could not assign a free tun/tap device.");
-		nm_vpn_plugin_set_state ((NMVPNPlugin*)plugin, NM_VPN_SERVICE_STATE_STOPPED);
+		nm_vpn_service_plugin_set_state ((NMVpnServicePlugin*)plugin, NM_VPN_SERVICE_STATE_STOPPED);
 		return FALSE;
 	}
 
@@ -1506,18 +1504,18 @@ validate_ssh_agent_socket(const char* ssh_agent_socket, GError **error)
 }
 
 static gboolean
-real_connect (NMVPNPlugin   *plugin,
+real_connect (NMVpnServicePlugin   *plugin,
 	NMConnection  *connection,
 	GError       **error)
 {
-	NMSettingVPN *s_vpn;
+	NMSettingVpn *s_vpn;
 	const char *user_name;
 
 	s_vpn = NM_SETTING_VPN (nm_connection_get_setting (connection, NM_TYPE_SETTING_VPN));
 	if (!s_vpn) {
 		g_set_error (error,
 		             NM_VPN_PLUGIN_ERROR,
-		             NM_VPN_PLUGIN_ERROR_CONNECTION_INVALID,
+		             NM_VPN_PLUGIN_ERROR_INVALID_CONNECTION,
 		             "%s",
 		             _("Could not process the request because the VPN connection settings were invalid."));
 		return FALSE;
@@ -1537,17 +1535,17 @@ real_connect (NMVPNPlugin   *plugin,
 }
 
 static gboolean
-real_need_secrets (NMVPNPlugin *plugin,
+real_need_secrets (NMVpnServicePlugin *plugin,
 	NMConnection *connection,
-	char **setting_name,
+	const char **setting_name,
 	GError **error)
 {
-	NMSettingVPN *s_vpn;
+	NMSettingVpn *s_vpn;
 	gboolean need_secrets = FALSE;
 	const char *auth_type = NULL;
 	NMSettingSecretFlags flags = NM_SETTING_SECRET_FLAG_NONE;
 
-	g_return_val_if_fail (NM_IS_VPN_PLUGIN (plugin), FALSE);
+	g_return_val_if_fail (NM_IS_VPN_SERVICE_PLUGIN (plugin), FALSE);
 	g_return_val_if_fail (NM_IS_CONNECTION (connection), FALSE);
 
 	if (debug) {
@@ -1559,7 +1557,7 @@ real_need_secrets (NMVPNPlugin *plugin,
 	if (!s_vpn) {
 		g_set_error (error,
 		             NM_VPN_PLUGIN_ERROR,
-		             NM_VPN_PLUGIN_ERROR_CONNECTION_INVALID,
+		             NM_VPN_PLUGIN_ERROR_INVALID_CONNECTION,
 		             "%s",
 		             _("Could not process the request because the VPN connection settings were invalid."));
 		return FALSE;
@@ -1620,7 +1618,7 @@ ensure_killed (gpointer data)
 }
 
 static gboolean
-real_disconnect (NMVPNPlugin	 *plugin,
+real_disconnect (NMVpnServicePlugin	 *plugin,
 			  GError		**err)
 {
 	NMSshPluginPrivate *priv = NM_SSH_PLUGIN_GET_PRIVATE (plugin);
@@ -1647,7 +1645,7 @@ static void
 nm_ssh_plugin_class_init (NMSshPluginClass *plugin_class)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (plugin_class);
-	NMVPNPluginClass *parent_class = NM_VPN_PLUGIN_CLASS (plugin_class);
+	NMVpnServicePluginClass *parent_class = NM_VPN_SERVICE_PLUGIN_CLASS (plugin_class);
 
 	g_type_class_add_private (object_class, sizeof (NMSshPluginPrivate));
 
@@ -1659,7 +1657,7 @@ nm_ssh_plugin_class_init (NMSshPluginClass *plugin_class)
 
 static void
 plugin_state_changed (NMSshPlugin *plugin,
-	NMVPNServiceState state,
+	NMVpnServiceState state,
 	gpointer user_data)
 {
 	switch (state) {
@@ -1679,7 +1677,7 @@ nm_ssh_plugin_new (void)
 	NMSshPlugin *plugin;
 
 	plugin =  (NMSshPlugin *) g_object_new (NM_TYPE_SSH_PLUGIN,
-	                                            NM_VPN_PLUGIN_DBUS_SERVICE_NAME,
+	                                            NM_VPN_SERVICE_PLUGIN_DBUS_SERVICE_NAME,
 	                                            NM_DBUS_SERVICE_SSH,
 	                                            NULL);
 	if (plugin)
@@ -1710,7 +1708,7 @@ setup_signals (void)
 }
 
 static void
-quit_mainloop (NMVPNPlugin *plugin, gpointer user_data)
+quit_mainloop (NMVpnServicePlugin *plugin, gpointer user_data)
 {
 	g_main_loop_quit ((GMainLoop *) user_data);
 }

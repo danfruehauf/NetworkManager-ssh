@@ -24,7 +24,7 @@
 
 #include <glib.h>
 #include <glib-object.h>
-#include <nm-vpn-plugin.h>
+#include <nm-vpn-service-plugin.h>
 
 #include "nm-ssh-service-defines.h"
 
@@ -36,11 +36,11 @@
 #define NM_SSH_PLUGIN_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), NM_TYPE_SSH_PLUGIN, NMSshPluginClass))
 
 typedef struct {
-	NMVPNPlugin parent;
+	NMVpnServicePlugin parent;
 } NMSshPlugin;
 
 typedef struct {
-	NMVPNPluginClass parent;
+	NMVpnServicePluginClass parent;
 } NMSshPluginClass;
 
 GType nm_ssh_plugin_get_type (void);
