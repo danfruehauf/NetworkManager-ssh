@@ -49,6 +49,8 @@ dnl GNOME support
 dnl
 AC_ARG_WITH(gnome, AS_HELP_STRING([--without-gnome], [Build NetworkManager-ssh without GNOME support, e.g. vpn service only]))
 AM_CONDITIONAL(WITH_GNOME, test x"$with_gnome" != xno)
+AC_ARG_WITH(libnm-glib, AS_HELP_STRING([--without-libnm-glib], [Build NetworkManager-ssh without libnm-glib comatibility]))
+AM_CONDITIONAL(WITH_LIBNM_GLIB, test x"$with_libnm_glib" != xno)
 
 GETTEXT_PACKAGE=NetworkManager-ssh
 AC_SUBST(GETTEXT_PACKAGE)
@@ -61,21 +63,23 @@ PKG_CHECK_MODULES(GIO, gio-unix-2.0)
 AC_SUBST(GIO_CFLAGS)
 AC_SUBST(GIO_LIBS)
 
-PKG_CHECK_MODULES(LIBNM_GLIB,
-	NetworkManager >= 1.1.0
-	libnm-util >= 1.1.0
-	libnm-glib >= 1.1.0
-	libnm-glib-vpn >= 1.1.0)
-LIBNM_GLIB_CFLAGS="$LIBNM_GLIB_CFLAGS -DNM_VERSION_MIN_REQUIRED=NM_VERSION_1_2"
-LIBNM_GLIB_CFLAGS="$LIBNM_GLIB_CFLAGS -DNM_VERSION_MAX_ALLOWED=NM_VERSION_1_2"
-
 if test x"$with_gnome" != xno; then
 	PKG_CHECK_MODULES(GTK, gtk+-3.0 >= 3.4)
 	GTK_CFLAGS="$GTK_CFLAGS -DGDK_VERSION_MIN_REQUIRED=GDK_VERSION_3_4"
 
-	PKG_CHECK_MODULES(LIBNM_GTK, libnm-gtk >= 1.1.0)
 	PKG_CHECK_MODULES(LIBNMA, libnma >= 1.1.0)
 	PKG_CHECK_MODULES(LIBSECRET, libsecret-1)
+
+	if test x"$with_libnm_glib" != xno; then
+		PKG_CHECK_MODULES(LIBNM_GTK, libnm-gtk >= 1.1.0)
+		PKG_CHECK_MODULES(LIBNM_GLIB,
+			NetworkManager >= 1.1.0
+			libnm-util >= 1.1.0
+			libnm-glib >= 1.1.0
+			libnm-glib-vpn >= 1.1.0)
+		LIBNM_GLIB_CFLAGS="$LIBNM_GLIB_CFLAGS -DNM_VERSION_MIN_REQUIRED=NM_VERSION_1_2"
+		LIBNM_GLIB_CFLAGS="$LIBNM_GLIB_CFLAGS -DNM_VERSION_MAX_ALLOWED=NM_VERSION_1_2"
+	fi
 fi
 
 PKG_CHECK_MODULES(LIBNM, libnm >= 1.1.0)

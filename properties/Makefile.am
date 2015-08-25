@@ -1,7 +1,10 @@
 SUBDIRS = .
 
 plugindir = $(libdir)/NetworkManager
-plugin_LTLIBRARIES = libnm-vpn-plugin-ssh.la libnm-ssh-properties.la
+plugin_LTLIBRARIES = libnm-vpn-plugin-ssh.la
+if WITH_LIBNM_GLIB
+plugin_LTLIBRARIES += libnm-ssh-properties.la
+endif
 
 libnm_vpn_plugin_ssh_la_SOURCES = \
 	nm-ssh.c \
