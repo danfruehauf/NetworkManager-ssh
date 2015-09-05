@@ -13,7 +13,6 @@ Source0:   https://github.com/danfruehauf/NetworkManager-ssh/archive/%{commit}/%
 
 BuildRequires: autoconf
 BuildRequires: gtk3-devel
-BuildRequires: dbus-devel
 BuildRequires: NetworkManager-devel
 BuildRequires: NetworkManager-glib-devel
 BuildRequires: glib2-devel

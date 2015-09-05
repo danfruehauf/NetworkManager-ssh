@@ -9,8 +9,13 @@ endif
 dbusservicedir = $(sysconfdir)/dbus-1/system.d
 dbusservice_DATA = nm-ssh-service.conf
 
-nmvpnservicedir = $(sysconfdir)/NetworkManager/VPN
+nmvpnservicedir = $(NM_VPN_SERVICE_DIR)
 nmvpnservice_DATA = nm-ssh-service.name
+
+if WITH_LIBNM_GLIB
+nmvpnoldservicedir = $(sysconfdir)/NetworkManager/VPN
+nmvpnoldservice_DATA = nm-ssh-service.name
+endif
 
 desktopfile = nm-ssh.desktop.in
 iconfile = gnome-mime-application-x-ssh-settings.png
@@ -27,7 +32,9 @@ if WITH_GNOME
 endif
 
 nm-ssh-service.name: $(srcdir)/nm-ssh-service.name.in
-	sed -e 's|[@]LIBEXECDIR[@]|$(libexecdir)|g' $< >$@
+	sed -e 's|[@]LIBEXECDIR[@]|$(libexecdir)|g' \
+	    -e 's|[@]PLUGINDIR[@]|$(libdir)/NetworkManager|g' \
+	    $< >$@
 
 DISTCHECK_CONFIGURE_FLAGS = --with-tests=yes
 

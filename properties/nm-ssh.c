@@ -37,12 +37,29 @@
 
 #define NM_VPN_API_SUBJECT_TO_CHANGE
 
+#ifdef NM_SSH_OLD
+#define NM_VPN_LIBNM_COMPAT
 #include <nm-vpn-plugin-ui-interface.h>
 #include <nm-setting-vpn.h>
 #include <nm-setting-connection.h>
 #include <nm-setting-ip4-config.h>
 
-#include "src/nm-ssh-service.h"
+#define SSH_EDITOR_PLUGIN_ERROR                     NM_SETTING_VPN_ERROR
+#define SSH_EDITOR_PLUGIN_ERROR_INVALID_PROPERTY    NM_SETTING_VPN_ERROR_INVALID_PROPERTY
+#define SSH_EDITOR_PLUGIN_ERROR_FAILED              NM_SETTING_VPN_ERROR_UNKNOWN
+
+#define nm_simple_connection_new nm_connection_new
+
+#else /* !NM_SSH_OLD */
+
+#include <NetworkManager.h>
+
+#define SSH_EDITOR_PLUGIN_ERROR                     NM_CONNECTION_ERROR
+#define SSH_EDITOR_PLUGIN_ERROR_INVALID_PROPERTY    NM_CONNECTION_ERROR_INVALID_PROPERTY
+#define SSH_EDITOR_PLUGIN_ERROR_FAILED              NM_CONNECTION_ERROR_FAILED
+#endif
+
+#include "src/nm-ssh-service-defines.h"
 #include "nm-ssh.h"
 #include "advanced-dialog.h"
 
@@ -91,21 +108,28 @@ if (!strncmp (ITEMS[0], IMPORT_KEY, strlen (ITEMS[0]))) { \
 
 /************** plugin class **************/
 
-static void ssh_plugin_ui_interface_init (NMVpnPluginUiInterface *iface_class);
+enum {
+	PROP_0,
+	PROP_NAME,
+	PROP_DESC,
+	PROP_SERVICE
+};
 
-G_DEFINE_TYPE_EXTENDED (SshPluginUi, ssh_plugin_ui, G_TYPE_OBJECT, 0,
-						G_IMPLEMENT_INTERFACE (NM_TYPE_VPN_PLUGIN_UI_INTERFACE,
-											   ssh_plugin_ui_interface_init))
+static void ssh_editor_plugin_interface_init (NMVpnEditorPluginInterface *iface_class);
+
+G_DEFINE_TYPE_EXTENDED (SshEditorPlugin, ssh_editor_plugin, G_TYPE_OBJECT, 0,
+						G_IMPLEMENT_INTERFACE (NM_TYPE_VPN_EDITOR_PLUGIN,
+											   ssh_editor_plugin_interface_init))
 
 /************** UI widget class **************/
 
-static void ssh_plugin_ui_widget_interface_init (NMVpnPluginUiWidgetInterface *iface_class);
+static void ssh_editor_interface_init (NMVpnEditorInterface *iface_class);
 
-G_DEFINE_TYPE_EXTENDED (SshPluginUiWidget, ssh_plugin_ui_widget, G_TYPE_OBJECT, 0,
-						G_IMPLEMENT_INTERFACE (NM_TYPE_VPN_PLUGIN_UI_WIDGET_INTERFACE,
-											   ssh_plugin_ui_widget_interface_init))
+G_DEFINE_TYPE_EXTENDED (SshEditor, ssh_editor, G_TYPE_OBJECT, 0,
+						G_IMPLEMENT_INTERFACE (NM_TYPE_VPN_EDITOR,
+											   ssh_editor_interface_init))
 
-#define SSH_PLUGIN_UI_WIDGET_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), SSH_TYPE_PLUGIN_UI_WIDGET, SshPluginUiWidgetPrivate))
+#define SSH_EDITOR_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), SSH_TYPE_EDITOR, SshEditorPrivate))
 
 typedef struct {
 	GtkBuilder *builder;
@@ -115,57 +139,17 @@ typedef struct {
 	gboolean window_added;
 	GHashTable *advanced;
 	gboolean new_connection;
-} SshPluginUiWidgetPrivate;
+} SshEditorPrivate;
 
 
 #define COL_AUTH_NAME 0
 #define COL_AUTH_PAGE 1
 #define COL_AUTH_TYPE 2
 
-GQuark
-ssh_plugin_ui_error_quark (void)
-{
-	static GQuark error_quark = 0;
-
-	if (G_UNLIKELY (error_quark == 0))
-		error_quark = g_quark_from_static_string ("ssh-plugin-ui-error-quark");
-
-	return error_quark;
-}
-
-/* This should really be standard. */
-#define ENUM_ENTRY(NAME, DESC) { NAME, "" #NAME "", DESC }
-
-GType
-ssh_plugin_ui_error_get_type (void)
-{
-	static GType etype = 0;
-
-	if (etype == 0) {
-		static const GEnumValue values[] = {
-			/* Unknown error. */
-			ENUM_ENTRY (SSH_PLUGIN_UI_ERROR_UNKNOWN, "UnknownError"),
-			/* The connection was missing invalid. */
-			ENUM_ENTRY (SSH_PLUGIN_UI_ERROR_INVALID_CONNECTION, "InvalidConnection"),
-			/* The specified property was invalid. */
-			ENUM_ENTRY (SSH_PLUGIN_UI_ERROR_INVALID_PROPERTY, "InvalidProperty"),
-			/* The specified property was missing and is required. */
-			ENUM_ENTRY (SSH_PLUGIN_UI_ERROR_MISSING_PROPERTY, "MissingProperty"),
-			/* The file to import could not be read. */
-			ENUM_ENTRY (SSH_PLUGIN_UI_ERROR_FILE_NOT_READABLE, "FileNotReadable"),
-			/* The file to import could was not an SSH client file. */
-			ENUM_ENTRY (SSH_PLUGIN_UI_ERROR_FILE_NOT_SSH, "FileNotSSH"),
-			{ 0, 0, 0 }
-		};
-		etype = g_enum_register_static ("SshPluginUiError", values);
-	}
-	return etype;
-}
-
 static gboolean
-check_validity (SshPluginUiWidget *self, GError **error)
+check_validity (SshEditor *self, GError **error)
 {
-	SshPluginUiWidgetPrivate *priv = SSH_PLUGIN_UI_WIDGET_GET_PRIVATE (self);
+	SshEditorPrivate *priv = SSH_EDITOR_GET_PRIVATE (self);
 	GtkWidget *widget;
 	const char *str;
 
@@ -173,8 +157,8 @@ check_validity (SshPluginUiWidget *self, GError **error)
 	str = gtk_entry_get_text (GTK_ENTRY (widget));
 	if (!str || !strlen (str)) {
 		g_set_error (error,
-		             SSH_PLUGIN_UI_ERROR,
-		             SSH_PLUGIN_UI_ERROR_INVALID_PROPERTY,
+		             SSH_EDITOR_PLUGIN_ERROR,
+		             SSH_EDITOR_PLUGIN_ERROR_INVALID_PROPERTY,
 		             NM_SSH_KEY_REMOTE);
 		return FALSE;
 	}
@@ -183,8 +167,8 @@ check_validity (SshPluginUiWidget *self, GError **error)
 	str = gtk_entry_get_text (GTK_ENTRY (widget));
 	if (!str || !strlen (str)) {
 		g_set_error (error,
-		             SSH_PLUGIN_UI_ERROR,
-		             SSH_PLUGIN_UI_ERROR_INVALID_PROPERTY,
+		             SSH_EDITOR_PLUGIN_ERROR,
+		             SSH_EDITOR_PLUGIN_ERROR_INVALID_PROPERTY,
 		             NM_SSH_KEY_REMOTE_IP);
 		return FALSE;
 	}
@@ -193,8 +177,8 @@ check_validity (SshPluginUiWidget *self, GError **error)
 	str = gtk_entry_get_text (GTK_ENTRY (widget));
 	if (!str || !strlen (str)) {
 		g_set_error (error,
-		             SSH_PLUGIN_UI_ERROR,
-		             SSH_PLUGIN_UI_ERROR_INVALID_PROPERTY,
+		             SSH_EDITOR_PLUGIN_ERROR,
+		             SSH_EDITOR_PLUGIN_ERROR_INVALID_PROPERTY,
 		             NM_SSH_KEY_LOCAL_IP);
 		return FALSE;
 	}
@@ -203,8 +187,8 @@ check_validity (SshPluginUiWidget *self, GError **error)
 	str = gtk_entry_get_text (GTK_ENTRY (widget));
 	if (!str || !strlen (str)) {
 		g_set_error (error,
-		             SSH_PLUGIN_UI_ERROR,
-		             SSH_PLUGIN_UI_ERROR_INVALID_PROPERTY,
+		             SSH_EDITOR_PLUGIN_ERROR,
+		             SSH_EDITOR_PLUGIN_ERROR_INVALID_PROPERTY,
 		             NM_SSH_KEY_NETMASK);
 		return FALSE;
 	}
@@ -221,14 +205,14 @@ show_password_toggled (GtkToggleButton *togglebutton, GtkEntry *password_entry)
 static void
 stuff_changed_cb (GtkWidget *widget, gpointer user_data)
 {
-	g_signal_emit_by_name (SSH_PLUGIN_UI_WIDGET (user_data), "changed");
+	g_signal_emit_by_name (SSH_EDITOR (user_data), "changed");
 }
 
 static void
 auth_combo_changed_cb (GtkWidget *combo, gpointer user_data)
 {
-	SshPluginUiWidget *self = SSH_PLUGIN_UI_WIDGET (user_data);
-	SshPluginUiWidgetPrivate *priv = SSH_PLUGIN_UI_WIDGET_GET_PRIVATE (self);
+	SshEditor *self = SSH_EDITOR (user_data);
+	SshEditorPrivate *priv = SSH_EDITOR_GET_PRIVATE (self);
 	GtkWidget *auth_notebook;
 	GtkWidget *show_password;
 	GtkWidget *file_chooser;
@@ -271,8 +255,8 @@ advanced_dialog_close_cb (GtkWidget *dialog, gpointer user_data)
 static void
 advanced_dialog_response_cb (GtkWidget *dialog, gint response, gpointer user_data)
 {
-	SshPluginUiWidget *self = SSH_PLUGIN_UI_WIDGET (user_data);
-	SshPluginUiWidgetPrivate *priv = SSH_PLUGIN_UI_WIDGET_GET_PRIVATE (self);
+	SshEditor *self = SSH_EDITOR (user_data);
+	SshEditorPrivate *priv = SSH_EDITOR_GET_PRIVATE (self);
 	GError *error = NULL;
 
 	if (response != GTK_RESPONSE_OK) {
@@ -295,8 +279,8 @@ advanced_dialog_response_cb (GtkWidget *dialog, gint response, gpointer user_dat
 static void
 advanced_button_clicked_cb (GtkWidget *button, gpointer user_data)
 {
-	SshPluginUiWidget *self = SSH_PLUGIN_UI_WIDGET (user_data);
-	SshPluginUiWidgetPrivate *priv = SSH_PLUGIN_UI_WIDGET_GET_PRIVATE (self);
+	SshEditor *self = SSH_EDITOR (user_data);
+	SshEditorPrivate *priv = SSH_EDITOR_GET_PRIVATE (self);
 	GtkWidget *dialog, *toplevel;
 
 	toplevel = gtk_widget_get_toplevel (priv->widget);
@@ -340,7 +324,7 @@ ipv6_toggled_cb (GtkWidget *check, gpointer user_data)
 void
 init_auth_widget (GtkBuilder *builder,
                          GtkSizeGroup *group,
-                         NMSettingVPN *s_vpn,
+                         NMSettingVpn *s_vpn,
                          const char *contype,
                          const char *prefix,
                          ChangedCallback changed_cb,
@@ -400,8 +384,8 @@ init_auth_widget (GtkBuilder *builder,
 static void
 pw_type_combo_changed_cb (GtkWidget *combo, gpointer user_data)
 {
-	SshPluginUiWidget *self = SSH_PLUGIN_UI_WIDGET (user_data);
-	SshPluginUiWidgetPrivate *priv = SSH_PLUGIN_UI_WIDGET_GET_PRIVATE (self);
+	SshEditor *self = SSH_EDITOR (user_data);
+	SshEditorPrivate *priv = SSH_EDITOR_GET_PRIVATE (self);
 	GtkWidget *entry;
 
 	entry = GTK_WIDGET (gtk_builder_get_object (priv->builder, "auth_password_entry"));
@@ -425,13 +409,13 @@ pw_type_combo_changed_cb (GtkWidget *combo, gpointer user_data)
 
 static void
 init_one_pw_combo (
-	SshPluginUiWidget *self,
-	NMSettingVPN *s_vpn,
+	SshEditor *self,
+	NMSettingVpn *s_vpn,
 	const char *combo_name,
 	const char *secret_key,
 	const char *entry_name)
 {
-	SshPluginUiWidgetPrivate *priv = SSH_PLUGIN_UI_WIDGET_GET_PRIVATE (self);
+	SshEditorPrivate *priv = SSH_EDITOR_GET_PRIVATE (self);
 	int active = -1;
 	GtkWidget *widget;
 	GtkListStore *store;
@@ -477,10 +461,10 @@ init_one_pw_combo (
 
 /* FIXME break into smaller functions */
 static gboolean
-init_plugin_ui (SshPluginUiWidget *self, NMConnection *connection, GError **error)
+init_editor_plugin (SshEditor *self, NMConnection *connection, GError **error)
 {
-	SshPluginUiWidgetPrivate *priv = SSH_PLUGIN_UI_WIDGET_GET_PRIVATE (self);
-	NMSettingVPN *s_vpn;
+	SshEditorPrivate *priv = SSH_EDITOR_GET_PRIVATE (self);
+	NMSettingVpn *s_vpn;
 	GtkWidget *widget;
 	GtkListStore *store;
 	GtkTreeIter iter;
@@ -669,10 +653,10 @@ init_plugin_ui (SshPluginUiWidget *self, NMConnection *connection, GError **erro
 }
 
 static GObject *
-get_widget (NMVpnPluginUiWidgetInterface *iface)
+get_widget (NMVpnEditor *iface)
 {
-	SshPluginUiWidget *self = SSH_PLUGIN_UI_WIDGET (iface);
-	SshPluginUiWidgetPrivate *priv = SSH_PLUGIN_UI_WIDGET_GET_PRIVATE (self);
+	SshEditor *self = SSH_EDITOR (iface);
+	SshEditorPrivate *priv = SSH_EDITOR_GET_PRIVATE (self);
 
 	return G_OBJECT (priv->widget);
 }
@@ -680,7 +664,7 @@ get_widget (NMVpnPluginUiWidgetInterface *iface)
 static void
 hash_copy_advanced (gpointer key, gpointer data, gpointer user_data)
 {
-	NMSettingVPN *s_vpn = NM_SETTING_VPN (user_data);
+	NMSettingVpn *s_vpn = NM_SETTING_VPN (user_data);
 	const char *value = (const char *) data;
 
 	g_return_if_fail (value && strlen (value));
@@ -690,7 +674,7 @@ hash_copy_advanced (gpointer key, gpointer data, gpointer user_data)
 
 static gboolean auth_widget_update_connection (
 	GtkBuilder *builder,
-	NMSettingVPN *s_vpn)
+	NMSettingVpn *s_vpn)
 {
 	/* This function populates s_vpn with the auth properties */
 	GtkWidget *widget;
@@ -761,13 +745,13 @@ static gboolean auth_widget_update_connection (
 }
 
 static gboolean
-update_connection (NMVpnPluginUiWidgetInterface *iface,
+update_connection (NMVpnEditor *iface,
                    NMConnection *connection,
                    GError **error)
 {
-	SshPluginUiWidget *self = SSH_PLUGIN_UI_WIDGET (iface);
-	SshPluginUiWidgetPrivate *priv = SSH_PLUGIN_UI_WIDGET_GET_PRIVATE (self);
-	NMSettingVPN *s_vpn;
+	SshEditor *self = SSH_EDITOR (iface);
+	SshEditorPrivate *priv = SSH_EDITOR_GET_PRIVATE (self);
+	NMSettingVpn *s_vpn;
 	GtkWidget *widget;
 	const char *str;
 	gboolean valid = FALSE;
@@ -847,25 +831,25 @@ is_new_func (const char *key, const char *value, gpointer user_data)
 	*is_new = FALSE;
 }
 
-static NMVpnPluginUiWidgetInterface *
-nm_vpn_plugin_ui_widget_interface_new (NMConnection *connection, GError **error)
+static NMVpnEditor *
+nm_vpn_editor_interface_new (NMConnection *connection, GError **error)
 {
-	NMVpnPluginUiWidgetInterface *object;
-	SshPluginUiWidgetPrivate *priv;
+	NMVpnEditor *object;
+	SshEditorPrivate *priv;
 	char *ui_file;
 	gboolean new = TRUE;
-	NMSettingVPN *s_vpn;
+	NMSettingVpn *s_vpn;
 
 	if (error)
 		g_return_val_if_fail (*error == NULL, NULL);
 
-	object = NM_VPN_PLUGIN_UI_WIDGET_INTERFACE (g_object_new (SSH_TYPE_PLUGIN_UI_WIDGET, NULL));
+	object = g_object_new (SSH_TYPE_EDITOR, NULL);
 	if (!object) {
-		g_set_error (error, SSH_PLUGIN_UI_ERROR, 0, "could not create ssh object");
+		g_set_error (error, SSH_EDITOR_PLUGIN_ERROR, 0, "could not create ssh object");
 		return NULL;
 	}
 
-	priv = SSH_PLUGIN_UI_WIDGET_GET_PRIVATE (object);
+	priv = SSH_EDITOR_GET_PRIVATE (object);
 
 	ui_file = g_strdup_printf ("%s/%s", UIDIR, "nm-ssh-dialog.ui");
 	priv->builder = gtk_builder_new ();
@@ -876,7 +860,7 @@ nm_vpn_plugin_ui_widget_interface_new (NMConnection *connection, GError **error)
 		g_warning ("Couldn't load builder file: %s",
 		           error && *error ? (*error)->message : "(unknown)");
 		g_clear_error (error);
-		g_set_error (error, SSH_PLUGIN_UI_ERROR, 0,
+		g_set_error (error, SSH_EDITOR_PLUGIN_ERROR, 0,
 		             "could not load required resources from %s", ui_file);
 		g_free (ui_file);
 		g_object_unref (object);
@@ -887,7 +871,7 @@ nm_vpn_plugin_ui_widget_interface_new (NMConnection *connection, GError **error)
 
 	priv->widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "ssh_main_vbox"));
 	if (!priv->widget) {
-		g_set_error (error, SSH_PLUGIN_UI_ERROR, 0, "could not load UI widget");
+		g_set_error (error, SSH_EDITOR_PLUGIN_ERROR, 0, "could not load UI widget");
 		g_object_unref (object);
 		return NULL;
 	}
@@ -900,7 +884,7 @@ nm_vpn_plugin_ui_widget_interface_new (NMConnection *connection, GError **error)
 		nm_setting_vpn_foreach_data_item (s_vpn, is_new_func, &new);
 	priv->new_connection = new;
 
-	if (!init_plugin_ui (SSH_PLUGIN_UI_WIDGET (object), connection, error)) {
+	if (!init_editor_plugin (SSH_EDITOR (object), connection, error)) {
 		g_object_unref (object);
 		return NULL;
 	}
@@ -917,8 +901,8 @@ nm_vpn_plugin_ui_widget_interface_new (NMConnection *connection, GError **error)
 static void
 dispose (GObject *object)
 {
-	SshPluginUiWidget *plugin = SSH_PLUGIN_UI_WIDGET (object);
-	SshPluginUiWidgetPrivate *priv = SSH_PLUGIN_UI_WIDGET_GET_PRIVATE (plugin);
+	SshEditor *plugin = SSH_EDITOR (object);
+	SshEditorPrivate *priv = SSH_EDITOR_GET_PRIVATE (plugin);
 
 	if (priv->group)
 		g_object_unref (priv->group);
@@ -935,26 +919,26 @@ dispose (GObject *object)
 	if (priv->advanced)
 		g_hash_table_destroy (priv->advanced);
 
-	G_OBJECT_CLASS (ssh_plugin_ui_widget_parent_class)->dispose (object);
+	G_OBJECT_CLASS (ssh_editor_parent_class)->dispose (object);
 }
 
 static void
-ssh_plugin_ui_widget_class_init (SshPluginUiWidgetClass *req_class)
+ssh_editor_class_init (SshEditorClass *req_class)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (req_class);
 
-	g_type_class_add_private (req_class, sizeof (SshPluginUiWidgetPrivate));
+	g_type_class_add_private (req_class, sizeof (SshEditorPrivate));
 
 	object_class->dispose = dispose;
 }
 
 static void
-ssh_plugin_ui_widget_init (SshPluginUiWidget *plugin)
+ssh_editor_init (SshEditor *plugin)
 {
 }
 
 static void
-ssh_plugin_ui_widget_interface_init (NMVpnPluginUiWidgetInterface *iface_class)
+ssh_editor_interface_init (NMVpnEditorInterface *iface_class)
 {
 	/* interface implementation */
 	iface_class->get_widget = get_widget;
@@ -962,11 +946,11 @@ ssh_plugin_ui_widget_interface_init (NMVpnPluginUiWidgetInterface *iface_class)
 }
 
 static NMConnection *
-import (NMVpnPluginUiInterface *iface, const char *path, GError **error)
+import (NMVpnEditorPlugin *iface, const char *path, GError **error)
 {
 	NMConnection *connection = NULL;
 	NMSettingConnection *s_con;
-	NMSettingVPN *s_vpn;
+	NMSettingVpn *s_vpn;
 	char *contents = NULL;
 	char **lines = NULL;
 	char *ext;
@@ -975,16 +959,16 @@ import (NMVpnPluginUiInterface *iface, const char *path, GError **error)
 	ext = strrchr (path, '.');
 	if (!ext) {
 		g_set_error (error,
-		             SSH_PLUGIN_UI_ERROR,
-		             SSH_PLUGIN_UI_ERROR_FILE_NOT_SSH,
+		             SSH_EDITOR_PLUGIN_ERROR,
+		             SSH_EDITOR_PLUGIN_ERROR_FAILED,
 		             "unknown OpenVPN file extension, should be .sh");
 		goto out;
 	}
 
 	if (strncmp (ext, ".sh", strlen(".sh"))) {
 		g_set_error (error,
-		             SSH_PLUGIN_UI_ERROR,
-		             SSH_PLUGIN_UI_ERROR_FILE_NOT_SSH,
+		             SSH_EDITOR_PLUGIN_ERROR,
+		             SSH_EDITOR_PLUGIN_ERROR_FAILED,
 		             "unknown SSH file extension, should be .sh");
 		goto out;
 	}
@@ -1011,13 +995,13 @@ import (NMVpnPluginUiInterface *iface, const char *path, GError **error)
 	lines = g_strsplit_set (contents, "\r\n", 0);
 	if (g_strv_length (lines) <= 1) {
 		g_set_error (error,
-		             SSH_PLUGIN_UI_ERROR,
-		             SSH_PLUGIN_UI_ERROR_FILE_NOT_READABLE,
+		             SSH_EDITOR_PLUGIN_ERROR,
+		             SSH_EDITOR_PLUGIN_ERROR_FAILED,
 		             "not a valid OpenVPN configuration file");
 		goto out;
 	}
 
-	connection = nm_connection_new ();
+	connection = nm_simple_connection_new ();
 	s_con = NM_SETTING_CONNECTION (nm_setting_connection_new ());
 	nm_connection_add_setting (connection, NM_SETTING (s_con));
 
@@ -1102,13 +1086,13 @@ out:
 }
 
 static gboolean
-export (NMVpnPluginUiInterface *iface,
+export (NMVpnEditorPlugin *iface,
         const char *path,
         NMConnection *connection,
         GError **error)
 {
 	NMSettingConnection *s_con;
-	NMSettingVPN *s_vpn;
+	NMSettingVpn *s_vpn;
 	FILE *f;
 	const char *value;
 	const char *auth_type = NULL;
@@ -1138,7 +1122,7 @@ export (NMVpnPluginUiInterface *iface,
 	s_con = NM_SETTING_CONNECTION (nm_connection_get_setting (connection, NM_TYPE_SETTING_CONNECTION));
 	g_assert (s_con);
 
-	s_vpn = (NMSettingVPN *) nm_connection_get_setting (connection, NM_TYPE_SETTING_VPN);
+	s_vpn = (NMSettingVpn *) nm_connection_get_setting (connection, NM_TYPE_SETTING_VPN);
 
 	f = fopen (path, "w");
 	if (!f) {
@@ -1333,7 +1317,7 @@ done:
 }
 
 static char *
-get_suggested_name (NMVpnPluginUiInterface *iface, NMConnection *connection)
+get_suggested_filename (NMVpnEditorPlugin *iface, NMConnection *connection)
 {
 	NMSettingConnection *s_con;
 	const char *id;
@@ -1350,15 +1334,15 @@ get_suggested_name (NMVpnPluginUiInterface *iface, NMConnection *connection)
 }
 
 static guint32
-get_capabilities (NMVpnPluginUiInterface *iface)
+get_capabilities (NMVpnEditorPlugin *iface)
 {
-	return (NM_VPN_PLUGIN_UI_CAPABILITY_IMPORT | NM_VPN_PLUGIN_UI_CAPABILITY_EXPORT | NM_VPN_PLUGIN_UI_CAPABILITY_IPV6);
+	return (NM_VPN_EDITOR_PLUGIN_CAPABILITY_IMPORT | NM_VPN_EDITOR_PLUGIN_CAPABILITY_EXPORT | NM_VPN_EDITOR_PLUGIN_CAPABILITY_IPV6);
 }
 
-static NMVpnPluginUiWidgetInterface *
-ui_factory (NMVpnPluginUiInterface *iface, NMConnection *connection, GError **error)
+static NMVpnEditor *
+get_editor (NMVpnEditorPlugin *iface, NMConnection *connection, GError **error)
 {
-	return nm_vpn_plugin_ui_widget_interface_new (connection, error);
+	return nm_vpn_editor_interface_new (connection, error);
 }
 
 static void
@@ -1366,13 +1350,13 @@ get_property (GObject *object, guint prop_id,
 			  GValue *value, GParamSpec *pspec)
 {
 	switch (prop_id) {
-	case NM_VPN_PLUGIN_UI_INTERFACE_PROP_NAME:
+	case PROP_NAME:
 		g_value_set_string (value, SSH_PLUGIN_NAME);
 		break;
-	case NM_VPN_PLUGIN_UI_INTERFACE_PROP_DESC:
+	case PROP_DESC:
 		g_value_set_string (value, SSH_PLUGIN_DESC);
 		break;
-	case NM_VPN_PLUGIN_UI_INTERFACE_PROP_SERVICE:
+	case PROP_SERVICE:
 		g_value_set_string (value, SSH_PLUGIN_SERVICE);
 		break;
 	default:
@@ -1382,47 +1366,47 @@ get_property (GObject *object, guint prop_id,
 }
 
 static void
-ssh_plugin_ui_class_init (SshPluginUiClass *req_class)
+ssh_editor_plugin_class_init (SshEditorPluginClass *req_class)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (req_class);
 
 	object_class->get_property = get_property;
 
 	g_object_class_override_property (object_class,
-									  NM_VPN_PLUGIN_UI_INTERFACE_PROP_NAME,
-									  NM_VPN_PLUGIN_UI_INTERFACE_NAME);
+									  PROP_NAME,
+									  NM_VPN_EDITOR_PLUGIN_NAME);
 
 	g_object_class_override_property (object_class,
-									  NM_VPN_PLUGIN_UI_INTERFACE_PROP_DESC,
-									  NM_VPN_PLUGIN_UI_INTERFACE_DESC);
+									  PROP_DESC,
+									  NM_VPN_EDITOR_PLUGIN_DESCRIPTION);
 
 	g_object_class_override_property (object_class,
-									  NM_VPN_PLUGIN_UI_INTERFACE_PROP_SERVICE,
-									  NM_VPN_PLUGIN_UI_INTERFACE_SERVICE);
+									  PROP_SERVICE,
+									  NM_VPN_EDITOR_PLUGIN_SERVICE);
 }
 
 static void
-ssh_plugin_ui_init (SshPluginUi *plugin)
+ssh_editor_plugin_init (SshEditorPlugin *plugin)
 {
 }
 
 static void
-ssh_plugin_ui_interface_init (NMVpnPluginUiInterface *iface_class)
+ssh_editor_plugin_interface_init (NMVpnEditorPluginInterface *iface_class)
 {
 	/* interface implementation */
-	iface_class->ui_factory = ui_factory;
+	iface_class->get_editor = get_editor;
 	iface_class->get_capabilities = get_capabilities;
 	iface_class->import_from_file = import;
 	iface_class->export_to_file = export;
-	iface_class->get_suggested_name = get_suggested_name;
+	iface_class->get_suggested_filename = get_suggested_filename;
 }
 
-G_MODULE_EXPORT NMVpnPluginUiInterface *
-nm_vpn_plugin_ui_factory (GError **error)
+G_MODULE_EXPORT NMVpnEditorPlugin *
+nm_vpn_editor_plugin_factory (GError **error)
 {
 	if (error)
 		g_return_val_if_fail (*error == NULL, NULL);
 
-	return NM_VPN_PLUGIN_UI_INTERFACE (g_object_new (SSH_TYPE_PLUGIN_UI, NULL));
+	return g_object_new (SSH_TYPE_EDITOR_PLUGIN, NULL);
 }
 

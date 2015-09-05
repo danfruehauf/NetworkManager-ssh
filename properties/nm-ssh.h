@@ -26,69 +26,52 @@
 
 #include <glib-object.h>
 
-typedef enum
-{
-	SSH_PLUGIN_UI_ERROR_UNKNOWN = 0,
-	SSH_PLUGIN_UI_ERROR_INVALID_CONNECTION,
-	SSH_PLUGIN_UI_ERROR_INVALID_PROPERTY,
-	SSH_PLUGIN_UI_ERROR_MISSING_PROPERTY,
-	SSH_PLUGIN_UI_ERROR_FILE_NOT_READABLE,
-	SSH_PLUGIN_UI_ERROR_FILE_NOT_SSH
-} SshPluginUiError;
+#define SSH_TYPE_EDITOR_PLUGIN            (ssh_editor_plugin_get_type ())
+#define SSH_EDITOR_PLUGIN(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SSH_TYPE_EDITOR_PLUGIN, SshEditorPlugin))
+#define SSH_EDITOR_PLUGIN_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SSH_TYPE_EDITOR_PLUGIN, SshEditorPluginClass))
+#define SSH_IS_EDITOR_PLUGIN(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SSH_TYPE_EDITOR_PLUGIN))
+#define SSH_IS_EDITOR_PLUGIN_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((obj), SSH_TYPE_EDITOR_PLUGIN))
+#define SSH_EDITOR_PLUGIN_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), SSH_TYPE_EDITOR_PLUGIN, SshEditorPluginClass))
 
-#define SSH_TYPE_PLUGIN_UI_ERROR (ssh_plugin_ui_error_get_type ()) 
-GType ssh_plugin_ui_error_get_type (void);
+typedef struct _SshEditorPlugin SshEditorPlugin;
+typedef struct _SshEditorPluginClass SshEditorPluginClass;
 
-#define SSH_PLUGIN_UI_ERROR (ssh_plugin_ui_error_quark ())
-GQuark ssh_plugin_ui_error_quark (void);
-
-
-#define SSH_TYPE_PLUGIN_UI            (ssh_plugin_ui_get_type ())
-#define SSH_PLUGIN_UI(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SSH_TYPE_PLUGIN_UI, SshPluginUi))
-#define SSH_PLUGIN_UI_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SSH_TYPE_PLUGIN_UI, SshPluginUiClass))
-#define SSH_IS_PLUGIN_UI(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SSH_TYPE_PLUGIN_UI))
-#define SSH_IS_PLUGIN_UI_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((obj), SSH_TYPE_PLUGIN_UI))
-#define SSH_PLUGIN_UI_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), SSH_TYPE_PLUGIN_UI, SshPluginUiClass))
-
-typedef struct _SshPluginUi SshPluginUi;
-typedef struct _SshPluginUiClass SshPluginUiClass;
-
-struct _SshPluginUi {
+struct _SshEditorPlugin {
 	GObject parent;
 };
 
-struct _SshPluginUiClass {
+struct _SshEditorPluginClass {
 	GObjectClass parent;
 };
 
-GType ssh_plugin_ui_get_type (void);
+GType ssh_editor_plugin_get_type (void);
 
 
-#define SSH_TYPE_PLUGIN_UI_WIDGET            (ssh_plugin_ui_widget_get_type ())
-#define SSH_PLUGIN_UI_WIDGET(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SSH_TYPE_PLUGIN_UI_WIDGET, SshPluginUiWidget))
-#define SSH_PLUGIN_UI_WIDGET_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SSH_TYPE_PLUGIN_UI_WIDGET, SshPluginUiWidgetClass))
-#define SSH_IS_PLUGIN_UI_WIDGET(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SSH_TYPE_PLUGIN_UI_WIDGET))
-#define SSH_IS_PLUGIN_UI_WIDGET_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((obj), SSH_TYPE_PLUGIN_UI_WIDGET))
-#define SSH_PLUGIN_UI_WIDGET_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), SSH_TYPE_PLUGIN_UI_WIDGET, SshPluginUiWidgetClass))
+#define SSH_TYPE_EDITOR            (ssh_editor_get_type ())
+#define SSH_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SSH_TYPE_EDITOR, SshEditor))
+#define SSH_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SSH_TYPE_EDITOR, SshEditorClass))
+#define SSH_IS_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SSH_TYPE_EDITOR))
+#define SSH_IS_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((obj), SSH_TYPE_EDITOR))
+#define SSH_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), SSH_TYPE_EDITOR, SshEditorClass))
 
-typedef struct _SshPluginUiWidget SshPluginUiWidget;
-typedef struct _SshPluginUiWidgetClass SshPluginUiWidgetClass;
+typedef struct _SshEditor SshEditor;
+typedef struct _SshEditorClass SshEditorClass;
 
-struct _SshPluginUiWidget {
+struct _SshEditor {
 	GObject parent;
 };
 
-struct _SshPluginUiWidgetClass {
+struct _SshEditorClass {
 	GObjectClass parent;
 };
 
-GType ssh_plugin_ui_widget_get_type (void);
+GType ssh_editor_get_type (void);
 
 typedef void (*ChangedCallback) (GtkWidget *widget, gpointer user_data);
 
 void init_auth_widget (GtkBuilder *builder,
                        GtkSizeGroup *group,
-                       NMSettingVPN *s_vpn,
+                       NMSettingVpn *s_vpn,
                        const char *contype,
                        const char *prefix,
                        ChangedCallback changed_cb,

@@ -2,9 +2,9 @@ libexec_PROGRAMS = nm-ssh-auth-dialog
 
 nm_ssh_auth_dialog_CPPFLAGS = \
 	$(GTK_CFLAGS) \
-	$(NM_CFLAGS) \
 	$(LIBSECRET_CFLAGS) \
-	$(NMGTK_CFLAGS) \
+	$(LIBNM_CFLAGS) \
+	$(LIBNMA_CFLAGS) \
 	-I$(top_srcdir)/
 	-DICONDIR=\""$(datadir)/pixmaps"\" \
 	-DUIDIR=\""$(uidir)"\" \
@@ -20,8 +20,8 @@ nm_ssh_auth_dialog_SOURCES = \
 
 nm_ssh_auth_dialog_LDADD = \
 	$(GTK_LIBS) \
-	$(NM_LIBS) \
 	$(LIBSECRET_LIBS) \
-	$(NMGTK_LIBS)
+	$(LIBNM_LIBS) \
+	$(LIBNMA_LIBS)
 
 CLEANFILES = *~
