@@ -618,6 +618,7 @@ static gboolean
 nm_ssh_stdout_cb (GIOChannel *source, GIOCondition condition, gpointer user_data)
 {
 	NMVpnServicePlugin *plugin = NM_VPN_SERVICE_PLUGIN (user_data);
+	NMSshPluginPrivate *priv = NM_SSH_PLUGIN_GET_PRIVATE (plugin);
 	char *str = NULL;
 
 	if (!(condition & G_IO_IN))
@@ -641,12 +642,12 @@ nm_ssh_stdout_cb (GIOChannel *source, GIOCondition condition, gpointer user_data
 	} else if (g_str_has_prefix (str, "Tunnel device open failed.")) {
 		/* Opening of local tun device failed... :( */
 		g_warning("Tunnel device open failed.");
-		nm_vpn_service_plugin_set_state (plugin, NM_VPN_SERVICE_STATE_STOPPED);
+		nm_vpn_service_plugin_failure (plugin, NM_VPN_PLUGIN_FAILURE_CONNECT_FAILED);
 	} else if (g_str_has_prefix (str, "debug1: Sending command:")) {
 		/* If we got to sending the command, it means that things are
 		 * established, we should start the timer to get the local
 		 * interface up... */
-		if (NM_VPN_SERVICE_STATE_STOPPED != nm_vpn_service_plugin_get_state (plugin))
+		if (priv->pid)
 			nm_ssh_schedule_ifconfig_timer ((NMSshPlugin*)plugin);
 		else if(debug)
 			g_message("Not starting local timer because plugin is in STOPPED state");
@@ -654,16 +655,16 @@ nm_ssh_stdout_cb (GIOChannel *source, GIOCondition condition, gpointer user_data
 		/* Opening of remote tun device failed... :( */
 		g_warning("Tunnel device open failed on remote server.");
 		g_warning("Make sure you have privileges to open tun/tap devices and that your SSH server is configured with 'PermitTunnel=yes'");
-		nm_vpn_service_plugin_set_state (plugin, NM_VPN_SERVICE_STATE_STOPPED);
+		nm_vpn_service_plugin_failure (plugin, NM_VPN_PLUGIN_FAILURE_CONNECT_FAILED);
 	} else if (g_str_has_prefix (str, "debug1: Remote: Failed to open the tunnel device.")) {
 		/* Opening of remote tun device failed... device busy? */
 		g_warning("Tunnel device open failed on remote server.");
 		g_warning("Is this device free on the remote host?");
-		nm_vpn_service_plugin_set_state (plugin, NM_VPN_SERVICE_STATE_STOPPED);
+		nm_vpn_service_plugin_failure (plugin, NM_VPN_PLUGIN_FAILURE_CONNECT_FAILED);
 	} else if (strncmp (str, "The authenticity of host", 24) == 0) {
 		/* User will have to accept this new host with its fingerprint */
 		g_warning("It is not a known host, continue connecting?");
-		nm_vpn_service_plugin_set_state (plugin, NM_VPN_SERVICE_STATE_STOPPED);
+		nm_vpn_service_plugin_failure (plugin, NM_VPN_PLUGIN_FAILURE_CONNECT_FAILED);
 	}
 
 	g_message("%s", str);
@@ -761,10 +762,10 @@ ssh_watch_cb (GPid pid, gint status, gpointer user_data)
 	g_source_remove(priv->io_data->socket_channel_stderr_eventid);
 	close (g_io_channel_unix_get_fd(priv->io_data->ssh_stderr_channel));
 
-	if (!good_exit)
+	if (good_exit)
+		nm_vpn_service_plugin_disconnect (plugin, NULL);
+	else
 		nm_vpn_service_plugin_failure (plugin, failure);
-
-	nm_vpn_service_plugin_set_state (plugin, NM_VPN_SERVICE_STATE_STOPPED);
 }
 
 static const char *
@@ -1106,7 +1107,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	if (priv->io_data->local_dev_number == -1)
 	{
 		g_warning("Could not assign a free tun/tap device.");
-		nm_vpn_service_plugin_set_state ((NMVpnServicePlugin*)plugin, NM_VPN_SERVICE_STATE_STOPPED);
+		nm_vpn_service_plugin_failure (NM_VPN_SERVICE_PLUGIN (plugin), NM_VPN_PLUGIN_FAILURE_CONNECT_FAILED);
 		return FALSE;
 	}
 
