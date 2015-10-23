@@ -1,11 +1,9 @@
 AM_CPPFLAGS = \
 	$(LIBNM_CFLAGS) \
 	$(GIO_CFLAGS) \
-	-DG_DISABLE_DEPRECATED \
 	-DBINDIR=\"$(bindir)\" \
 	-DPREFIX=\""$(prefix)"\" \
 	-DSYSCONFDIR=\""$(sysconfdir)"\" \
-	-DVERSION="\"$(VERSION)\"" \
 	-DLIBDIR=\""$(libdir)"\" \
 	-DLIBEXECDIR=\""$(libexecdir)"\" \
 	-DLOCALSTATEDIR=\""$(localstatedir)"\" \
