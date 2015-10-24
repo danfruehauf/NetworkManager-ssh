@@ -21,15 +21,10 @@ ui_DATA = nm-ssh-dialog.ui
 common_CFLAGS = \
         $(GTK_CFLAGS) \
         $(GNOMEKEYRING_CFLAGS) \
-        $(DISABLE_DEPRECATED) \
         -I$(top_srcdir)/ \
         -DICONDIR=\""$(datadir)/pixmaps"\" \
         -DUIDIR=\""$(uidir)"\" \
-        -DG_DISABLE_DEPRECATED \
-        -DGDK_DISABLE_DEPRECATED \
-        -DGNOME_DISABLE_DEPRECATED \
-        -DGNOMELOCALEDIR=\"$(datadir)/locale\" \
-        -DVERSION=\"$(VERSION)\"
+        -DGNOMELOCALEDIR=\"$(datadir)/locale\"
 
 libnm_vpn_plugin_ssh_la_CFLAGS = \
         $(common_CFLAGS) \

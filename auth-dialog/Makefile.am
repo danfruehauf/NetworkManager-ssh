@@ -9,11 +9,7 @@ nm_ssh_auth_dialog_CPPFLAGS = \
 	-DICONDIR=\""$(datadir)/pixmaps"\" \
 	-DUIDIR=\""$(uidir)"\" \
 	-DBINDIR=\""$(bindir)"\" \
-	-DG_DISABLE_DEPRECATED \
-	-DGDK_DISABLE_DEPRECATED \
-	-DGNOME_DISABLE_DEPRECATED \
-	-DGNOMELOCALEDIR=\"$(datadir)/locale\" \
-	-DVERSION=\"$(VERSION)\"
+	-DGNOMELOCALEDIR=\"$(datadir)/locale\"
 
 nm_ssh_auth_dialog_SOURCES = \
 	main.c
