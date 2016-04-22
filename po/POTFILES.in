@@ -1,5 +1,6 @@
 # List of source files containing translatable strings.
 # Please keep this file sorted alphabetically.
+appdata/network-manager-ssh.appdata.xml.in
 nm-ssh.desktop.in
 auth-dialog/main.c
 properties/advanced-dialog.c

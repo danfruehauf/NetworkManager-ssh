@@ -21,12 +21,14 @@ Makefile
 Makefile.in
 
 aclocal.m4
+po/NetworkManager-ssh.pot
 compile
 config.*
 configure
 depcomp
 install-sh
 libtool
+network-manager-ssh.appdata.xml
 ltmain.sh
 missing
 nm-ssh-service.name
