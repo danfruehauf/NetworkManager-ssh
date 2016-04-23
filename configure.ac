@@ -1,6 +1,6 @@
 AC_PREREQ(2.52)
 
-AC_INIT(NetworkManager-ssh, 1.1.0, malkodan@gmail.com, NetworkManager-ssh)
+AC_INIT(NetworkManager-ssh, 1.2.0, malkodan@gmail.com, NetworkManager-ssh)
 AM_INIT_AUTOMAKE([1.9 subdir-objects tar-ustar no-dist-gzip dist-xz])
 AM_MAINTAINER_MODE
 
@@ -51,6 +51,7 @@ AC_ARG_WITH(gnome, AS_HELP_STRING([--without-gnome], [Build NetworkManager-ssh w
 AM_CONDITIONAL(WITH_GNOME, test x"$with_gnome" != xno)
 AC_ARG_WITH(libnm-glib, AS_HELP_STRING([--without-libnm-glib], [Build NetworkManager-ssh without libnm-glib comatibility]))
 AM_CONDITIONAL(WITH_LIBNM_GLIB, test x"$with_libnm_glib" != xno)
+AC_ARG_ENABLE(absolute-paths, AS_HELP_STRING([--enable-absolute-paths], [Use absolute paths to in .name files. Useful for development. (default is no)]))
 
 GETTEXT_PACKAGE=NetworkManager-ssh
 AC_SUBST(GETTEXT_PACKAGE)
@@ -90,6 +91,9 @@ NM_VPN_SERVICE_DIR=`$PKG_CONFIG pkg-config --define-variable prefix='\${prefix}'
 AC_SUBST(NM_VPN_SERVICE_DIR)
 
 NM_COMPILER_WARNINGS
+
+test x"$enable_absolute_paths" = x"yes" && NM_PLUGIN_DIR='$(libdir)/NetworkManager/'
+AC_SUBST(NM_PLUGIN_DIR)
 
 dnl
 dnl Constants
