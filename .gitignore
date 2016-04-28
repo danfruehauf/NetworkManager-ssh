@@ -28,7 +28,7 @@ configure
 depcomp
 install-sh
 libtool
-network-manager-ssh.appdata.xml
+network-manager-ssh.metainfo.xml
 ltmain.sh
 missing
 nm-ssh-service.name
