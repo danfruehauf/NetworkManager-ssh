@@ -26,7 +26,7 @@
 #include <glib-object.h>
 #include <nm-vpn-service-plugin.h>
 
-#include "nm-ssh-service-defines.h"
+#include "nm-service-defines.h"
 
 #define NM_TYPE_SSH_PLUGIN            (nm_ssh_plugin_get_type ())
 #define NM_SSH_PLUGIN(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), NM_TYPE_SSH_PLUGIN, NMSshPlugin))

@@ -59,7 +59,7 @@
 #define SSH_EDITOR_PLUGIN_ERROR_FAILED              NM_CONNECTION_ERROR_FAILED
 #endif
 
-#include "src/nm-ssh-service-defines.h"
+#include "nm-service-defines.h"
 #include "nm-ssh.h"
 #include "advanced-dialog.h"
 
