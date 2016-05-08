@@ -137,14 +137,15 @@ AM_CPPFLAGS = \
 	$(LIBNM_CFLAGS) \
 	$(GIO_CFLAGS) \
 	-DNM_SSH_LOCALEDIR=\"$(datadir)/locale\" \
-	-I$(top_srcdir)
+	-I$(top_srcdir) \
+	-I$(top_srcdir)/shared/
 
 libexec_PROGRAMS += nm-ssh-service
 
 nm_ssh_service_SOURCES = \
 	src/nm-ssh-service.c \
 	src/nm-ssh-service.h \
-	src/nm-ssh-service-defines.h
+	shared/nm-service-defines.h
 
 nm_ssh_service_LDADD = \
 	$(LIBNM_LIBS) $(GIO_LIBS)
@@ -205,7 +206,8 @@ auth_dialog_nm_ssh_auth_dialog_CPPFLAGS = \
 	$(LIBSECRET_CFLAGS) \
 	$(LIBNM_CFLAGS) \
 	$(LIBNMA_CFLAGS) \
-	-I$(top_srcdir)/
+	-I$(top_srcdir)/ \
+	-I$(top_srcdir)/shared/
 
 auth_dialog_nm_ssh_auth_dialog_SOURCES = \
 	properties/resources.c \
