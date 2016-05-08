@@ -6,4 +6,6 @@ auth-dialog/main.c
 properties/advanced-dialog.c
 properties/nm-ssh.c
 [type: gettext/glade]properties/nm-ssh-dialog.ui
+shared/nm-utils/nm-shared-utils.c
+shared/nm-utils/nm-vpn-plugin-utils.c
 src/nm-ssh-service.c
