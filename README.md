@@ -38,15 +38,20 @@ Enjoy your new RPM.
 
 ### Ubuntu/Debian
 
-Building a .deb should be straight forward with:
+On recent Debian/Ubuntu distributions you should be able to install with:
+```
+# apt-get install network-manager-ssh
+```
+
+In case you want to build the package for Debian/Ubuntu, you can use the complimentary packaging this repository provides, but **please do not open bugs about it on this GitHub issue tracker.** The correct thing to do is to use the upstream packages provided with the distribution and open bugs on the distribution issue tracker.
+
+Building a .deb *should* be straight forward with:
 ```
 # apt-get install libnm-glib-dev libnm-glib-vpn-dev libnm-util-dev libnm-dev libnma-dev libgnome-keyring-dev dh-autoreconf libgtk-3-dev sshpass
 $ autoreconf -fvi && ./configure && make deb
 ```
 
 Enjoy your new .deb. (It should show up in the directory you `git clone`d from.)
-
-I am still looking for someone to maintain this package for Ubuntu as it seems like there is a demand.
 
 ### Older Distributions
 
@@ -220,6 +225,8 @@ This will create a tunnel of 192.168.0.1<->192.168.0.2 on tun100 on both machine
  * Thomas Young - First user!
  * Whoopie - For nice debian support and testing
  * Oren Held - Invaluable feedback and testing
+ * Lubomir Rintel (@lkundrak)- Keeping this repository up to date with upstream NetworkManager, assisting with Fedora packaging
+ * Lennart Weller (@lhw) - Debian packaging
 
 ## Screenshots
 
