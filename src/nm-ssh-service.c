@@ -1501,15 +1501,15 @@ plugin_state_changed (NMSshPlugin *plugin,
 }
 
 NMSshPlugin *
-nm_ssh_plugin_new (void)
+nm_ssh_plugin_new (const char *bus_name)
 {
 	NMSshPlugin *plugin;
 	GError *error = NULL;
 
 	plugin =  (NMSshPlugin *) g_initable_new (NM_TYPE_SSH_PLUGIN, NULL, &error,
-	                                          NM_VPN_SERVICE_PLUGIN_DBUS_SERVICE_NAME,
-	                                          NM_DBUS_SERVICE_SSH,
+	                                          NM_VPN_SERVICE_PLUGIN_DBUS_SERVICE_NAME, bus_name,
 	                                          NULL);
+
 	if (plugin) {
 		g_signal_connect (G_OBJECT (plugin), "state-changed", G_CALLBACK (plugin_state_changed), NULL);
 	} else {
@@ -1553,10 +1553,12 @@ main (int argc, char *argv[])
 	NMSshPlugin *plugin;
 	gboolean persist = FALSE;
 	GOptionContext *opt_ctx = NULL;
+	gchar *bus_name = NM_DBUS_SERVICE_SSH;
 
 	GOptionEntry options[] = {
 		{ "persist", 0, 0, G_OPTION_ARG_NONE, &persist, N_("Don't quit when VPN connection terminates"), NULL },
 		{ "debug", 0, 0, G_OPTION_ARG_NONE, &debug, N_("Enable verbose debug logging (may expose passwords)"), NULL },
+		{ "bus-name", 0, 0, G_OPTION_ARG_STRING, &bus_name, N_("D-Bus name to use for this instance"), NULL },
 		{NULL}
 	};
 
@@ -1572,7 +1574,7 @@ main (int argc, char *argv[])
 	textdomain (GETTEXT_PACKAGE);
 
 	/* Parse options */
-	opt_ctx = g_option_context_new (NULL);
+	opt_ctx = g_option_context_new (bus_name);
 	g_option_context_set_translation_domain (opt_ctx, GETTEXT_PACKAGE);
 	g_option_context_set_ignore_unknown_options (opt_ctx, FALSE);
 	g_option_context_set_help_enabled (opt_ctx, TRUE);
@@ -1593,7 +1595,7 @@ main (int argc, char *argv[])
 	if (system ("/sbin/modprobe tun") == -1)
 		exit (EXIT_FAILURE);
 
-	plugin = nm_ssh_plugin_new ();
+	plugin = nm_ssh_plugin_new (bus_name);
 	if (!plugin)
 		exit (EXIT_FAILURE);
 
