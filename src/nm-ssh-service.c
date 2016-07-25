@@ -1604,13 +1604,18 @@ NMSshPlugin *
 nm_ssh_plugin_new (void)
 {
 	NMSshPlugin *plugin;
+	GError *error = NULL;
 
-	plugin =  (NMSshPlugin *) g_object_new (NM_TYPE_SSH_PLUGIN,
-	                                            NM_VPN_SERVICE_PLUGIN_DBUS_SERVICE_NAME,
-	                                            NM_DBUS_SERVICE_SSH,
-	                                            NULL);
-	if (plugin)
+	plugin =  (NMSshPlugin *) g_initable_new (NM_TYPE_SSH_PLUGIN, NULL, &error,
+	                                          NM_VPN_SERVICE_PLUGIN_DBUS_SERVICE_NAME,
+	                                          NM_DBUS_SERVICE_SSH,
+	                                          NULL);
+	if (plugin) {
 		g_signal_connect (G_OBJECT (plugin), "state-changed", G_CALLBACK (plugin_state_changed), NULL);
+	} else {
+		g_warning ("Failed to initialize a plugin instance: %s", error->message);
+		g_error_free (error);
+	}
 
 	return plugin;
 }
