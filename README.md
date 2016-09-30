@@ -26,6 +26,10 @@ If you're using Fedora 22 or later, you can simply run:
 ```
 # dnf install NetworkManager-ssh-gnome
 ```
+If you're using Fedora 22 or later, with KDE Plasma 5 run:
+```
+# dnf install NetworkManager-ssh plasma-nm-ssh
+```
 
 That will set you up with NetworkManager and the traditional GNOME interface. I am the current maintainer of the package for Fedora.
 
