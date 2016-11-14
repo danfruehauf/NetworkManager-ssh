@@ -5,6 +5,11 @@ _get_external_interface() {
 	ip route get 1.1.1.1 | head -1 | cut -d' ' -f5
 }
 
+# install ifconfig
+install_ifconfig() {
+	yum install -y net-tools
+}
+
 # permit tunnel on server
 permit_tunnel() {
 	echo 'PermitTunnel=yes' >> /etc/ssh/sshd_config
@@ -30,8 +35,9 @@ firewall_rules() {
 
 # main
 main() {
-	permit_tunnel
-	kernel_forwarding
+	install_ifconfig && \
+	permit_tunnel && \
+	kernel_forwarding && \
 	firewall_rules
 }
 
