@@ -961,7 +961,7 @@ import (NMVpnEditorPlugin *iface, const char *path, GError **error)
 		g_set_error (error,
 		             SSH_EDITOR_PLUGIN_ERROR,
 		             SSH_EDITOR_PLUGIN_ERROR_FAILED,
-		             "unknown OpenVPN file extension, should be .sh");
+		             "unknown SSH file extension, should be .sh");
 		goto out;
 	}
 
@@ -997,7 +997,7 @@ import (NMVpnEditorPlugin *iface, const char *path, GError **error)
 		g_set_error (error,
 		             SSH_EDITOR_PLUGIN_ERROR,
 		             SSH_EDITOR_PLUGIN_ERROR_FAILED,
-		             "not a valid OpenVPN configuration file");
+		             "not a valid SSH configuration file");
 		goto out;
 	}
 
