@@ -1045,7 +1045,6 @@ import (NMVpnEditorPlugin *iface, const char *path, GError **error)
 		PARSE_IMPORT_KEY_WITH_DEFAULT_VALUE_INT (MTU_KEY, NM_SSH_KEY_TUNNEL_MTU, items, s_vpn, NM_SSH_DEFAULT_MTU)
 		PARSE_IMPORT_KEY_WITH_DEFAULT_VALUE_INT (REMOTE_DEV_KEY, NM_SSH_KEY_REMOTE_DEV, items, s_vpn, NM_SSH_DEFAULT_REMOTE_DEV)
 		PARSE_IMPORT_KEY_BOOL (DEV_TYPE_KEY, NM_SSH_KEY_TAP_DEV, items, s_vpn, "tap")
-		PARSE_IMPORT_KEY_BOOL (NO_DEFAULT_ROUTE_KEY, NM_SSH_KEY_NO_DEFAULT_ROUTE, items, s_vpn, YES)
 
 		/* Some extra care required with extra_opts as we need to:
 		 * 1. Use the whole line (might contain = chars in it)
@@ -1116,7 +1115,6 @@ export (NMVpnEditorPlugin *iface,
 	char *preferred_authentication = NULL;
 	unsigned password_prompt_nr = 0;
 	gboolean ipv6 = FALSE;
-	gboolean no_default_route = FALSE;
 	gboolean success = FALSE;
 
 	s_con = NM_SETTING_CONNECTION (nm_connection_get_setting (connection, NM_TYPE_SETTING_CONNECTION));
@@ -1218,11 +1216,6 @@ export (NMVpnEditorPlugin *iface,
 		tunnel_type = g_strdup("point-to-point");
 	}
 
-	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_NO_DEFAULT_ROUTE);
-	if (value && IS_YES(value)) {
-		no_default_route = TRUE;
-	}
-
 	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_IP_6);
 	if (value && IS_YES(value)) {
 		ipv6 = TRUE;
@@ -1287,8 +1280,6 @@ export (NMVpnEditorPlugin *iface,
 	/* Assign tun/tap */
 	fprintf (f, "%s=%s\n", DEV_TYPE_KEY, device_type);
 	fprintf (f, "%s=%s\n", TUNNEL_TYPE_KEY, tunnel_type);
-	fprintf (f, "%s=%s\n\n", NO_DEFAULT_ROUTE_KEY,
-		no_default_route == TRUE ? YES : NO);
 
 	/* Add a little of bash script to probe for a free tun/tap device */
 	fprintf (f, "for i in `seq 0 255`; do ! %s $DEV_TYPE$i >& /dev/null && LOCAL_DEV=$i && break; done", IFCONFIG);

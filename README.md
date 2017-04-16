@@ -147,8 +147,6 @@ That's it, you're done.
 
 ## Authenticating with SSH Agent
 
-Right now only <i>ssh-agent</i> authentication is supported, so you need to:
-
 You will need <i>ssh-agent</i> running before you start NetworkManager-ssh.
 
 How do you know if you have <i>ssh-agent</i> running? Simply run:
