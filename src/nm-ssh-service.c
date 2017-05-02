@@ -95,7 +95,6 @@ typedef struct {
 
 typedef struct {
 	GPid	pid;
-	guint connect_timer;
 	guint connect_count;
 	NMSshPluginIOData *io_data;
 } NMSshPluginPrivate;
@@ -531,76 +530,6 @@ send_network_config (NMSshPlugin *plugin)
 }
 
 static gboolean
-nm_ssh_local_device_up_cb (gpointer data)
-{
-	NMSshPlugin *plugin = NM_SSH_PLUGIN (data);
-	NMSshPluginPrivate *priv = NM_SSH_PLUGIN_GET_PRIVATE (plugin);
-	NMSshPluginIOData *io_data = priv->io_data;
-	char *ifconfig_cmd_4, *ifconfig_cmd_6;
-
-	priv->connect_count++;
-
-	/* IPv4 ifconfig command */
-	ifconfig_cmd_4 = (gpointer) g_strdup_printf (
-		"%s %s%d %s netmask %s pointopoint %s mtu %d up",
-		IFCONFIG,
-		io_data->dev_type,
-		io_data->local_dev_number,
-		io_data->local_addr,
-		io_data->netmask,
-		io_data->remote_addr,
-		priv->io_data->mtu);
-
-	/* IPv6 ifconfig command */
-	if (io_data->ipv6) {
-		ifconfig_cmd_6 = (gpointer) g_strdup_printf (
-			"%s %s%d add %s/%s",
-			IFCONFIG,
-			io_data->dev_type,
-			io_data->local_dev_number,
-			io_data->local_addr_6,
-			io_data->netmask_6);
-	} else {
-		/* No IPv6, we'll just have a null command */
-		ifconfig_cmd_6 = g_strdup("");
-	}
-
-	if (debug) {
-		g_message ("IPv4 ifconfig: '%s'", ifconfig_cmd_4);
-		g_message ("IPv6 ifconfig: '%s'", ifconfig_cmd_6);
-	}
-
-	if ((system(ifconfig_cmd_4) != 0 || system(ifconfig_cmd_6) != 0 ) &&
-		priv->connect_count <= 30)
-	{
-		/* We failed, but we'll try again soon... */
-		g_free(ifconfig_cmd_4);
-		g_free(ifconfig_cmd_6);
-		return TRUE;
-	}
-	g_free(ifconfig_cmd_4);
-	g_free(ifconfig_cmd_6);
-
-	g_message ("Interface %s%d configured.", io_data->dev_type, io_data->local_dev_number);
-
-	priv->connect_timer = 0;
-	send_network_config(plugin);
-
-	/* Return false so we don't get called again */
-	return FALSE;
-}
-
-
-static void
-nm_ssh_schedule_ifconfig_timer (NMSshPlugin *plugin)
-{
-	NMSshPluginPrivate *priv = NM_SSH_PLUGIN_GET_PRIVATE (plugin);
-
-	if (priv->connect_timer == 0)
-		priv->connect_timer = g_timeout_add (1000, nm_ssh_local_device_up_cb, plugin);
-}
-
-static gboolean
 nm_ssh_stdout_cb (GIOChannel *source, GIOCondition condition, gpointer user_data)
 {
 	NMVpnServicePlugin *plugin = NM_VPN_SERVICE_PLUGIN (user_data);
@@ -634,7 +563,7 @@ nm_ssh_stdout_cb (GIOChannel *source, GIOCondition condition, gpointer user_data
 		 * established, we should start the timer to get the local
 		 * interface up... */
 		if (priv->pid)
-			nm_ssh_schedule_ifconfig_timer ((NMSshPlugin*)plugin);
+			send_network_config((NMSshPlugin *)plugin);
 		else if(debug)
 			g_message("Not starting local timer because plugin is in STOPPED state");
 	} else if (g_str_has_prefix (str, "debug1: Remote: Server has rejected tunnel device forwarding")) {
@@ -698,11 +627,6 @@ ssh_watch_cb (GPid pid, gint status, gpointer user_data)
 		g_warning ("ssh died with signal %d", WTERMSIG (status));
 	else
 		g_warning ("ssh died from an unknown cause");
-
-	if (0 != priv->connect_timer) {
-		g_source_remove(priv->connect_timer);
-		priv->connect_timer = 0;
-	}
 
 	/* Reap child if needed. */
 	waitpid (priv->pid, NULL, WNOHANG);
