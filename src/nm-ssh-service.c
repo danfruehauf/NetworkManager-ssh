@@ -78,9 +78,6 @@ typedef struct {
 	char *remote_addr_6;
 	char *netmask_6;
 
-	/* Replace or not the default route, the default is to replace */
-	gboolean no_default_route;
-
 	/* fds for handling input/output of the SSH process */
 	GIOChannel *ssh_stdin_channel;
 	GIOChannel *ssh_stdout_channel;
@@ -98,7 +95,6 @@ typedef struct {
 
 typedef struct {
 	GPid	pid;
-	guint connect_timer;
 	guint connect_count;
 	NMSshPluginIOData *io_data;
 } NMSshPluginPrivate;
@@ -123,7 +119,6 @@ static ValidProperty valid_properties[] = {
 	{ NM_SSH_KEY_REMOTE_DEV,           G_TYPE_INT, 0, 255, FALSE },
 	{ NM_SSH_KEY_TAP_DEV,              G_TYPE_BOOLEAN, 0, 0, FALSE },
 	{ NM_SSH_KEY_REMOTE_USERNAME,      G_TYPE_STRING, 0, 0, FALSE },
-	{ NM_SSH_KEY_NO_DEFAULT_ROUTE,     G_TYPE_BOOLEAN, 0, 0, FALSE },
 	/* FIXME should fix host validation for IPv6 addresses */
 	{ NM_SSH_KEY_IP_6,                 G_TYPE_BOOLEAN, 0, 0, FALSE },
 	{ NM_SSH_KEY_REMOTE_IP_6,          G_TYPE_STRING, 0, 0, FALSE },
@@ -448,11 +443,6 @@ send_network_config (NMSshPlugin *plugin)
 	/* IPv4 specific (local_addr, remote_addr, netmask) */
 	g_variant_builder_add (&config, "{sv}", NM_VPN_PLUGIN_CONFIG_HAS_IP4, g_variant_new_boolean (TRUE));
 
-	/* replace default route? */
-	if (io_data->no_default_route) {
-		g_variant_builder_add (&config, "{sv}", NM_VPN_PLUGIN_IP4_CONFIG_NEVER_DEFAULT, g_variant_new_boolean (TRUE));
-	}
-
 	/* local_address */
 	if (io_data->local_addr)
 	{
@@ -490,11 +480,6 @@ send_network_config (NMSshPlugin *plugin)
 	/* IPv6 specific (local_addr_6, remote_addr_6, netmask_6) */
 	if (io_data->ipv6) {
 		g_variant_builder_add (&config, "{sv}", NM_VPN_PLUGIN_CONFIG_HAS_IP6, g_variant_new_boolean (TRUE));
-
-		/* replace default route? */
-		if (io_data->no_default_route) {
-			g_variant_builder_add (&config, "{sv}", NM_VPN_PLUGIN_IP6_CONFIG_NEVER_DEFAULT, g_variant_new_boolean (TRUE));
-		}
 
 		/* local_addr_6 */
 		if (io_data->local_addr_6)
@@ -545,76 +530,6 @@ send_network_config (NMSshPlugin *plugin)
 }
 
 static gboolean
-nm_ssh_local_device_up_cb (gpointer data)
-{
-	NMSshPlugin *plugin = NM_SSH_PLUGIN (data);
-	NMSshPluginPrivate *priv = NM_SSH_PLUGIN_GET_PRIVATE (plugin);
-	NMSshPluginIOData *io_data = priv->io_data;
-	char *ifconfig_cmd_4, *ifconfig_cmd_6;
-
-	priv->connect_count++;
-
-	/* IPv4 ifconfig command */
-	ifconfig_cmd_4 = (gpointer) g_strdup_printf (
-		"%s %s%d %s netmask %s pointopoint %s mtu %d up",
-		IFCONFIG,
-		io_data->dev_type,
-		io_data->local_dev_number,
-		io_data->local_addr,
-		io_data->netmask,
-		io_data->remote_addr,
-		priv->io_data->mtu);
-
-	/* IPv6 ifconfig command */
-	if (io_data->ipv6) {
-		ifconfig_cmd_6 = (gpointer) g_strdup_printf (
-			"%s %s%d add %s/%s",
-			IFCONFIG,
-			io_data->dev_type,
-			io_data->local_dev_number,
-			io_data->local_addr_6,
-			io_data->netmask_6);
-	} else {
-		/* No IPv6, we'll just have a null command */
-		ifconfig_cmd_6 = g_strdup("");
-	}
-
-	if (debug) {
-		g_message ("IPv4 ifconfig: '%s'", ifconfig_cmd_4);
-		g_message ("IPv6 ifconfig: '%s'", ifconfig_cmd_6);
-	}
-
-	if ((system(ifconfig_cmd_4) != 0 || system(ifconfig_cmd_6) != 0 ) &&
-		priv->connect_count <= 30)
-	{
-		/* We failed, but we'll try again soon... */
-		g_free(ifconfig_cmd_4);
-		g_free(ifconfig_cmd_6);
-		return TRUE;
-	}
-	g_free(ifconfig_cmd_4);
-	g_free(ifconfig_cmd_6);
-
-	g_message ("Interface %s%d configured.", io_data->dev_type, io_data->local_dev_number);
-
-	priv->connect_timer = 0;
-	send_network_config(plugin);
-
-	/* Return false so we don't get called again */
-	return FALSE;
-}
-
-
-static void
-nm_ssh_schedule_ifconfig_timer (NMSshPlugin *plugin)
-{
-	NMSshPluginPrivate *priv = NM_SSH_PLUGIN_GET_PRIVATE (plugin);
-
-	if (priv->connect_timer == 0)
-		priv->connect_timer = g_timeout_add (1000, nm_ssh_local_device_up_cb, plugin);
-}
-
-static gboolean
 nm_ssh_stdout_cb (GIOChannel *source, GIOCondition condition, gpointer user_data)
 {
 	NMVpnServicePlugin *plugin = NM_VPN_SERVICE_PLUGIN (user_data);
@@ -648,7 +563,7 @@ nm_ssh_stdout_cb (GIOChannel *source, GIOCondition condition, gpointer user_data
 		 * established, we should start the timer to get the local
 		 * interface up... */
 		if (priv->pid)
-			nm_ssh_schedule_ifconfig_timer ((NMSshPlugin*)plugin);
+			send_network_config((NMSshPlugin *)plugin);
 		else if(debug)
 			g_message("Not starting local timer because plugin is in STOPPED state");
 	} else if (g_str_has_prefix (str, "debug1: Remote: Server has rejected tunnel device forwarding")) {
@@ -712,11 +627,6 @@ ssh_watch_cb (GPid pid, gint status, gpointer user_data)
 		g_warning ("ssh died with signal %d", WTERMSIG (status));
 	else
 		g_warning ("ssh died from an unknown cause");
-
-	if (0 != priv->connect_timer) {
-		g_source_remove(priv->connect_timer);
-		priv->connect_timer = 0;
-	}
 
 	/* Reap child if needed. */
 	waitpid (priv->pid, NULL, WNOHANG);
@@ -1055,16 +965,6 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 
 	/* Set verbose mode, we'll parse the arguments */
 	add_ssh_arg (args, "-v");
-
-	/* Dictate whether to replace the default route or not */
-	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_NO_DEFAULT_ROUTE);
-	if (tmp && IS_YES(tmp)) {
-		priv->io_data->no_default_route = TRUE;
-	} else {
-		/* That's the default - to replace the default route
-		   It's a VPN after all!! :) */
-		priv->io_data->no_default_route = FALSE;
-	}
 
 	/* FIXME if not using SSH_AUTH_SOCK we can't know where is known_hosts */
 	/* We have SSH_AUTH_SOCK, we'll assume it's owned by the user
