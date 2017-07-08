@@ -72,7 +72,15 @@ Please edit <i>/etc/dbus-1/system.d/org.freedesktop.NetworkManager.conf</i> and 
 <allow send_destination="org.freedesktop.NetworkManager.ssh"/>
 ```
 
-Make sure your target host is known in `/root/.ssh/known_hosts`.
+Make sure your target host is known in `~/.ssh/known_hosts`. If it's not there, you should add it manually or by SSHing to it:
+```
+$ ssh root@TARGET_HOST
+The authenticity of host 'TARGET_HOST' can't be established.
+ECDSA key fingerprint is SHA256:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.
+ECDSA key fingerprint is MD5:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added 'TARGET_HOST' (ECDSA) to the list of known hosts.
+```
 
 If all went right, you should have a new VPN of type <i>SSH</i> when creating a new VPN.
 
