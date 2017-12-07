@@ -45,6 +45,6 @@ typedef struct {
 
 GType nm_ssh_plugin_get_type (void);
 
-NMSshPlugin *nm_ssh_plugin_new (void);
+NMSshPlugin *nm_ssh_plugin_new (const char *bus_name);
 
 #endif /* NM_SSH_SERVICE_H */
