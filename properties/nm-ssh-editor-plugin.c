@@ -170,6 +170,8 @@ import (NMVpnEditorPlugin *iface, const char *path, GError **error)
 		PARSE_IMPORT_KEY (REMOTE_KEY, NM_SSH_KEY_REMOTE, items, s_vpn)
 		PARSE_IMPORT_KEY_WITH_DEFAULT_VALUE_STR (AUTH_TYPE_KEY, NM_SSH_KEY_AUTH_TYPE, items, s_vpn, NM_SSH_AUTH_TYPE_SSH_AGENT)
 		PARSE_IMPORT_KEY_WITH_DEFAULT_VALUE_STR (REMOTE_USERNAME_KEY, NM_SSH_KEY_REMOTE_USERNAME, items, s_vpn, NM_SSH_DEFAULT_REMOTE_USERNAME);
+		PARSE_IMPORT_KEY(SOCKS_ONLY_INTERFACE, NM_SSH_KEY_SOCKS_ONLY_INTERFACE, items, s_vpn);
+		PARSE_IMPORT_KEY(SOCKS_BIND_ADDRESS, NM_SSH_KEY_SOCKS_BIND_ADDRESS, items, s_vpn);
 		PARSE_IMPORT_KEY (KEY_FILE_KEY, NM_SSH_KEY_KEY_FILE, items, s_vpn)
 		PARSE_IMPORT_KEY (REMOTE_IP_KEY, NM_SSH_KEY_REMOTE_IP, items, s_vpn)
 		PARSE_IMPORT_KEY (LOCAL_IP_KEY, NM_SSH_KEY_LOCAL_IP, items, s_vpn)
@@ -219,6 +221,8 @@ export (NMVpnEditorPlugin *iface,
 	const char *remote_dev = NULL;
 	const char *mtu = NULL;
 	const char *remote_username = NULL;
+	const char *socks_only_interface = NULL;
+	const char *socks_bind_address = NULL;
 	char *device_type = NULL;
 	char *tunnel_type = NULL;
 	char *ifconfig_cmd_local_6 = NULL;
@@ -312,6 +316,18 @@ export (NMVpnEditorPlugin *iface,
 	else
 		remote_username = g_strdup(NM_SSH_DEFAULT_REMOTE_USERNAME);
 
+	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_SOCKS_ONLY_INTERFACE);
+	if (value && strlen (value))
+		socks_only_interface = value;
+	else
+		socks_only_interface = NULL;
+
+	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_SOCKS_BIND_ADDRESS);
+	if (value && strlen (value))
+		socks_bind_address = value;
+	else
+		socks_bind_address = NULL;
+
 	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_TAP_DEV);
 	if (value && IS_YES(value)) {
 		device_type = g_strdup("tap");
@@ -385,18 +401,41 @@ export (NMVpnEditorPlugin *iface,
 	fprintf (f, "%s=%s\n", DEV_TYPE_KEY, device_type);
 	fprintf (f, "%s=%s\n", TUNNEL_TYPE_KEY, tunnel_type);
 
-	/* Add a little of bash script to probe for a free tun/tap device */
-	fprintf (f, "for i in `seq 0 255`; do ! %s $DEV_TYPE$i >& /dev/null && LOCAL_DEV=$i && break; done", IFCONFIG);
+	if (socks_only_interface)
+		fprintf (f, "%s=%s\n", SOCKS_ONLY_INTERFACE, socks_only_interface);
 
-	/* The generic lines that will perform the connection */
+	if (socks_bind_address)
+		fprintf (f, "%s=%s\n", SOCKS_BIND_ADDRESS, socks_bind_address);
+
+	/* Add a little of bash script to probe for a free tun/tap device */
+	if (!socks_only_interface)
+	{
+		fprintf (f, "for i in `seq 0 255`; do ! %s $DEV_TYPE$i >& /dev/null && LOCAL_DEV=$i && break; done", IFCONFIG);
+	}
+
 	fprintf (f, "\n");
-	fprintf(f, "ssh -f %s -o PreferredAuthentications=%s -o NumberOfPasswordPrompts=%d -o Tunnel=$TUNNEL_TYPE -o ServerAliveInterval=10 -o TCPKeepAlive=yes -o TunnelDevice=$LOCAL_DEV:$REMOTE_DEV -o User=$REMOTE_USERNAME -o Port=$PORT -o HostName=$REMOTE $REMOTE \"%s $DEV_TYPE$REMOTE_DEV $REMOTE_IP netmask $NETMASK pointopoint $LOCAL_IP; %s\" && \\\n",
+	/* The generic lines that will perform the connection */
+	fprintf(f, "ssh -f %s -o PreferredAuthentications=%s -o NumberOfPasswordPrompts=%d -o ServerAliveInterval=10 -o TCPKeepAlive=yes -o User=$REMOTE_USERNAME -o Port=$PORT -o HostName=$REMOTE",
 		(key_file ? g_strconcat("-i ", key_file, NULL) : ""),
 		preferred_authentication,
-		password_prompt_nr,
-		IFCONFIG,
-		ifconfig_cmd_remote_6);
-	fprintf(f, "%s $DEV_TYPE$LOCAL_DEV $LOCAL_IP netmask $NETMASK pointopoint $REMOTE_IP; %s\n", IFCONFIG, ifconfig_cmd_local_6);
+		password_prompt_nr);
+
+	if (socks_bind_address)
+	{
+		fprintf(f, " -o DynamicForward=%s", socks_bind_address);
+	}
+
+	if (socks_only_interface)
+	{
+		fprintf(f, " -N $REMOTE");
+	}
+	else
+	{
+		fprintf(f, " -o Tunnel=$TUNNEL_TYPE -o TunnelDevice=$LOCAL_DEV:$REMOTE_DEV $REMOTE");
+		fprintf(f, " \"%s $DEV_TYPE$REMOTE_DEV $REMOTE_IP netmask $NETMASK pointopoint $LOCAL_IP; %s\" && \\\n", IFCONFIG, ifconfig_cmd_remote_6);
+		fprintf(f, "%s $DEV_TYPE$LOCAL_DEV $LOCAL_IP netmask $NETMASK pointopoint $REMOTE_IP; %s\n", IFCONFIG, ifconfig_cmd_local_6);
+	}
+	fprintf(f, "\\\n");
 
 	success = TRUE;
 

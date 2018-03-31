@@ -55,6 +55,8 @@ static const char *advanced_keys[] = {
 	NM_SSH_KEY_REMOTE_DEV,
 	NM_SSH_KEY_TAP_DEV,
 	NM_SSH_KEY_REMOTE_USERNAME,
+	NM_SSH_KEY_SOCKS_ONLY_INTERFACE,
+	NM_SSH_KEY_SOCKS_BIND_ADDRESS,
 	NULL
 };
 
@@ -128,6 +130,26 @@ remote_username_toggled_cb (GtkWidget *check, gpointer user_data)
 		gtk_check_button_get_active (GTK_CHECK_BUTTON (check)));
 
 	widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_username_entry"));
+	gtk_widget_set_sensitive (widget, gtk_check_button_get_active (GTK_CHECK_BUTTON (check)));
+}
+
+static void
+socks_only_interface_toggled_cb (GtkWidget *check, gpointer user_data)
+{
+	GtkBuilder *builder = (GtkBuilder *) user_data;
+	GtkWidget *widget;
+
+	widget = GTK_WIDGET (gtk_builder_get_object (builder, "socks_only_interface_entry"));
+	gtk_widget_set_sensitive (widget, gtk_check_button_get_active (GTK_CHECK_BUTTON (check)));
+}
+
+static void
+socks_bind_address_toggled_cb (GtkWidget *check, gpointer user_data)
+{
+	GtkBuilder *builder = (GtkBuilder *) user_data;
+	GtkWidget *widget;
+
+	widget = GTK_WIDGET (gtk_builder_get_object (builder, "socks_bind_address_entry"));
 	gtk_widget_set_sensitive (widget, gtk_check_button_get_active (GTK_CHECK_BUTTON (check)));
 }
 
@@ -259,6 +281,44 @@ advanced_dialog_new (GHashTable *hash)
 		gtk_widget_set_sensitive (widget, FALSE);
 	}
 
+	widget = GTK_WIDGET (gtk_builder_get_object (builder, "socks_only_interface_checkbutton"));
+	g_assert (widget);
+	g_signal_connect (G_OBJECT (widget), "toggled", G_CALLBACK (socks_only_interface_toggled_cb), builder);
+
+	value = g_hash_table_lookup (hash, NM_SSH_KEY_SOCKS_ONLY_INTERFACE);
+	if (value && strlen (value)) {
+		gtk_check_button_set_active (GTK_CHECK_BUTTON (widget), TRUE);
+
+		widget = GTK_WIDGET (gtk_builder_get_object (builder, "socks_only_interface_entry"));
+		gtk_editable_set_text (GTK_EDITABLE (widget), value);
+		gtk_widget_set_sensitive (widget, TRUE);
+	} else {
+		gtk_check_button_set_active (GTK_CHECK_BUTTON (widget), FALSE);
+
+		widget = GTK_WIDGET (gtk_builder_get_object (builder, "socks_only_interface_entry"));
+		gtk_editable_set_text (GTK_EDITABLE (widget), NM_SSH_DEFAULT_SOCKS_ONLY_INTERFACE);
+		gtk_widget_set_sensitive (widget, FALSE);
+	}
+
+	widget = GTK_WIDGET (gtk_builder_get_object (builder, "socks_bind_address_checkbutton"));
+	g_assert (widget);
+	g_signal_connect (G_OBJECT (widget), "toggled", G_CALLBACK (socks_bind_address_toggled_cb), builder);
+
+	value = g_hash_table_lookup (hash, NM_SSH_KEY_SOCKS_BIND_ADDRESS);
+	if (value && strlen (value)) {
+		gtk_check_button_set_active (GTK_CHECK_BUTTON (widget), TRUE);
+
+		widget = GTK_WIDGET (gtk_builder_get_object (builder, "socks_bind_address_entry"));
+		gtk_editable_set_text (GTK_EDITABLE (widget), value);
+		gtk_widget_set_sensitive (widget, TRUE);
+	} else {
+		gtk_check_button_set_active (GTK_CHECK_BUTTON (widget), FALSE);
+
+		widget = GTK_WIDGET (gtk_builder_get_object (builder, "socks_bind_address_entry"));
+		gtk_editable_set_text (GTK_EDITABLE (widget), NM_SSH_DEFAULT_SOCKS_BIND_ADDRESS);
+		gtk_widget_set_sensitive (widget, FALSE);
+	}
+
 out:
 	return dialog;
 }
@@ -317,6 +377,24 @@ advanced_dialog_new_hash_from_dialog (GtkWidget *dialog, GError **error)
 		widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_username_entry"));
 		remote_username = gtk_editable_get_text (GTK_EDITABLE (widget));
 		g_hash_table_insert (hash, g_strdup (NM_SSH_KEY_REMOTE_USERNAME), g_strdup(remote_username));
+	}
+
+	widget = GTK_WIDGET (gtk_builder_get_object (builder, "socks_only_interface_checkbutton"));
+	if (gtk_check_button_get_active (GTK_CHECK_BUTTON (widget))) {
+		const gchar *socks_only_interface;
+
+		widget = GTK_WIDGET (gtk_builder_get_object (builder, "socks_only_interface_entry"));
+		socks_only_interface = gtk_editable_get_text (GTK_EDITABLE (widget));
+		g_hash_table_insert (hash, g_strdup (NM_SSH_KEY_SOCKS_ONLY_INTERFACE), g_strdup(socks_only_interface));
+	}
+
+	widget = GTK_WIDGET (gtk_builder_get_object (builder, "socks_bind_address_checkbutton"));
+	if (gtk_check_button_get_active (GTK_CHECK_BUTTON (widget))) {
+		const gchar *socks_bind_address;
+
+		widget = GTK_WIDGET (gtk_builder_get_object (builder, "socks_bind_address_entry"));
+		socks_bind_address = gtk_editable_get_text (GTK_EDITABLE (widget));
+		g_hash_table_insert (hash, g_strdup (NM_SSH_KEY_SOCKS_BIND_ADDRESS), g_strdup(socks_bind_address));
 	}
 
 	return hash;

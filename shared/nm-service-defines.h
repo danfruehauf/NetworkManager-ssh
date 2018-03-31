@@ -40,6 +40,8 @@
 #define	NM_SSH_KEY_SSH_AUTH_SOCK "ssh-auth-sock"
 #define	NM_SSH_KEY_TAP_DEV "tap-dev"
 #define	NM_SSH_KEY_REMOTE_USERNAME "remote-username"
+#define	NM_SSH_KEY_SOCKS_ONLY_INTERFACE "socks-only-interface"
+#define	NM_SSH_KEY_SOCKS_BIND_ADDRESS "socks-bind-address"
 #define	NM_SSH_KEY_IP_6 "ip-6"
 #define	NM_SSH_KEY_REMOTE_IP_6 "remote-ip-6"
 #define	NM_SSH_KEY_LOCAL_IP_6 "local-ip-6"
@@ -52,6 +54,8 @@
 #define	NM_SSH_DEFAULT_MTU 1500
 #define	NM_SSH_DEFAULT_REMOTE_DEV 100
 #define	NM_SSH_DEFAULT_REMOTE_USERNAME "root"
+#define	NM_SSH_DEFAULT_SOCKS_ONLY_INTERFACE "dummy0"
+#define	NM_SSH_DEFAULT_SOCKS_BIND_ADDRESS "localhost:8080"
 
 #define	NM_SSH_AUTH_TYPE_SSH_AGENT "ssh-agent"
 #define	NM_SSH_AUTH_TYPE_PASSWORD "password"
