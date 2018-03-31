@@ -71,6 +71,8 @@ typedef NMVpnEditor *(*NMVpnEditorFactory) (NMVpnEditorPlugin *editor_plugin,
 #define	PORT_KEY "PORT"
 #define	MTU_KEY "MTU"
 #define	REMOTE_DEV_KEY "REMOTE_DEV"
+#define	SOCKS_ONLY_INTERFACE "SOCKS_ONLY_INTERFACE"
+#define	SOCKS_BIND_ADDRESS "SOCKS_BIND_ADDRESS"
 #define	DEV_TYPE_KEY "DEV_TYPE"
 #define	NO_DEFAULT_ROUTE_KEY "NO_DEFAULT_ROUTE"
 #define	TUNNEL_TYPE_KEY "TUNNEL_TYPE"
