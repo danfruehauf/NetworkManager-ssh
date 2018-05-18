@@ -86,19 +86,8 @@ If all went right, you should have a new VPN of type <i>SSH</i> when creating a 
 
 ### Debugging
 
-When things go wrong and you can't really figure out what's happening, you can run the SSH VPN plugin in debug mode.
-
-As <b>root</b> run (on Fedora/RHEL/CentOS):
-```
-# /usr/libexec/nm-ssh-service --debug
-```
-
-On Debian/Ubuntu:
-```
-# /usr/lib/NetworkManager/nm-ssh-service --debug
-```
-
-Invoke the connection via the NetworkManager icon in your taskbar and you should see the full output of what's going on...
+When things go wrong and you can't really figure out what's happening, have a look at `/var/log/messages` as you spin up the connection. You should
+be able to tell what is going wrong.
 
 ## Server side configuration
 
