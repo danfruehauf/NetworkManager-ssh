@@ -49,8 +49,8 @@ dnl GNOME support
 dnl
 AC_ARG_WITH(gnome, AS_HELP_STRING([--without-gnome], [Build NetworkManager-ssh without GNOME support, e.g. vpn service only]))
 AM_CONDITIONAL(WITH_GNOME, test x"$with_gnome" != xno)
-AC_ARG_WITH(libnm-glib, AS_HELP_STRING([--without-libnm-glib], [Build NetworkManager-ssh without libnm-glib comatibility]))
-AM_CONDITIONAL(WITH_LIBNM_GLIB, test x"$with_libnm_glib" != xno)
+AC_ARG_WITH(libnm-glib, AS_HELP_STRING([--with-libnm-glib], [Build NetworkManager-ssh without libnm-glib comatibility]))
+AM_CONDITIONAL(WITH_LIBNM_GLIB, test x"$with_libnm_glib" == xyes)
 AC_ARG_ENABLE(absolute-paths, AS_HELP_STRING([--enable-absolute-paths], [Use absolute paths to in .name files. Useful for development. (default is no)]))
 
 GETTEXT_PACKAGE=NetworkManager-ssh
@@ -71,7 +71,7 @@ if test x"$with_gnome" != xno; then
 	PKG_CHECK_MODULES(LIBNMA, libnma >= 1.1.0)
 	PKG_CHECK_MODULES(LIBSECRET, libsecret-1)
 
-	if test x"$with_libnm_glib" != xno; then
+	if test x"$with_libnm_glib" == xyes; then
 		PKG_CHECK_MODULES(LIBNM_GTK, libnm-gtk >= 1.1.0)
 		PKG_CHECK_MODULES(LIBNM_GLIB,
 			NetworkManager >= 1.1.0
