@@ -182,6 +182,7 @@ get_secrets (const char *vpn_uuid,
 		return TRUE;
 	}
 
+	gtk_init (NULL, NULL);
 
 	dialog = NMA_VPN_PASSWORD_DIALOG (
 	            nma_vpn_password_dialog_new (_("Authenticate VPN"), prompt, NULL));
@@ -256,10 +257,9 @@ main (int argc, char *argv[])
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
-	gtk_init (&argc, &argv);
-
 	context = g_option_context_new ("- ssh auth dialog");
 	g_option_context_add_main_entries (context, entries, GETTEXT_PACKAGE);
+	g_option_context_add_group (context, gtk_get_option_group (FALSE));
 	g_option_context_parse (context, &argc, &argv, NULL);
 	g_option_context_free (context);
 
