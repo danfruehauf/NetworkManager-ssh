@@ -71,12 +71,14 @@ rm -f %{buildroot}%{_libdir}/NetworkManager/lib*.la
 %config(noreplace) %{_sysconfdir}/NetworkManager/VPN/nm-ssh-service.name
 %{_libexecdir}/nm-ssh-service
 %{_libexecdir}/nm-ssh-auth-dialog
+%{_prefix}/lib/NetworkManager/VPN/nm-ssh-service.name
 
 %files -n NetworkManager-ssh-gnome
 %doc COPYING AUTHORS README ChangeLog
 %{_libdir}/NetworkManager/lib*.so*
 %dir %{_datadir}/gnome-vpn-properties/ssh
 %{_datadir}/gnome-vpn-properties/ssh/nm-ssh-dialog.ui
+%{_datarootdir}/appdata/network-manager-ssh.metainfo.xml
 
 %changelog
 
