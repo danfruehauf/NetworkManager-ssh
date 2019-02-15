@@ -47,6 +47,8 @@
 #define	NM_SSH_KEY_NETMASK_6 "netmask-6"
 #define	NM_SSH_KEY_AUTH_TYPE "auth-type"
 #define	NM_SSH_KEY_KEY_FILE "key-file"
+#define	NM_SSH_KEY_SOCKS "socks"
+#define	NM_SSH_KEY_SOCKS_BIND_ADDRESS "socks-bind-address"
 #define	NM_SSH_KEY_PASSWORD "password"
 
 #define	NM_SSH_DEFAULT_PORT 22
@@ -54,6 +56,8 @@
 #define	NM_SSH_DEFAULT_REMOTE_DEV 100
 #define	NM_SSH_DEFAULT_EXTRA_OPTS "-o ServerAliveInterval=10 -o TCPKeepAlive=yes"
 #define	NM_SSH_DEFAULT_REMOTE_USERNAME "root"
+#define	NM_SSH_DEFAULT_SOCKS_BIND_ADDRESS "localhost:12345"
+#define	NM_SSH_DEFAULT_SOCKS_INTERFACE "dummy0"
 
 #define	NM_SSH_AUTH_TYPE_SSH_AGENT "ssh-agent"
 #define	NM_SSH_AUTH_TYPE_PASSWORD "password"

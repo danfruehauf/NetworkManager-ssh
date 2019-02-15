@@ -78,6 +78,9 @@ typedef struct {
 	char *remote_addr_6;
 	char *netmask_6;
 
+	/* Socks mode - no tunnel activated */
+	gboolean socks;
+
 	/* fds for handling input/output of the SSH process */
 	GIOChannel *ssh_stdin_channel;
 	GIOChannel *ssh_stdout_channel;
@@ -126,6 +129,8 @@ static ValidProperty valid_properties[] = {
 	{ NM_SSH_KEY_NETMASK_6,            G_TYPE_STRING, 0, 0, FALSE },
 	{ NM_SSH_KEY_AUTH_TYPE,            G_TYPE_STRING, 0, 0, FALSE },
 	{ NM_SSH_KEY_KEY_FILE,             G_TYPE_STRING, 0, 0, FALSE },
+	{ NM_SSH_KEY_SOCKS,                G_TYPE_BOOLEAN, 0, 0, FALSE },
+	{ NM_SSH_KEY_SOCKS_BIND_ADDRESS,   G_TYPE_STRING, 0, 0, FALSE },
 	{ NM_SSH_KEY_PASSWORD"-flags",     G_TYPE_STRING, 0, 0, FALSE },
 	{ NULL,                            G_TYPE_NONE, FALSE }
 };
@@ -165,14 +170,14 @@ validate_one_property (const char *key, const char *value, gpointer user_data)
 	info->have_items = TRUE;
 
 	/* 'name' is the setting name; always allowed but unused */
-	if (!strncmp (key, NM_SETTING_NAME, strlen(NM_SETTING_NAME)))
+	if (!strncmp (key, NM_SETTING_NAME, strlen(NM_SETTING_NAME)) && strlen(key) == strlen(NM_SETTING_NAME))
 		return;
 
 	for (i = 0; info->table[i].name; i++) {
 		ValidProperty prop = info->table[i];
 		long int tmp;
 
-		if (strncmp (prop.name, key, strlen(prop.name)))
+		if (strncmp (prop.name, key, strlen(prop.name)) && strlen(prop.name) == strlen(key))
 			continue;
 
 		switch (prop.type) {
@@ -530,6 +535,25 @@ send_network_config (NMSshPlugin *plugin)
 }
 
 static gboolean
+send_network_config_socks (NMSshPlugin *plugin)
+{
+	GVariantBuilder     config;
+	GVariant           *val;
+
+	g_variant_builder_init (&config, G_VARIANT_TYPE_VARDICT);
+
+	/* FIXME Make SOCKS interface configurable, currently hardcoded to dummy0 */
+	g_message("SOCKS Sending network config using device %s", NM_SSH_DEFAULT_SOCKS_INTERFACE);
+	val = str_to_gvariant (NM_SSH_DEFAULT_SOCKS_INTERFACE, FALSE);
+	g_variant_builder_add (&config, "{sv}", NM_VPN_PLUGIN_CONFIG_TUNDEV, val);
+
+	/* Send general config */
+	nm_vpn_service_plugin_set_config ((NMVpnServicePlugin*) plugin, g_variant_builder_end (&config));
+
+	return TRUE;
+}
+
+static gboolean
 nm_ssh_stdout_cb (GIOChannel *source, GIOCondition condition, gpointer user_data)
 {
 	NMVpnServicePlugin *plugin = NM_VPN_SERVICE_PLUGIN (user_data);
@@ -566,6 +590,14 @@ nm_ssh_stdout_cb (GIOChannel *source, GIOCondition condition, gpointer user_data
 			send_network_config((NMSshPlugin *)plugin);
 		else if(debug)
 			g_message("Not starting local timer because plugin is in STOPPED state");
+	} else if (g_str_has_prefix (str, "debug1: Local forwarding listening on")) {
+		g_message("Socks port forwarding mode detected");
+		if (priv->io_data->socks) {
+			g_message("Sending socks network configuration");
+			send_network_config_socks((NMSshPlugin *)plugin);
+		} else {
+			g_message("Not sending socks network configuration, because socks mode is not set");
+		}
 	} else if (g_str_has_prefix (str, "debug1: Remote: Server has rejected tunnel device forwarding")) {
 		/* Opening of remote tun device failed... :( */
 		g_warning("Tunnel device open failed on remote server.");
@@ -845,6 +877,13 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	/* Get auth_type from s_vpn */
 	auth_type = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_AUTH_TYPE);
 
+	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_SOCKS);
+	if (tmp && IS_YES(tmp)) {
+		priv->io_data->socks = TRUE;
+	} else {
+		priv->io_data->socks = FALSE;
+	}
+
 	/* Handle different behaviour for different auth types */
 	envp[0] = NULL;
 	if (!strncmp (auth_type, NM_SSH_AUTH_TYPE_PASSWORD, strlen(NM_SSH_AUTH_TYPE_PASSWORD))) {
@@ -992,23 +1031,27 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	}
 
 	/* Device, either tun or tap */
-	add_ssh_arg (args, "-o");
 	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_TAP_DEV);
-	if (tmp && IS_YES(tmp)) {
-		add_ssh_arg (args, "Tunnel=ethernet");
-		g_strlcpy ((gchar *) &priv->io_data->dev_type, "tap", 4);
+	if (priv->io_data->socks) {
+		g_message ("Using socks mode");
 	} else {
-		add_ssh_arg (args, "Tunnel=point-to-point");
-		g_strlcpy ((gchar *) &priv->io_data->dev_type, "tun", 4);
-	}
+		add_ssh_arg (args, "-o");
+		if (tmp && IS_YES(tmp)) {
+			add_ssh_arg (args, "Tunnel=ethernet");
+			g_strlcpy ((gchar *) &priv->io_data->dev_type, "tap", 4);
+		} else {
+			add_ssh_arg (args, "Tunnel=point-to-point");
+			g_strlcpy ((gchar *) &priv->io_data->dev_type, "tun", 4);
+		}
 
-	/* Get a local tun/tap */
-	priv->io_data->local_dev_number = nm_ssh_get_free_device(priv->io_data->dev_type);
-	if (priv->io_data->local_dev_number == -1)
-	{
-		g_warning("Could not assign a free tun/tap device.");
-		nm_vpn_service_plugin_failure (NM_VPN_SERVICE_PLUGIN (plugin), NM_VPN_PLUGIN_FAILURE_CONNECT_FAILED);
-		return FALSE;
+		/* Get a local tun/tap */
+		priv->io_data->local_dev_number = nm_ssh_get_free_device(priv->io_data->dev_type);
+		if (priv->io_data->local_dev_number == -1)
+		{
+			g_warning("Could not assign a free tun/tap device.");
+			nm_vpn_service_plugin_failure (NM_VPN_SERVICE_PLUGIN (plugin), NM_VPN_PLUGIN_FAILURE_CONNECT_FAILED);
+			return FALSE;
+		}
 	}
 
 	/* Remote */
@@ -1181,12 +1224,28 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		priv->io_data->netmask_6 = g_strdup("");
 	}
 
+	if (priv->io_data->socks) {
+		tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_SOCKS_BIND_ADDRESS);
+		if (!tmp) {
+			g_set_error (error,
+			             NM_VPN_PLUGIN_ERROR,
+			             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
+			             "%s",
+			             _("No SOCKS bind address defined."));
+			free_ssh_args (args);
+			return FALSE;
+		}
 
-	/* The -w option, provide a remote and local tun/tap device */
-	tmp_arg = (gpointer) g_strdup_printf (
-			"TunnelDevice=%d:%d", priv->io_data->local_dev_number, priv->io_data->remote_dev_number);
-	add_ssh_arg (args, "-o"); add_ssh_arg (args, tmp_arg);
-	g_free(tmp_arg);
+		g_message ("Using SOCKS proxy (-D %s)", tmp);
+		add_ssh_arg (args, "-D");
+		add_ssh_arg (args, tmp);
+	} else {
+		/* The -w option, provide a remote and local tun/tap device */
+		tmp_arg = (gpointer) g_strdup_printf ("TunnelDevice=%d:%d", priv->io_data->local_dev_number, priv->io_data->remote_dev_number);
+		add_ssh_arg (args, "-o");
+		add_ssh_arg (args, tmp_arg);
+		g_free(tmp_arg);
+	}
 
 	/* Remote username, should usually be root */
 	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_REMOTE_USERNAME);
@@ -1234,12 +1293,19 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	} else {
 		ifconfig_cmd_6 = g_strdup("");
 	}
-	/* Concatenate ifconfig_cmd_4 and ifconfig_cmd_6 to one command */
-	tmp_arg = g_strconcat(ifconfig_cmd_4, "; ", ifconfig_cmd_6, NULL);
-	add_ssh_arg (args, tmp_arg);
+
+	if (priv->io_data->socks) {
+		g_message ("Using socks mode - no remote command set, using -N");
+		add_ssh_arg (args, "-N");
+	} else {
+		/* Concatenate ifconfig_cmd_4 and ifconfig_cmd_6 to one command */
+		tmp_arg = g_strconcat(ifconfig_cmd_4, "; ", ifconfig_cmd_6, NULL);
+		add_ssh_arg (args, tmp_arg);
+		g_free(tmp_arg);
+	}
+
 	g_free(ifconfig_cmd_4);
 	g_free(ifconfig_cmd_6);
-	g_free(tmp_arg);
 
 	/* Wrap it up */
 	g_ptr_array_add (args, NULL);
@@ -1593,6 +1659,9 @@ main (int argc, char *argv[])
 		g_message ("nm-ssh-service (version " DIST_VERSION ") starting...");
 
 	if (system ("/sbin/modprobe tun") == -1)
+		exit (EXIT_FAILURE);
+
+	if (system ("/sbin/modprobe dummy") == -1)
 		exit (EXIT_FAILURE);
 
 	plugin = nm_ssh_plugin_new (bus_name);
