@@ -80,9 +80,7 @@ typedef struct {
 
 	/* fds for handling input/output of the SSH process */
 	GIOChannel *ssh_stdin_channel;
-	GIOChannel *ssh_stdout_channel;
 	GIOChannel *ssh_stderr_channel;
-	guint socket_channel_stdout_eventid;
 	guint socket_channel_stderr_eventid;
 
 	/* hold local and remote tun/tap numbers
@@ -530,7 +528,7 @@ send_network_config (NMSshPlugin *plugin)
 }
 
 static gboolean
-nm_ssh_stdout_cb (GIOChannel *source, GIOCondition condition, gpointer user_data)
+nm_ssh_stderr_cb (GIOChannel *source, GIOCondition condition, gpointer user_data)
 {
 	NMVpnServicePlugin *plugin = NM_VPN_SERVICE_PLUGIN (user_data);
 	NMSshPluginPrivate *priv = NM_SSH_PLUGIN_GET_PRIVATE (plugin);
@@ -549,7 +547,6 @@ nm_ssh_stdout_cb (GIOChannel *source, GIOCondition condition, gpointer user_data
 
 	/* Probe for the remote interface number */
 	if (g_str_has_prefix(str, "debug1: Requesting tun unit")) {
-	} else if (g_str_has_prefix(str, "debug1: Requesting tun unit")) {
 		/* This message denotes the tun/tap device opening on the remote host */
 	} else if (g_str_has_prefix (str, "debug1: sys_tun_open:")) {
 		/* This message denotes the tun/tap device opening on the local host
@@ -643,27 +640,12 @@ ssh_watch_cb (GPid pid, gint status, gpointer user_data)
 	}
 
 	/* Try to get the last bits of data from ssh */
-	if (priv->io_data && priv->io_data->ssh_stdout_channel) {
-		GIOChannel *channel = priv->io_data->ssh_stdout_channel;
-		GIOCondition condition;
-
-		while ((condition = g_io_channel_get_buffer_condition (channel)) & G_IO_IN) {
-			if (!nm_ssh_stdout_cb (channel, condition, plugin)) {
-				good_exit = FALSE;
-				break;
-			}
-		}
-	}
-	g_source_remove(priv->io_data->socket_channel_stdout_eventid);
-	close (g_io_channel_unix_get_fd(priv->io_data->ssh_stdout_channel));
-
-	/* Try to get the last bits of data from ssh */
 	if (priv->io_data && priv->io_data->ssh_stderr_channel) {
 		GIOChannel *channel = priv->io_data->ssh_stderr_channel;
 		GIOCondition condition;
 
 		while ((condition = g_io_channel_get_buffer_condition (channel)) & G_IO_IN) {
-			if (!nm_ssh_stdout_cb (channel, condition, plugin)) {
+			if (!nm_ssh_stderr_cb (channel, condition, plugin)) {
 				good_exit = FALSE;
 				break;
 			}
@@ -822,7 +804,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	GPtrArray *args;
 	GSource *ssh_watch;
 	GPid pid;
-	gint ssh_stdin_fd, ssh_stdout_fd, ssh_stderr_fd;
+	gint ssh_stdin_fd, ssh_stderr_fd;
 	int sshpass_pipe[2];
 	const gchar *password = NULL;
 
@@ -1247,7 +1229,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	/* Spawn with pipes */
 	if (!g_spawn_async_with_pipes (NULL, (char **) args->pdata, envp,
 						G_SPAWN_DO_NOT_REAP_CHILD | G_SPAWN_LEAVE_DESCRIPTORS_OPEN, NULL, NULL, &pid,
-						&ssh_stdin_fd, &ssh_stdout_fd, &ssh_stderr_fd,
+						&ssh_stdin_fd, NULL, &ssh_stderr_fd,
 						error)) {
 		free_ssh_args (args);
 		return FALSE;
@@ -1275,27 +1257,19 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 
 	g_message ("ssh started with pid %d", pid);
 
-	/* Add a watch for the SSH stdout and stderr */
+	/* Add a watch for the SSH stdin and stderr */
 	priv->io_data->ssh_stdin_channel = g_io_channel_unix_new (ssh_stdin_fd);
-	priv->io_data->ssh_stdout_channel = g_io_channel_unix_new (ssh_stdout_fd);
 	priv->io_data->ssh_stderr_channel = g_io_channel_unix_new (ssh_stderr_fd);
 
-	/* Set io watches on stdout and stderr */
-	/* stdout */
-	priv->io_data->socket_channel_stdout_eventid = g_io_add_watch (
-		priv->io_data->ssh_stdout_channel,
-		G_IO_IN,
-		nm_ssh_stdout_cb,
-		plugin);
+	/* Set io watches on stderr */
 	/* stderr */
 	priv->io_data->socket_channel_stderr_eventid = g_io_add_watch (
 		priv->io_data->ssh_stderr_channel,
 		G_IO_IN,
-		nm_ssh_stdout_cb,
+		nm_ssh_stderr_cb,
 		plugin);
 
 	/* Set encoding to NULL */
-	g_io_channel_set_encoding (priv->io_data->ssh_stdout_channel, NULL, NULL);
 	g_io_channel_set_encoding (priv->io_data->ssh_stderr_channel, NULL, NULL);
 
 	/* Add a watch for the process */
