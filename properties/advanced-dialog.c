@@ -51,7 +51,6 @@
 static const char *advanced_keys[] = {
 	NM_SSH_KEY_PORT,
 	NM_SSH_KEY_TUNNEL_MTU,
-	NM_SSH_KEY_EXTRA_OPTS,
 	NM_SSH_KEY_REMOTE_DEV,
 	NM_SSH_KEY_TAP_DEV,
 	NM_SSH_KEY_REMOTE_USERNAME,
@@ -104,16 +103,6 @@ tunmtu_toggled_cb (GtkWidget *check, gpointer user_data)
 	GtkWidget *widget;
 
 	widget = GTK_WIDGET (gtk_builder_get_object (builder, "tunmtu_spinbutton"));
-	gtk_widget_set_sensitive (widget, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (check)));
-}
-
-static void
-extra_opts_toggled_cb (GtkWidget *check, gpointer user_data)
-{
-	GtkBuilder *builder = (GtkBuilder *) user_data;
-	GtkWidget *widget;
-
-	widget = GTK_WIDGET (gtk_builder_get_object (builder, "extra_opts_entry"));
 	gtk_widget_set_sensitive (widget, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (check)));
 }
 
@@ -233,25 +222,6 @@ advanced_dialog_new (GHashTable *hash)
 		gtk_widget_set_sensitive (widget, FALSE);
 	}
 
-	widget = GTK_WIDGET (gtk_builder_get_object (builder, "extra_opts_checkbutton"));
-	g_assert (widget);
-	g_signal_connect (G_OBJECT (widget), "toggled", G_CALLBACK (extra_opts_toggled_cb), builder);
-
-	value = g_hash_table_lookup (hash, NM_SSH_KEY_EXTRA_OPTS);
-	if (value && strlen (value)) {
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), TRUE);
-
-		widget = GTK_WIDGET (gtk_builder_get_object (builder, "extra_opts_entry"));
-		gtk_entry_set_text (GTK_ENTRY (widget), value);
-		gtk_widget_set_sensitive (widget, TRUE);
-	} else {
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), FALSE);
-
-		widget = GTK_WIDGET (gtk_builder_get_object (builder, "extra_opts_entry"));
-		gtk_entry_set_text (GTK_ENTRY (widget), NM_SSH_DEFAULT_EXTRA_OPTS);
-		gtk_widget_set_sensitive (widget, FALSE);
-	}
-
 	widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_dev_checkbutton"));
 	g_assert (widget);
 	g_signal_connect (G_OBJECT (widget), "toggled", G_CALLBACK (remote_dev_toggled_cb), builder);
@@ -337,15 +307,6 @@ advanced_dialog_new_hash_from_dialog (GtkWidget *dialog, GError **error)
 		widget = GTK_WIDGET (gtk_builder_get_object (builder, "port_spinbutton"));
 		port = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (widget));
 		g_hash_table_insert (hash, g_strdup (NM_SSH_KEY_PORT), g_strdup_printf ("%d", port));
-	}
-
-	widget = GTK_WIDGET (gtk_builder_get_object (builder, "extra_opts_checkbutton"));
-	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget))) {
-		const gchar *extra_options;
-
-		widget = GTK_WIDGET (gtk_builder_get_object (builder, "extra_opts_entry"));
-		extra_options = gtk_entry_get_text (GTK_ENTRY (widget));
-		g_hash_table_insert (hash, g_strdup (NM_SSH_KEY_EXTRA_OPTS), g_strdup(extra_options));
 	}
 
 	widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_dev_checkbutton"));

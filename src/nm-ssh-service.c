@@ -113,7 +113,6 @@ static ValidProperty valid_properties[] = {
 	{ NM_SSH_KEY_NETMASK,              G_TYPE_STRING, 0, 0, TRUE },
 	{ NM_SSH_KEY_PORT,                 G_TYPE_INT, 1, 65535, FALSE },
 	{ NM_SSH_KEY_TUNNEL_MTU,           G_TYPE_INT, 1, 9000, FALSE },
-	{ NM_SSH_KEY_EXTRA_OPTS,           G_TYPE_STRING, 0, 0, FALSE },
 	{ NM_SSH_KEY_REMOTE_DEV,           G_TYPE_INT, 0, 255, FALSE },
 	{ NM_SSH_KEY_TAP_DEV,              G_TYPE_BOOLEAN, 0, 0, FALSE },
 	{ NM_SSH_KEY_REMOTE_USERNAME,      G_TYPE_STRING, 0, 0, FALSE },
@@ -717,25 +716,6 @@ add_ssh_arg (GPtrArray *args, const char *arg)
 	g_ptr_array_add (args, (gpointer) g_strdup (arg));
 }
 
-static void
-add_ssh_extra_opts (GPtrArray *args, const char *extra_opts)
-{
-	gchar      **extra_opts_split;
-	gchar      **iter;
-
-	/* Needs to separate arguements nicely */
-	extra_opts_split = g_strsplit (extra_opts, " ", 256);
-	iter = extra_opts_split;
-
-	/* Ensure it's a valid DNS name or IP address */
-	while (*iter) {
-		g_message("%s", *iter);
-		add_ssh_arg (args, *iter);
-		iter++;
-	}
-	g_strfreev (extra_opts_split);
-}
-
 static gboolean
 get_ssh_arg_int (const char *arg, long int *retval)
 {
@@ -964,14 +944,10 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		g_free(known_hosts_file);
 	}
 
-	/* Extra SSH options */
-	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_EXTRA_OPTS);
-	if (tmp && strlen (tmp)) {
-		add_ssh_extra_opts (args, tmp);
-	} else {
-		/* Add default extra options */
-		add_ssh_extra_opts (args, NM_SSH_DEFAULT_EXTRA_OPTS);
-	}
+	add_ssh_arg (args, "-o");
+	add_ssh_arg (args, "ServerAliveInterval=10");
+	add_ssh_arg (args, "-o");
+	add_ssh_arg (args, "TCPKeepAlive=yes");
 
 	/* Device, either tun or tap */
 	add_ssh_arg (args, "-o");
