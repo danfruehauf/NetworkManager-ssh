@@ -1045,31 +1045,6 @@ import (NMVpnEditorPlugin *iface, const char *path, GError **error)
 		PARSE_IMPORT_KEY_WITH_DEFAULT_VALUE_INT (MTU_KEY, NM_SSH_KEY_TUNNEL_MTU, items, s_vpn, NM_SSH_DEFAULT_MTU)
 		PARSE_IMPORT_KEY_WITH_DEFAULT_VALUE_INT (REMOTE_DEV_KEY, NM_SSH_KEY_REMOTE_DEV, items, s_vpn, NM_SSH_DEFAULT_REMOTE_DEV)
 		PARSE_IMPORT_KEY_BOOL (DEV_TYPE_KEY, NM_SSH_KEY_TAP_DEV, items, s_vpn, "tap")
-
-		/* Some extra care required with extra_opts as we need to:
-		 * 1. Use the whole line (might contain = chars in it)
-		 * 2. Strip the single/double quotes */
-		if (!strncmp (items[0], EXTRA_OPTS_KEY, strlen (items[0]))) {
-			gchar *parsed_extra_opts = NULL;
-			gchar *unquoted_extra_opts = NULL;
-			/* Read the whole line, witout the EXTRA_OPTS= part */
-			parsed_extra_opts = g_strdup(*line + strlen(EXTRA_OPTS_KEY) + 1);
-
-			/* Check if string is quoted */
-			if ( (parsed_extra_opts[0] == '"' && parsed_extra_opts[strlen(parsed_extra_opts)-1] == '"') ||
-				/* String is quoted (would usually be), lets strip the quotes */
-				(parsed_extra_opts[0] == '\'' && parsed_extra_opts[strlen(parsed_extra_opts)-1] == '\'') ) {
-				/* Unquote string */
-				parsed_extra_opts[strlen(parsed_extra_opts)-1] = '\0';
-				unquoted_extra_opts = parsed_extra_opts + 1;
-			}
-			/* After all this effort, try to compare to the default value */
-			if (strncmp(unquoted_extra_opts, NM_SSH_DEFAULT_EXTRA_OPTS, strlen(unquoted_extra_opts)))
-				nm_setting_vpn_add_data_item (s_vpn, NM_SSH_KEY_EXTRA_OPTS, unquoted_extra_opts);
-			g_free (items);
-			g_free (parsed_extra_opts);
-			continue;
-		}
 	}
 
 	if (connection)
@@ -1104,7 +1079,6 @@ export (NMVpnEditorPlugin *iface,
 	const char *local_ip_6 = NULL;
 	const char *remote_ip_6 = NULL;
 	const char *netmask_6 = NULL;
-	const char *extra_opts = NULL;
 	const char *remote_dev = NULL;
 	const char *mtu = NULL;
 	const char *remote_username = NULL;
@@ -1189,12 +1163,6 @@ export (NMVpnEditorPlugin *iface,
 	else
 		mtu = g_strdup_printf("%d", NM_SSH_DEFAULT_MTU);
 
-	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_EXTRA_OPTS);
-	if (value && strlen (value))
-		extra_opts = value;
-	else
-		extra_opts = g_strdup(NM_SSH_DEFAULT_EXTRA_OPTS);
-
 	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_REMOTE_DEV);
 	if (value && strlen (value))
 		remote_dev = value;
@@ -1274,7 +1242,6 @@ export (NMVpnEditorPlugin *iface,
 	}
 	fprintf (f, "%s=%s\n", PORT_KEY, port);
 	fprintf (f, "%s=%s\n", MTU_KEY, mtu);
-	fprintf (f, "%s='%s'\n", EXTRA_OPTS_KEY, extra_opts);
 	fprintf (f, "%s=%s\n", REMOTE_DEV_KEY, remote_dev);
 
 	/* Assign tun/tap */
@@ -1286,7 +1253,7 @@ export (NMVpnEditorPlugin *iface,
 
 	/* The generic lines that will perform the connection */
 	fprintf (f, "\n");
-	fprintf(f, "ssh -f %s -o PreferredAuthentications=%s -o NumberOfPasswordPrompts=%d -o Tunnel=$TUNNEL_TYPE $EXTRA_OPTS -o TunnelDevice=$LOCAL_DEV:$REMOTE_DEV -o User=$REMOTE_USERNAME -o Port=$PORT -o HostName=$REMOTE $REMOTE \"%s $DEV_TYPE$REMOTE_DEV $REMOTE_IP netmask $NETMASK pointopoint $LOCAL_IP; %s\" && \\\n",
+	fprintf(f, "ssh -f %s -o PreferredAuthentications=%s -o NumberOfPasswordPrompts=%d -o Tunnel=$TUNNEL_TYPE -o ServerAliveInterval=10 -o TCPKeepAlive=yes -o TunnelDevice=$LOCAL_DEV:$REMOTE_DEV -o User=$REMOTE_USERNAME -o Port=$PORT -o HostName=$REMOTE $REMOTE \"%s $DEV_TYPE$REMOTE_DEV $REMOTE_IP netmask $NETMASK pointopoint $LOCAL_IP; %s\" && \\\n",
 		(key_file ? g_strconcat("-i ", key_file, NULL) : ""),
 		preferred_authentication,
 		password_prompt_nr,

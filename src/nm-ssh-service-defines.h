@@ -36,7 +36,6 @@
 #define	NM_SSH_KEY_NETMASK "netmask"
 #define	NM_SSH_KEY_PORT "port"
 #define	NM_SSH_KEY_TUNNEL_MTU "tunnel-mtu"
-#define	NM_SSH_KEY_EXTRA_OPTS "extra-opts"
 #define	NM_SSH_KEY_REMOTE_DEV "remote-dev"
 #define	NM_SSH_KEY_SSH_AUTH_SOCK "ssh-auth-sock"
 #define	NM_SSH_KEY_TAP_DEV "tap-dev"
@@ -52,7 +51,6 @@
 #define	NM_SSH_DEFAULT_PORT 22
 #define	NM_SSH_DEFAULT_MTU 1500
 #define	NM_SSH_DEFAULT_REMOTE_DEV 100
-#define	NM_SSH_DEFAULT_EXTRA_OPTS "-o ServerAliveInterval=10 -o TCPKeepAlive=yes"
 #define	NM_SSH_DEFAULT_REMOTE_USERNAME "root"
 
 #define	NM_SSH_AUTH_TYPE_SSH_AGENT "ssh-agent"

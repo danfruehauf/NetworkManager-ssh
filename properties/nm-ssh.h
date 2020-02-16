@@ -93,7 +93,6 @@ void init_auth_widget (GtkBuilder *builder,
 #define	NETMASK_6_KEY "NETMASK_6"
 #define	PORT_KEY "PORT"
 #define	MTU_KEY "MTU"
-#define	EXTRA_OPTS_KEY "EXTRA_OPTS"
 #define	REMOTE_DEV_KEY "REMOTE_DEV"
 #define	DEV_TYPE_KEY "DEV_TYPE"
 #define	NO_DEFAULT_ROUTE_KEY "NO_DEFAULT_ROUTE"
