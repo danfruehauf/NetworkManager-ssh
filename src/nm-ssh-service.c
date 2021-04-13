@@ -774,11 +774,11 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	/* This giant function is basically taking care of passing all the
 	 * correct parameters to ssh (and sshpass) */
 	NMSshPluginPrivate *priv = NM_SSH_PLUGIN_GET_PRIVATE (plugin);
-	const char *ssh_binary, *sshpass_binary, *tmp;
-	const char *remote, *port, *mtu, *ssh_agent_socket, *auth_type;
-	char *known_hosts_file;
-	char *tmp_arg;
-	char *ifconfig_cmd_4, *ifconfig_cmd_6;
+	const char *ssh_binary = NULL, *sshpass_binary = NULL, *tmp = NULL;
+	const char *remote = NULL, *port = NULL, *mtu = NULL, *ssh_agent_socket = NULL, *auth_type = NULL;
+	char *known_hosts_file = NULL;
+	char *tmp_arg = NULL;
+	char *ifconfig_cmd_4 = NULL, *ifconfig_cmd_6 = NULL;
 	char *envp[16];
 	long int tmp_int;
 	GPtrArray *args;
