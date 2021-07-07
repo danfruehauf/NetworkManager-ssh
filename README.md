@@ -64,6 +64,9 @@ On old distributions with NetworkManager < 0.9.10, such as Ubuntu 14.04, use the
 $ git checkout 0.9.3
 $ autoreconf -fvi && ./configure && make deb
 ```
+### Arch Linux
+
+A package for Arch is available in the AUR - https://aur.archlinux.org/packages/networkmanager-ssh-git
 
 ## Running
 
