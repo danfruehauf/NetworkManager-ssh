@@ -592,7 +592,7 @@ nm_ssh_get_free_device (const char *device_type)
 
 	for (device = 0; device <= 255; device++)
 	{
-		system_cmd = (gpointer) g_strdup_printf ("%s %s%d >& /dev/null", IFCONFIG, device_type, device);
+		system_cmd = (gpointer) g_strdup_printf ("%s %s%d > /dev/null 2>&1", IFCONFIG, device_type, device);
 		if (system(system_cmd) != 0)
 		{
 			g_free(system_cmd);
