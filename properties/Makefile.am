@@ -22,9 +22,7 @@ common_CFLAGS = \
         $(GTK_CFLAGS) \
         $(GNOMEKEYRING_CFLAGS) \
         -I$(top_srcdir)/ \
-        -DICONDIR=\""$(datadir)/pixmaps"\" \
-        -DUIDIR=\""$(uidir)"\" \
-        -DGNOMELOCALEDIR=\"$(datadir)/locale\"
+        -DUIDIR=\""$(uidir)"\"
 
 libnm_vpn_plugin_ssh_la_CFLAGS = \
         $(common_CFLAGS) \

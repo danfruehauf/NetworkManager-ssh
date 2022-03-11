@@ -6,10 +6,7 @@ nm_ssh_auth_dialog_CPPFLAGS = \
 	$(LIBNM_CFLAGS) \
 	$(LIBNMA_CFLAGS) \
 	-I$(top_srcdir)/
-	-DICONDIR=\""$(datadir)/pixmaps"\" \
-	-DUIDIR=\""$(uidir)"\" \
-	-DBINDIR=\""$(bindir)"\" \
-	-DGNOMELOCALEDIR=\"$(datadir)/locale\"
+	-DUIDIR=\""$(uidir)"\"
 
 nm_ssh_auth_dialog_SOURCES = \
 	main.c

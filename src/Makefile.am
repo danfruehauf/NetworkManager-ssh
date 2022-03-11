@@ -1,13 +1,6 @@
 AM_CPPFLAGS = \
 	$(LIBNM_CFLAGS) \
 	$(GIO_CFLAGS) \
-	-DBINDIR=\"$(bindir)\" \
-	-DPREFIX=\""$(prefix)"\" \
-	-DSYSCONFDIR=\""$(sysconfdir)"\" \
-	-DLIBDIR=\""$(libdir)"\" \
-	-DLIBEXECDIR=\""$(libexecdir)"\" \
-	-DLOCALSTATEDIR=\""$(localstatedir)"\" \
-	-DDATADIR=\"$(datadir)\" \
 	-DNM_SSH_LOCALEDIR=\"$(datadir)/locale\" \
 	-I$(top_srcdir)
 
