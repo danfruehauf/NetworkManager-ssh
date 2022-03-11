@@ -872,8 +872,42 @@ Please make sure the user you specify is allowed to open tun/tap devices on the 
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkFileChooserButton" id="auth_keyfile_filechooserbutton">
+                  <object class="GtkButton" id="auth_keyfile_button">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="hexpand">True</property>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <child>
+                          <object class="GtkLabel" id="auth_keyfile_button_label">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">(None)</property>
+                            <property name="use-underline">True</property>
+                            <property name="xalign">0</property>
+                          </object>
+                          <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkImage">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="icon-name">document-open-symbolic</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                      </object>
+                    </child>
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
@@ -949,6 +983,53 @@ Please make sure the user you specify is allowed to open tun/tap devices on the 
             <property name="fill">False</property>
             <property name="pack_type">end</property>
             <property name="position">2</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkFileChooserDialog" id="auth_keyfile_chooser">
+    <property name="modal">True</property>
+    <action-widgets>
+      <action-widget response="-6">auth_keyfile_chooser_cancel</action-widget>
+      <action-widget response="-3">auth_keyfile_chooser_accept</action-widget>
+    </action-widgets>
+    <child type="titlebar">
+      <object class="GtkHeaderBar">
+        <property name="visible">True</property>
+        <property name="show-close-button">False</property>
+        <child type="title">
+          <object class="GtkLabel">
+            <property name="visible">True</property>
+            <property name="label" translatable="yes">Choose a SSH private key…</property>
+            <style>
+              <class name="title"/>
+            </style>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="auth_keyfile_chooser_cancel">
+            <property name="label" translatable="yes">_Cancel</property>
+            <property name="visible">True</property>
+            <property name="receives-default">False</property>
+            <property name="use-underline">True</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="auth_keyfile_chooser_accept">
+            <property name="label" translatable="yes">_Select</property>
+            <property name="visible">True</property>
+            <property name="receives-default">True</property>
+            <property name="use-underline">True</property>
+            <property name="can-default">True</property>
+            <style>
+              <class name="default"/>
+              <class name="suggested-action"/>
+            </style>
+          </object>
+          <packing>
+            <property name="position">1</property>
+            <property name="pack-type">end</property>
           </packing>
         </child>
       </object>
