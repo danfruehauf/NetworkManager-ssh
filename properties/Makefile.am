@@ -20,7 +20,6 @@ ui_DATA = nm-ssh-dialog.ui
 
 common_CFLAGS = \
         $(GTK_CFLAGS) \
-        $(GNOMEKEYRING_CFLAGS) \
         -I$(top_srcdir)/ \
         -DUIDIR=\""$(uidir)"\"
 
