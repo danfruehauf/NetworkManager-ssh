@@ -47,6 +47,7 @@ typedef struct {
 	gboolean window_added;
 	GHashTable *advanced;
 	gboolean new_connection;
+	GFile *keyfile;
 } SshEditorPrivate;
 
 
@@ -123,7 +124,7 @@ auth_combo_changed_cb (GtkWidget *combo, gpointer user_data)
 	SshEditorPrivate *priv = SSH_EDITOR_GET_PRIVATE (self);
 	GtkWidget *auth_notebook;
 	GtkWidget *show_password;
-	GtkWidget *file_chooser;
+	GtkWidget *keyfile_button;
 	GtkTreeModel *model;
 	GtkTreeIter iter;
 	gint new_page = 0;
@@ -132,8 +133,8 @@ auth_combo_changed_cb (GtkWidget *combo, gpointer user_data)
 	g_assert (auth_notebook);
 	show_password = GTK_WIDGET (gtk_builder_get_object (priv->builder, "auth_password_show_password_checkbutton"));
 	g_assert (show_password);
-	file_chooser = GTK_WIDGET (gtk_builder_get_object (priv->builder, "auth_keyfile_filechooserbutton"));
-	g_assert (file_chooser);
+	keyfile_button = GTK_WIDGET (gtk_builder_get_object (priv->builder, "auth_keyfile_button"));
+	g_assert (keyfile_button);
 
 	model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo));
 	g_assert (model);
@@ -145,7 +146,7 @@ auth_combo_changed_cb (GtkWidget *combo, gpointer user_data)
 	gtk_widget_set_sensitive (show_password, new_page == 1);
 
 	/* Key file entry relevant only to key page (2) */
-	gtk_widget_set_sensitive (file_chooser, new_page == 2);
+	gtk_widget_set_sensitive (keyfile_button, new_page == 2);
 
 	gtk_notebook_set_current_page (GTK_NOTEBOOK (auth_notebook), new_page);
 
@@ -229,19 +230,67 @@ ipv6_toggled_cb (GtkWidget *check, gpointer user_data)
 	gtk_widget_set_sensitive (widget, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (check)));
 }
 
-void
-init_auth_widget (GtkBuilder *builder,
+static void
+chooser_show (GtkWidget *parent, GtkWidget *widget)
+{
+	GtkWidget *toplevel;
+
+	toplevel = gtk_widget_get_toplevel (parent);
+	g_return_if_fail (gtk_widget_is_toplevel (toplevel));
+
+	gtk_window_set_transient_for (GTK_WINDOW (widget), GTK_WINDOW (toplevel));
+	gtk_widget_show (widget);
+}
+
+static void
+chooser_button_update_file (SshEditor *self)
+{
+	SshEditorPrivate *priv = SSH_EDITOR_GET_PRIVATE (self);
+	char *basename = NULL;
+	GtkLabel *label;
+
+	label = GTK_LABEL (gtk_builder_get_object (priv->builder,
+	                                           "auth_keyfile_button_label"));
+
+	if (priv->keyfile)
+		basename = g_file_get_basename (priv->keyfile);
+	if (basename) {
+		gtk_label_set_label (label, basename);
+		g_free (basename);
+	} else {
+		gtk_label_set_label (label, _("(None)"));
+	}
+}
+
+static void
+chooser_response (GtkDialog *chooser, gint response_id, gpointer user_data)
+{
+	SshEditor *self = SSH_EDITOR (user_data);
+	SshEditorPrivate *priv = SSH_EDITOR_GET_PRIVATE (self);
+
+	if (response_id == GTK_RESPONSE_ACCEPT) {
+		if (priv->keyfile)
+			g_object_unref (priv->keyfile);
+		priv->keyfile = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (chooser));
+		chooser_button_update_file (self);
+		stuff_changed_cb (GTK_WIDGET (chooser), self);
+	}
+
+	gtk_widget_hide (GTK_WIDGET (chooser));
+}
+
+static void
+init_auth_widget (SshEditor *self,
+                         GtkBuilder *builder,
                          GtkSizeGroup *group,
                          NMSettingVpn *s_vpn,
                          const char *contype,
-                         const char *prefix,
-                         ChangedCallback changed_cb,
-                         gpointer user_data)
+                         const char *prefix)
 {
+	SshEditorPrivate *priv = SSH_EDITOR_GET_PRIVATE (self);
 	GtkWidget *widget, *widget2;
 	g_return_if_fail (builder != NULL);
 	g_return_if_fail (group != NULL);
-	g_return_if_fail (changed_cb != NULL);
 	g_return_if_fail (prefix != NULL);
 
 	/* Three major connection types here: ssh-agent, key file, password */
@@ -257,7 +306,7 @@ init_auth_widget (GtkBuilder *builder,
 		show_password_toggled (GTK_TOGGLE_BUTTON (widget), GTK_ENTRY (widget2));
 
 		/* Load password */
-		g_signal_connect (G_OBJECT (widget2), "changed", G_CALLBACK (changed_cb), user_data);
+		g_signal_connect (G_OBJECT (widget2), "changed", G_CALLBACK (stuff_changed_cb), self);
 		if (s_vpn) {
 			password = nm_setting_vpn_get_secret (s_vpn, NM_SSH_KEY_PASSWORD);
 			if (password)
@@ -271,16 +320,27 @@ init_auth_widget (GtkBuilder *builder,
 	else if (!strncmp (contype, NM_SSH_AUTH_TYPE_KEY, strlen(NM_SSH_AUTH_TYPE_KEY))) {
 		/* Get key filename and set it */
 		const gchar *filename;
-		widget = GTK_WIDGET (gtk_builder_get_object (builder, "auth_keyfile_filechooserbutton"));
-		/* FIXME add filter */
-		//gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (widget), filter);
-		gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (widget), TRUE);
+
+		widget = GTK_WIDGET (gtk_builder_get_object (builder, "auth_keyfile_chooser"));
+		g_signal_connect_swapped (G_OBJECT (widget), "delete-event",
+					  G_CALLBACK (gtk_widget_hide_on_delete), widget);
+		g_signal_connect (gtk_builder_get_object (builder, "auth_keyfile_button"),
+		                  "clicked", G_CALLBACK (chooser_show), widget);
+
+		g_signal_connect (G_OBJECT (widget), "response", G_CALLBACK (chooser_response), self);
 		if (s_vpn) {
 			filename = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_KEY_FILE);
-			if (filename && strlen (filename))
-				gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (widget), filename);
+			if (filename && strlen (filename)) {
+		                priv->keyfile = g_file_new_for_path (filename);
+		                gtk_file_chooser_set_file (GTK_FILE_CHOOSER (widget),
+				                           priv->keyfile, NULL);
+		        }
 		}
-		g_signal_connect (G_OBJECT (widget), "selection-changed", G_CALLBACK (changed_cb), user_data);
+
+		chooser_button_update_file (self);
+
+		/* FIXME add filter */
+		//gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (widget), filter);
 	} else if (!strncmp (contype, NM_SSH_AUTH_TYPE_SSH_AGENT, strlen(NM_SSH_AUTH_TYPE_SSH_AGENT))) {
 		/* ssh-agent is the default */
 		/* Not much to do here! No options for ssh-agent :) */
@@ -498,9 +558,8 @@ init_editor_plugin (SshEditor *self, NMConnection *connection, GError **error)
 	}
 
 	/* SSH Agent auth widget */
-	init_auth_widget (priv->builder, priv->group, s_vpn,
-		NM_SSH_KEY_AUTH_TYPE, "ssh-agent",
-		stuff_changed_cb, self);
+	init_auth_widget (self, priv->builder, priv->group, s_vpn,
+		NM_SSH_KEY_AUTH_TYPE, "ssh-agent");
 	gtk_list_store_append (store, &iter);
 	gtk_list_store_set (store, &iter,
 		COL_AUTH_NAME, _("SSH Agent"),
@@ -511,9 +570,8 @@ init_editor_plugin (SshEditor *self, NMConnection *connection, GError **error)
 		active = 0;
 
 	/* Password auth widget */
-	init_auth_widget (priv->builder, priv->group, s_vpn,
-		NM_SSH_AUTH_TYPE_PASSWORD, "pw",
-		stuff_changed_cb, self);
+	init_auth_widget (self, priv->builder, priv->group, s_vpn,
+		NM_SSH_AUTH_TYPE_PASSWORD, "pw");
 	gtk_list_store_append (store, &iter);
 	gtk_list_store_set (store, &iter,
 		COL_AUTH_NAME, _("Password"),
@@ -524,9 +582,8 @@ init_editor_plugin (SshEditor *self, NMConnection *connection, GError **error)
 		active = 1;
 
 	/* Key auth widget */
-	init_auth_widget (priv->builder, priv->group, s_vpn,
-		NM_SSH_AUTH_TYPE_KEY, "key",
-		stuff_changed_cb, self);
+	init_auth_widget (self, priv->builder, priv->group, s_vpn,
+		NM_SSH_AUTH_TYPE_KEY, "key");
 	gtk_list_store_append (store, &iter);
 	gtk_list_store_set (store, &iter,
 		COL_AUTH_NAME, _("Key Authentication"),
@@ -578,10 +635,11 @@ hash_copy_advanced (gpointer key, gpointer data, gpointer user_data)
 }
 
 static gboolean auth_widget_update_connection (
-	GtkBuilder *builder,
+	SshEditor *self,
 	NMSettingVpn *s_vpn)
 {
 	/* This function populates s_vpn with the auth properties */
+	SshEditorPrivate *priv = SSH_EDITOR_GET_PRIVATE (self);
 	GtkWidget *widget;
 	GtkWidget *combo_password;
 	GtkComboBox *combo;
@@ -590,7 +648,8 @@ static gboolean auth_widget_update_connection (
 	char *auth_type = NULL;
 	gboolean success = TRUE;
 
-	combo = GTK_COMBO_BOX (GTK_WIDGET (gtk_builder_get_object (builder, "auth_auth_type_combobox")));
+	combo = GTK_COMBO_BOX (GTK_WIDGET (gtk_builder_get_object (priv->builder,
+	                                                           "auth_auth_type_combobox")));
 	model = gtk_combo_box_get_model (combo);
 
 	success = gtk_combo_box_get_active_iter (combo, &iter);
@@ -606,9 +665,10 @@ static gboolean auth_widget_update_connection (
 		NMSettingSecretFlags pw_flags = NM_SETTING_SECRET_FLAG_NONE;
 
 		/* Grab original password flags */
-		widget = GTK_WIDGET (gtk_builder_get_object (builder, "auth_password_entry"));
+		widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "auth_password_entry"));
 		pw_flags = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (widget), "flags"));
-		combo_password = GTK_WIDGET (gtk_builder_get_object (builder, "auth_password_save_password_combobox"));
+		combo_password = GTK_WIDGET (gtk_builder_get_object (priv->builder,
+		                                                     "auth_password_save_password_combobox"));
 
 		/* And set new ones based on the type combo */
 		switch (gtk_combo_box_get_active (GTK_COMBO_BOX (combo_password))) {
@@ -629,11 +689,13 @@ static gboolean auth_widget_update_connection (
 	else if (!strncmp (auth_type, NM_SSH_AUTH_TYPE_KEY, strlen(NM_SSH_AUTH_TYPE_KEY))) {
 		/* Key auth */
 		gchar *filename;
-		widget = GTK_WIDGET (gtk_builder_get_object (builder, "auth_keyfile_filechooserbutton"));
-		filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (widget));
-		if (filename && strlen (filename)) {
+		widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "auth_keyfile_chooser"));
+		if (priv->keyfile)
+			filename = g_file_get_path (priv->keyfile);
+		else
+			filename = NULL;
+		if (filename && strlen (filename))
 			nm_setting_vpn_add_data_item (s_vpn, NM_SSH_KEY_KEY_FILE, filename);
-		}
 		g_free (filename);
 	}
 	else if (!strncmp (auth_type, NM_SSH_AUTH_TYPE_SSH_AGENT, strlen(NM_SSH_AUTH_TYPE_SSH_AGENT))) {
@@ -716,7 +778,7 @@ update_connection (NMVpnEditor *iface,
 	}
 
 	/* Authentication type */
-	valid &= auth_widget_update_connection (priv->builder, s_vpn);
+	valid &= auth_widget_update_connection (self, s_vpn);
 
 	if (priv->advanced)
 		g_hash_table_foreach (priv->advanced, hash_copy_advanced, s_vpn);
@@ -815,6 +877,9 @@ dispose (GObject *object)
 
 	if (priv->advanced)
 		g_hash_table_destroy (priv->advanced);
+
+	if (priv->keyfile)
+		g_object_unref (priv->keyfile);
 
 	G_OBJECT_CLASS (ssh_editor_parent_class)->dispose (object);
 }

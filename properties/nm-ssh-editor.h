@@ -48,14 +48,4 @@ GType ssh_editor_get_type (void);
 
 NMVpnEditor *nm_ssh_editor_new (NMConnection *connection, GError **error);
 
-typedef void (*ChangedCallback) (GtkWidget *widget, gpointer user_data);
-
-void init_auth_widget (GtkBuilder *builder,
-                       GtkSizeGroup *group,
-                       NMSettingVpn *s_vpn,
-                       const char *contype,
-                       const char *prefix,
-                       ChangedCallback changed_cb,
-                       gpointer user_data);
-
 #endif	/* _NM_SSH_EDITOR_H_ */
