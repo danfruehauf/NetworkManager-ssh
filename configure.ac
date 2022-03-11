@@ -8,6 +8,8 @@ AC_CONFIG_MACRO_DIR([m4])
 
 AC_CONFIG_HEADERS([config.h])
 
+AC_USE_SYSTEM_EXTENSIONS
+
 dnl
 dnl Require programs
 dnl
@@ -29,6 +31,7 @@ dnl
 AC_TYPE_MODE_T
 AC_TYPE_PID_T
 AC_HEADER_TIME
+AC_GNU_SOURCE
 
 dnl
 dnl Checks for library functions.

@@ -2,6 +2,7 @@
 /***************************************************************************
  *
  * Copyright (C) 2013 Dan Fruehauf, <malkodan@gmail.com>
+ * Copyright (C) 2022 Red Hat, Inc.
  * Based on work by Dan Williams, <dcbw@redhat.com>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -45,7 +46,7 @@
 #endif
 
 #include "advanced-dialog.h"
-#include "nm-ssh.h"
+#include "nm-ssh-editor.h"
 #include "nm-service-defines.h"
 
 static const char *advanced_keys[] = {
