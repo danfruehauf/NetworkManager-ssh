@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+	<gresource prefix="/org/freedesktop/network-manager-ssh">
+		<file preprocess="xml-stripblanks">nm-ssh-dialog.ui</file>
+	</gresource>
+</gresources>

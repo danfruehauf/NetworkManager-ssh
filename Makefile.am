@@ -4,8 +4,6 @@ SUBDIRS = . po
 
 CLEANFILES =
 
-EXTRA_DIST =
-
 DISTCHECK_CONFIGURE_FLAGS = --with-tests=yes
 
 dbusservicedir = $(sysconfdir)/dbus-1/system.d
@@ -55,12 +53,14 @@ nm-ssh-service.name: $(srcdir)/nm-ssh-service.name.in
 	    -e 's|[@]PLUGINDIR[@]/|@NM_PLUGIN_DIR@|g' \
 	    $< >$@
 
-EXTRA_DIST += nm-ssh-service.name.in \
+EXTRA_DIST = nm-ssh-service.name.in \
 	$(dbusservice_DATA) \
 	$(desktopfile) \
 	$(iconfile) \
 	$(appdata_in_files) \
 	$(appdata_DATA) \
+	properties/nm-ssh-dialog.ui \
+	properties/gresource.xml \
 	intltool-extract.in \
 	intltool-merge.in \
 	intltool-update.in
@@ -155,22 +155,24 @@ if WITH_LIBNM_GLIB
 plugin_LTLIBRARIES += properties/libnm-ssh-properties.la
 endif
 
+properties/resources.c: properties/gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir)/properties --generate-dependencies $(srcdir)/properties/gresource.xml)
+	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) $< --target=$@ --sourcedir=$(srcdir)/properties --generate-source --internal
+
 properties_libnm_vpn_plugin_ssh_la_SOURCES = \
 	properties/nm-ssh.c \
 	properties/nm-ssh.h \
 	properties/advanced-dialog.c \
 	properties/advanced-dialog.h
 
+nodist_properties_libnm_vpn_plugin_ssh_la_SOURCES = \
+	properties/resources.c
+
 properties_libnm_ssh_properties_la_SOURCES = \
         $(libnm_vpn_plugin_ssh_la_SOURCES)
 
-uidir = $(datadir)/gnome-vpn-properties/ssh
-ui_DATA = properties/nm-ssh-dialog.ui
-
 plugin_CFLAGS = \
         $(GTK_CFLAGS) \
-        -I$(top_srcdir)/ \
-        -DUIDIR=\""$(uidir)"\"
+        -I$(top_srcdir)/
 
 properties_libnm_vpn_plugin_ssh_la_CFLAGS = \
         $(plugin_CFLAGS) \
@@ -195,11 +197,6 @@ properties_libnm_vpn_plugin_ssh_la_LDFLAGS = \
 properties_libnm_ssh_properties_la_LDFLAGS = \
         $(libnm_vpn_plugin_ssh_la_LDFLAGS)
 
-
-EXTRA_DIST += \
-        $(ui_DATA)
-
-
 ###################################################################################################
 libexec_PROGRAMS += auth_dialog/nm-ssh-auth-dialog
 
@@ -209,9 +206,9 @@ auth_dialog_nm_ssh_auth_dialog_CPPFLAGS = \
 	$(LIBNM_CFLAGS) \
 	$(LIBNMA_CFLAGS) \
 	-I$(top_srcdir)/
-	-DUIDIR=\""$(uidir)"\"
 
 auth_dialog_nm_ssh_auth_dialog_SOURCES = \
+	properties/resources.c \
 	auth-dialog/main.c
 
 auth_dialog_nm_ssh_auth_dialog_LDADD = \
