@@ -4,7 +4,8 @@ appdata/network-manager-ssh.metainfo.xml.in
 nm-ssh.desktop.in
 auth-dialog/main.c
 properties/advanced-dialog.c
-properties/nm-ssh.c
+properties/nm-ssh-editor-plugin.c
+properties/nm-ssh-editor.c
 [type: gettext/glade]properties/nm-ssh-dialog.ui
 shared/nm-utils/nm-shared-utils.c
 shared/nm-utils/nm-vpn-plugin-utils.c

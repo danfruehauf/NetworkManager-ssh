@@ -12,6 +12,8 @@ dbusservice_DATA = nm-ssh-service.conf
 nmvpnservicedir = $(NM_VPN_SERVICE_DIR)
 nmvpnservice_DATA = nm-ssh-service.name
 
+plugindir = $(libdir)/NetworkManager
+
 libexec_PROGRAMS =
 
 if WITH_LIBNM_GLIB
@@ -163,55 +165,77 @@ nm_ssh_service_SOURCES = \
 nm_ssh_service_LDADD = \
 	$(LIBNM_LIBS) $(GIO_LIBS)
 
-plugindir = $(libdir)/NetworkManager
+properties/resources.c: properties/gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir)/properties --generate-dependencies $(srcdir)/properties/gresource.xml)
+	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) $< --target=$@ --sourcedir=$(srcdir)/properties --generate-source --internal
+
+###################################################################################################
+
 plugin_LTLIBRARIES = properties/libnm-vpn-plugin-ssh.la
+
+properties_libnm_vpn_plugin_ssh_la_SOURCES = \
+	shared/nm-utils/nm-vpn-plugin-utils.c \
+	shared/nm-utils/nm-vpn-plugin-utils.h \
+	properties/nm-ssh-editor-plugin.c \
+	properties/nm-ssh-editor-plugin.h
+
+properties_libnm_vpn_plugin_ssh_la_CFLAGS = \
+	$(LIBNM_CFLAGS)
+
+properties_libnm_vpn_plugin_ssh_la_LIBADD = \
+	$(LIBNM_LIBS)
+
+properties_libnm_vpn_plugin_ssh_la_LDFLAGS = \
+	-avoid-version
+
+###################################################################################################
+
+if WITH_GNOME
+plugin_LTLIBRARIES += properties/libnm-gtk3-vpn-plugin-ssh-editor.la
+endif
+
+properties_libnm_gtk3_vpn_plugin_ssh_editor_la_SOURCES = \
+	properties/nm-ssh-editor.c \
+	properties/nm-ssh-editor.h \
+	properties/advanced-dialog.c \
+	properties/advanced-dialog.h
+
+nodist_properties_libnm_gtk3_vpn_plugin_ssh_editor_la_SOURCES = \
+	properties/resources.c
+
+properties_libnm_gtk3_vpn_plugin_ssh_editor_la_CFLAGS = \
+	$(GTK_CFLAGS) \
+	$(LIBNM_CFLAGS)
+
+properties_libnm_gtk3_vpn_plugin_ssh_editor_la_LIBADD = \
+	$(GTK_LIBS) \
+	$(LIBNM_LIBS)
+
+properties_libnm_gtk3_vpn_plugin_ssh_editor_la_LDFLAGS = \
+	-avoid-version
+
+###################################################################################################
+
 if WITH_LIBNM_GLIB
 plugin_LTLIBRARIES += properties/libnm-ssh-properties.la
 endif
 
-properties/resources.c: properties/gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir)/properties --generate-dependencies $(srcdir)/properties/gresource.xml)
-	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) $< --target=$@ --sourcedir=$(srcdir)/properties --generate-source --internal
-
-properties_libnm_vpn_plugin_ssh_la_SOURCES = \
-	properties/nm-ssh.c \
-	properties/nm-ssh.h \
-	properties/advanced-dialog.c \
-	properties/advanced-dialog.h
-
-nodist_properties_libnm_vpn_plugin_ssh_la_SOURCES = \
-	properties/resources.c
-
 properties_libnm_ssh_properties_la_SOURCES = \
-        $(libnm_vpn_plugin_ssh_la_SOURCES)
-
-plugin_CFLAGS = \
-        $(GTK_CFLAGS) \
-        -I$(top_srcdir)/
-
-properties_libnm_vpn_plugin_ssh_la_CFLAGS = \
-        $(plugin_CFLAGS) \
-        $(LIBNM_CFLAGS)
+	$(properties_libnm_gtk3_vpn_plugin_ssh_editor_la_SOURCES) \
+	$(libnm_vpn_plugin_ssh_la_SOURCES)
 
 properties_libnm_ssh_properties_la_CFLAGS = \
-        -DNM_SSH_OLD \
-        $(plugin_CFLAGS) \
-        $(LIBNM_GLIB_CFLAGS)
-
-properties_libnm_vpn_plugin_ssh_la_LIBADD = \
-        $(GTK_LIBS) \
-        $(LIBNM_LIBS)
+	-DNM_SSH_OLD \
+	$(LIBNM_GLIB_CFLAGS)
 
 properties_libnm_ssh_properties_la_LIBADD = \
-        $(GTK_LIBS) \
-        $(LIBNM_GLIB_LIBS)
-
-properties_libnm_vpn_plugin_ssh_la_LDFLAGS = \
-        -avoid-version
+	$(GTK_LIBS) \
+	$(LIBNM_GLIB_LIBS)
 
 properties_libnm_ssh_properties_la_LDFLAGS = \
-        $(libnm_vpn_plugin_ssh_la_LDFLAGS)
+	$(libnm_vpn_plugin_ssh_la_LDFLAGS)
 
 ###################################################################################################
+
 libexec_PROGRAMS += auth_dialog/nm-ssh-auth-dialog
 
 auth_dialog_nm_ssh_auth_dialog_CPPFLAGS = \

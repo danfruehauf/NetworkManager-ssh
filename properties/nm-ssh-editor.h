@@ -1,8 +1,8 @@
 /* -*- Mode: C; tab-width: 4; indent-tabs-mode: t; c-basic-offset: 4 -*- */
 /***************************************************************************
- * nm-ssh.h : GNOME UI dialogs for configuring ssh VPN connections
  *
  * Copyright (C) 2013 Dan Fruehauf, <malkodan@gmail.com>
+ * Copyright (C) 2022 Red Hat, Inc.
  * Based on work by Dan Williams, <dcbw@redhat.com>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,31 +21,10 @@
  *
  **************************************************************************/
 
-#ifndef _NM_SSH_H_
-#define _NM_SSH_H_
+#ifndef _NM_SSH_EDITOR_H_
+#define _NM_SSH_EDITOR_H_
 
 #include <glib-object.h>
-
-#define SSH_TYPE_EDITOR_PLUGIN            (ssh_editor_plugin_get_type ())
-#define SSH_EDITOR_PLUGIN(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SSH_TYPE_EDITOR_PLUGIN, SshEditorPlugin))
-#define SSH_EDITOR_PLUGIN_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SSH_TYPE_EDITOR_PLUGIN, SshEditorPluginClass))
-#define SSH_IS_EDITOR_PLUGIN(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SSH_TYPE_EDITOR_PLUGIN))
-#define SSH_IS_EDITOR_PLUGIN_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((obj), SSH_TYPE_EDITOR_PLUGIN))
-#define SSH_EDITOR_PLUGIN_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), SSH_TYPE_EDITOR_PLUGIN, SshEditorPluginClass))
-
-typedef struct _SshEditorPlugin SshEditorPlugin;
-typedef struct _SshEditorPluginClass SshEditorPluginClass;
-
-struct _SshEditorPlugin {
-	GObject parent;
-};
-
-struct _SshEditorPluginClass {
-	GObjectClass parent;
-};
-
-GType ssh_editor_plugin_get_type (void);
-
 
 #define SSH_TYPE_EDITOR            (ssh_editor_get_type ())
 #define SSH_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SSH_TYPE_EDITOR, SshEditor))
@@ -67,6 +46,8 @@ struct _SshEditorClass {
 
 GType ssh_editor_get_type (void);
 
+NMVpnEditor *nm_ssh_editor_new (NMConnection *connection, GError **error);
+
 typedef void (*ChangedCallback) (GtkWidget *widget, gpointer user_data);
 
 void init_auth_widget (GtkBuilder *builder,
@@ -77,26 +58,4 @@ void init_auth_widget (GtkBuilder *builder,
                        ChangedCallback changed_cb,
                        gpointer user_data);
 
-/* Export/Import key dictionary */
-#define	REMOTE_KEY "REMOTE"
-#define	AUTH_TYPE_KEY "AUTH_TYPE"
-#define	KEY_FILE_KEY "KEY_FILE"
-#define	PREFERRED_AUTHENTICATION_KEY "PREFERRED_AUTHENTICATION"
-#define	PASSWORD_PROMPT_NR_KEY "PASSWORD_PROMPT_NR"
-#define	REMOTE_USERNAME_KEY "REMOTE_USERNAME"
-#define	REMOTE_IP_KEY "REMOTE_IP"
-#define	LOCAL_IP_KEY "LOCAL_IP"
-#define	NETMASK_KEY "NETMASK"
-#define	IP_6_KEY "IP_6"
-#define	REMOTE_IP_6_KEY "REMOTE_IP_6"
-#define	LOCAL_IP_6_KEY "LOCAL_IP_6"
-#define	NETMASK_6_KEY "NETMASK_6"
-#define	PORT_KEY "PORT"
-#define	MTU_KEY "MTU"
-#define	REMOTE_DEV_KEY "REMOTE_DEV"
-#define	DEV_TYPE_KEY "DEV_TYPE"
-#define	NO_DEFAULT_ROUTE_KEY "NO_DEFAULT_ROUTE"
-#define	TUNNEL_TYPE_KEY "TUNNEL_TYPE"
-
-#endif	/* _NM_SSH_H_ */
-
+#endif	/* _NM_SSH_EDITOR_H_ */
