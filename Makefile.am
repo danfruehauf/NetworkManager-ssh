@@ -1,16 +1,20 @@
-AUTOMAKE_OPTIONS = foreign
+AUTOMAKE_OPTIONS = foreign subdir-objects
 
-SUBDIRS = src
+SUBDIRS = . po
 
-if WITH_GNOME
-SUBDIRS += auth-dialog properties po
-endif
+CLEANFILES =
+
+EXTRA_DIST =
+
+DISTCHECK_CONFIGURE_FLAGS = --with-tests=yes
 
 dbusservicedir = $(sysconfdir)/dbus-1/system.d
 dbusservice_DATA = nm-ssh-service.conf
 
 nmvpnservicedir = $(NM_VPN_SERVICE_DIR)
 nmvpnservice_DATA = nm-ssh-service.name
+
+libexec_PROGRAMS =
 
 if WITH_LIBNM_GLIB
 # Install a file with full path to plugins for an old gnome-shell
@@ -51,9 +55,7 @@ nm-ssh-service.name: $(srcdir)/nm-ssh-service.name.in
 	    -e 's|[@]PLUGINDIR[@]/|@NM_PLUGIN_DIR@|g' \
 	    $< >$@
 
-DISTCHECK_CONFIGURE_FLAGS = --with-tests=yes
-
-EXTRA_DIST = nm-ssh-service.name.in \
+EXTRA_DIST += nm-ssh-service.name.in \
 	$(dbusservice_DATA) \
 	$(desktopfile) \
 	$(iconfile) \
@@ -63,7 +65,7 @@ EXTRA_DIST = nm-ssh-service.name.in \
 	intltool-merge.in \
 	intltool-update.in
 
-CLEANFILES = $(nmvpnservice_DATA) \
+CLEANFILES += $(nmvpnservice_DATA) \
 	$(desktop_DATA) \
 	$(appdata_DATA)
 
@@ -130,3 +132,90 @@ deb: changelog dist-xz
 	dpkg-buildpackage -B -nc
 
 .PHONY: rpm deb changelog
+
+AM_CPPFLAGS = \
+	$(LIBNM_CFLAGS) \
+	$(GIO_CFLAGS) \
+	-DNM_SSH_LOCALEDIR=\"$(datadir)/locale\" \
+	-I$(top_srcdir)
+
+libexec_PROGRAMS += nm-ssh-service
+
+nm_ssh_service_SOURCES = \
+	src/nm-ssh-service.c \
+	src/nm-ssh-service.h \
+	src/nm-ssh-service-defines.h
+
+nm_ssh_service_LDADD = \
+	$(LIBNM_LIBS) $(GIO_LIBS)
+
+plugindir = $(libdir)/NetworkManager
+plugin_LTLIBRARIES = properties/libnm-vpn-plugin-ssh.la
+if WITH_LIBNM_GLIB
+plugin_LTLIBRARIES += properties/libnm-ssh-properties.la
+endif
+
+properties_libnm_vpn_plugin_ssh_la_SOURCES = \
+	properties/nm-ssh.c \
+	properties/nm-ssh.h \
+	properties/advanced-dialog.c \
+	properties/advanced-dialog.h
+
+properties_libnm_ssh_properties_la_SOURCES = \
+        $(libnm_vpn_plugin_ssh_la_SOURCES)
+
+uidir = $(datadir)/gnome-vpn-properties/ssh
+ui_DATA = properties/nm-ssh-dialog.ui
+
+plugin_CFLAGS = \
+        $(GTK_CFLAGS) \
+        -I$(top_srcdir)/ \
+        -DUIDIR=\""$(uidir)"\"
+
+properties_libnm_vpn_plugin_ssh_la_CFLAGS = \
+        $(plugin_CFLAGS) \
+        $(LIBNM_CFLAGS)
+
+properties_libnm_ssh_properties_la_CFLAGS = \
+        -DNM_SSH_OLD \
+        $(plugin_CFLAGS) \
+        $(LIBNM_GLIB_CFLAGS)
+
+properties_libnm_vpn_plugin_ssh_la_LIBADD = \
+        $(GTK_LIBS) \
+        $(LIBNM_LIBS)
+
+properties_libnm_ssh_properties_la_LIBADD = \
+        $(GTK_LIBS) \
+        $(LIBNM_GLIB_LIBS)
+
+properties_libnm_vpn_plugin_ssh_la_LDFLAGS = \
+        -avoid-version
+
+properties_libnm_ssh_properties_la_LDFLAGS = \
+        $(libnm_vpn_plugin_ssh_la_LDFLAGS)
+
+
+EXTRA_DIST += \
+        $(ui_DATA)
+
+
+###################################################################################################
+libexec_PROGRAMS += auth_dialog/nm-ssh-auth-dialog
+
+auth_dialog_nm_ssh_auth_dialog_CPPFLAGS = \
+	$(GTK_CFLAGS) \
+	$(LIBSECRET_CFLAGS) \
+	$(LIBNM_CFLAGS) \
+	$(LIBNMA_CFLAGS) \
+	-I$(top_srcdir)/
+	-DUIDIR=\""$(uidir)"\"
+
+auth_dialog_nm_ssh_auth_dialog_SOURCES = \
+	auth-dialog/main.c
+
+auth_dialog_nm_ssh_auth_dialog_LDADD = \
+	$(GTK_LIBS) \
+	$(LIBSECRET_LIBS) \
+	$(LIBNM_LIBS) \
+	$(LIBNMA_LIBS)
