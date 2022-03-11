@@ -168,6 +168,14 @@ nm_ssh_service_LDADD = \
 properties/resources.c: properties/gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir)/properties --generate-dependencies $(srcdir)/properties/gresource.xml)
 	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) $< --target=$@ --sourcedir=$(srcdir)/properties --generate-source --internal
 
+gtk4/resources.c: properties/gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies $(srcdir)/properties/gresource.xml |sed "s,^,$(builddir)/gtk4/,")
+	@mkdir -p $(builddir)/gtk4
+	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) $< --target=$@ --sourcedir=$(srcdir)/gtk4 --sourcedir=$(builddir)/gtk4 --generate-source --internal
+
+gtk4/%.ui: properties/%.ui
+	@mkdir -p $(builddir)/gtk4
+	gtk4-builder-tool simplify --3to4 $< |grep -v can-default >$@
+
 ###################################################################################################
 
 plugin_LTLIBRARIES = properties/libnm-vpn-plugin-ssh.la
@@ -212,6 +220,29 @@ properties_libnm_gtk3_vpn_plugin_ssh_editor_la_LIBADD = \
 
 properties_libnm_gtk3_vpn_plugin_ssh_editor_la_LDFLAGS = \
 	-avoid-version
+
+###################################################################################################
+
+if WITH_GTK4
+plugin_LTLIBRARIES += properties/libnm-gtk4-vpn-plugin-ssh-editor.la
+endif
+
+properties_libnm_gtk4_vpn_plugin_ssh_editor_la_SOURCES = \
+	$(properties_libnm_gtk3_vpn_plugin_ssh_editor_la_SOURCES)
+
+nodist_properties_libnm_gtk4_vpn_plugin_ssh_editor_la_SOURCES = \
+	gtk4/resources.c
+
+properties_libnm_gtk4_vpn_plugin_ssh_editor_la_CFLAGS = \
+	$(GTK4_CFLAGS) \
+	$(LIBNM_CFLAGS)
+
+properties_libnm_gtk4_vpn_plugin_ssh_editor_la_LIBADD = \
+	$(GTK4_LIBS) \
+	$(LIBNM_LIBS)
+
+properties_libnm_gtk4_vpn_plugin_ssh_editor_la_LDFLAGS = \
+	$(properties_libnm_gtk3_vpn_plugin_ssh_editor_la_LDFLAGS)
 
 ###################################################################################################
 

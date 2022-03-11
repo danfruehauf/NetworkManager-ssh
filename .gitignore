@@ -19,6 +19,7 @@
 *.app
 
 autom4te.cache/
+gtk4/
 Makefile
 Makefile.in
 
