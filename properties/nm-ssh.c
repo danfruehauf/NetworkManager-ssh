@@ -836,7 +836,6 @@ nm_vpn_editor_interface_new (NMConnection *connection, GError **error)
 {
 	NMVpnEditor *object;
 	SshEditorPrivate *priv;
-	char *ui_file;
 	gboolean new = TRUE;
 	NMSettingVpn *s_vpn;
 
@@ -851,23 +850,16 @@ nm_vpn_editor_interface_new (NMConnection *connection, GError **error)
 
 	priv = SSH_EDITOR_GET_PRIVATE (object);
 
-	ui_file = g_strdup_printf ("%s/%s", UIDIR, "nm-ssh-dialog.ui");
 	priv->builder = gtk_builder_new ();
 
 	gtk_builder_set_translation_domain (priv->builder, GETTEXT_PACKAGE);
 
-	if (!gtk_builder_add_from_file (priv->builder, ui_file, error)) {
+	if (!gtk_builder_add_from_resource (priv->builder, "/org/freedesktop/network-manager-ssh/nm-ssh-dialog.ui", error)) {
 		g_warning ("Couldn't load builder file: %s",
 		           error && *error ? (*error)->message : "(unknown)");
-		g_clear_error (error);
-		g_set_error (error, SSH_EDITOR_PLUGIN_ERROR, 0,
-		             "could not load required resources from %s", ui_file);
-		g_free (ui_file);
 		g_object_unref (object);
 		return NULL;
 	}
-
-	g_free (ui_file);
 
 	priv->widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "ssh_main_vbox"));
 	if (!priv->widget) {
