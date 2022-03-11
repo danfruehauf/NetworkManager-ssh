@@ -451,14 +451,29 @@ _call_editor_factory (gpointer factory,
 static NMVpnEditor *
 get_editor (NMVpnEditorPlugin *iface, NMConnection *connection, GError **error)
 {
+	gpointer gtk3_only_symbol;
+	GModule *self_module;
+	const char *editor;
+
 	g_return_val_if_fail (SSH_IS_EDITOR_PLUGIN (iface), NULL);
 	g_return_val_if_fail (NM_IS_CONNECTION (connection), NULL);
 	g_return_val_if_fail (!error || !*error, NULL);
 
+
+	self_module = g_module_open (NULL, 0);
+	g_module_symbol (self_module, "gtk_container_add", &gtk3_only_symbol);
+	g_module_close (self_module);
+
+	if (gtk3_only_symbol) {
+		editor = "libnm-gtk3-vpn-plugin-ssh-editor.so";
+	} else {
+		editor = "libnm-gtk4-vpn-plugin-ssh-editor.so";
+	}
+
 #ifdef NM_VPN_OLD
 	return nm_ssh_editor_new (connection, error);
 #else
-	return nm_vpn_plugin_utils_load_editor ("libnm-gtk3-vpn-plugin-ssh-editor.so",
+	return nm_vpn_plugin_utils_load_editor (editor,
 						"nm_vpn_editor_factory_ssh",
 						_call_editor_factory,
 						iface,

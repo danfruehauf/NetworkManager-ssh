@@ -22,9 +22,6 @@
  **************************************************************************/
 
 #include "nm-default.h"
-
-#include <gtk/gtk.h>
-
 #include "nm-ssh-editor.h"
 #include "advanced-dialog.h"
 
@@ -63,7 +60,7 @@ check_validity (SshEditor *self, GError **error)
 	const char *str;
 
 	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "gateway_entry"));
-	str = gtk_entry_get_text (GTK_ENTRY (widget));
+	str = gtk_editable_get_text (GTK_EDITABLE (widget));
 	if (!str || !strlen (str)) {
 		g_set_error (error,
 		             NMV_EDITOR_PLUGIN_ERROR,
@@ -73,7 +70,7 @@ check_validity (SshEditor *self, GError **error)
 	}
 
 	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "remote_ip_entry"));
-	str = gtk_entry_get_text (GTK_ENTRY (widget));
+	str = gtk_editable_get_text (GTK_EDITABLE (widget));
 	if (!str || !strlen (str)) {
 		g_set_error (error,
 		             NMV_EDITOR_PLUGIN_ERROR,
@@ -83,7 +80,7 @@ check_validity (SshEditor *self, GError **error)
 	}
 
 	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "local_ip_entry"));
-	str = gtk_entry_get_text (GTK_ENTRY (widget));
+	str = gtk_editable_get_text (GTK_EDITABLE (widget));
 	if (!str || !strlen (str)) {
 		g_set_error (error,
 		             NMV_EDITOR_PLUGIN_ERROR,
@@ -93,7 +90,7 @@ check_validity (SshEditor *self, GError **error)
 	}
 
 	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "netmask_entry"));
-	str = gtk_entry_get_text (GTK_ENTRY (widget));
+	str = gtk_editable_get_text (GTK_EDITABLE (widget));
 	if (!str || !strlen (str)) {
 		g_set_error (error,
 		             NMV_EDITOR_PLUGIN_ERROR,
@@ -106,9 +103,9 @@ check_validity (SshEditor *self, GError **error)
 }
 
 static void
-show_password_toggled (GtkToggleButton *togglebutton, GtkEntry *password_entry)
+show_password_toggled (GtkCheckButton *checkbutton, GtkEntry *password_entry)
 {
-	gtk_entry_set_visibility (password_entry, gtk_toggle_button_get_active (togglebutton));
+	gtk_entry_set_visibility (password_entry, gtk_check_button_get_active (checkbutton));
 }
 
 static void
@@ -157,8 +154,8 @@ static void
 advanced_dialog_close_cb (GtkWidget *dialog, gpointer user_data)
 {
 	gtk_widget_hide (dialog);
-	/* gtk_widget_destroy() will remove the window from the window group */
-	gtk_widget_destroy (dialog);
+	/* gtk_window_destroy() will remove the window from the window group */
+	gtk_window_destroy (GTK_WINDOW(dialog));
 }
 
 static void
@@ -190,10 +187,11 @@ advanced_button_clicked_cb (GtkWidget *button, gpointer user_data)
 {
 	SshEditor *self = SSH_EDITOR (user_data);
 	SshEditorPrivate *priv = SSH_EDITOR_GET_PRIVATE (self);
-	GtkWidget *dialog, *toplevel;
+	GtkWidget *dialog;
+	GtkRoot *root;
 
-	toplevel = gtk_widget_get_toplevel (priv->widget);
-	g_return_if_fail (gtk_widget_is_toplevel (toplevel));
+	root = gtk_widget_get_root (priv->widget);
+	g_return_if_fail (GTK_IS_WINDOW(root));
 
 	dialog = advanced_dialog_new (priv->advanced);
 	if (!dialog) {
@@ -203,15 +201,15 @@ advanced_button_clicked_cb (GtkWidget *button, gpointer user_data)
 
 	gtk_window_group_add_window (priv->window_group, GTK_WINDOW (dialog));
 	if (!priv->window_added) {
-		gtk_window_group_add_window (priv->window_group, GTK_WINDOW (toplevel));
+		gtk_window_group_add_window (priv->window_group, GTK_WINDOW (root));
 		priv->window_added = TRUE;
 	}
 
-	gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (toplevel));
+	gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (root));
 	g_signal_connect (G_OBJECT (dialog), "response", G_CALLBACK (advanced_dialog_response_cb), self);
 	g_signal_connect (G_OBJECT (dialog), "close", G_CALLBACK (advanced_dialog_close_cb), self);
 
-	gtk_widget_show_all (dialog);
+	gtk_widget_show (dialog);
 }
 
 static void
@@ -221,24 +219,24 @@ ipv6_toggled_cb (GtkWidget *check, gpointer user_data)
 	GtkWidget *widget;
 
 	widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_ip_6_entry"));
-	gtk_widget_set_sensitive (widget, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (check)));
+	gtk_widget_set_sensitive (widget, gtk_check_button_get_active (GTK_CHECK_BUTTON (check)));
 
 	widget = GTK_WIDGET (gtk_builder_get_object (builder, "local_ip_6_entry"));
-	gtk_widget_set_sensitive (widget, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (check)));
+	gtk_widget_set_sensitive (widget, gtk_check_button_get_active (GTK_CHECK_BUTTON (check)));
 
 	widget = GTK_WIDGET (gtk_builder_get_object (builder, "netmask_6_entry"));
-	gtk_widget_set_sensitive (widget, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (check)));
+	gtk_widget_set_sensitive (widget, gtk_check_button_get_active (GTK_CHECK_BUTTON (check)));
 }
 
 static void
 chooser_show (GtkWidget *parent, GtkWidget *widget)
 {
-	GtkWidget *toplevel;
+	GtkRoot *root;
 
-	toplevel = gtk_widget_get_toplevel (parent);
-	g_return_if_fail (gtk_widget_is_toplevel (toplevel));
+	root = gtk_widget_get_root (parent);
+	g_return_if_fail (GTK_IS_WINDOW(root));
 
-	gtk_window_set_transient_for (GTK_WINDOW (widget), GTK_WINDOW (toplevel));
+	gtk_window_set_transient_for (GTK_WINDOW (widget), GTK_WINDOW (root));
 	gtk_widget_show (widget);
 }
 
@@ -303,14 +301,14 @@ init_auth_widget (SshEditor *self,
 		widget2 = GTK_WIDGET (gtk_builder_get_object (builder, "auth_password_entry"));
 		g_assert (widget2);
 		g_signal_connect (widget, "toggled", G_CALLBACK (show_password_toggled), widget2);
-		show_password_toggled (GTK_TOGGLE_BUTTON (widget), GTK_ENTRY (widget2));
+		show_password_toggled (GTK_CHECK_BUTTON (widget), GTK_ENTRY (widget2));
 
 		/* Load password */
 		g_signal_connect (G_OBJECT (widget2), "changed", G_CALLBACK (stuff_changed_cb), self);
 		if (s_vpn) {
 			password = nm_setting_vpn_get_secret (s_vpn, NM_SSH_KEY_PASSWORD);
 			if (password)
-				gtk_entry_set_text (GTK_ENTRY (widget2), password);
+				gtk_editable_set_text (GTK_EDITABLE (widget2), password);
 
 			nm_setting_get_secret_flags (NM_SETTING (s_vpn), NM_SSH_KEY_PASSWORD, &pw_flags, NULL);
 			/* FIXME */
@@ -322,8 +320,7 @@ init_auth_widget (SshEditor *self,
 		const gchar *filename;
 
 		widget = GTK_WIDGET (gtk_builder_get_object (builder, "auth_keyfile_chooser"));
-		g_signal_connect_swapped (G_OBJECT (widget), "delete-event",
-					  G_CALLBACK (gtk_widget_hide_on_delete), widget);
+		gtk_window_set_hide_on_close (GTK_WINDOW(widget), TRUE);
 		g_signal_connect (gtk_builder_get_object (builder, "auth_keyfile_button"),
 		                  "clicked", G_CALLBACK (chooser_show), widget);
 
@@ -364,7 +361,7 @@ pw_type_combo_changed_cb (GtkWidget *combo, gpointer user_data)
 	 */
 	switch (gtk_combo_box_get_active (GTK_COMBO_BOX (combo))) {
 	case PW_TYPE_ASK:
-		gtk_entry_set_text (GTK_ENTRY (entry), "");
+		gtk_editable_set_text (GTK_EDITABLE (entry), "");
 		gtk_widget_set_sensitive (entry, FALSE);
 		break;
 	default:
@@ -397,7 +394,7 @@ init_one_pw_combo (
 	 */
 	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, entry_name));
 	g_assert (widget);
-	value = gtk_entry_get_text (GTK_ENTRY (widget));
+	value = gtk_editable_get_text (GTK_EDITABLE (widget));
 	if (value && strlen (value))
 		default_idx = 0;
 
@@ -451,7 +448,7 @@ init_editor_plugin (SshEditor *self, NMConnection *connection, GError **error)
 	if (s_vpn) {
 		value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_REMOTE);
 		if (value)
-			gtk_entry_set_text (GTK_ENTRY (widget), value);
+			gtk_editable_set_text (GTK_EDITABLE (widget), value);
 	}
 	g_signal_connect (G_OBJECT (widget), "changed", G_CALLBACK (stuff_changed_cb), self);
 
@@ -462,7 +459,7 @@ init_editor_plugin (SshEditor *self, NMConnection *connection, GError **error)
 	if (s_vpn) {
 		value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_REMOTE_IP);
 		if (value)
-			gtk_entry_set_text (GTK_ENTRY (widget), value);
+			gtk_editable_set_text (GTK_EDITABLE (widget), value);
 	}
 	g_signal_connect (G_OBJECT (widget), "changed", G_CALLBACK (stuff_changed_cb), self);
 
@@ -473,7 +470,7 @@ init_editor_plugin (SshEditor *self, NMConnection *connection, GError **error)
 	if (s_vpn) {
 		value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_LOCAL_IP);
 		if (value)
-			gtk_entry_set_text (GTK_ENTRY (widget), value);
+			gtk_editable_set_text (GTK_EDITABLE (widget), value);
 	}
 	g_signal_connect (G_OBJECT (widget), "changed", G_CALLBACK (stuff_changed_cb), self);
 
@@ -484,7 +481,7 @@ init_editor_plugin (SshEditor *self, NMConnection *connection, GError **error)
 	if (s_vpn) {
 		value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_NETMASK);
 		if (value)
-			gtk_entry_set_text (GTK_ENTRY (widget), value);
+			gtk_editable_set_text (GTK_EDITABLE (widget), value);
 	}
 	g_signal_connect (G_OBJECT (widget), "changed", G_CALLBACK (stuff_changed_cb), self);
 
@@ -495,7 +492,7 @@ init_editor_plugin (SshEditor *self, NMConnection *connection, GError **error)
 	if (s_vpn) {
 		value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_REMOTE_IP_6);
 		if (value)
-			gtk_entry_set_text (GTK_ENTRY (widget), value);
+			gtk_editable_set_text (GTK_EDITABLE (widget), value);
 	}
 	g_signal_connect (G_OBJECT (widget), "changed", G_CALLBACK (stuff_changed_cb), self);
 
@@ -506,7 +503,7 @@ init_editor_plugin (SshEditor *self, NMConnection *connection, GError **error)
 	if (s_vpn) {
 		value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_LOCAL_IP_6);
 		if (value)
-			gtk_entry_set_text (GTK_ENTRY (widget), value);
+			gtk_editable_set_text (GTK_EDITABLE (widget), value);
 	}
 	g_signal_connect (G_OBJECT (widget), "changed", G_CALLBACK (stuff_changed_cb), self);
 
@@ -517,7 +514,7 @@ init_editor_plugin (SshEditor *self, NMConnection *connection, GError **error)
 	if (s_vpn) {
 		value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_NETMASK_6);
 		if (value)
-			gtk_entry_set_text (GTK_ENTRY (widget), value);
+			gtk_editable_set_text (GTK_EDITABLE (widget), value);
 	}
 	g_signal_connect (G_OBJECT (widget), "changed", G_CALLBACK (stuff_changed_cb), self);
 
@@ -526,9 +523,9 @@ init_editor_plugin (SshEditor *self, NMConnection *connection, GError **error)
 	g_assert (widget);
 	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_IP_6);
 	if (value && IS_YES(value)) {
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), TRUE);
+		gtk_check_button_set_active (GTK_CHECK_BUTTON (widget), TRUE);
 	} else {
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), FALSE);
+		gtk_check_button_set_active (GTK_CHECK_BUTTON (widget), FALSE);
 	}
 	/* Call the callback to show/hide IPv6 options */
 	ipv6_toggled_cb (widget, priv->builder);
@@ -673,7 +670,7 @@ static gboolean auth_widget_update_connection (
 		/* And set new ones based on the type combo */
 		switch (gtk_combo_box_get_active (GTK_COMBO_BOX (combo_password))) {
 		case PW_TYPE_SAVE:
-			password = gtk_entry_get_text (GTK_ENTRY (widget));
+			password = gtk_editable_get_text (GTK_EDITABLE (widget));
 			if (password && strlen (password))
 				nm_setting_vpn_add_secret (s_vpn, NM_SSH_KEY_PASSWORD, password);
 			break;
@@ -731,48 +728,48 @@ update_connection (NMVpnEditor *iface,
 
 	/* Gateway */
 	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "gateway_entry"));
-	str = gtk_entry_get_text (GTK_ENTRY (widget));
+	str = gtk_editable_get_text (GTK_EDITABLE (widget));
 	if (str && strlen (str))
 		nm_setting_vpn_add_data_item (s_vpn, NM_SSH_KEY_REMOTE, str);
 
 	/* Remote IP */
 	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "remote_ip_entry"));
-	str = gtk_entry_get_text (GTK_ENTRY (widget));
+	str = gtk_editable_get_text (GTK_EDITABLE (widget));
 	if (str && strlen (str))
 		nm_setting_vpn_add_data_item (s_vpn, NM_SSH_KEY_REMOTE_IP, str);
 
 	/* Local IP */
 	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "local_ip_entry"));
-	str = gtk_entry_get_text (GTK_ENTRY (widget));
+	str = gtk_editable_get_text (GTK_EDITABLE (widget));
 	if (str && strlen (str))
 		nm_setting_vpn_add_data_item (s_vpn, NM_SSH_KEY_LOCAL_IP, str);
 
 	/* Netmask */
 	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "netmask_entry"));
-	str = gtk_entry_get_text (GTK_ENTRY (widget));
+	str = gtk_editable_get_text (GTK_EDITABLE (widget));
 	if (str && strlen (str))
 		nm_setting_vpn_add_data_item (s_vpn, NM_SSH_KEY_NETMASK, str);
 
 	/* IPv6 enabled */
 	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "ipv6_checkbutton"));
-	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget))) {
+	if (gtk_check_button_get_active (GTK_CHECK_BUTTON (widget))) {
 		nm_setting_vpn_add_data_item (s_vpn, NM_SSH_KEY_IP_6, YES);
 
 		/* Remote IP IPv6 */
 		widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "remote_ip_6_entry"));
-		str = gtk_entry_get_text (GTK_ENTRY (widget));
+		str = gtk_editable_get_text (GTK_EDITABLE (widget));
 		if (str && strlen (str))
 			nm_setting_vpn_add_data_item (s_vpn, NM_SSH_KEY_REMOTE_IP_6, str);
 
 		/* Local IP IPv6 */
 		widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "local_ip_6_entry"));
-		str = gtk_entry_get_text (GTK_ENTRY (widget));
+		str = gtk_editable_get_text (GTK_EDITABLE (widget));
 		if (str && strlen (str))
 			nm_setting_vpn_add_data_item (s_vpn, NM_SSH_KEY_LOCAL_IP_6, str);
 
 		/* Prefix IPv6 */
 		widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "netmask_6_entry"));
-		str = gtk_entry_get_text (GTK_ENTRY (widget));
+		str = gtk_editable_get_text (GTK_EDITABLE (widget));
 		if (str && strlen (str))
 			nm_setting_vpn_add_data_item (s_vpn, NM_SSH_KEY_NETMASK_6, str);
 	}
