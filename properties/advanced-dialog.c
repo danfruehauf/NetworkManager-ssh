@@ -123,19 +123,9 @@ remote_username_toggled_cb (GtkWidget *check, gpointer user_data)
 	GtkBuilder *builder = (GtkBuilder *) user_data;
 	GtkWidget *widget;
 
-	/* Add a warning if not using root */
-	if (gtk_toggle_button_get_active  (GTK_TOGGLE_BUTTON (check) )) {
-		GtkWidget *dialog;
-		dialog = gtk_message_dialog_new(
-			GTK_WINDOW (gtk_builder_get_object (builder, "ssh_advanced_dialog")),
-			GTK_DIALOG_MODAL,
-			GTK_MESSAGE_WARNING,
-			GTK_BUTTONS_OK,
-			_("You have chosen not to use 'root' as the remote username.\n\nPlease make sure the user you specify is allowed to open tun/tap devices on the remote host."));
-		gtk_window_set_title(GTK_WINDOW(dialog), "Warning");
-		gtk_dialog_run(GTK_DIALOG(dialog));
-		gtk_widget_destroy(dialog);
-	}
+	widget = GTK_WIDGET (gtk_builder_get_object (builder, "user_warning_revealer"));
+	gtk_revealer_set_reveal_child (GTK_REVEALER (widget),
+		gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(check)));
 
 	widget = GTK_WIDGET (gtk_builder_get_object (builder, "remote_username_entry"));
 	gtk_widget_set_sensitive (widget, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (check)));
