@@ -478,9 +478,6 @@ init_editor_plugin (SshEditor *self, NMConnection *connection, GError **error)
 	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "ipv6_label"));
 	g_assert (widget);
 	gtk_widget_show (widget);
-	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "ipv6_alignment"));
-	g_assert (widget);
-	gtk_widget_show (widget);
 
 	/* Authentication combo box */
 	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "auth_auth_type_combobox"));
