@@ -1,21 +1,22 @@
-# translation of NetworkManager-ssh.HEAD.po to Georgian
-# Vladimer Sichinava ვლადიმერ სიჭინავა <vsichi@gnome.org>, 2007.
-# Malkhaz Barkalaya მალზახ ბარკალაია <malxaz@gmail.com>
+# Georgian translations for NetworkManager-ssh package.
+# Copyright (C) 2022 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the NetworkManager-ssh package.
+# Temuri Doghonadze <temuri dot doghonadze at gmail dot com>. 2022
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: NetworkManager-ssh.HEAD\n"
+"Project-Id-Version: NetworkManager-ssh\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-15 17:00+1000\n"
-"PO-Revision-Date: 2007-03-07 01:02+0100\n"
-"Last-Translator: Vladimer Sichinava ვლადიმერ სიჭინავა <vsichi@gnome.org>\n"
-"Language-Team: Georgian <http://mail.gnome.org/mailman/listinfo/gnome-ge-"
-"list>\n"
+"PO-Revision-Date: 2022-07-23 23:07+0200\n"
+"Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
+"Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
-"Plural-Forms: nplurals=1; plural=0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.1.1\n"
 
 #. Otherwise, we have no saved password, or the password flags indicated
 #. * that the password should never be saved.
@@ -23,16 +24,15 @@ msgstr ""
 #: ../auth-dialog/main.c:141
 #, c-format
 msgid "You need to authenticate to access the Virtual Private Network '%s'."
-msgstr "VPN '%s' ითხოვს ავტორიზაციას."
+msgstr "პირად ვირტუალურ ქსელში (%s) წვდომის მისაღებად საჭიროა ავთენტიკაცია."
 
 #: ../auth-dialog/main.c:150 ../auth-dialog/main.c:170
 msgid "Authenticate VPN"
-msgstr "VPN-ავტორიზაცია"
+msgstr "VPN-ის ავთენტიკაცია"
 
 #: ../auth-dialog/main.c:152 ../properties/nm-ssh-dialog.ui.h:27
-#, fuzzy
 msgid "Password:"
-msgstr "_პაროლი:"
+msgstr "პაროლი:"
 
 #: ../auth-dialog/main.c:291
 #, c-format
@@ -41,9 +41,11 @@ msgid ""
 "\n"
 "Is ssh-agent running?"
 msgstr ""
+"გარემოს ცვლადის (%s) პოვნა შეუძლებელია.\n"
+"\n"
+"არის ssh-agent-ი გაშვებული?"
 
 #: ../auth-dialog/vpn-password-dialog.c:95
-#, fuzzy
 msgid "_Password:"
 msgstr "_პაროლი:"
 
@@ -52,9 +54,8 @@ msgid "_Secondary Password:"
 msgstr "_მეორადი პაროლი:"
 
 #: ../auth-dialog/vpn-password-dialog.c:240
-#, fuzzy
 msgid "Sh_ow passwords"
-msgstr "პაროლი"
+msgstr "_პაროლების ჩვენება"
 
 #: ../properties/advanced-dialog.c:137
 msgid ""
@@ -66,158 +67,148 @@ msgstr ""
 
 #: ../properties/nm-ssh.c:49
 msgid "SSH"
-msgstr ""
+msgstr "SSH"
 
 #: ../properties/nm-ssh.c:50
 msgid "Compatible with the SSH server."
-msgstr ""
+msgstr "SSH სერვერთან თავსებადია."
 
 #: ../properties/nm-ssh.c:457
 msgid "Saved"
-msgstr ""
+msgstr "შენახულია"
 
 #: ../properties/nm-ssh.c:464
 msgid "Always Ask"
-msgstr ""
+msgstr "ყოველთვის კითხვა"
 
 #: ../properties/nm-ssh.c:620
-#, fuzzy
 msgid "SSH Agent"
-msgstr "SSH-კლიენტი"
+msgstr "SSH  აგენტი"
 
 #: ../properties/nm-ssh.c:633
 msgid "Password"
 msgstr "პაროლი"
 
 #: ../properties/nm-ssh.c:646
-#, fuzzy
 msgid "Key Authentication"
-msgstr "VPN-ავტორიზაცია"
+msgstr "გასაღებით ავთენტიკაცია"
 
 #: ../properties/nm-ssh-dialog.ui.h:1
 msgid " "
-msgstr ""
+msgstr " "
 
 #: ../properties/nm-ssh-dialog.ui.h:2
 msgid "Not required"
-msgstr ""
+msgstr "აუცილებელი არაა"
 
 #: ../properties/nm-ssh-dialog.ui.h:3
 msgid "SSH Advanced Options"
-msgstr ""
+msgstr "SSH-ის დამატებითი პარამეტრები"
 
 #: ../properties/nm-ssh-dialog.ui.h:4
 msgid "Use custom gateway port:"
-msgstr ""
+msgstr "გამავალი რაუტერის პორტის ხელით მითითება:"
 
 #: ../properties/nm-ssh-dialog.ui.h:5
 msgid "Use custom tunnel Maximum Transmission Unit (MTU):"
-msgstr ""
+msgstr "ტუნელის MTU-ის ხელით მითითება:"
 
 #: ../properties/nm-ssh-dialog.ui.h:6
 msgid "Extra SSH options:"
-msgstr ""
+msgstr "SSH-ის დამატებითი პარამეტრები:"
 
 #: ../properties/nm-ssh-dialog.ui.h:7
 msgid "Remote device number:"
-msgstr ""
+msgstr "დაშორებული მოწყობილობის ნომერი:"
 
 #: ../properties/nm-ssh-dialog.ui.h:8
-#, fuzzy
 msgid "Use a TAP device"
 msgstr "TAP მოწყობილობის გამოყენება"
 
 #: ../properties/nm-ssh-dialog.ui.h:9
-#, fuzzy
 msgid "Remote username:"
-msgstr "მომხმარებლის სახელი:"
+msgstr "დაშორებული მომხმარებლის სახელი:"
 
 #: ../properties/nm-ssh-dialog.ui.h:10
 msgid "Do not replace default route"
-msgstr ""
+msgstr "ნაგულისხმები რაუტის არ შეცვლა"
 
 #: ../properties/nm-ssh-dialog.ui.h:11
 msgid "General"
-msgstr ""
+msgstr "ზოგადი"
 
 #: ../properties/nm-ssh-dialog.ui.h:12
-#, fuzzy
 msgid "<b>General</b>"
-msgstr "<b>საჭიროა</b>"
+msgstr "<b>საერთო</b>"
 
 #: ../properties/nm-ssh-dialog.ui.h:13
-#, fuzzy
 msgid "Gateway:"
-msgstr "_რაბის პორტი:"
+msgstr "ნაგულისხმები რაუტერი:"
 
 #: ../properties/nm-ssh-dialog.ui.h:14
 msgid "<b>Network Settings</b>"
-msgstr ""
+msgstr "<b>ქსელის მორგება</b>"
 
 #: ../properties/nm-ssh-dialog.ui.h:15
-#, fuzzy
 msgid "Remote IP Address:"
-msgstr "დისტანციური IP:"
+msgstr "დაშორებული IP მისამართი:"
 
 #: ../properties/nm-ssh-dialog.ui.h:16
-#, fuzzy
 msgid "Local IP Address:"
-msgstr "ლოკალური IP:"
+msgstr "ლოკალური IP მისამართი:"
 
 #: ../properties/nm-ssh-dialog.ui.h:17
 msgid "Netmask:"
-msgstr ""
+msgstr "ქსელური ნიღაბი:"
 
 #: ../properties/nm-ssh-dialog.ui.h:18
 msgid "<b>IPv6 Network Settings</b>"
-msgstr ""
+msgstr "<b>IPv6 ქსელის მორგება</b>"
 
 #: ../properties/nm-ssh-dialog.ui.h:19
 msgid "Use IPv6"
-msgstr ""
+msgstr "IPv6-ის გამოყენება"
 
 #: ../properties/nm-ssh-dialog.ui.h:20
 msgid "Remote IP Address (IPv6):"
-msgstr ""
+msgstr "დაშორებული IP მისამართი(IPv6):"
 
 #: ../properties/nm-ssh-dialog.ui.h:21
 msgid "Local IP Address (IPv6):"
-msgstr ""
+msgstr "ლოკალური IP მისამართი (IPv6):"
 
 #: ../properties/nm-ssh-dialog.ui.h:22
 msgid "Prefix (IPv6):"
-msgstr ""
+msgstr "პრეფიქსი (IPv6):"
 
 #: ../properties/nm-ssh-dialog.ui.h:23
 msgid "Advanced..."
-msgstr ""
+msgstr "დამატებით..."
 
 #: ../properties/nm-ssh-dialog.ui.h:24
-#, fuzzy
 msgid "<b>Authentication</b>"
-msgstr "<b>შეერთების სახელი</b>"
+msgstr "<b>ავთენტიკაცია</b>"
 
 #: ../properties/nm-ssh-dialog.ui.h:25
 msgid "Type:"
-msgstr ""
+msgstr "ტიპი:"
 
 #: ../properties/nm-ssh-dialog.ui.h:26
 msgid "Select an authentication mode."
-msgstr ""
+msgstr "აირჩიეთ ავთენტიკაციის რეჟიმი."
 
 #: ../properties/nm-ssh-dialog.ui.h:28
-#, fuzzy
 msgid "Show Passwords"
-msgstr "პაროლი"
+msgstr "პაროლების ჩვენება"
 
 #: ../properties/nm-ssh-dialog.ui.h:29
 msgid "SSH Key File:"
-msgstr ""
+msgstr "SSH-ის გასაღების ფაილი:"
 
 #: ../src/nm-ssh-service.c:195
 #, c-format
 msgid "invalid address '%s'"
-msgstr ""
+msgstr "არასწორი მისამართი: %s"
 
 #: ../src/nm-ssh-service.c:207
 #, c-format
@@ -241,47 +232,47 @@ msgstr ""
 
 #: ../src/nm-ssh-service.c:252
 msgid "No VPN configuration options."
-msgstr ""
+msgstr "VPN-ის მორგების გარეშე."
 
 #: ../src/nm-ssh-service.c:1010
 msgid "Could not find the ssh binary."
-msgstr ""
+msgstr "/usr/bin/ssh გამშვები ფაილი ვერ ვიპოვე."
 
 #: ../src/nm-ssh-service.c:1035
 msgid "Could not find the sshpass binary."
-msgstr ""
+msgstr "\"sshpass\"-ის გამშვები ფაილი ვერ ვიპოვე."
 
 #: ../src/nm-ssh-service.c:1053
 msgid "No password specified."
-msgstr ""
+msgstr "პაროლი მითითებული არაა."
 
 #: ../src/nm-ssh-service.c:1090
 msgid "Key authentication selected, but no key file specified."
-msgstr ""
+msgstr "არჩეულია გასაღებით ავთენტიკაცია, მაგრამ გასაღები მითითებული არაა."
 
 #: ../src/nm-ssh-service.c:1110
 msgid "Missing required SSH_AUTH_SOCK."
-msgstr ""
+msgstr "აკლია SSH_AUTH_SOCK. ის აუცილებელია."
 
 #: ../src/nm-ssh-service.c:1124 ../src/nm-ssh-service.c:1584
 #, c-format
 msgid "Unknown authentication type: %s."
-msgstr ""
+msgstr "ავტოკონსოლის უცნობი ტიპი '%s'."
 
 #: ../src/nm-ssh-service.c:1194
 #, c-format
 msgid "Please set remote address."
-msgstr ""
+msgstr "მიუთითეთ დაშორებული მისამართი."
 
 #: ../src/nm-ssh-service.c:1210
 #, c-format
 msgid "Invalid port number '%s'."
-msgstr ""
+msgstr "პორტის არასწორი ნომერი: \"%s\"."
 
 #: ../src/nm-ssh-service.c:1229
 #, c-format
 msgid "Invalid TUN MTU size '%s'."
-msgstr ""
+msgstr "TUN MTU -ის არასწორი ზომა: '%s'."
 
 #: ../src/nm-ssh-service.c:1248
 #, c-format
@@ -290,34 +281,33 @@ msgstr ""
 
 #: ../src/nm-ssh-service.c:1267
 msgid "Missing required remote IP address."
-msgstr ""
+msgstr "აკლია აუცილებელი დაშორებული IP მისამართი."
 
 #: ../src/nm-ssh-service.c:1281
 msgid "Missing required local IP address."
-msgstr ""
+msgstr "აკლია აუცილებელი ლოკალური IP მისამართი."
 
 #: ../src/nm-ssh-service.c:1297
 msgid "Missing required netmask."
-msgstr ""
+msgstr "აკლია აუცილებელი ქსელის ნიღაბი."
 
 #: ../src/nm-ssh-service.c:1317
 msgid "Missing required IPv6 remote IP address."
-msgstr ""
+msgstr "აკლია აუცილებელი IPv6 დაშორებული IP მისამართი."
 
 #: ../src/nm-ssh-service.c:1331
 msgid "Missing required IPv6 local IP address."
-msgstr ""
+msgstr "აკლია აუცილებელი IPv6 ლოკალური IP მისამართი."
 
 #: ../src/nm-ssh-service.c:1345
 msgid "Missing required IPv6 netmask."
-msgstr ""
+msgstr "აკლია აუცილებელი IPv6 ქსელის ნიღაბი."
 
 #: ../src/nm-ssh-service.c:1504 ../src/nm-ssh-service.c:1546
-#, fuzzy
 msgid ""
 "Could not process the request because the VPN connection settings were "
 "invalid."
-msgstr "VPN-ში შესვლა ვერ მოხერხდა - არასწორია VPN-კონფიგურაციის პარამეტრები."
+msgstr ""
 
 #: ../src/nm-ssh-service.c:1708
 msgid "Don't quit when VPN connection terminates"
@@ -330,287 +320,3 @@ msgstr ""
 #: ../src/nm-ssh-service.c:1725
 msgid "nm-ssh-service provides integrated SSH capability to NetworkManager."
 msgstr ""
-
-#~ msgid "_Username:"
-#~ msgstr "_მომხმარებელი:"
-
-#~ msgid "_Domain:"
-#~ msgstr "_დომენი:"
-
-#~ msgid "Connect _anonymously"
-#~ msgstr "_ანონიმური დაკავშირება"
-
-#~ msgid "Connect as _user:"
-#~ msgstr "_სახელი, რომლითაც ვუკავშირდებით:"
-
-#~ msgid "_Remember password for this session"
-#~ msgstr "_მიმდინარე სესიის პაროლის დამახსოვრება"
-
-#~ msgid "_Save password in keyring"
-#~ msgstr "_გასაღების შენახვა აცმაში"
-
-#~ msgid "Certificate pass_word:"
-#~ msgstr "_სერტიფიკატის პაროლი:"
-
-#~ msgid "Certificate password:"
-#~ msgstr "სერტიფიკატის პაროლი:"
-
-#~ msgid "Add, Remove, and Edit VPN Connections"
-#~ msgstr "VPN-შეერთების დამატება, მოხსნა და რედაქტირება"
-
-#~ msgid "VPN Connection Manager (SSH)"
-#~ msgstr "VPN-შეერთებების მენეჯერი (SSH)"
-
-#~ msgid "The following SSH connection will be created:"
-#~ msgstr "იხსნება SSH-შეერთება:"
-
-#~ msgid "Name:  %s"
-#~ msgstr "სახელი: %s"
-
-#~ msgid "Connection Type: X.509 Certificates"
-#~ msgstr "შეერთების ტიპი: X.509 სერტიფიკატები"
-
-#~ msgid "CA:  %s"
-#~ msgstr "CA: %s"
-
-#~ msgid "Cert:  %s"
-#~ msgstr "სერტ: %s"
-
-#~ msgid "Key:  %s"
-#~ msgstr "გასაღები: %s"
-
-#~ msgid "Connection Type: Shared Key"
-#~ msgstr "შეერთების ტიპი:ზიარი გასაღები"
-
-#~ msgid "Shared Key:  %s"
-#~ msgstr "ზიარი გასაღები: %s"
-
-#~ msgid "Local IP:  %s"
-#~ msgstr "ლოკალური IP: %s"
-
-#~ msgid "Remote IP:  %s"
-#~ msgstr "დისტანციური IP: %s"
-
-#~ msgid "Connection Type: Password"
-#~ msgstr "შეერთების ტიპი: პაროლი"
-
-#~ msgid "Username:  %s"
-#~ msgstr "მომხმარებელი: %s"
-
-#~ msgid "Connection Type: X.509 with Password Authentication"
-#~ msgstr "შეერთების ტიპი: X.509 პაროლის ავტორიზაციით"
-
-#~ msgid "Remote:  %s"
-#~ msgstr "დისტანციური: %s"
-
-#~ msgid "Port:  %s"
-#~ msgstr "პორტი: %s"
-
-#~ msgid "Device: %s"
-#~ msgstr "მოწყობილობა: %s"
-
-#~ msgid "TAP"
-#~ msgstr "TAP"
-
-#~ msgid "TUN"
-#~ msgstr "TUN"
-
-#~ msgid "Protocol: %s"
-#~ msgstr "პროტოკოლი: %s"
-
-#~ msgid "TCP"
-#~ msgstr "TCP"
-
-#~ msgid "UDP"
-#~ msgstr "UDP"
-
-#~ msgid "Routes:  %s"
-#~ msgstr "მარშრუტები: %s"
-
-#~ msgid "Use LZO Compression: %s"
-#~ msgstr "LZO კუმშვის მეთოდი: %s"
-
-#~ msgid "Yes"
-#~ msgstr "დიახ"
-
-#~ msgid "No"
-#~ msgstr "არა"
-
-#~ msgid "Cipher:  %s"
-#~ msgstr "ციფრი: %s"
-
-#~ msgid "TLS auth:  %s %s"
-#~ msgstr "TLS ავტ: %s %s"
-
-#~ msgid "The connection details can be changed using the \"Edit\" button."
-#~ msgstr "შეერთების დეტალების შეცვლა შეიძლება \"Edit\" ღილაკით."
-
-#~ msgid "Cannot import settings"
-#~ msgstr "ვერ ხერხდება პარამეტრების იმპორტი"
-
-#~ msgid "The VPN settings file '%s' does not contain valid data."
-#~ msgstr "VPN პარამეტრების ფაილი '%s' არ შეიცავს საჭირო მონაცემებს."
-
-#~ msgid "Select file to import"
-#~ msgstr "მიუთითეთ ფაილი იმპორტისათვის"
-
-#~ msgid "Select CA to use"
-#~ msgstr "მიუთითეთ CA"
-
-#~ msgid "Select certificate to use"
-#~ msgstr "მიუთითეთ სერტიფიკატი"
-
-#~ msgid "Select key to use"
-#~ msgstr "მიუთითეთ გასაღები"
-
-#~ msgid "Select shared key to use"
-#~ msgstr "მიუთითეთ ზიარი გასაღები"
-
-#~ msgid "Select TA to use"
-#~ msgstr "მიუთითეთ TA"
-
-#~ msgid "Save as..."
-#~ msgstr "შეინახე როგორც..."
-
-#~ msgid "A file named \"%s\" already exists."
-#~ msgstr "ფაილი \"%s\" უკვე არსებობს."
-
-#~ msgid "Do you want to replace it with the one you are saving?"
-#~ msgstr "შევცვალოთ თქვენი ფაილით?"
-
-#~ msgid "Failed to export configuration"
-#~ msgstr "კონფიგურაციის ექსპორტი ვერ მოხერხდა"
-
-#~ msgid "Failed to save file %s"
-#~ msgstr "ვერ მოხერხდა %s ფაილის შენახვა"
-
-#~ msgid "(Default: 1194)"
-#~ msgstr "(ნაგულისხმევი: 1194)"
-
-#~ msgid "0"
-#~ msgstr "0"
-
-#~ msgid "1"
-#~ msgstr "1"
-
-#~ msgid "<b>Connection Information</b>"
-#~ msgstr "<b>ინფორმაცია შეერთების შესახებ</b>"
-
-#~ msgid "<i>example: 172.16.0.0/16 10.11.12.0/24</i>"
-#~ msgstr "<i>მაგალითი: 172.16.0.0/16 10.11.12.0/24</i>"
-
-#~ msgid "CA  file:"
-#~ msgstr "CA ფაილი:"
-
-#~ msgid "CA file:"
-#~ msgstr "CA ფაილი:"
-
-#~ msgid "Certificate:"
-#~ msgstr "სერტიფიკატი:"
-
-#~ msgid "Connection Name"
-#~ msgstr "შეერთების სახელი"
-
-#~ msgid "Connection Type:"
-#~ msgstr "შეერთების ტიპი:"
-
-#~ msgid "Direction:"
-#~ msgstr "მიმართულება:"
-
-#~ msgid "Key:"
-#~ msgstr "გასაღები:"
-
-#~ msgid ""
-#~ "Name used to identify the connection to the private network, e.g. "
-#~ "\"Campus VPN\" or \"Corporate Network\""
-#~ msgstr "VPN-იდენტიფიკატორი, მაგ.: \"Campus VPN\" ან \"Corporate Network\""
-
-#~ msgid "Optional"
-#~ msgstr "არ არის სავალდებულო"
-
-#~ msgid ""
-#~ "Please enter the information provided by your system administrator below. "
-#~ "Do not enter your password here as you will be prompted when connecting."
-#~ msgstr ""
-#~ "შეიყვანეთ სისტემური ადმინისტრატორისაგან მიღებული ინფორმაცია. შეერთებისას "
-#~ "აქ ნუ შეიყვანთ თქვენს პაროლს."
-
-#~ msgid ""
-#~ "Please note that the file you import is not an SSH configuration file. "
-#~ "Ask your adminstrator for the file."
-#~ msgstr ""
-#~ "თქვენს მიერ იმპორტირებული ფაილი არ არის SSH კონფიგურაციის ფაილი. "
-#~ "მოსთხოვეთ ფაილი თქვენს ადმინისტრატორს."
-
-#~ msgid "Shared Key:"
-#~ msgstr "ზიარი გასაღები:"
-
-#~ msgid "Shared key"
-#~ msgstr "ზიარი გასაღები"
-
-#~ msgid "Use LZO compression"
-#~ msgstr "LZO-კუმშვის გამოყენება"
-
-#~ msgid "Use TCP connection"
-#~ msgstr "TCP შეერთების გამოყენება"
-
-#~ msgid "Use TLS auth:"
-#~ msgstr "TLS ავტ:"
-
-#~ msgid "Use cipher:"
-#~ msgstr "ციფრი:"
-
-#~ msgid "X.509"
-#~ msgstr "X.509"
-
-#~ msgid ""
-#~ "X.509 Certificates\n"
-#~ "Pre-shared key\n"
-#~ "Password Authentication\n"
-#~ "X.509 with Password Authentication"
-#~ msgstr ""
-#~ "X.509 სერტიფიკატები\n"
-#~ "წინასწარგაზიარებული გასაღები\n"
-#~ "პაროლით ავტორიზება\n"
-#~ "X.509 პაროლით ავტორიზებით"
-
-#~ msgid "X.509/Pass"
-#~ msgstr "X.509/პარ"
-
-#~ msgid "_Gateway Address:"
-#~ msgstr "_რაბის მისამართი"
-
-#~ msgid "_Import Saved Configuration..."
-#~ msgstr "_შენახული კონფიგურაციის იმპორტი..."
-
-#~ msgid "_Only use VPN connection for these addresses"
-#~ msgstr "_ამ მისამართებისათვის მხოლოდ VPN-შეერთება"
-
-#~ msgid "none"
-#~ msgstr "არა"
-
-#~ msgid ""
-#~ "The VPN login failed because the user name and password were not accepted "
-#~ "or the certificate password was wrong."
-#~ msgstr ""
-#~ "VPN-ში შესვლა ვერ მოხერხდა - არასწორია მომხმარებლის სახელი/პაროლი ან "
-#~ "სერტიფიკატის პაროლი."
-
-#~ msgid "The VPN login failed because the VPN program could not be started."
-#~ msgstr "VPN-ში შესვლა ვერ მოხერხდა - პროგრამა ვერ გაიშვა."
-
-#~ msgid ""
-#~ "The VPN login failed because the VPN program could not connect to the VPN "
-#~ "server."
-#~ msgstr ""
-#~ "VPN-ში შესვლა ვერ მოხერხდა - VPN-პროგრამა ვერ დაუკავშირდა VPN-სერვერს."
-
-#~ msgid ""
-#~ "The VPN login failed because the VPN program received an invalid "
-#~ "configuration from the VPN server."
-#~ msgstr ""
-#~ "VPN-ში შესვლა ვერ მოხერხდა - VPN-პროგრამამ ვერ მიიღო სწორი კონფიგურაცია "
-#~ "VPN-სერვერისაგან."
-
-#~ msgid "VPN connection failed"
-#~ msgstr "VPN-თან შეერთება ვერ მოხერხდა"
