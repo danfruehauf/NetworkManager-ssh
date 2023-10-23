@@ -7,21 +7,22 @@
 # Leonid Kanter <leon@asplinux.ru>, 2007, 2008.
 # Артём Попов <artfwo@gmail.com>, 2009.
 # Yuri Kozlov <yuray@komyakino.ru>, 2010, 2011.
+# Olesya Gerasimenko <translation-team@basealt.ru>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: network-manager-ssh trunk\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-15 17:00+1000\n"
-"PO-Revision-Date: 2011-06-10 22:00+0300\n"
-"Last-Translator: Yuri Myasoedov <omerta13@yandex.ru>\n"
-"Language-Team: Russian <gnome-cyr@gnome.org>\n"
+"PO-Revision-Date: 2023-10-23 10:59+0300\n"
+"Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
+"Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
+"=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 23.04.3\n"
 
 #. Otherwise, we have no saved password, or the password flags indicated
 #. * that the password should never be saved.
@@ -46,6 +47,9 @@ msgid ""
 "\n"
 "Is ssh-agent running?"
 msgstr ""
+"Не удалось найти переменную окружения «%s».\n"
+"\n"
+"Запущен ли ssh-agent?"
 
 #: ../auth-dialog/vpn-password-dialog.c:95
 msgid "_Password:"
@@ -56,9 +60,8 @@ msgid "_Secondary Password:"
 msgstr "_Вторичный пароль:"
 
 #: ../auth-dialog/vpn-password-dialog.c:240
-#, fuzzy
 msgid "Sh_ow passwords"
-msgstr "Показать пароль"
+msgstr "По_казать пароли"
 
 #: ../properties/advanced-dialog.c:137
 msgid ""
@@ -67,6 +70,10 @@ msgid ""
 "Please make sure the user you specify is allowed to open tun/tap devices on "
 "the remote host."
 msgstr ""
+"Выбрано не использовать «root» в качестве имени пользователя для соединения.\n"
+"\n"
+"Убедитесь, что указанному пользователю разрешено открывать устройства tun/tap"
+" на удалённом узле."
 
 #: ../properties/nm-ssh.c:49
 msgid "SSH"
@@ -78,24 +85,23 @@ msgstr "Совместим с сервером SSH."
 
 #: ../properties/nm-ssh.c:457
 msgid "Saved"
-msgstr ""
+msgstr "Сохранённый"
 
 #: ../properties/nm-ssh.c:464
 msgid "Always Ask"
-msgstr ""
+msgstr "Всегда спрашивать"
 
 #: ../properties/nm-ssh.c:620
 msgid "SSH Agent"
-msgstr ""
+msgstr "Агент SSH"
 
 #: ../properties/nm-ssh.c:633
 msgid "Password"
 msgstr "Пароль"
 
 #: ../properties/nm-ssh.c:646
-#, fuzzy
 msgid "Key Authentication"
-msgstr "Аутентификация TLS"
+msgstr "Аутентификация по ключу"
 
 #: ../properties/nm-ssh-dialog.ui.h:1
 msgid " "
@@ -110,37 +116,33 @@ msgid "SSH Advanced Options"
 msgstr "Дополнительные параметры SSH"
 
 #: ../properties/nm-ssh-dialog.ui.h:4
-#, fuzzy
 msgid "Use custom gateway port:"
-msgstr "Использовать другой _порт шлюза:"
+msgstr "Использовать нестандартный порт шлюза:"
 
 #: ../properties/nm-ssh-dialog.ui.h:5
-#, fuzzy
 msgid "Use custom tunnel Maximum Transmission Unit (MTU):"
 msgstr ""
-"Использовать нестандартный максимальный размер элемента передачи (MTU):"
+"Использовать нестандартный максимальный передаваемый блок данных (MTU):"
 
 #: ../properties/nm-ssh-dialog.ui.h:6
 msgid "Extra SSH options:"
-msgstr ""
+msgstr "Дополнительные параметры SSH:"
 
 #: ../properties/nm-ssh-dialog.ui.h:7
 msgid "Remote device number:"
-msgstr ""
+msgstr "Номер удалённого устройства:"
 
 #: ../properties/nm-ssh-dialog.ui.h:8
-#, fuzzy
 msgid "Use a TAP device"
-msgstr "Использовать устройство TA_P"
+msgstr "Использовать устройство TAP"
 
 #: ../properties/nm-ssh-dialog.ui.h:9
-#, fuzzy
 msgid "Remote username:"
-msgstr "Имя пользователя на прокси:"
+msgstr "Имя пользователя для соединения:"
 
 #: ../properties/nm-ssh-dialog.ui.h:10
 msgid "Do not replace default route"
-msgstr ""
+msgstr "Не заменять маршрут по умолчанию"
 
 #: ../properties/nm-ssh-dialog.ui.h:11
 msgid "General"
@@ -151,13 +153,12 @@ msgid "<b>General</b>"
 msgstr "<b>Общие</b>"
 
 #: ../properties/nm-ssh-dialog.ui.h:13
-#, fuzzy
 msgid "Gateway:"
-msgstr "_Шлюз:"
+msgstr "Шлюз:"
 
 #: ../properties/nm-ssh-dialog.ui.h:14
 msgid "<b>Network Settings</b>"
-msgstr ""
+msgstr "<b>Параметры сети</b>"
 
 #: ../properties/nm-ssh-dialog.ui.h:15
 msgid "Remote IP Address:"
@@ -169,34 +170,31 @@ msgstr "Локальный IP-адрес:"
 
 #: ../properties/nm-ssh-dialog.ui.h:17
 msgid "Netmask:"
-msgstr ""
+msgstr "Маска сети:"
 
 #: ../properties/nm-ssh-dialog.ui.h:18
 msgid "<b>IPv6 Network Settings</b>"
-msgstr ""
+msgstr "<b>Параметры сети IPv6</b>"
 
 #: ../properties/nm-ssh-dialog.ui.h:19
 msgid "Use IPv6"
-msgstr ""
+msgstr "Использовать IPv6"
 
 #: ../properties/nm-ssh-dialog.ui.h:20
-#, fuzzy
 msgid "Remote IP Address (IPv6):"
-msgstr "Удалённый IP-адрес:"
+msgstr "Удалённый IP-адрес (IPv6)::"
 
 #: ../properties/nm-ssh-dialog.ui.h:21
-#, fuzzy
 msgid "Local IP Address (IPv6):"
-msgstr "Локальный IP-адрес:"
+msgstr "Локальный IP-адрес (IPv6):"
 
 #: ../properties/nm-ssh-dialog.ui.h:22
 msgid "Prefix (IPv6):"
-msgstr ""
+msgstr "Префикс (IPv6):"
 
 #: ../properties/nm-ssh-dialog.ui.h:23
-#, fuzzy
 msgid "Advanced..."
-msgstr "_Дополнительно…"
+msgstr "Дополнительно…"
 
 #: ../properties/nm-ssh-dialog.ui.h:24
 msgid "<b>Authentication</b>"
@@ -207,19 +205,16 @@ msgid "Type:"
 msgstr "Тип:"
 
 #: ../properties/nm-ssh-dialog.ui.h:26
-#, fuzzy
 msgid "Select an authentication mode."
-msgstr "Аутентификация TLS"
+msgstr "Выберите режим аутентификации."
 
 #: ../properties/nm-ssh-dialog.ui.h:28
-#, fuzzy
 msgid "Show Passwords"
 msgstr "Показать пароли"
 
 #: ../properties/nm-ssh-dialog.ui.h:29
-#, fuzzy
 msgid "SSH Key File:"
-msgstr "Файл ключа:"
+msgstr "Файл ключа SSH:"
 
 #: ../src/nm-ssh-service.c:195
 #, c-format
@@ -256,32 +251,30 @@ msgid "Could not find the ssh binary."
 msgstr "Не удалось найти исполняемый файл ssh."
 
 #: ../src/nm-ssh-service.c:1035
-#, fuzzy
 msgid "Could not find the sshpass binary."
-msgstr "Не удалось найти исполняемый файл ssh."
+msgstr "Не удалось найти исполняемый файл sshpass."
 
 #: ../src/nm-ssh-service.c:1053
-#, fuzzy
 msgid "No password specified."
-msgstr "Показать пароли"
+msgstr "Пароль не указан."
 
 #: ../src/nm-ssh-service.c:1090
 msgid "Key authentication selected, but no key file specified."
-msgstr ""
+msgstr "Выбрана аутентификация по ключу, но не указан файл ключа."
 
 #: ../src/nm-ssh-service.c:1110
 msgid "Missing required SSH_AUTH_SOCK."
-msgstr ""
+msgstr "Отсутствует необходимая переменная окружения SSH_AUTH_SOCK."
 
 #: ../src/nm-ssh-service.c:1124 ../src/nm-ssh-service.c:1584
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown authentication type: %s."
-msgstr "Неизвестный тип подключения «%s»."
+msgstr "Неизвестный тип аутентификации: %s."
 
 #: ../src/nm-ssh-service.c:1194
 #, c-format
 msgid "Please set remote address."
-msgstr ""
+msgstr "Укажите удалённый адрес."
 
 #: ../src/nm-ssh-service.c:1210
 #, c-format
@@ -294,41 +287,33 @@ msgid "Invalid TUN MTU size '%s'."
 msgstr "Некорректный размер TUN MTU «%s»."
 
 #: ../src/nm-ssh-service.c:1248
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid TUN/TAP device number '%s'."
-msgstr "Некорректный номер порта «%s»."
+msgstr "Некорректный номер устройства TUN/TAP «%s»."
 
 #: ../src/nm-ssh-service.c:1267
-#, fuzzy
 msgid "Missing required remote IP address."
-msgstr ""
-"Отсутствует необходимый удалённый IP-адрес для режима со статическим ключом."
+msgstr "Отсутствует необходимый удалённый IP-адрес."
 
 #: ../src/nm-ssh-service.c:1281
-#, fuzzy
 msgid "Missing required local IP address."
-msgstr ""
-"Отсутствует необходимый локальный IP-адрес для режима со статическим ключом."
+msgstr "Отсутствует необходимый локальный IP-адрес."
 
 #: ../src/nm-ssh-service.c:1297
 msgid "Missing required netmask."
-msgstr ""
+msgstr "Отсутствует необходимая маска сети."
 
 #: ../src/nm-ssh-service.c:1317
-#, fuzzy
 msgid "Missing required IPv6 remote IP address."
-msgstr ""
-"Отсутствует необходимый удалённый IP-адрес для режима со статическим ключом."
+msgstr "Отсутствует необходимый удалённый IP-адрес IPv6."
 
 #: ../src/nm-ssh-service.c:1331
-#, fuzzy
 msgid "Missing required IPv6 local IP address."
-msgstr ""
-"Отсутствует необходимый локальный IP-адрес для режима со статическим ключом."
+msgstr "Отсутствует необходимый локальный IP-адрес IPv6."
 
 #: ../src/nm-ssh-service.c:1345
 msgid "Missing required IPv6 netmask."
-msgstr ""
+msgstr "Отсутствует необходимая маска сети IPv6."
 
 #: ../src/nm-ssh-service.c:1504 ../src/nm-ssh-service.c:1546
 msgid ""
@@ -346,9 +331,8 @@ msgid "Enable verbose debug logging (may expose passwords)"
 msgstr "Включить подробный режим отладки (могут отображаться пароли)"
 
 #: ../src/nm-ssh-service.c:1725
-#, fuzzy
 msgid "nm-ssh-service provides integrated SSH capability to NetworkManager."
-msgstr "nm-vpnc-service позволяет использовать SSH в NetworkManager."
+msgstr "nm-ssh-service позволяет использовать SSH в NetworkManager."
 
 #~ msgid "_Username:"
 #~ msgstr "_Имя пользователя:"
