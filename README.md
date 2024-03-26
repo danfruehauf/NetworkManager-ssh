@@ -66,7 +66,7 @@ $ autoreconf -fvi && ./configure && make deb
 ```
 ### Arch Linux
 
-A package for Arch is available in the AUR - https://aur.archlinux.org/packages/networkmanager-ssh-git
+A package for Arch is available in the AUR - [https://aur.archlinux.org/packages/networkmanager-ssh-git](https://aur.archlinux.org/packages/networkmanager-ssh)
 
 ## Running
 
