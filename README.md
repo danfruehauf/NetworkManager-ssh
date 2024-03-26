@@ -23,19 +23,19 @@ Basically NetworkManager-ssh integrates OpenSSH tunnel capabilities with Network
 ### Fedora/CentOS
 
 If you're using Fedora 22 or later, you can simply run:
-```
-# dnf install NetworkManager-ssh-gnome
+```sh
+sudo dnf install NetworkManager-ssh-gnome
 ```
 If you're using Fedora 22 or later, with KDE Plasma 5 run:
-```
-# dnf install NetworkManager-ssh plasma-nm-ssh
+```sh
+sudo dnf install NetworkManager-ssh plasma-nm-ssh
 ```
 
 That will set you up with NetworkManager and the traditional GNOME interface. I am the current maintainer of the package for Fedora.
 
 On older versions of Fedora or CentOS, you can run the following after cloning the repository:
-```
-$ autoreconf -fvi && ./configure && make rpm
+```sh
+autoreconf -fvi && ./configure && make rpm
 ```
 
 Enjoy your new RPM.
@@ -43,16 +43,18 @@ Enjoy your new RPM.
 ### Ubuntu/Debian
 
 On recent Debian/Ubuntu distributions you should be able to install with:
-```
-# apt-get install network-manager-ssh
+```sh
+sudo apt-get install network-manager-ssh
 ```
 
-In case you want to build the package for Debian/Ubuntu, you can use the complimentary packaging this repository provides, but **please do not open bugs about it on this GitHub issue tracker.** The correct thing to do is to use the upstream packages provided with the distribution and open bugs on the distribution issue tracker.
+In case you want to build the package for Debian/Ubuntu, you can use the complimentary packaging this repository provides.
+But **please do not open bugs about it on this GitHub issue tracker**.
+The correct thing to do is to use the upstream packages provided with the distribution and open bugs on the distribution issue tracker.
 
 Building a .deb *should* be straight forward with:
-```
-# apt-get install libnm-glib-dev libnm-glib-vpn-dev libnm-util-dev libnm-dev libnma-dev libgnome-keyring-dev dh-autoreconf libgtk-3-dev sshpass
-$ autoreconf -fvi && ./configure && make deb
+```sh
+sudo apt-get install libnm-glib-dev libnm-glib-vpn-dev libnm-util-dev libnm-dev libnma-dev libgnome-keyring-dev dh-autoreconf libgtk-3-dev sshpass
+autoreconf -fvi && ./configure && make deb
 ```
 
 Enjoy your new .deb. (It should show up in the directory you `git clone`d from.)
@@ -60,19 +62,20 @@ Enjoy your new .deb. (It should show up in the directory you `git clone`d from.)
 ### Older Distributions
 
 On old distributions with NetworkManager < 0.9.10, such as Ubuntu 14.04, use the 0.9.3 tag:
-```
-$ git checkout 0.9.3
-$ autoreconf -fvi && ./configure && make deb
+```sh
+git checkout 0.9.3
+autoreconf -fvi && ./configure && make deb
 ```
 
 ## Running
 
-Please edit <i>/etc/dbus-1/system.d/org.freedesktop.NetworkManager.conf</i> and add the line:
-```
+Please edit `/etc/dbus-1/system.d/org.freedesktop.NetworkManager.conf` and add the line:
+```xml
 <allow send_destination="org.freedesktop.NetworkManager.ssh"/>
 ```
 
-Make sure your target host is known in `~/.ssh/known_hosts`. If it's not there, you should add it manually or by SSHing to it:
+Make sure your target host is known in `~/.ssh/known_hosts`.
+If it's not there, you should add it manually or by SSHing to it:
 ```
 $ ssh root@TARGET_HOST
 The authenticity of host 'TARGET_HOST' can't be established.
@@ -86,8 +89,8 @@ If all went right, you should have a new VPN of type <i>SSH</i> when creating a 
 
 ### Debugging
 
-When things go wrong and you can't really figure out what's happening, have a look at `/var/log/messages` as you spin up the connection. You should
-be able to tell what is going wrong.
+When things go wrong and you can't really figure out what's happening, have a look at `/var/log/messages` as you spin up the connection.
+You should be able to tell what is going wrong.
 
 ## Server side configuration
 
@@ -99,7 +102,7 @@ PermitTunnel=yes
 ```
 
 Enable kernel packet forwarding:
-```
+```sh
 echo 1 > /proc/sys/net/ipv4/ip_forward
 ```
 
@@ -107,7 +110,7 @@ In terms of firewall configuration, I recommend looking at the "standard" way of
 These however, should work on most GNU/Linux distributions.
 
 Tun devices:
-```
+```sh
 iptables -I FORWARD -i tun+ -j ACCEPT
 iptables -I FORWARD -o tun+ -j ACCEPT
 iptables -I INPUT -i tun+ -j ACCEPT
@@ -115,7 +118,7 @@ iptables -t nat -I POSTROUTING -o EXTERNAL_INTERFACE -j MASQUERADE
 ```
 
 Tap devices:
-```
+```sh
 iptables -I FORWARD -i tap+ -j ACCEPT
 iptables -I FORWARD -o tap+ -j ACCEPT
 iptables -I INPUT -i tap+ -j ACCEPT
@@ -147,7 +150,7 @@ That's it, you're done.
 You will need <i>ssh-agent</i> running before you start NetworkManager-ssh.
 
 How do you know if you have <i>ssh-agent</i> running? Simply run:
-```
+```sh
 $ env | grep SSH
 SSH_AGENT_PID=16152
 SSH_AUTH_SOCK=/tmp/ssh-mGTf3Q1L2oPf/agent.16151
@@ -170,7 +173,7 @@ If the destination host is not in your <i>known_hosts</i> file, things will not 
 ## Behind the scenes - how does it actually work??
 
 In order to open a tunnel OpenSSH VPN, all that you have to do is run:
-```
+```bash
 #!/bin/bash
 # This is the WAN IP/hostname of the remote machine
 REMOTE=EDIT_ME
@@ -217,7 +220,8 @@ ssh -f -v -o Tunnel=$TUNNEL_TYPE -o NumberOfPasswordPrompts=0 $EXTRA_OPTS \
 
 That's actually an edited export file of a working SSH VPN configuration I have from NetworkManager.
 
-This will create a tunnel of 192.168.0.1<->192.168.0.2 on tun100 on both machines. If forwarding is enabled on that SSH server, you'll get pass-through internet easy.
+This will create a tunnel of 192.168.0.1<->192.168.0.2 on tun100 on both machines.
+If forwarding is enabled on that SSH server, you'll get pass-through internet easy.
 
 ## People I'd like to thank
 
