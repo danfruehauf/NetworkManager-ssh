@@ -18,8 +18,11 @@ Build-Depends:
  libgnome-keyring-dev,
  libgtk-3-dev (>= 3.0),
  libglib2.0-dev
-Standards-Version: 3.9.3
-Homepage: http://www.gnome.org/projects/NetworkManager/
+Standards-Version: 4.5.0
+Vcs-Browser: https://github.com/danfruehauf/NetworkManager-ssh/
+Vcs-Git: https://github.com/danfruehauf/NetworkManager-ssh.git
+Homepage: https://github.com/danfruehauf/NetworkManager-ssh/
+
 
 Package: network-manager-ssh
 Architecture: any
@@ -28,7 +31,7 @@ Recommends: network-manager-ssh-gnome | plasma-widget-networkmanagement
 Description: network management framework (SSH plugin core)
  NetworkManager is a system network service that manages your network devices
  and connections, attempting to keep active network connectivity when
- available. It manages ethernet, WiFi, mobile broadband (WWAN), and PPPoE
+ available. It manages ethernet, Wi-Fi, mobile broadband (WWAN), and PPPoE
  devices, and provides VPN integration with a variety of different VPN
  services.
  .
@@ -40,9 +43,8 @@ Depends: ${shlibs:Depends}, ${misc:Depends}, network-manager-ssh (= ${binary:Ver
 Description: network management framework (SSH plugin GNOME GUI)
  NetworkManager is a system network service that manages your network devices
  and connections, attempting to keep active network connectivity when
- available. It manages ethernet, WiFi, mobile broadband (WWAN), and PPPoE
+ available. It manages ethernet, Wi-Fi, mobile broadband (WWAN), and PPPoE
  devices, and provides VPN integration with a variety of different VPN
  services.
  .
  This package provides the GNOME bits of NetworkManager's SSH plugin.
-
