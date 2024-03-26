@@ -28,7 +28,6 @@
 
 #include <glib/gi18n.h>
 #include <gio/gio.h>
-#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -169,7 +168,7 @@ validate_one_property (const char *key, const char *value, gpointer user_data)
 		ValidProperty prop = info->table[i];
 		long int tmp;
 
-		if (strncmp (prop.name, key, strlen(prop.name)))
+		if (strncmp (prop.name, key, strlen(prop.name)) != 0)
 			continue;
 
 		switch (prop.type) {
@@ -310,7 +309,7 @@ resolve_hostname (const char *hostname)
 	const char *p;
 	gboolean is_name = FALSE;
 
-	/* Check if it seems to be a hostname hostname */
+	/* Check if it seems to be a hostname */
 	p = hostname;
 	while (*p) {
 		if (*p != '.' && !isdigit (*p)) {
@@ -890,7 +889,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 				return FALSE;
 			}
 		} else if (!strncmp (auth_type, NM_SSH_AUTH_TYPE_SSH_AGENT, strlen(NM_SSH_AUTH_TYPE_SSH_AGENT))) {
-			/* Last but not least, the original nm-ssh default behaviour which
+			/* Last but not least, the original nm-ssh default behaviour
 		 	* which is the sanest of all - SSH_AGENT socket */
 			/* FIXME add all the ssh agent logic here */
 			/* Set SSH_AUTH_SOCK from ssh-agent
@@ -1034,7 +1033,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 			free_ssh_args (args);
 			return FALSE;
 		}
-		priv->io_data->remote_dev_number = tmp_int;
+		priv->io_data->remote_dev_number = (gint) tmp_int;
 	} else {
 		/* Use tun100/tap100 by default */
 		priv->io_data->remote_dev_number = NM_SSH_DEFAULT_REMOTE_DEV;
@@ -1146,7 +1145,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	add_ssh_arg (args, "-o"); add_ssh_arg (args, tmp_arg);
 	g_free(tmp_arg);
 
-	/* Remote username, should usually be root */
+	/* Remote username. Should usually be root */
 	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_REMOTE_USERNAME);
 	if (tmp && strlen (tmp)) {
 		priv->io_data->username = g_strdup (tmp);
@@ -1264,7 +1263,7 @@ validate_ssh_agent_socket(const char* ssh_agent_socket, GError **error)
 	GFile           *gfile = NULL;
 	GFileInfo       *info = NULL;
 	if (debug)
-		g_message ("Inspecing ssh agent socket at: '%s'\n", ssh_agent_socket);
+		g_message ("Inspecting ssh agent socket at: '%s'\n", ssh_agent_socket);
 
 	if (!g_file_test (ssh_agent_socket, G_FILE_TEST_EXISTS))
 		return FALSE;
@@ -1306,7 +1305,7 @@ real_connect (NMVpnServicePlugin   *plugin,
 	if (!nm_ssh_properties_validate (s_vpn, error))
 		return FALSE;
 
-	/* Finally try to start SSH */
+	/* Finally, try to start SSH */
 	if (!nm_ssh_start_ssh_binary (NM_SSH_PLUGIN (plugin), s_vpn, user_name, error))
 		return FALSE;
 
@@ -1347,7 +1346,7 @@ real_need_secrets (NMVpnServicePlugin *plugin,
 	if (!auth_type)
 		auth_type = NM_SSH_AUTH_TYPE_SSH_AGENT;
 
-	/* Lets see if we need some passwords... */
+	/* Let's see if we need some passwords... */
 	if (!strncmp (auth_type, NM_SSH_AUTH_TYPE_PASSWORD, strlen(NM_SSH_AUTH_TYPE_PASSWORD))) {
 		/* Password auth */
 		need_secrets = TRUE;
