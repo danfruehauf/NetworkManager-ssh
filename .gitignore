@@ -19,6 +19,7 @@
 *.app
 
 autom4te.cache/
+build
 gtk4/
 Makefile
 Makefile.in
@@ -38,4 +39,13 @@ nm-ssh-service.name
 stamp-h1
 properties/resources.c
 
+.dirstamp
+/auth_dialog/nm-ssh-auth-dialog
+/nm-ssh-service
 /NetworkManager-ssh-*.tar*
+/debian/autoreconf.before
+/debian/autoreconf.after
+/debian/debhelper-build-stamp
+/debian/.debhelper/
+/debian/tmp/
+/debian/network-manager-ssh/
