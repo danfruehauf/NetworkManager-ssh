@@ -1,18 +1,7 @@
 # NetworkManager-ssh
 
 Happy to introduce SSH VPN integration for NetworkManager.
-
-It is still very much work in progress, so please do open me issues with bugs or future requests.
-If there will be enough interest, I'll definitely continue developing it.
-I still have enough cleanups I need to perform code wise.
-
-I've forked the work of NetworkManager-ssh from NetworkManager-openvpn.
-
-## Why?
-
-Because we can!
-
-SSH VPN can be used just anywhere!
+The SSH VPN can be used just anywhere!
 
 ## So what does it do?
 
