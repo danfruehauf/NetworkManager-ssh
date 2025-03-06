@@ -45,9 +45,9 @@ if WITH_GNOME
 #icon_DATA = $(iconfile)
 endif
 
-appdatadir = $(datadir)/appdata
+appdatadir = $(datadir)/metainfo
 appdata_DATA = $(appdata_in_files:.xml.in=.xml)
-appdata_in_files = appdata/network-manager-ssh.metainfo.xml.in
+appdata_in_files = metainfo/network-manager-ssh.metainfo.xml.in
 @INTLTOOL_XML_RULE@
 
 nm-ssh-service.name: $(srcdir)/nm-ssh-service.name.in
