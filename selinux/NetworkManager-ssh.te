@@ -1,0 +1,43 @@
+
+module NetworkManager-ssh 1.0;
+
+require {
+	type ssh_exec_t;
+	type unconfined_t;
+	type user_tmp_t;
+        type config_home_t;
+        type ssh_home_t;
+        type admin_home_t;
+        type user_home_t;
+        type user_home_dir_t;
+	type systemd_conf_t;
+	type ptmx_t;
+	type devpts_t;
+	type NetworkManager_ssh_t;
+	class capability { dac_override net_admin };
+	class dir { search };
+	class file { open read execute_no_trans getattr };
+	class chr_file { open read write ioctl };
+	class sock_file { read write getattr };
+	class unix_stream_socket connectto;
+}
+
+#============= NetworkManager_ssh_t ==============
+allow NetworkManager_ssh_t self:capability { dac_override net_admin };
+allow NetworkManager_ssh_t ssh_exec_t:file execute_no_trans;
+allow NetworkManager_ssh_t unconfined_t:unix_stream_socket connectto;
+allow NetworkManager_ssh_t user_tmp_t:sock_file { read write getattr };
+allow NetworkManager_ssh_t systemd_conf_t:file { open read getattr };
+
+# Allow known_hosts access in user's directory
+allow NetworkManager_ssh_t ssh_home_t:file { open read getattr };
+allow NetworkManager_ssh_t config_home_t:file { open read getattr };
+allow NetworkManager_ssh_t user_home_dir_t:dir { search };
+
+# Allow known_hosts reading from root directory (when user can't be probed)
+allow NetworkManager_ssh_t admin_home_t:dir { search };
+
+# sshpass (password from stdin)
+allow NetworkManager_ssh_t ptmx_t:chr_file { open read write ioctl };
+allow NetworkManager_ssh_t devpts_t:dir { search };
+allow NetworkManager_ssh_t devpts_t:chr_file { open read write ioctl };
