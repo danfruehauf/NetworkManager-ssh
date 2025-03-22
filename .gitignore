@@ -39,7 +39,7 @@ stamp-h1
 properties/resources.c
 
 .dirstamp
-auth_dialog/nm-ssh-auth-dialog
+auth-dialog/nm-ssh-auth-dialog
 nm-ssh-service
 NetworkManager-ssh-*.tar*
 debian/autoreconf.before
