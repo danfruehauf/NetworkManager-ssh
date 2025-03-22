@@ -78,7 +78,7 @@ rm -f %{buildroot}%{_libdir}/NetworkManager/lib*.la
 %{_libdir}/NetworkManager/lib*.so*
 %dir %{_datadir}/gnome-vpn-properties/ssh
 %{_datadir}/gnome-vpn-properties/ssh/nm-ssh-dialog.ui
-%{_datarootdir}/appdata/network-manager-ssh.metainfo.xml
+%{_datarootdir}/metainfo/network-manager-ssh.metainfo.xml
 
 %changelog
 
