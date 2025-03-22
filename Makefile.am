@@ -272,7 +272,7 @@ properties_libnm_ssh_properties_la_LDFLAGS = \
 
 ###################################################################################################
 
-libexec_PROGRAMS += auth_dialog/nm-ssh-auth-dialog
+libexec_PROGRAMS += auth-dialog/nm-ssh-auth-dialog
 
 auth_dialog_nm_ssh_auth_dialog_CPPFLAGS = \
 	$(GTK_CFLAGS) \
