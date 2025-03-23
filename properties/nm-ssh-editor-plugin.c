@@ -221,8 +221,12 @@ export (NMVpnEditorPlugin *iface,
 	const char *remote_username = NULL;
 	char *device_type = NULL;
 	char *tunnel_type = NULL;
-	char *ifconfig_cmd_local_6 = NULL;
-	char *ifconfig_cmd_remote_6 = NULL;
+	char *ip_link_cmd_local = NULL;
+	char *ip_link_cmd_remote = NULL;
+	char *ip_addr_cmd_local_4 = NULL;
+	char *ip_addr_cmd_remote_4 = NULL;
+	char *ip_addr_cmd_local_6 = NULL;
+	char *ip_addr_cmd_remote_6 = NULL;
 	char *preferred_authentication = NULL;
 	unsigned password_prompt_nr = 0;
 	gboolean ipv6 = FALSE;
@@ -321,6 +325,12 @@ export (NMVpnEditorPlugin *iface,
 		tunnel_type = g_strdup("point-to-point");
 	}
 
+	ip_link_cmd_local = g_strdup_printf("%s link set $MTU dev $DEV_TYPE$LOCAL_DEV", IPROUTE2);
+	ip_link_cmd_remote = g_strdup_printf("%s link set $MTU dev $DEV_TYPE$REMOTE_DEV", IPROUTE2);
+
+	ip_addr_cmd_local_4 = g_strdup_printf("%s addr add $LOCAL_IP/$NETMASK peer $REMOTE_IP/$NETMASK dev $DEV_TYPE$LOCAL_DEV", IPROUTE2);
+	ip_addr_cmd_remote_4 = g_strdup_printf("%s addr add $REMOTE_IP/$NETMASK peer $LOCAL_IP/$NETMASK dev $DEV_TYPE$REMOTE_DEV", IPROUTE2);
+
 	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_IP_6);
 	if (value && IS_YES(value)) {
 		ipv6 = TRUE;
@@ -349,12 +359,12 @@ export (NMVpnEditorPlugin *iface,
 			goto done;
 		}
 
-		ifconfig_cmd_local_6 = g_strdup_printf("%s $DEV_TYPE$LOCAL_DEV add $LOCAL_IP_6/$NETMASK_6", IFCONFIG);
-		ifconfig_cmd_remote_6 = g_strdup_printf("%s $DEV_TYPE$REMOTE_DEV add $REMOTE_IP_6/$NETMASK_6", IFCONFIG);
+		ip_addr_cmd_local_6 = g_strdup_printf("; %s addr add $LOCAL_IP_6/$NETMASK_6 peer $REMOTE_IP_6/$NETMASK_6 dev $DEV_TYPE$LOCAL_DEV", IPROUTE2);
+		ip_addr_cmd_remote_6 = g_strdup_printf("; %s addr add $REMOTE_IP_6/$NETMASK_6 peer $LOCAL_IP_6/$NETMASK_6 dev $DEV_TYPE$REMOTE_DEV", IPROUTE2);
 	} else {
 		ipv6 = FALSE;
-		ifconfig_cmd_local_6 = g_strdup("");
-		ifconfig_cmd_remote_6 = g_strdup("");
+		ip_addr_cmd_local_6 = g_strdup("");
+		ip_addr_cmd_remote_6 = g_strdup("");
 	}
 
 	/* Advanced values end */
@@ -386,24 +396,29 @@ export (NMVpnEditorPlugin *iface,
 	fprintf (f, "%s=%s\n", TUNNEL_TYPE_KEY, tunnel_type);
 
 	/* Add a little of bash script to probe for a free tun/tap device */
-	fprintf (f, "for i in `seq 0 255`; do ! %s $DEV_TYPE$i >& /dev/null && LOCAL_DEV=$i && break; done", IFCONFIG);
+	fprintf (f, "for i in `seq 0 255`; do ! %s link show $DEV_TYPE$i >& /dev/null && LOCAL_DEV=$i && break; done", IPROUTE2);
 
 	/* The generic lines that will perform the connection */
 	fprintf (f, "\n");
-	fprintf(f, "ssh -f %s -o PreferredAuthentications=%s -o NumberOfPasswordPrompts=%d -o Tunnel=$TUNNEL_TYPE -o ServerAliveInterval=10 -o TCPKeepAlive=yes -o TunnelDevice=$LOCAL_DEV:$REMOTE_DEV -o User=$REMOTE_USERNAME -o Port=$PORT -o HostName=$REMOTE $REMOTE \"%s $DEV_TYPE$REMOTE_DEV $REMOTE_IP netmask $NETMASK pointopoint $LOCAL_IP; %s\" && \\\n",
+	fprintf(f, "ssh -f %s -o PreferredAuthentications=%s -o NumberOfPasswordPrompts=%d -o Tunnel=$TUNNEL_TYPE -o ServerAliveInterval=10 -o TCPKeepAlive=yes -o TunnelDevice=$LOCAL_DEV:$REMOTE_DEV -o User=$REMOTE_USERNAME -o Port=$PORT -o HostName=$REMOTE $REMOTE \"%s%s; %s\" && \\\n",
 		(key_file ? g_strconcat("-i ", key_file, NULL) : ""),
 		preferred_authentication,
 		password_prompt_nr,
-		IFCONFIG,
-		ifconfig_cmd_remote_6);
-	fprintf(f, "%s $DEV_TYPE$LOCAL_DEV $LOCAL_IP netmask $NETMASK pointopoint $REMOTE_IP; %s\n", IFCONFIG, ifconfig_cmd_local_6);
+		ip_addr_cmd_remote_4,
+		ip_addr_cmd_remote_6,
+		ip_link_cmd_remote);
+	fprintf(f, "%s%s; %s\n", ip_addr_cmd_local_4, ip_addr_cmd_local_6, ip_link_cmd_local);
 
 	success = TRUE;
 
 	g_free(device_type);
 	g_free(tunnel_type);
-	g_free(ifconfig_cmd_local_6);
-	g_free(ifconfig_cmd_remote_6);
+	g_free(ip_link_cmd_local);
+	g_free(ip_link_cmd_remote);
+	g_free(ip_addr_cmd_local_4);
+	g_free(ip_addr_cmd_remote_4);
+	g_free(ip_addr_cmd_local_6);
+	g_free(ip_addr_cmd_remote_6);
 	g_free(preferred_authentication);
 
 done:

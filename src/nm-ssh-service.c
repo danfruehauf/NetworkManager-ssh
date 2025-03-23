@@ -591,7 +591,7 @@ nm_ssh_get_free_device (const char *device_type)
 
 	for (device = 0; device <= 255; device++)
 	{
-		system_cmd = (gpointer) g_strdup_printf ("%s %s%d > /dev/null 2>&1", IFCONFIG, device_type, device);
+		system_cmd = (gpointer) g_strdup_printf ("%s link show %s%d > /dev/null 2>&1", IPROUTE2, device_type, device);
 		if (system(system_cmd) != 0)
 		{
 			g_free(system_cmd);
@@ -777,7 +777,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	const char *remote = NULL, *port = NULL, *mtu = NULL, *ssh_agent_socket = NULL, *auth_type = NULL;
 	char *known_hosts_file = NULL;
 	char *tmp_arg = NULL;
-	char *ifconfig_cmd_4 = NULL, *ifconfig_cmd_6 = NULL;
+	char *ip_addr_cmd_4 = NULL, *ip_addr_cmd_6 = NULL, *ip_link_cmd = NULL;
 	char *envp[16];
 	long int tmp_int;
 	GPtrArray *args;
@@ -1169,33 +1169,44 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	add_ssh_arg (args, "NetworkManager-ssh");
 
 	/* Command line to run on remote machine */
-	ifconfig_cmd_4 = (gpointer) g_strdup_printf (
-		"%s %s%d inet %s netmask %s pointopoint %s mtu %d",
-		IFCONFIG,
+	ip_link_cmd = (gpointer) g_strdup_printf (
+		"%s link set mtu %d dev %s%d up"
+		IPROUTE2,
+		priv->io_data->mtu,
 		priv->io_data->dev_type,
-		priv->io_data->remote_dev_number,
+		priv->io_data->remote_dev_number);
+
+	/* Command line to run on remote machine */
+	ip_addr_cmd_4 = (gpointer) g_strdup_printf (
+		"%s addr add %s/%s peer %s/%s dev %s%d",
+		IPROUTE2,
 		priv->io_data->remote_addr,
 		priv->io_data->netmask,
 		priv->io_data->local_addr,
-		priv->io_data->mtu);
+		priv->io_data->netmask,
+		priv->io_data->dev_type,
+		priv->io_data->remote_dev_number);
 
 	/* IPv6 ifconfig command to run on remote machine */
 	if (priv->io_data->ipv6) {
-		ifconfig_cmd_6 = (gpointer) g_strdup_printf (
-			"%s %s%d add %s/%s",
-			IFCONFIG,
-			priv->io_data->dev_type,
-			priv->io_data->remote_dev_number,
+		ip_addr_cmd_6 = (gpointer) g_strdup_printf (
+			"%s addr add %s/%s peer %s/%s dev %s%d",
+			IPROUTE2,
 			priv->io_data->remote_addr_6,
-			priv->io_data->netmask_6);
+			priv->io_data->netmask_6,
+			priv->io_data->local_addr_6,
+			priv->io_data->netmask_6,
+			priv->io_data->dev_type,
+			priv->io_data->remote_dev_number);
 	} else {
-		ifconfig_cmd_6 = g_strdup("");
+		ip_addr_cmd_6 = g_strdup("");
 	}
-	/* Concatenate ifconfig_cmd_4 and ifconfig_cmd_6 to one command */
-	tmp_arg = g_strconcat(ifconfig_cmd_4, "; ", ifconfig_cmd_6, NULL);
+	/* Concatenate ip_addr_cmd_4, ip_addr_cmd_6 and ip_link_cmd to one command */
+	tmp_arg = g_strconcat(ip_addr_cmd_4, "; ", ip_addr_cmd_6, "; ", ip_link_cmd, NULL);
 	add_ssh_arg (args, tmp_arg);
-	g_free(ifconfig_cmd_4);
-	g_free(ifconfig_cmd_6);
+	g_free(ip_addr_cmd_4);
+	g_free(ip_addr_cmd_6);
+	g_free(ip_link_cmd);
 	g_free(tmp_arg);
 
 	/* Wrap it up */
