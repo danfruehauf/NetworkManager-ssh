@@ -78,8 +78,8 @@ typedef struct {
 	char *netmask_6;
 
 	/* Socks mode - no tunnel activated */
-	gboolean socks_only;
-	char* socks_only_interface;
+	gboolean no_tunnel;
+	char* no_tunnel_interface;
 	char* socks_bind_address;
 
 	/* fds for handling input/output of the SSH process */
@@ -127,7 +127,7 @@ static ValidProperty valid_properties[] = {
 	{ NM_SSH_KEY_NETMASK_6,            G_TYPE_STRING, 0, 0, FALSE },
 	{ NM_SSH_KEY_AUTH_TYPE,            G_TYPE_STRING, 0, 0, FALSE },
 	{ NM_SSH_KEY_KEY_FILE,             G_TYPE_STRING, 0, 0, FALSE },
-	{ NM_SSH_KEY_SOCKS_ONLY_INTERFACE, G_TYPE_STRING, 0, 0, FALSE },
+	{ NM_SSH_KEY_NO_TUNNEL_INTERFACE,  G_TYPE_STRING, 0, 0, FALSE },
 	{ NM_SSH_KEY_SOCKS_BIND_ADDRESS,   G_TYPE_STRING, 0, 0, FALSE },
 	{ NM_SSH_KEY_PASSWORD"-flags",     G_TYPE_STRING, 0, 0, FALSE },
 	{ NULL,                            G_TYPE_NONE, FALSE }
@@ -418,9 +418,9 @@ send_network_config (NMSshPlugin *plugin)
 	else
 		g_warning ("remote_gw unset.");
 
-	if (io_data->socks_only)
+	if (io_data->no_tunnel)
 	{
-		val = str_to_gvariant (priv->io_data->socks_only_interface, FALSE);
+		val = str_to_gvariant (priv->io_data->no_tunnel_interface, FALSE);
 		g_variant_builder_add (&config, "{sv}", NM_VPN_PLUGIN_CONFIG_TUNDEV, val);
 	}
 	else
@@ -524,7 +524,7 @@ send_network_config (NMSshPlugin *plugin)
 
 	/* ---------------------------------------------------- */
 
-	if (io_data->socks_only)
+	if (io_data->no_tunnel)
 	{
 		g_variant_builder_add (&ip4config, "{sv}", NM_VPN_PLUGIN_IP4_CONFIG_NEVER_DEFAULT, g_variant_new_boolean (TRUE));
 		g_variant_builder_add (&ip6config, "{sv}", NM_VPN_PLUGIN_IP4_CONFIG_NEVER_DEFAULT, g_variant_new_boolean (TRUE));
@@ -584,8 +584,8 @@ nm_ssh_stderr_cb (GIOChannel *source, GIOCondition condition, gpointer user_data
 			g_message("Not starting local timer because plugin is in STOPPED state");
 	} else if (g_str_has_prefix (str, "debug1: Local forwarding listening on")) {
 		g_message("Socks port forwarding mode detected");
-		if (priv->io_data->socks_only) {
-			g_message("Sending socks network configuration");
+		if (priv->io_data->no_tunnel) {
+			g_message("Sending no tunnel network configuration");
 			send_network_config((NMSshPlugin *)plugin);
 		} else {
 			g_message("Not sending socks network configuration, because socks mode is not set");
@@ -835,13 +835,13 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	/* Get auth_type from s_vpn */
 	auth_type = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_AUTH_TYPE);
 
-	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_SOCKS_ONLY_INTERFACE);
+	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_NO_TUNNEL_INTERFACE);
 	if (tmp) {
-		priv->io_data->socks_only = TRUE;
-		priv->io_data->socks_only_interface = g_strdup (tmp);
+		priv->io_data->no_tunnel = TRUE;
+		priv->io_data->no_tunnel_interface = g_strdup (tmp);
 	} else {
-		priv->io_data->socks_only = FALSE;
-		priv->io_data->socks_only_interface = NULL;
+		priv->io_data->no_tunnel = FALSE;
+		priv->io_data->no_tunnel_interface = NULL;
 	}
 
 	/* Handle different behaviour for different auth types */
@@ -988,8 +988,8 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 
 	/* Device, either tun or tap */
 	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_TAP_DEV);
-	if (priv->io_data->socks_only) {
-		g_message ("Using socks mode");
+	if (priv->io_data->no_tunnel) {
+		g_message ("Will not establish tunnel (will use dummy interface)");
 	} else {
 		add_ssh_arg (args, "-o");
 		if (tmp && IS_YES(tmp)) {
@@ -1180,7 +1180,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		priv->io_data->netmask_6 = g_strdup("");
 	}
 
-	if (priv->io_data->socks_only) {
+	if (priv->io_data->no_tunnel) {
 		tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_SOCKS_BIND_ADDRESS);
 		if (!tmp) {
 			g_set_error (error,
@@ -1273,7 +1273,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 			priv->io_data->remote_dev_number);
 	}
 
-	if (priv->io_data->socks_only) {
+	if (priv->io_data->no_tunnel) {
 		g_message ("Using socks mode - no remote command set, using -N");
 		add_ssh_arg (args, "-N");
 	} else {

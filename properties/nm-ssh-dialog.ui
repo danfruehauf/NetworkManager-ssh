@@ -344,12 +344,12 @@ Please make sure the user you specify is allowed to open tun/tap devices on the 
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkHBox" id="socks_only_interface_hbox">
+                  <object class="GtkHBox" id="no_tunnel_interface_hbox">
                     <property name="visible">True</property>
                     <property name="spacing">6</property>
                     <child>
-                      <object class="GtkCheckButton" id="socks_only_interface_checkbutton">
-                        <property name="label" translatable="yes">Socks only (dummy interface):</property>
+                      <object class="GtkCheckButton" id="no_tunnel_interface_checkbutton">
+                        <property name="label" translatable="yes">No tunnel (specify dummy interface):</property>
                         <property name="visible">True</property>
                         <property name="receives_default">False</property>
                         <property name="use_underline">True</property>
@@ -362,7 +362,7 @@ Please make sure the user you specify is allowed to open tun/tap devices on the 
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkEntry" id="socks_only_interface_entry">
+                      <object class="GtkEntry" id="no_tunnel_interface_entry">
                         <property name="visible">True</property>
                         <property name="text">dummy0</property>
                       </object>
