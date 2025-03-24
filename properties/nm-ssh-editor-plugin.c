@@ -41,6 +41,18 @@ if (!strncmp (ITEMS[0], IMPORT_KEY, strlen (ITEMS[0]))) { \
 	continue; \
 }
 
+#define PARSE_IMPORT_KEY_QUOTES(IMPORT_KEY, NM_SSH_KEY, ITEMS, VPN_CONN) \
+if (!strncmp (ITEMS[0], IMPORT_KEY, strlen (ITEMS[0]))) { \
+	if (ITEMS[1][0] == '"' && items[1][strlen(items[1]) - 1] == '"') \
+	{ \
+		ITEMS[1][strlen(items[1]) - 1] = '\0'; \
+		ITEMS[1]++; \
+	} \
+	nm_setting_vpn_add_data_item (VPN_CONN, NM_SSH_KEY, ITEMS[1]); \
+	g_free(ITEMS); \
+	continue; \
+}
+
 #define PARSE_IMPORT_KEY_BOOL(IMPORT_KEY, NM_SSH_KEY, ITEMS, VPN_CONN, VALUE) \
 if (!strncmp (ITEMS[0], IMPORT_KEY, strlen (ITEMS[0]))) { \
 	if (!strncmp(ITEMS[1], VALUE, strlen(ITEMS[1]))) { \
@@ -170,8 +182,10 @@ import (NMVpnEditorPlugin *iface, const char *path, GError **error)
 		PARSE_IMPORT_KEY (REMOTE_KEY, NM_SSH_KEY_REMOTE, items, s_vpn)
 		PARSE_IMPORT_KEY_WITH_DEFAULT_VALUE_STR (AUTH_TYPE_KEY, NM_SSH_KEY_AUTH_TYPE, items, s_vpn, NM_SSH_AUTH_TYPE_SSH_AGENT)
 		PARSE_IMPORT_KEY_WITH_DEFAULT_VALUE_STR (REMOTE_USERNAME_KEY, NM_SSH_KEY_REMOTE_USERNAME, items, s_vpn, NM_SSH_DEFAULT_REMOTE_USERNAME);
-		PARSE_IMPORT_KEY(NO_TUNNEL_INTERFACE, NM_SSH_KEY_NO_TUNNEL_INTERFACE, items, s_vpn);
-		PARSE_IMPORT_KEY(SOCKS_BIND_ADDRESS, NM_SSH_KEY_SOCKS_BIND_ADDRESS, items, s_vpn);
+		PARSE_IMPORT_KEY (NO_TUNNEL_INTERFACE, NM_SSH_KEY_NO_TUNNEL_INTERFACE, items, s_vpn);
+		PARSE_IMPORT_KEY (SOCKS_BIND_ADDRESS, NM_SSH_KEY_SOCKS_BIND_ADDRESS, items, s_vpn);
+		PARSE_IMPORT_KEY_QUOTES (LOCAL_BIND_ADDRESS, NM_SSH_KEY_LOCAL_BIND_ADDRESS, items, s_vpn);
+		PARSE_IMPORT_KEY_QUOTES (REMOTE_BIND_ADDRESS, NM_SSH_KEY_REMOTE_BIND_ADDRESS, items, s_vpn);
 		PARSE_IMPORT_KEY (KEY_FILE_KEY, NM_SSH_KEY_KEY_FILE, items, s_vpn)
 		PARSE_IMPORT_KEY (REMOTE_IP_KEY, NM_SSH_KEY_REMOTE_IP, items, s_vpn)
 		PARSE_IMPORT_KEY (LOCAL_IP_KEY, NM_SSH_KEY_LOCAL_IP, items, s_vpn)
@@ -223,6 +237,8 @@ export (NMVpnEditorPlugin *iface,
 	const char *remote_username = NULL;
 	const char *no_tunnel_interface = NULL;
 	const char *socks_bind_address = NULL;
+	const char *local_bind_address = NULL;
+	const char *remote_bind_address = NULL;
 	char *device_type = NULL;
 	char *tunnel_type = NULL;
 	char *ip_link_cmd_local = NULL;
@@ -235,6 +251,9 @@ export (NMVpnEditorPlugin *iface,
 	unsigned password_prompt_nr = 0;
 	gboolean ipv6 = FALSE;
 	gboolean success = FALSE;
+
+	char **bind_addresses = NULL;
+	char **bind_address = NULL;
 
 	s_con = NM_SETTING_CONNECTION (nm_connection_get_setting (connection, NM_TYPE_SETTING_CONNECTION));
 	g_assert (s_con);
@@ -332,6 +351,18 @@ export (NMVpnEditorPlugin *iface,
 	else
 		socks_bind_address = NULL;
 
+	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_LOCAL_BIND_ADDRESS);
+	if (value && strlen (value))
+		local_bind_address = value;
+	else
+		local_bind_address = NULL;
+
+	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_REMOTE_BIND_ADDRESS);
+	if (value && strlen (value))
+		remote_bind_address = value;
+	else
+		remote_bind_address = NULL;
+
 	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_TAP_DEV);
 	if (value && IS_YES(value)) {
 		device_type = g_strdup("tap");
@@ -417,6 +448,12 @@ export (NMVpnEditorPlugin *iface,
 	if (socks_bind_address)
 		fprintf (f, "%s=%s\n", SOCKS_BIND_ADDRESS, socks_bind_address);
 
+	if (local_bind_address)
+		fprintf (f, "%s=\"%s\"\n", LOCAL_BIND_ADDRESS, local_bind_address);
+
+	if (remote_bind_address)
+		fprintf (f, "%s=\"%s\"\n", REMOTE_BIND_ADDRESS, remote_bind_address);
+
 	/* Add a little of bash script to probe for a free tun/tap device */
 	if (!no_tunnel_interface)
 	{
@@ -433,6 +470,30 @@ export (NMVpnEditorPlugin *iface,
 	if (socks_bind_address)
 	{
 		fprintf(f, " -o DynamicForward=%s", socks_bind_address);
+	}
+
+	if (local_bind_address)
+	{
+		bind_addresses = g_strsplit_set (local_bind_address, " ", 0);
+		for (bind_address = bind_addresses; *bind_address; bind_address++) {
+			if (strlen (*bind_address))
+				fprintf(f, " -L %s", *bind_address);
+		}
+
+		if (bind_addresses)
+			g_strfreev (bind_addresses);
+	}
+
+	if (remote_bind_address)
+	{
+		bind_addresses = g_strsplit_set (remote_bind_address, " ", 0);
+		for (bind_address = bind_addresses; *bind_address; bind_address++) {
+			if (strlen (*bind_address))
+				fprintf(f, " -R %s", *bind_address);
+		}
+
+		if (bind_addresses)
+			g_strfreev (bind_addresses);
 	}
 
 	if (no_tunnel_interface)

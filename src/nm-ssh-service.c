@@ -81,6 +81,8 @@ typedef struct {
 	gboolean no_tunnel;
 	char* no_tunnel_interface;
 	char* socks_bind_address;
+	char* local_bind_address;
+	char* remote_bind_address;
 
 	/* fds for handling input/output of the SSH process */
 	GIOChannel *ssh_stdin_channel;
@@ -815,6 +817,8 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	gint ssh_stdin_fd, ssh_stderr_fd;
 	int sshpass_pipe[2];
 	const gchar *password = NULL;
+	gchar **bind_addresses = NULL;
+	gchar **bind_address = NULL;
 
 	/* Find ssh */
 	ssh_binary = nm_find_ssh ();
@@ -1224,11 +1228,53 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	}
 
 	if (priv->io_data->socks_bind_address)
-        {
+	{
 		tmp_arg = g_strdup_printf ("DynamicForward=%s", priv->io_data->socks_bind_address);
 		add_ssh_arg (args, "-o");
 		add_ssh_arg (args, tmp_arg);
 		g_free(tmp_arg);
+	}
+
+	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_LOCAL_BIND_ADDRESS);
+	if (tmp && strlen (tmp)) {
+		priv->io_data->local_bind_address = g_strdup (tmp);
+	} else {
+		priv->io_data->local_bind_address = NULL;
+	}
+
+	if (priv->io_data->local_bind_address)
+	{
+		bind_addresses = g_strsplit_set (priv->io_data->local_bind_address, " ", 0);
+		for (bind_address = bind_addresses; *bind_address; bind_address++) {
+			if (strlen (*bind_address)) {
+				add_ssh_arg (args, "-L");
+				add_ssh_arg (args, *bind_address);
+			}
+		}
+
+		if (bind_addresses)
+			g_strfreev (bind_addresses);
+	}
+
+	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_REMOTE_BIND_ADDRESS);
+	if (tmp && strlen (tmp)) {
+		priv->io_data->remote_bind_address = g_strdup (tmp);
+	} else {
+		priv->io_data->remote_bind_address = NULL;
+	}
+
+	if (priv->io_data->remote_bind_address)
+	{
+		bind_addresses = g_strsplit_set (priv->io_data->remote_bind_address, " ", 0);
+		for (bind_address = bind_addresses; *bind_address; bind_address++) {
+			if (strlen (*bind_address)) {
+				add_ssh_arg (args, "-R");
+				add_ssh_arg (args, *bind_address);
+			}
+		}
+
+		if (bind_addresses)
+			g_strfreev (bind_addresses);
 	}
 
 	/* Connect to remote */

@@ -385,7 +385,7 @@ Please make sure the user you specify is allowed to open tun/tap devices on the 
                     <property name="spacing">6</property>
                     <child>
                       <object class="GtkCheckButton" id="socks_bind_address_checkbutton">
-                        <property name="label" translatable="yes">SOCKS bind address:</property>
+                        <property name="label" translatable="yes">SOCKS bind address (-D):</property>
                         <property name="visible">True</property>
                         <property name="receives_default">False</property>
                         <property name="use_underline">True</property>
@@ -413,6 +413,78 @@ Please make sure the user you specify is allowed to open tun/tap devices on the 
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="position">6</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkHBox" id="local_bind_address_hbox">
+                    <property name="visible">True</property>
+                    <property name="spacing">6</property>
+                    <child>
+                      <object class="GtkCheckButton" id="local_bind_address_checkbutton">
+                        <property name="label" translatable="yes">Local bind addresses (-L, space separated):</property>
+                        <property name="visible">True</property>
+                        <property name="receives_default">False</property>
+                        <property name="use_underline">True</property>
+                        <property name="draw_indicator">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="local_bind_address_entry">
+                        <property name="visible">True</property>
+                        <property name="text">localhost:8080:localhost:8080</property>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">7</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkHBox" id="remote_bind_address_hbox">
+                    <property name="visible">True</property>
+                    <property name="spacing">6</property>
+                    <child>
+                      <object class="GtkCheckButton" id="remote_bind_address_checkbutton">
+                        <property name="label" translatable="yes">Remote bind addresses (-R, space separated):</property>
+                        <property name="visible">True</property>
+                        <property name="receives_default">False</property>
+                        <property name="use_underline">True</property>
+                        <property name="draw_indicator">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="remote_bind_address_entry">
+                        <property name="visible">True</property>
+                        <property name="text">localhost:8080:localhost:8080</property>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">8</property>
                   </packing>
                 </child>
               </object>
