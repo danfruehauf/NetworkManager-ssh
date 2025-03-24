@@ -385,7 +385,7 @@ Please make sure the user you specify is allowed to open tun/tap devices on the 
                     <property name="spacing">6</property>
                     <child>
                       <object class="GtkCheckButton" id="socks_bind_address_checkbutton">
-                        <property name="label" translatable="yes">Socks bind address:</property>
+                        <property name="label" translatable="yes">SOCKS bind address:</property>
                         <property name="visible">True</property>
                         <property name="receives_default">False</property>
                         <property name="use_underline">True</property>
