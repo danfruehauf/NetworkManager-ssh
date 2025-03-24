@@ -87,6 +87,8 @@ handy if you'd like to have one of (or more):
  * Local port binding (`-L`)
  * Remote port binding (`-R`)
 
+Each of the above option take multiple arguments that are space separated.
+
 ### Debugging
 
 When things go wrong and you can't really figure out what's happening, have a look at `/var/log/messages` as you spin up the connection.
