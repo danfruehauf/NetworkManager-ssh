@@ -1229,10 +1229,18 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 
 	if (priv->io_data->socks_bind_address)
 	{
-		tmp_arg = g_strdup_printf ("DynamicForward=%s", priv->io_data->socks_bind_address);
-		add_ssh_arg (args, "-o");
-		add_ssh_arg (args, tmp_arg);
-		g_free(tmp_arg);
+		bind_addresses = g_strsplit_set (priv->io_data->socks_bind_address, " ", 0);
+		for (bind_address = bind_addresses; *bind_address; bind_address++) {
+			if (strlen (*bind_address)) {
+				tmp_arg = g_strdup_printf ("DynamicForward=%s", *bind_address);
+				add_ssh_arg (args, "-o");
+				add_ssh_arg (args, tmp_arg);
+				g_free(tmp_arg);
+			}
+		}
+
+		if (bind_addresses)
+			g_strfreev (bind_addresses);
 	}
 
 	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_LOCAL_BIND_ADDRESS);

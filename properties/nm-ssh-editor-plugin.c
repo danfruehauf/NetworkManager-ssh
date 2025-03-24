@@ -183,7 +183,7 @@ import (NMVpnEditorPlugin *iface, const char *path, GError **error)
 		PARSE_IMPORT_KEY_WITH_DEFAULT_VALUE_STR (AUTH_TYPE_KEY, NM_SSH_KEY_AUTH_TYPE, items, s_vpn, NM_SSH_AUTH_TYPE_SSH_AGENT)
 		PARSE_IMPORT_KEY_WITH_DEFAULT_VALUE_STR (REMOTE_USERNAME_KEY, NM_SSH_KEY_REMOTE_USERNAME, items, s_vpn, NM_SSH_DEFAULT_REMOTE_USERNAME);
 		PARSE_IMPORT_KEY (NO_TUNNEL_INTERFACE, NM_SSH_KEY_NO_TUNNEL_INTERFACE, items, s_vpn);
-		PARSE_IMPORT_KEY (SOCKS_BIND_ADDRESS, NM_SSH_KEY_SOCKS_BIND_ADDRESS, items, s_vpn);
+		PARSE_IMPORT_KEY_QUOTES (SOCKS_BIND_ADDRESS, NM_SSH_KEY_SOCKS_BIND_ADDRESS, items, s_vpn);
 		PARSE_IMPORT_KEY_QUOTES (LOCAL_BIND_ADDRESS, NM_SSH_KEY_LOCAL_BIND_ADDRESS, items, s_vpn);
 		PARSE_IMPORT_KEY_QUOTES (REMOTE_BIND_ADDRESS, NM_SSH_KEY_REMOTE_BIND_ADDRESS, items, s_vpn);
 		PARSE_IMPORT_KEY (KEY_FILE_KEY, NM_SSH_KEY_KEY_FILE, items, s_vpn)
@@ -446,7 +446,7 @@ export (NMVpnEditorPlugin *iface,
 		fprintf (f, "%s=%s\n", NO_TUNNEL_INTERFACE, no_tunnel_interface);
 
 	if (socks_bind_address)
-		fprintf (f, "%s=%s\n", SOCKS_BIND_ADDRESS, socks_bind_address);
+		fprintf (f, "%s=\"%s\"\n", SOCKS_BIND_ADDRESS, socks_bind_address);
 
 	if (local_bind_address)
 		fprintf (f, "%s=\"%s\"\n", LOCAL_BIND_ADDRESS, local_bind_address);
@@ -469,7 +469,14 @@ export (NMVpnEditorPlugin *iface,
 
 	if (socks_bind_address)
 	{
-		fprintf(f, " -o DynamicForward=%s", socks_bind_address);
+		bind_addresses = g_strsplit_set (socks_bind_address, " ", 0);
+		for (bind_address = bind_addresses; *bind_address; bind_address++) {
+			if (strlen (*bind_address))
+				fprintf(f, " -o DynamicForward=%s", *bind_address);
+		}
+
+		if (bind_addresses)
+			g_strfreev (bind_addresses);
 	}
 
 	if (local_bind_address)
