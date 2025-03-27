@@ -5,14 +5,15 @@ require {
 	type ssh_exec_t;
 	type unconfined_t;
 	type user_tmp_t;
-        type config_home_t;
-        type ssh_home_t;
-        type admin_home_t;
-        type user_home_t;
-        type user_home_dir_t;
+	type config_home_t;
+	type ssh_home_t;
+	type admin_home_t;
+	type user_home_t;
+	type user_home_dir_t;
 	type systemd_conf_t;
 	type ptmx_t;
 	type devpts_t;
+	type ephemeral_port_t;
 	type NetworkManager_ssh_t;
 	class capability { dac_override net_admin };
 	class dir { search };
@@ -20,6 +21,7 @@ require {
 	class chr_file { open read write ioctl };
 	class sock_file { read write getattr };
 	class unix_stream_socket connectto;
+	class tcp_socket name_connect;
 }
 
 #============= NetworkManager_ssh_t ==============
@@ -28,6 +30,7 @@ allow NetworkManager_ssh_t ssh_exec_t:file execute_no_trans;
 allow NetworkManager_ssh_t unconfined_t:unix_stream_socket connectto;
 allow NetworkManager_ssh_t user_tmp_t:sock_file { read write getattr };
 allow NetworkManager_ssh_t systemd_conf_t:file { open read getattr };
+allow NetworkManager_ssh_t ephemeral_port_t:tcp_socket name_connect;
 
 # Allow known_hosts access in user's directory
 allow NetworkManager_ssh_t ssh_home_t:file { open read getattr };
