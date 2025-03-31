@@ -77,6 +77,9 @@ typedef struct {
 	char *remote_addr_6;
 	char *netmask_6;
 
+	/* sudo on remote command */
+	gboolean sudo;
+
 	/* Socks mode - no tunnel activated */
 	gboolean no_tunnel;
 	char* no_tunnel_interface;
@@ -123,6 +126,7 @@ static ValidProperty valid_properties[] = {
 	{ NM_SSH_KEY_TAP_DEV,              G_TYPE_BOOLEAN, 0, 0, FALSE },
 	{ NM_SSH_KEY_REMOTE_USERNAME,      G_TYPE_STRING, 0, 0, FALSE },
 	/* FIXME should fix host validation for IPv6 addresses */
+	{ NM_SSH_KEY_SUDO,                 G_TYPE_BOOLEAN, 0, 0, FALSE },
 	{ NM_SSH_KEY_IP_6,                 G_TYPE_BOOLEAN, 0, 0, FALSE },
 	{ NM_SSH_KEY_REMOTE_IP_6,          G_TYPE_STRING, 0, 0, FALSE },
 	{ NM_SSH_KEY_LOCAL_IP_6,           G_TYPE_STRING, 0, 0, FALSE },
@@ -804,6 +808,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	/* This giant function is basically taking care of passing all the
 	 * correct parameters to ssh (and sshpass) */
 	NMSshPluginPrivate *priv = NM_SSH_PLUGIN_GET_PRIVATE (plugin);
+	char *sudo = NULL;
 	const char *ssh_binary = NULL, *sshpass_binary = NULL, *tmp = NULL;
 	const char *remote = NULL, *port = NULL, *mtu = NULL, *ssh_agent_socket = NULL, *auth_type = NULL;
 	char *known_hosts_file = NULL;
@@ -1012,6 +1017,15 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 			nm_vpn_service_plugin_failure (NM_VPN_SERVICE_PLUGIN (plugin), NM_VPN_PLUGIN_FAILURE_CONNECT_FAILED);
 			return FALSE;
 		}
+	}
+
+	/* Device, either tun or tap */
+	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_SUDO);
+	if (tmp && IS_YES(tmp)) {
+		g_message ("Using '%s' as prefix for remote commands", SUDO);
+		sudo = g_strdup_printf ("%s ", SUDO);
+	} else {
+		sudo = g_strdup_printf ("");
 	}
 
 	/* Remote */
@@ -1297,7 +1311,8 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 
 	/* Command line to run on remote machine */
 	ip_link_cmd = (gpointer) g_strdup_printf (
-		"%s link set mtu %d dev %s%d up",
+		"%s%s link set mtu %d dev %s%d up",
+		sudo,
 		IPROUTE2,
 		priv->io_data->mtu,
 		priv->io_data->dev_type,
@@ -1305,7 +1320,8 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 
 	/* Command line to run on remote machine */
 	ip_addr_cmd_4 = (gpointer) g_strdup_printf (
-		"%s addr add %s/%s peer %s/%s dev %s%d",
+		"%s%s addr add %s/%s peer %s/%s dev %s%d",
+		sudo,
 		IPROUTE2,
 		priv->io_data->remote_addr,
 		priv->io_data->netmask,
@@ -1317,7 +1333,8 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	/* IPv6 ifconfig command to run on remote machine */
 	if (priv->io_data->ipv6) {
 		ip_addr_cmd_6 = (gpointer) g_strdup_printf (
-			"%s addr add %s/%s peer %s/%s dev %s%d",
+			"%s%s addr add %s/%s peer %s/%s dev %s%d",
+			sudo,
 			IPROUTE2,
 			priv->io_data->remote_addr_6,
 			priv->io_data->netmask_6,
@@ -1379,6 +1396,8 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		close(sshpass_pipe[0]);
 		close(sshpass_pipe[1]);
 	}
+
+	g_free (sudo);
 
 	g_message ("ssh started with pid %d", pid);
 

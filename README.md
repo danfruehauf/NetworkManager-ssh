@@ -149,6 +149,25 @@ NetworkManager-ssh probes for the <i>ssh-agent</i> that is attached to your sess
 
 ## Limitations
 
+## Running Without Remote Root
+
+If you wish to run that plugin with a non-root user on the other side, but with tunnel support, you can prepare the tunnel device on the other end
+before hand, and then you can login with a non-root account. Run the following on the remote server:
+```
+# ip tuntap add name tun101 mode tun user dan
+```
+
+The command above will allow `tun101` to be opened by used `dan`.
+
+Now, you can configure the plugin to use `tun101` and user `dan` on the remote end. If you still get an error like:
+```
+debug1: Remote: Failed to open the tunnel device.
+channel 0: open failed: connect failed: open failed
+Tunnel forwarding failed
+```
+
+It is likely something is misconfigured, and you'll have to debug further.
+
 ### Extra Options
 
 Initially, _any_ SSH command flags were allowed to be passed. However, this could cause a privilege escalation issue - so that option was removed
