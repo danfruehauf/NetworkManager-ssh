@@ -344,6 +344,31 @@ Please make sure the user you specify is allowed to open tun/tap devices on the 
                   </packing>
                 </child>
                 <child>
+                  <object class="GtkHBox" id="sudo_hbox">
+                    <property name="visible">True</property>
+                    <property name="spacing">6</property>
+                    <child>
+                      <object class="GtkCheckButton" id="sudo_checkbutton">
+                        <property name="label" translatable="yes">Use sudo for remote commands</property>
+                        <property name="visible">True</property>
+                        <property name="receives_default">False</property>
+                        <property name="use_underline">True</property>
+                        <property name="draw_indicator">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">4</property>
+                  </packing>
+                </child>
+                <child>
                   <object class="GtkHBox" id="no_tunnel_interface_hbox">
                     <property name="visible">True</property>
                     <property name="spacing">6</property>
@@ -376,7 +401,7 @@ Please make sure the user you specify is allowed to open tun/tap devices on the 
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">5</property>
+                    <property name="position">6</property>
                   </packing>
                 </child>
                 <child>
@@ -412,7 +437,7 @@ Please make sure the user you specify is allowed to open tun/tap devices on the 
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">6</property>
+                    <property name="position">7</property>
                   </packing>
                 </child>
                 <child>
@@ -466,7 +491,7 @@ Please make sure the user you specify is allowed to open tun/tap devices on the 
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="position">0</property>
+                        <property name="position">8</property>
                       </packing>
                     </child>
                     <child>
@@ -484,7 +509,7 @@ Please make sure the user you specify is allowed to open tun/tap devices on the 
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">8</property>
+                    <property name="position">9</property>
                   </packing>
                 </child>
               </object>

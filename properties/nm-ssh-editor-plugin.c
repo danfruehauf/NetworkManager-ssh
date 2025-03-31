@@ -198,6 +198,7 @@ import (NMVpnEditorPlugin *iface, const char *path, GError **error)
 		PARSE_IMPORT_KEY_WITH_DEFAULT_VALUE_INT (MTU_KEY, NM_SSH_KEY_TUNNEL_MTU, items, s_vpn, NM_SSH_DEFAULT_MTU)
 		PARSE_IMPORT_KEY_WITH_DEFAULT_VALUE_INT (REMOTE_DEV_KEY, NM_SSH_KEY_REMOTE_DEV, items, s_vpn, NM_SSH_DEFAULT_REMOTE_DEV)
 		PARSE_IMPORT_KEY_BOOL (DEV_TYPE_KEY, NM_SSH_KEY_TAP_DEV, items, s_vpn, "tap")
+		PARSE_IMPORT_KEY_BOOL (SUDO_KEY, NM_SSH_KEY_SUDO, items, s_vpn, "1")
 	}
 
 	if (connection)
@@ -241,6 +242,7 @@ export (NMVpnEditorPlugin *iface,
 	const char *remote_bind_address = NULL;
 	char *device_type = NULL;
 	char *tunnel_type = NULL;
+	char *sudo = NULL;
 	char *ip_link_cmd_local = NULL;
 	char *ip_link_cmd_remote = NULL;
 	char *ip_addr_cmd_local_4 = NULL;
@@ -372,11 +374,18 @@ export (NMVpnEditorPlugin *iface,
 		tunnel_type = g_strdup("point-to-point");
 	}
 
-	ip_link_cmd_local = g_strdup_printf("%s link set mtu $MTU dev $DEV_TYPE$LOCAL_DEV up", IPROUTE2);
-	ip_link_cmd_remote = g_strdup_printf("%s link set mtu $MTU dev $DEV_TYPE$REMOTE_DEV up", IPROUTE2);
+	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_SUDO);
+	if (value && IS_YES(value)) {
+		sudo = g_strdup_printf("%s ", SUDO);
+	} else {
+		sudo = g_strdup("");
+	}
 
-	ip_addr_cmd_local_4 = g_strdup_printf("%s addr add $LOCAL_IP/$NETMASK peer $REMOTE_IP/$NETMASK dev $DEV_TYPE$LOCAL_DEV", IPROUTE2);
-	ip_addr_cmd_remote_4 = g_strdup_printf("%s addr add $REMOTE_IP/$NETMASK peer $LOCAL_IP/$NETMASK dev $DEV_TYPE$REMOTE_DEV", IPROUTE2);
+	ip_link_cmd_local = g_strdup_printf("%s%s link set mtu $MTU dev $DEV_TYPE$LOCAL_DEV up", sudo, IPROUTE2);
+	ip_link_cmd_remote = g_strdup_printf("%s%s link set mtu $MTU dev $DEV_TYPE$REMOTE_DEV up", sudo, IPROUTE2);
+
+	ip_addr_cmd_local_4 = g_strdup_printf("%s%s addr add $LOCAL_IP/$NETMASK peer $REMOTE_IP/$NETMASK dev $DEV_TYPE$LOCAL_DEV", sudo, IPROUTE2);
+	ip_addr_cmd_remote_4 = g_strdup_printf("%s%s addr add $REMOTE_IP/$NETMASK peer $LOCAL_IP/$NETMASK dev $DEV_TYPE$REMOTE_DEV", sudo, IPROUTE2);
 
 	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_IP_6);
 	if (value && IS_YES(value)) {
@@ -441,6 +450,7 @@ export (NMVpnEditorPlugin *iface,
 	/* Assign tun/tap */
 	fprintf (f, "%s=%s\n", DEV_TYPE_KEY, device_type);
 	fprintf (f, "%s=%s\n", TUNNEL_TYPE_KEY, tunnel_type);
+	fprintf (f, "%s=%s\n", SUDO_KEY, strlen(sudo) == 0 ? "0" : "1");
 
 	if (no_tunnel_interface)
 		fprintf (f, "%s=%s\n", NO_TUNNEL_INTERFACE, no_tunnel_interface);
@@ -521,6 +531,7 @@ export (NMVpnEditorPlugin *iface,
 
 	g_free(device_type);
 	g_free(tunnel_type);
+	g_free(sudo);
 	g_free(ip_link_cmd_local);
 	g_free(ip_link_cmd_remote);
 	g_free(ip_addr_cmd_local_4);

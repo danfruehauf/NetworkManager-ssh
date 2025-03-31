@@ -116,6 +116,7 @@ dnl Constants
 dnl ip (iproute2) should usually be at /sbin/ip
 AC_DEFINE(IFCONFIG, "/sbin/ifconfig", ifconfig)
 AC_DEFINE(IPROUTE2, "/sbin/ip", iproute2)
+AC_DEFINE(SUDO, "sudo", sudo)
 
 dnl ssh-agent SSH_AUTH_SOCK variable
 AC_DEFINE(SSH_AUTH_SOCK, "SSH_AUTH_SOCK", SSH_AUTH_SOCK)
