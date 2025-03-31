@@ -77,6 +77,7 @@ typedef NMVpnEditor *(*NMVpnEditorFactory) (NMVpnEditorPlugin *editor_plugin,
 #define	REMOTE_BIND_ADDRESS "REMOTE_BIND_ADDRESS"
 #define	DEV_TYPE_KEY "DEV_TYPE"
 #define	SUDO_KEY "SUDO"
+#define	NO_REMOTE_COMMAND_KEY "NO_REMOTE_COMMAND"
 #define	NO_DEFAULT_ROUTE_KEY "NO_DEFAULT_ROUTE"
 #define	TUNNEL_TYPE_KEY "TUNNEL_TYPE"
 
