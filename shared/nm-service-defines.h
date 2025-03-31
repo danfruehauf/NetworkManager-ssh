@@ -41,6 +41,7 @@
 #define	NM_SSH_KEY_TAP_DEV "tap-dev"
 #define	NM_SSH_KEY_REMOTE_USERNAME "remote-username"
 #define	NM_SSH_KEY_SUDO "sudo"
+#define	NM_SSH_KEY_NO_REMOTE_COMMAND "no-remote-command"
 #define	NM_SSH_KEY_NO_TUNNEL_INTERFACE "no-tunnel-interface"
 #define	NM_SSH_KEY_SOCKS_BIND_ADDRESS "socks-bind-address"
 #define	NM_SSH_KEY_LOCAL_BIND_ADDRESS "local-bind-address"

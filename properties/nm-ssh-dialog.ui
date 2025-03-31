@@ -147,7 +147,10 @@
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">You have chosen not to use 'root' as the remote username.
 
-Please make sure the user you specify is allowed to open tun/tap devices on the remote host.</property>
+Please make sure the user you specify is allowed to open tun/tap devices on the remote host.
+
+Alternatively, allow the remote device to be handled by any user by running as root, on the remote host:
+ip tuntap add name TUN_DEVICE mode tun user USER</property>
                   </object>
                 </child>
               </object>
@@ -277,7 +280,7 @@ Please make sure the user you specify is allowed to open tun/tap devices on the 
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">3</property>
+                    <property name="position">2</property>
                   </packing>
                 </child>
                 <child>
@@ -302,7 +305,7 @@ Please make sure the user you specify is allowed to open tun/tap devices on the 
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">4</property>
+                    <property name="position">3</property>
                   </packing>
                 </child>
                 <child>
@@ -340,7 +343,7 @@ Please make sure the user you specify is allowed to open tun/tap devices on the 
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">5</property>
+                    <property name="position">4</property>
                   </packing>
                 </child>
                 <child>
@@ -365,7 +368,32 @@ Please make sure the user you specify is allowed to open tun/tap devices on the 
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">4</property>
+                    <property name="position">5</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkHBox" id="no_remote_command_hbox">
+                    <property name="visible">True</property>
+                    <property name="spacing">6</property>
+                    <child>
+                      <object class="GtkCheckButton" id="no_remote_command_checkbutton">
+                        <property name="label" translatable="yes">Disable remote command (-N)</property>
+                        <property name="visible">True</property>
+                        <property name="receives_default">False</property>
+                        <property name="use_underline">True</property>
+                        <property name="draw_indicator">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">6</property>
                   </packing>
                 </child>
                 <child>
@@ -401,7 +429,7 @@ Please make sure the user you specify is allowed to open tun/tap devices on the 
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">6</property>
+                    <property name="position">7</property>
                   </packing>
                 </child>
                 <child>
@@ -437,7 +465,7 @@ Please make sure the user you specify is allowed to open tun/tap devices on the 
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">7</property>
+                    <property name="position">8</property>
                   </packing>
                 </child>
                 <child>
@@ -473,7 +501,7 @@ Please make sure the user you specify is allowed to open tun/tap devices on the 
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">7</property>
+                    <property name="position">9</property>
                   </packing>
                 </child>
                 <child>
@@ -491,7 +519,7 @@ Please make sure the user you specify is allowed to open tun/tap devices on the 
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="position">8</property>
+                        <property name="position">9</property>
                       </packing>
                     </child>
                     <child>
@@ -509,7 +537,7 @@ Please make sure the user you specify is allowed to open tun/tap devices on the 
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">9</property>
+                    <property name="position">10</property>
                   </packing>
                 </child>
               </object>

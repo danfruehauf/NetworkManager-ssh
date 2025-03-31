@@ -56,6 +56,7 @@ static const char *advanced_keys[] = {
 	NM_SSH_KEY_TAP_DEV,
 	NM_SSH_KEY_REMOTE_USERNAME,
 	NM_SSH_KEY_SUDO,
+	NM_SSH_KEY_NO_REMOTE_COMMAND,
 	NM_SSH_KEY_NO_TUNNEL_INTERFACE,
 	NM_SSH_KEY_SOCKS_BIND_ADDRESS,
 	NM_SSH_KEY_LOCAL_BIND_ADDRESS,
@@ -310,6 +311,12 @@ advanced_dialog_new (GHashTable *hash)
 		gtk_check_button_set_active (GTK_CHECK_BUTTON (widget), TRUE);
 	}
 
+	value = g_hash_table_lookup (hash, NM_SSH_KEY_NO_REMOTE_COMMAND);
+	if (value && IS_YES(value)) {
+		widget = GTK_WIDGET (gtk_builder_get_object (builder, "no_remote_command_checkbutton"));
+		gtk_check_button_set_active (GTK_CHECK_BUTTON (widget), TRUE);
+	}
+
 	widget = GTK_WIDGET (gtk_builder_get_object (builder, "no_tunnel_interface_checkbutton"));
 	g_assert (widget);
 	g_signal_connect (G_OBJECT (widget), "toggled", G_CALLBACK (no_tunnel_interface_toggled_cb), builder);
@@ -449,6 +456,10 @@ advanced_dialog_new_hash_from_dialog (GtkWidget *dialog, GError **error)
 	widget = GTK_WIDGET (gtk_builder_get_object (builder, "sudo_checkbutton"));
 	if (gtk_check_button_get_active (GTK_CHECK_BUTTON (widget)))
 		g_hash_table_insert (hash, g_strdup (NM_SSH_KEY_SUDO), g_strdup (YES));
+
+	widget = GTK_WIDGET (gtk_builder_get_object (builder, "no_remote_command_checkbutton"));
+	if (gtk_check_button_get_active (GTK_CHECK_BUTTON (widget)))
+		g_hash_table_insert (hash, g_strdup (NM_SSH_KEY_NO_REMOTE_COMMAND), g_strdup (YES));
 
 	widget = GTK_WIDGET (gtk_builder_get_object (builder, "no_tunnel_interface_checkbutton"));
 	if (gtk_check_button_get_active (GTK_CHECK_BUTTON (widget))) {

@@ -199,6 +199,7 @@ import (NMVpnEditorPlugin *iface, const char *path, GError **error)
 		PARSE_IMPORT_KEY_WITH_DEFAULT_VALUE_INT (REMOTE_DEV_KEY, NM_SSH_KEY_REMOTE_DEV, items, s_vpn, NM_SSH_DEFAULT_REMOTE_DEV)
 		PARSE_IMPORT_KEY_BOOL (DEV_TYPE_KEY, NM_SSH_KEY_TAP_DEV, items, s_vpn, "tap")
 		PARSE_IMPORT_KEY_BOOL (SUDO_KEY, NM_SSH_KEY_SUDO, items, s_vpn, "1")
+		PARSE_IMPORT_KEY_BOOL (NO_REMOTE_COMMAND_KEY, NM_SSH_KEY_NO_REMOTE_COMMAND, items, s_vpn, "1")
 	}
 
 	if (connection)
@@ -251,6 +252,7 @@ export (NMVpnEditorPlugin *iface,
 	char *ip_addr_cmd_remote_6 = NULL;
 	char *preferred_authentication = NULL;
 	unsigned password_prompt_nr = 0;
+	gboolean no_remote_command = FALSE;
 	gboolean ipv6 = FALSE;
 	gboolean success = FALSE;
 
@@ -381,6 +383,13 @@ export (NMVpnEditorPlugin *iface,
 		sudo = g_strdup("");
 	}
 
+	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_NO_REMOTE_COMMAND);
+	if (value && IS_YES(value)) {
+		no_remote_command = TRUE;
+	} else {
+		no_remote_command = FALSE;
+	}
+
 	ip_link_cmd_local = g_strdup_printf("%s%s link set mtu $MTU dev $DEV_TYPE$LOCAL_DEV up", sudo, IPROUTE2);
 	ip_link_cmd_remote = g_strdup_printf("%s%s link set mtu $MTU dev $DEV_TYPE$REMOTE_DEV up", sudo, IPROUTE2);
 
@@ -451,6 +460,7 @@ export (NMVpnEditorPlugin *iface,
 	fprintf (f, "%s=%s\n", DEV_TYPE_KEY, device_type);
 	fprintf (f, "%s=%s\n", TUNNEL_TYPE_KEY, tunnel_type);
 	fprintf (f, "%s=%s\n", SUDO_KEY, strlen(sudo) == 0 ? "0" : "1");
+	fprintf (f, "%s=%s\n", NO_REMOTE_COMMAND_KEY, no_remote_command ? "1" : "0");
 
 	if (no_tunnel_interface)
 		fprintf (f, "%s=%s\n", NO_TUNNEL_INTERFACE, no_tunnel_interface);
@@ -513,7 +523,7 @@ export (NMVpnEditorPlugin *iface,
 			g_strfreev (bind_addresses);
 	}
 
-	if (no_tunnel_interface)
+	if (no_tunnel_interface || no_remote_command)
 	{
 		fprintf(f, " -N $REMOTE");
 	}

@@ -82,6 +82,7 @@ typedef struct {
 
 	/* Socks mode - no tunnel activated */
 	gboolean no_tunnel;
+	gboolean no_remote_command;
 	char* no_tunnel_interface;
 	char* socks_bind_address;
 	char* local_bind_address;
@@ -844,10 +845,18 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	/* Get auth_type from s_vpn */
 	auth_type = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_AUTH_TYPE);
 
+	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_NO_REMOTE_COMMAND);
+	if (tmp) {
+		priv->io_data->no_remote_command = TRUE;
+	} else {
+		priv->io_data->no_remote_command = FALSE;
+	}
+
 	tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_NO_TUNNEL_INTERFACE);
 	if (tmp) {
 		priv->io_data->no_tunnel = TRUE;
 		priv->io_data->no_tunnel_interface = g_strdup (tmp);
+		priv->io_data->no_remote_command = TRUE;
 	} else {
 		priv->io_data->no_tunnel = FALSE;
 		priv->io_data->no_tunnel_interface = NULL;
@@ -1344,8 +1353,8 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 			priv->io_data->remote_dev_number);
 	}
 
-	if (priv->io_data->no_tunnel) {
-		g_message ("Using socks mode - no remote command set, using -N");
+	if (priv->io_data->no_tunnel || priv->io_data->no_remote_command) {
+		g_message ("Using -N - no remote command set, or SOCKS mode set");
 		add_ssh_arg (args, "-N");
 	} else {
 		/* Concatenate ip_addr_cmd_4, ip_addr_cmd_6 and ip_link_cmd to one command */
