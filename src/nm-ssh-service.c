@@ -590,12 +590,10 @@ nm_ssh_stderr_cb (GIOChannel *source, GIOCondition condition, gpointer user_data
 		else if(debug)
 			g_message("Not starting local timer because plugin is in STOPPED state");
 	} else if (g_str_has_prefix (str, "debug1: Local forwarding listening on")) {
-		g_message("Socks port forwarding mode detected");
-		if (priv->io_data->no_tunnel) {
-			g_message("Sending no tunnel network configuration");
+		g_message("Port forwarding mode detected");
+		if (priv->io_data->no_remote_command) {
+			g_message("Sending network configuration (no remote_command)");
 			send_network_config((NMSshPlugin *)plugin);
-		} else {
-			g_message("Not sending socks network configuration, because socks mode is not set");
 		}
 	} else if (g_str_has_prefix (str, "debug1: Remote: Server has rejected tunnel device forwarding")) {
 		/* Opening of remote tun device failed... :( */
@@ -1208,20 +1206,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	}
 
 	if (priv->io_data->no_tunnel) {
-		tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_SOCKS_BIND_ADDRESS);
-		if (!tmp) {
-			g_set_error (error,
-			             NM_VPN_PLUGIN_ERROR,
-			             NM_VPN_PLUGIN_ERROR_BAD_ARGUMENTS,
-			             "%s",
-			             _("No SOCKS bind address defined."));
-			free_ssh_args (args);
-			return FALSE;
-		}
-
-		g_message ("Using SOCKS proxy (-D %s)", tmp);
-		add_ssh_arg (args, "-D");
-		add_ssh_arg (args, tmp);
+		/* Nothing to do here... */
 	} else {
 		/* The -w option, provide a remote and local tun/tap device */
 		tmp_arg = (gpointer) g_strdup_printf ("TunnelDevice=%d:%d", priv->io_data->local_dev_number, priv->io_data->remote_dev_number);
