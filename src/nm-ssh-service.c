@@ -83,6 +83,7 @@ typedef struct {
 	/* Socks mode - no tunnel activated */
 	gboolean no_tunnel;
 	gboolean no_remote_command;
+	gboolean network_config_sent;
 	char* no_tunnel_interface;
 	char* socks_bind_address;
 	char* local_bind_address;
@@ -390,6 +391,11 @@ send_network_config (NMSshPlugin *plugin)
 	char               *device;
 	char               *resolved_hostname;
 
+	if (io_data->network_config_sent)
+	{
+		return TRUE;
+	}
+
 	g_variant_builder_init (&config, G_VARIANT_TYPE_VARDICT);
 	g_variant_builder_init (&ip4config, G_VARIANT_TYPE_VARDICT);
 	g_variant_builder_init (&ip6config, G_VARIANT_TYPE_VARDICT);
@@ -549,6 +555,8 @@ send_network_config (NMSshPlugin *plugin)
 	/* Send IPv4 config */
 	nm_vpn_service_plugin_set_ip4_config ((NMVpnServicePlugin*) plugin,
 	                                      g_variant_builder_end (&ip4config));
+
+	io_data->network_config_sent = TRUE;
 
 	return TRUE;
 }
@@ -837,6 +845,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 
 	/* Allocate io_data structure */
 	priv->io_data = g_malloc0 (sizeof (NMSshPluginIOData));
+	priv->io_data->network_config_sent = FALSE;
 
 	args = g_ptr_array_new ();
 
