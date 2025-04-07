@@ -80,14 +80,43 @@ Warning: Permanently added 'TARGET_HOST' (ECDSA) to the list of known hosts.
 
 If all went right, you should have a new VPN of type <i>SSH</i> when creating a new VPN.
 
-## No-Tunnel Support
-If you are after a no full tunnel support, you can tick that option in the dialog box. This also allows you to SSH with a non-privileged user. This is
-handy if you'd like to have one of (or more):
+## Scenario #1 - Classic Full Tunnel Support
+For that scenario, remote root login is required, and you want to achieve a full tap/tun tunnel. Use the following settings:
+ * Define IP addresses on the same subnet for both local and remote ends
+   * The default are 172.16.40.1/255.255.255.252 for the remote end, and 172.16.40.2/255.255.255.252 locally
+ * Leave all settings as default, but adjust remote host and port
+
+For authentication, it is generally recommended to use key based authentication, either ssh-agent or a static key.
+
+## Scenario #2 - Full Tunnel Support Without Remote Root
+It is possible to login with a non-privileged user on the remote end, but still have a tun/tap device opened, with some prior preparation.
+
+Prepare the tun100 device on the remote host to be used by a non-privileged user:
+```
+# ip tuntap add name tun100 mode tun user dan
+```
+
+In the advanced dialog set the following:
+ * Set the remote user to login with - that has permissions for the tun/tap device (`dan` in the example above)
+ * Set the device number to match the device you've pre-opened on the remote host (`100` in that case)
+ * Decide how you want the IP address to be set on the other side
+   * Use `sudo` for the remote commands, and NetworkManager-ssh will handle that
+   * Tick `Disable remote command (-N)`, and set the IP address manually on the remote end
+     * Something along the lines of: `/sbin/ip addr add 172.16.40.1/255.255.255.252 peer 172.16.40.2/255.255.255.252 dev tun100`
+
+## Scenario $3 - No Tunnel
+If you are after a no full tunnel support, tick both in the advanced dialog:
+ * `No tunnel` (this also implies `-N`, for no remote command)
+ * You can choose a non-privileged user on the remote host as well
+
+This mode is handy if you're after setting a SSH connection with one or more of the following options:
  * SOCKS proxy (`-D`)
  * Local port binding (`-L`)
  * Remote port binding (`-R`)
 
 Each of the above option take multiple arguments that are space separated.
+
+NetworkManager requires a device for the VPN to be bound to, so a dummy device is being used with dummy IP addresses.
 
 ### Debugging
 
@@ -183,7 +212,7 @@ In order to open a tunnel OpenSSH VPN, all that you have to do is run:
 ```bash
 #!/bin/bash
 # This is the WAN IP/hostname of the remote machine
-REMOTE=nm-ssh.nevela.com
+REMOTE=vpn.nm-ssh.com
 
 # Remote username will usually be root, or any other privileged user
 # who can open tun/tap devices on the remote host
@@ -235,7 +264,7 @@ If forwarding is enabled on that SSH server, you'll get pass-through internet ea
  * Oren Held - Invaluable feedback and testing
  * Lubomir Rintel (@lkundrak)- Keeping this repository up to date with upstream NetworkManager, assisting with Fedora packaging
  * Lennart Weller (@lhw) - Debian packaging
- * Anyone else who engaged with the project, opened tickets and/or submitted code
+ * Anyone else who engaged with the project - tested the software & opened tickets, suggested improvements, and/or submitted code
 
 ## Screenshots
 
