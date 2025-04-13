@@ -1041,7 +1041,7 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		g_message ("Using '%s' as prefix for remote commands", SUDO);
 		sudo = g_strdup_printf ("%s ", SUDO);
 	} else {
-		sudo = g_strdup_printf ("");
+		sudo = g_strdup ("");
 	}
 
 	/* Remote */
