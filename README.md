@@ -1,12 +1,11 @@
 # NetworkManager-ssh
 
-Happy to introduce SSH VPN integration for NetworkManager.
-The SSH VPN can be used just anywhere!
+SSH VPN integration for NetworkManager. The SSH VPN can be used just anywhere!
 
 ## So what does it do?
 
-Basically NetworkManager-ssh integrates OpenSSH tunnel capabilities with NetworkManager and provides you with the easiest of all VPNs, as OpenSSH lives
-on almost any *nix machine today.
+NetworkManager-ssh integrates OpenSSH tunnel capabilities with NetworkManager and provides you with the easiest of all VPNs, as OpenSSH lives on almost
+any *nix machine today.
 
 ## Compiling
 
@@ -104,7 +103,7 @@ In the advanced dialog set the following:
    * Tick `Disable remote command (-N)`, and set the IP address manually on the remote end
      * Something along the lines of: `/sbin/ip addr add 172.16.40.1/255.255.255.252 peer 172.16.40.2/255.255.255.252 dev tun100`
 
-## Scenario $3 - No Tunnel
+## Scenario #3 - No Tunnel
 If you are after a no full tunnel support, tick both in the advanced dialog:
  * `No tunnel` (this also implies `-N`, for no remote command)
  * You can choose a non-privileged user on the remote host as well
