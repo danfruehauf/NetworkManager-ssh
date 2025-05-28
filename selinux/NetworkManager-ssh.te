@@ -13,8 +13,11 @@ require {
 	type systemd_conf_t;
 	type ptmx_t;
 	type devpts_t;
-	type ephemeral_port_t;
 	type NetworkManager_ssh_t;
+	type reserved_port_t;
+	type hi_reserved_port_t;
+	type unreserved_port_t;
+	type ephemeral_port_t;
 	class capability { dac_override net_admin };
 	class dir { search };
 	class file { open read execute_no_trans getattr };
@@ -30,6 +33,15 @@ allow NetworkManager_ssh_t ssh_exec_t:file execute_no_trans;
 allow NetworkManager_ssh_t unconfined_t:unix_stream_socket connectto;
 allow NetworkManager_ssh_t user_tmp_t:sock_file { read write getattr };
 allow NetworkManager_ssh_t systemd_conf_t:file { open read getattr };
+
+# Allow connection to all remote ports:
+# reserved - 1-511
+# hi_reserved - 512-1023
+# unreserved - 1024-32767, 61000-65535
+# ephemeral - 32768-60999
+allow NetworkManager_ssh_t reserved_port_t:tcp_socket name_connect;
+allow NetworkManager_ssh_t hi_reserved_port_t:tcp_socket name_connect;
+allow NetworkManager_ssh_t unreserved_port_t:tcp_socket name_connect;
 allow NetworkManager_ssh_t ephemeral_port_t:tcp_socket name_connect;
 
 # Allow known_hosts access in user's directory
