@@ -317,21 +317,45 @@ addr4_to_gvariant (const char *str)
 }
 
 static char *
-resolve_hostname (const char *hostname)
+resolve_hostname (const char *hostname, gboolean* retval_is_ipv6)
 {
 	struct in_addr addr;
+	struct in6_addr addr6;
 	char *ip = NULL;
 	const char *p;
+	char addr_buffer[INET6_ADDRSTRLEN];
 	gboolean is_name = FALSE;
+	gboolean is_ipv4 = FALSE;
+	gboolean is_ipv6 = FALSE;
+	gboolean has_dot = FALSE;
+	gboolean has_colon = FALSE;
+
+	*retval_is_ipv6 = FALSE;
 
 	/* Check if it seems to be a hostname */
 	p = hostname;
 	while (*p) {
-		if (*p != '.' && !isdigit (*p)) {
+		if (*p == '.') {
+			has_dot = TRUE;
+		} else if (*p == ':') {
+			has_colon = TRUE;
+		} else if (!isxdigit((unsigned char) *p)) {
 			is_name = TRUE;
 			break;
 		}
 		p++;
+	}
+
+	/* Determine type (ipv4/ipv6) */
+	if (!is_name) {
+		if (has_dot && !has_colon) {
+			is_ipv4 = TRUE;
+		} else if (has_colon && !has_dot) {
+			is_ipv6 = TRUE;
+		} else {
+			/* Contains both '.' and ':' - not valid IP syntax, consider it a name and resolve it */
+			is_name = TRUE;
+		}
 	}
 
 	/* Resolve a hostname if required */
@@ -342,7 +366,7 @@ resolve_hostname (const char *hostname)
 
 		memset (&hints, 0, sizeof (hints));
 
-		hints.ai_family = AF_INET;
+		hints.ai_family = AF_UNSPEC;
 		hints.ai_flags = AI_ADDRCONFIG;
 		err = getaddrinfo (hostname, NULL, &hints, &result);
 		if (err != 0) {
@@ -356,24 +380,45 @@ resolve_hostname (const char *hostname)
 		 * different one here, and the VPN just won't work.
 		 */
 		for (rp = result; rp; rp = rp->ai_next) {
-			if (   (rp->ai_family == AF_INET)
+			if ((rp->ai_family == AF_INET)
 			    && (rp->ai_addrlen == sizeof (struct sockaddr_in))) {
 				struct sockaddr_in *inptr = (struct sockaddr_in *) rp->ai_addr;
 
 				ip = g_strdup(inet_ntoa (inptr->sin_addr));
 				if (debug)
-					g_message("Resolved gateway '%s'->'%s'", hostname, ip);
+					g_message("Resolved gateway '%s'->'%s' (ipv4)", hostname, ip);
+				break;
+			}
+			else if ((rp->ai_family == AF_INET6)
+			    && (rp->ai_addrlen == sizeof (struct sockaddr_in6))) {
+				struct sockaddr_in6 *inptr = (struct sockaddr_in6 *) rp->ai_addr;
+
+				*retval_is_ipv6 = TRUE;
+				ip = g_strdup(inet_ntop(AF_INET6, &inptr->sin6_addr, addr_buffer, sizeof(addr_buffer)));
+				if (debug)
+					g_message("Resolved gateway '%s'->'%s' (ipv6)", hostname, ip);
 				break;
 			}
 		}
 
 		freeaddrinfo (result);
 	} else {
-		errno = 0;
-		if (inet_pton (AF_INET, hostname, &addr) <= 0) {
-			g_warning ("%s: failed to convert VPN gateway address '%s' (%d)",
-			           __func__, hostname, errno);
-			return NULL;
+		if (is_ipv4) {
+			errno = 0;
+			if (inet_pton (AF_INET, hostname, &addr) <= 0) {
+				g_warning ("%s: failed to convert IPv4 VPN gateway address '%s' (%d)",
+			               __func__, hostname, errno);
+				return NULL;
+			}
+		}
+		else if (is_ipv6) {
+			*retval_is_ipv6 = TRUE;
+			errno = 0;
+			if (inet_pton (AF_INET6, hostname, &addr6) <= 0) {
+				g_warning ("%s: failed to convert IPv6 VPN gateway address '%s' (%d)",
+			               __func__, hostname, errno);
+				return NULL;
+			}
 		}
 		ip = g_strdup (hostname);
 	}
@@ -419,9 +464,15 @@ send_network_config (NMSshPlugin *plugin)
 	if (io_data->remote_gw)
 	{
 		/* We might have to resolve that */
-		resolved_hostname = resolve_hostname (io_data->remote_gw);
+		gboolean is_ipv6 = FALSE;
+		resolved_hostname = resolve_hostname (io_data->remote_gw, &is_ipv6);
 		if (resolved_hostname) {
-			val = addr4_to_gvariant (resolved_hostname);
+			if (is_ipv6) {
+				val = addr6_to_gvariant (resolved_hostname);
+			}
+			else {
+				val = addr4_to_gvariant (resolved_hostname);
+			}
 			g_variant_builder_add (&config, "{sv}", NM_VPN_PLUGIN_CONFIG_EXT_GATEWAY, val);
 			g_free (resolved_hostname);
 		} else {
