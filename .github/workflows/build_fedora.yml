@@ -1,0 +1,47 @@
+---
+name: Build NetworkManager-ssh Fedora
+
+on:
+  workflow_call:
+    inputs:
+      fedora-version:
+        required: true
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: "fedora:${{ inputs.fedora-version }}"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: |
+          dnf -y update
+          dnf -y install \
+            make autoconf gtk3-devel NetworkManager-libnm-devel glib2-devel \
+            libtool intltool gettext-devel libnma-devel libsecret-devel \
+            bzip2 selinux-policy checkpolicy \
+            dbus NetworkManager openssh-clients shared-mime-info sshpass \
+            libnma-gtk4-devel || true
+          dnf clean all
+
+      - name: Build NetworkManager-ssh
+        run: |
+          if [ ! -f configure ]; then
+            autoreconf -vfi
+          fi
+          ./configure --disable-static \
+            $(if [ -d gtk4 ]; then echo "--with-gtk4"; fi) \
+            --enable-more-warnings=yes \
+            --with-dist-version=1.4.2-1
+          make -j$(nproc)
+
+      - name: Build SELinux module
+        run: |
+          cd selinux
+          checkmodule -M -m -o NetworkManager-ssh.mod NetworkManager-ssh.te
+          semodule_package -o NetworkManager-ssh.pp -m NetworkManager-ssh.mod
+          bzip2 NetworkManager-ssh.pp

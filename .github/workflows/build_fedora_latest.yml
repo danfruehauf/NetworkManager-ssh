@@ -1,0 +1,14 @@
+---
+name: Build NetworkManager-ssh Fedora Latest
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: ["**"]
+
+jobs:
+  call-build:
+    uses: ./.github/workflows/build_fedora.yml
+    with:
+      fedora-version: latest
