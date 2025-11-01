@@ -1,0 +1,14 @@
+---
+name: Build NetworkManager-ssh Ubuntu Latest
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: ["**"]
+
+jobs:
+  call-build:
+    uses: ./.github/workflows/build_ubuntu.yml
+    with:
+      ubuntu-version: latest
