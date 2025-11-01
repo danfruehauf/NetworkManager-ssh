@@ -1,0 +1,15 @@
+---
+name: Build NetworkManager-ssh Rocky 9
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: ["**"]
+
+jobs:
+  call-build:
+    uses: ./.github/workflows/build.yml
+    with:
+      image-name: rockylinux
+      image-version: 9

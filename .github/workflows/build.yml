@@ -33,11 +33,15 @@ jobs:
 
             dnf -y update
             dnf -y install \
-              make autoconf gtk3-devel NetworkManager-libnm-devel glib2-devel \
-              libtool intltool gettext-devel libnma-devel libsecret-devel \
-              bzip2 selinux-policy checkpolicy \
+              make autoconf automake gtk3-devel NetworkManager-libnm-devel \
+              glib2-devel libtool intltool gettext-devel libnma-devel \
+              libsecret-devel bzip2 selinux-policy checkpolicy \
               dbus NetworkManager openssh-clients shared-mime-info sshpass \
-              libnma-gtk4-devel || true
+              || true
+
+            if [[ "$DISTRO_ID" == "fedora" ]]; then
+              dnf -y install libnma-gtk4-devel || true
+            fi
           else
             apt-get update
             DEBIAN_FRONTEND=noninteractive apt-get install -y \
