@@ -9,6 +9,7 @@ on:
 
 jobs:
   call-build:
-    uses: ./.github/workflows/build_ubuntu.yml
+    uses: ./.github/workflows/build.yml
     with:
-      ubuntu-version: latest
+      image-name: ubuntu
+      image-version: latest
