@@ -9,6 +9,7 @@ on:
 
 jobs:
   call-build:
-    uses: ./.github/workflows/build_fedora.yml
+    uses: ./.github/workflows/build.yml
     with:
-      fedora-version: rawhide
+      image-name: fedora
+      image-version: rawhide
