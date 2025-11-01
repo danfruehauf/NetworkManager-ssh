@@ -14,6 +14,7 @@ any *nix machine today.
 |----------------|---------------------------------------------------------------------------------------------------------------------------------|
 | Fedora Latest  | ![Fedora Latest Build](https://github.com/danfruehauf/NetworkManager-ssh/actions/workflows/build_fedora_latest.yml/badge.svg)   |
 | Fedora Rawhide | ![Fedora Rawhide Build](https://github.com/danfruehauf/NetworkManager-ssh/actions/workflows/build_fedora_rawhide.yml/badge.svg) |
+| Rocky 9        | ![Rocky 9 Build](https://github.com/danfruehauf/NetworkManager-ssh/actions/workflows/build_rocky_9.yml/badge.svg) |
 | Ubuntu Latest  | ![Ubuntu Latest Build](https://github.com/danfruehauf/NetworkManager-ssh/actions/workflows/build_ubuntu_latest.yml/badge.svg)   |
 
 ### Fedora/CentOS
