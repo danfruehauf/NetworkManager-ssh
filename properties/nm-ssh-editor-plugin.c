@@ -102,7 +102,7 @@ import (NMVpnEditorPlugin *iface, const char *path, GError **error)
 	NMSettingVpn *s_vpn;
 	char *contents = NULL;
 	char **lines = NULL;
-	char *ext;
+	const char *ext;
 	char **line;
 
 	ext = strrchr (path, '.');
