@@ -49,6 +49,8 @@
 
 #include "nm-ssh-service.h"
 #include "nm-utils.h"
+#include "nm-utils/nm-macros-internal.h"
+#include "nm-utils/nm-shared-utils.h"
 
 #if !defined(DIST_VERSION)
 # define DIST_VERSION VERSION
@@ -56,6 +58,7 @@
 
 static gboolean debug = FALSE;
 static GMainLoop *loop = NULL;
+static GPtrArray *tmp_file_paths;
 
 G_DEFINE_TYPE (NMSshPlugin, nm_ssh_plugin, NM_TYPE_VPN_SERVICE_PLUGIN)
 
@@ -825,6 +828,50 @@ get_ssh_arg_int (const char *arg, long int *retval)
 	return TRUE;
 }
 
+/*
++ * Given a file name and an (optional) user name owning the
++ * connection, returns the file name to be used in the configuration.
++ *
++ * If the user is set, the file is accessed on behalf of the user,
++ * and copied to a temporary file readable only by root. If
++ * requested, the file name is unescaped.
++ *
++ * The returned file name must be freed by the caller.
++ */
+static char *
+access_file (const char *filename,
+             const char *user,
+             gboolean do_unescape,
+             GError **error)
+ {
+	char *tmp = NULL;
+	char *to_free = NULL;
+
+	g_return_val_if_fail (filename, FALSE);
+	g_return_val_if_fail (!error || !*error, FALSE);
+
+	if (!user) {
+		if (do_unescape) {
+			return nm_utils_str_utf8safe_unescape_cp (filename);
+		} else
+			return g_strdup (filename);
+	}
+
+	/* Private connection */
+
+	if (do_unescape) {
+		filename = nm_utils_str_utf8safe_unescape (filename, &to_free);
+	}
+
+	tmp = nm_utils_copy_cert_as_user (filename, user, error);
+	if (!tmp)
+		return NULL;
+
+	g_ptr_array_add (tmp_file_paths, g_strdup (tmp));
+
+	return tmp;
+}
+
 static char*
 get_known_hosts_file(const char *username,
 	const char* ssh_agent_socket)
@@ -857,6 +904,35 @@ get_known_hosts_file(const char *username,
 	return ssh_known_hosts;
 }
 
+static const char *
+get_connection_permission_user (NMConnection *connection)
+{
+    NMSettingConnection *s_con;
+    const char *ptype;
+    const char *pitem;
+    const char *pdetail;
+    guint num_perms;
+    guint i;
+
+    s_con = nm_connection_get_setting_connection (connection);
+    if (!s_con)
+        return NULL;
+
+    num_perms = nm_setting_connection_get_num_permissions (s_con);
+    if (num_perms == 0)
+        return NULL;
+
+    for (i = 0; i < num_perms; i++) {
+        if (!nm_setting_connection_get_permission (s_con, i, &ptype, &pitem, &pdetail))
+            continue;
+
+        if (nm_streq0 (ptype, "user"))
+            return pitem;
+    }
+
+    return NULL;
+}
+
 static gboolean
 nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	NMSettingVpn *s_vpn,
@@ -870,6 +946,9 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	const char *ssh_binary = NULL, *sshpass_binary = NULL, *tmp = NULL;
 	const char *remote = NULL, *port = NULL, *mtu = NULL, *ssh_agent_socket = NULL, *auth_type = NULL;
 	char *known_hosts_file = NULL;
+	char *known_hosts_file_tmp = NULL;
+	const char *ssh_private_key = NULL;
+	char *ssh_private_key_tmp = NULL;
 	char *tmp_arg = NULL;
 	char *ip_addr_cmd_4 = NULL, *ip_addr_cmd_6 = NULL, *ip_link_cmd = NULL;
 	char *envp[16];
@@ -987,11 +1066,15 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 
 		/* Passing a id_dsa/id_rsa key as an argument to ssh */
 		if (!strncmp (auth_type, NM_SSH_AUTH_TYPE_KEY, strlen(NM_SSH_AUTH_TYPE_KEY))) {
-			tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_KEY_FILE);
-			if (tmp && strlen (tmp)) {
+			ssh_private_key = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_KEY_FILE);
+
+			// Add private key in a safe manner
+			ssh_private_key_tmp = access_file (ssh_private_key, default_username, TRUE, error);
+
+			if (ssh_private_key_tmp && strlen (ssh_private_key_tmp)) {
 				/* Specify key file */
 				add_ssh_arg (args, "-i");
-				add_ssh_arg (args, tmp);
+				add_ssh_arg (args, ssh_private_key_tmp);
 			} else {
 				/* No key specified? Exit! */
 				g_set_error (error,
@@ -1047,14 +1130,22 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 	 * So we'll probe the user owning SSH_AUTH_SOCK and then use
 	 * -o UserKnownHostsFile=$HOME/.ssh/known_hosts */
 	known_hosts_file = get_known_hosts_file(default_username, ssh_agent_socket);
+
 	if (!(known_hosts_file && strlen (known_hosts_file))) {
 		g_warning("Using root's .ssh/known_hosts");
 	} else {
+		// Verify access to known_hosts_file and add safely
+		known_hosts_file_tmp = access_file (known_hosts_file, default_username, TRUE, error);
+		if (!(known_hosts_file_tmp && strlen (known_hosts_file_tmp)))
+			return FALSE;
+
 		if (debug)
-			g_message("Using known_hosts at: '%s'", known_hosts_file);
+			g_message("Using known_hosts at: '%s' (%s)", known_hosts_file_tmp, known_hosts_file);
+
 		add_ssh_arg (args, "-o");
-		add_ssh_arg (args, g_strdup_printf("UserKnownHostsFile=%s", known_hosts_file) );
+		add_ssh_arg (args, g_strdup_printf("UserKnownHostsFile=%s", known_hosts_file_tmp) );
 		g_free(known_hosts_file);
+		g_free(known_hosts_file_tmp);
 	}
 
 	add_ssh_arg (args, "-o");
@@ -1522,7 +1613,7 @@ real_connect (NMVpnServicePlugin   *plugin,
 		return FALSE;
 	}
 
-	user_name = nm_setting_vpn_get_user_name (s_vpn);
+	user_name = get_connection_permission_user (connection);
 
 	/* Validate the properties */
 	if (!nm_ssh_properties_validate (s_vpn, error))
@@ -1726,6 +1817,7 @@ main (int argc, char *argv[])
 	gboolean persist = FALSE;
 	GOptionContext *opt_ctx = NULL;
 	gchar *bus_name = NM_DBUS_SERVICE_SSH;
+	guint i;
 
 	GOptionEntry options[] = {
 		{ "persist", 0, 0, G_OPTION_ARG_NONE, &persist, N_("Don't quit when VPN connection terminates"), NULL },
@@ -1774,6 +1866,8 @@ main (int argc, char *argv[])
 	if (!plugin)
 		exit (EXIT_FAILURE);
 
+	tmp_file_paths = g_ptr_array_new_with_free_func(g_free);
+
 	loop = g_main_loop_new (NULL, FALSE);
 
 	if (!persist)
@@ -1781,6 +1875,11 @@ main (int argc, char *argv[])
 
 	setup_signals ();
 	g_main_loop_run (loop);
+
+	for (i = 0; i < tmp_file_paths->len; i++) {
+		unlink ((const char *) tmp_file_paths->pdata[i]);
+	}
+	g_ptr_array_unref (tmp_file_paths);
 
 	g_main_loop_unref (loop);
 	g_object_unref (plugin);
