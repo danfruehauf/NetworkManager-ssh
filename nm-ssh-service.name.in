@@ -3,6 +3,7 @@ name=ssh
 service=org.freedesktop.NetworkManager.ssh
 program=@LIBEXECDIR@/nm-ssh-service
 supports-multiple-connections=true
+supports-safe-private-file-access=true
 
 [libnm]
 plugin=@PLUGINDIR@/libnm-vpn-plugin-ssh.so
