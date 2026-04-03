@@ -54,9 +54,7 @@ jobs:
 
       - name: Build NetworkManager-ssh
         run: |
-          if [ ! -f configure ]; then
-            autoreconf -vfi
-          fi
+          autoreconf -vfi
           ./configure --disable-static \
             $(if [ -d gtk4 ]; then echo "--with-gtk4"; fi) \
             --enable-more-warnings=yes \
