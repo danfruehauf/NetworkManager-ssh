@@ -103,6 +103,16 @@ PKG_CHECK_MODULES(LIBNM, libnm >= 1.1.0)
 LIBNM_CFLAGS="$LIBNM_CFLAGS -DNM_VERSION_MIN_REQUIRED=NM_VERSION_1_2"
 LIBNM_CFLAGS="$LIBNM_CFLAGS -DNM_VERSION_MAX_ALLOWED=NM_VERSION_1_2"
 
+saved_LIBS="$LIBS"
+saved_CFLAGS="$CFLAGS"
+LIBS="$LIBNM_LIBS $LIBS"
+CFLAGS="$LIBNM_CFLAGS $CFLAGS"
+AC_CHECK_FUNC([nm_utils_copy_cert_as_user],
+    [AC_DEFINE([HAVE_NM_UTILS_COPY_CERT_AS_USER], [1],
+               [Define if nm_utils_copy_cert_as_user is available in libnm])])
+LIBS="$saved_LIBS"
+CFLAGS="$saved_CFLAGS"
+
 NM_VPN_SERVICE_DIR=`$PKG_CONFIG --define-variable prefix='\${prefix}' --variable vpnservicedir libnm`
 AC_SUBST(NM_VPN_SERVICE_DIR)
 

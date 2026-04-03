@@ -96,4 +96,11 @@ char *nm_utils_str_utf8safe_unescape_cp (const char *str);
 
 char *nm_utils_str_utf8safe_escape_take (char *str, NMUtilsStrUtf8SafeFlags flags);
 
+
+/*****************************************************************************/
+
+#ifndef HAVE_NM_UTILS_COPY_CERT_AS_USER
+char *nm_utils_copy_cert_as_user (const char *filename, const char *user, GError **error);
+#endif
+
 #endif /* __NM_SHARED_UTILS_H__ */

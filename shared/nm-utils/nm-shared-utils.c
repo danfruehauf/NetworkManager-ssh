@@ -24,6 +24,12 @@
 #include "nm-shared-utils.h"
 
 #include <errno.h>
+#include <fcntl.h>
+#include <grp.h>
+#include <pwd.h>
+#include <sys/stat.h>
+#include <sys/wait.h>
+#include <unistd.h>
 
 /*****************************************************************************/
 
@@ -454,3 +460,125 @@ nm_utils_str_utf8safe_escape_take (char *str, NMUtilsStrUtf8SafeFlags flags)
 	}
 	return str;
 }
+
+/*****************************************************************************/
+
+#ifndef HAVE_NM_UTILS_COPY_CERT_AS_USER
+/*
+ * Fallback implementation of nm_utils_copy_cert_as_user() for systems
+ * with NetworkManager < 1.52.2 (e.g. EL9, older Ubuntu LTS).
+ *
+ * Forks a child that drops privileges to @user, reads @filename, and
+ * pipes the content back to the parent, which writes it to a root-owned
+ * temporary file under /run/NetworkManager/cert/ (mode 0600).
+ */
+char *
+nm_utils_copy_cert_as_user (const char *filename, const char *user, GError **error)
+{
+	struct passwd *pw;
+	int pipefd[2];
+	pid_t pid;
+	char *tmp_path = NULL;
+	int tmp_fd = -1;
+	char buf[4096];
+	ssize_t n;
+	gboolean write_error = FALSE;
+	int status;
+
+	g_return_val_if_fail (filename, NULL);
+	g_return_val_if_fail (user, NULL);
+	g_return_val_if_fail (!error || !*error, NULL);
+
+	pw = getpwnam (user);
+	if (!pw) {
+		g_set_error (error, NM_UTILS_ERROR, NM_UTILS_ERROR_UNKNOWN,
+		             "Unknown user '%s'", user);
+		return NULL;
+	}
+
+	if (pipe (pipefd) < 0) {
+		g_set_error (error, NM_UTILS_ERROR, NM_UTILS_ERROR_UNKNOWN,
+		             "Failed to create pipe: %s", g_strerror (errno));
+		return NULL;
+	}
+
+	pid = fork ();
+	if (pid < 0) {
+		close (pipefd[0]);
+		close (pipefd[1]);
+		g_set_error (error, NM_UTILS_ERROR, NM_UTILS_ERROR_UNKNOWN,
+		             "Failed to fork: %s", g_strerror (errno));
+		return NULL;
+	}
+
+	if (pid == 0) {
+		/* Child: drop privileges to @user and stream the file to the pipe */
+		int fd;
+
+		close (pipefd[0]);
+
+		if (setgid (pw->pw_gid) < 0
+		    || initgroups (pw->pw_name, pw->pw_gid) < 0
+		    || setuid (pw->pw_uid) < 0) {
+			close (pipefd[1]);
+			_exit (1);
+		}
+
+		fd = open (filename, O_RDONLY);
+		if (fd < 0) {
+			close (pipefd[1]);
+			_exit (1);
+		}
+
+		while ((n = read (fd, buf, sizeof (buf))) > 0) {
+			if (write (pipefd[1], buf, n) != n) {
+				close (fd);
+				close (pipefd[1]);
+				_exit (1);
+			}
+		}
+		close (fd);
+		close (pipefd[1]);
+		_exit (0);
+	}
+
+	/* Parent: write pipe output to a root-only temp file */
+	close (pipefd[1]);
+
+	g_mkdir_with_parents ("/run/NetworkManager/cert", 0700);
+
+	tmp_path = g_strdup ("/run/NetworkManager/cert/nm-ssh-XXXXXX");
+	tmp_fd = mkstemp (tmp_path);
+	if (tmp_fd < 0) {
+		g_set_error (error, NM_UTILS_ERROR, NM_UTILS_ERROR_UNKNOWN,
+		             "Failed to create temporary file: %s", g_strerror (errno));
+		g_free (tmp_path);
+		close (pipefd[0]);
+		waitpid (pid, NULL, 0);
+		return NULL;
+	}
+
+	fchmod (tmp_fd, 0600);
+
+	while ((n = read (pipefd[0], buf, sizeof (buf))) > 0) {
+		if (write (tmp_fd, buf, n) != n) {
+			write_error = TRUE;
+			break;
+		}
+	}
+
+	close (tmp_fd);
+	close (pipefd[0]);
+	waitpid (pid, &status, 0);
+
+	if (write_error || !WIFEXITED (status) || WEXITSTATUS (status) != 0) {
+		unlink (tmp_path);
+		g_free (tmp_path);
+		g_set_error (error, NM_UTILS_ERROR, NM_UTILS_ERROR_UNKNOWN,
+		             "Failed to read '%s' as user '%s'", filename, user);
+		return NULL;
+	}
+
+	return tmp_path;
+}
+#endif /* HAVE_NM_UTILS_COPY_CERT_AS_USER */
