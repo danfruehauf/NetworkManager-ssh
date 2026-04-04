@@ -1020,6 +1020,13 @@ nm_ssh_start_ssh_binary (NMSshPlugin *plugin,
 		/* Use sshpass binary */
 		add_ssh_arg (args, sshpass_binary);
 
+		/* Custom password prompt match (-P flag) */
+		tmp = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_SSHPASS_PROMPT);
+		if (tmp && strlen(tmp)) {
+			add_ssh_arg (args, "-P");
+			add_ssh_arg (args, tmp);
+		}
+
 		/* Get password */
 		password = nm_setting_vpn_get_secret (s_vpn, NM_SSH_KEY_PASSWORD);
 		if (password && strlen(password)) {
