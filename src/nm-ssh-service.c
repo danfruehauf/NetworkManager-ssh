@@ -140,6 +140,7 @@ static ValidProperty valid_properties[] = {
 	{ NM_SSH_KEY_KEY_FILE,             G_TYPE_STRING, 0, 0, FALSE },
 	{ NM_SSH_KEY_NO_TUNNEL_INTERFACE,  G_TYPE_STRING, 0, 0, FALSE },
 	{ NM_SSH_KEY_SOCKS_BIND_ADDRESS,   G_TYPE_STRING, 0, 0, FALSE },
+	{ NM_SSH_KEY_SSHPASS_PROMPT,       G_TYPE_STRING, 0, 0, FALSE },
 	{ NM_SSH_KEY_PASSWORD"-flags",     G_TYPE_STRING, 0, 0, FALSE },
 	{ NULL,                            G_TYPE_NONE, FALSE }
 };

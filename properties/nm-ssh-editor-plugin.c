@@ -186,6 +186,7 @@ import (NMVpnEditorPlugin *iface, const char *path, GError **error)
 		PARSE_IMPORT_KEY_QUOTES (SOCKS_BIND_ADDRESS, NM_SSH_KEY_SOCKS_BIND_ADDRESS, items, s_vpn);
 		PARSE_IMPORT_KEY_QUOTES (LOCAL_BIND_ADDRESS, NM_SSH_KEY_LOCAL_BIND_ADDRESS, items, s_vpn);
 		PARSE_IMPORT_KEY_QUOTES (REMOTE_BIND_ADDRESS, NM_SSH_KEY_REMOTE_BIND_ADDRESS, items, s_vpn);
+		PARSE_IMPORT_KEY (SSHPASS_PROMPT_KEY, NM_SSH_KEY_SSHPASS_PROMPT, items, s_vpn)
 		PARSE_IMPORT_KEY (KEY_FILE_KEY, NM_SSH_KEY_KEY_FILE, items, s_vpn)
 		PARSE_IMPORT_KEY (REMOTE_IP_KEY, NM_SSH_KEY_REMOTE_IP, items, s_vpn)
 		PARSE_IMPORT_KEY (LOCAL_IP_KEY, NM_SSH_KEY_LOCAL_IP, items, s_vpn)
@@ -241,6 +242,7 @@ export (NMVpnEditorPlugin *iface,
 	const char *socks_bind_address = NULL;
 	const char *local_bind_address = NULL;
 	const char *remote_bind_address = NULL;
+	const char *sshpass_prompt = NULL;
 	char *device_type = NULL;
 	char *tunnel_type = NULL;
 	char *sudo = NULL;
@@ -367,6 +369,12 @@ export (NMVpnEditorPlugin *iface,
 	else
 		remote_bind_address = NULL;
 
+	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_SSHPASS_PROMPT);
+	if (value && strlen (value))
+		sshpass_prompt = value;
+	else
+		sshpass_prompt = NULL;
+
 	value = nm_setting_vpn_get_data_item (s_vpn, NM_SSH_KEY_TAP_DEV);
 	if (value && IS_YES(value)) {
 		device_type = g_strdup("tap");
@@ -473,6 +481,9 @@ export (NMVpnEditorPlugin *iface,
 
 	if (remote_bind_address)
 		fprintf (f, "%s=\"%s\"\n", REMOTE_BIND_ADDRESS, remote_bind_address);
+
+	if (sshpass_prompt)
+		fprintf (f, "%s=%s\n", SSHPASS_PROMPT_KEY, sshpass_prompt);
 
 	/* Add a little of bash script to probe for a free tun/tap device */
 	if (!no_tunnel_interface)
