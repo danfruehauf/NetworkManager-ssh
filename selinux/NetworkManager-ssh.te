@@ -13,14 +13,15 @@ require {
 	type systemd_conf_t;
 	type ptmx_t;
 	type devpts_t;
+	type NetworkManager_var_run_t;
 	type NetworkManager_ssh_t;
 	type reserved_port_t;
 	type hi_reserved_port_t;
 	type unreserved_port_t;
 	type ephemeral_port_t;
 	class capability { dac_override net_admin };
-	class dir { search };
-	class file { open read execute_no_trans getattr };
+	class dir { add_name create getattr remove_name search write };
+	class file { create getattr execute_no_trans open read rename unlink write };
 	class chr_file { open read write ioctl };
 	class sock_file { read write getattr };
 	class unix_stream_socket connectto;
@@ -56,3 +57,7 @@ allow NetworkManager_ssh_t admin_home_t:dir { search };
 allow NetworkManager_ssh_t ptmx_t:chr_file { open read write ioctl };
 allow NetworkManager_ssh_t devpts_t:dir { search };
 allow NetworkManager_ssh_t devpts_t:chr_file { open read write ioctl };
+
+# nm_utils_copy_cert_as_user() access to /run/NetworkManager/cert
+allow NetworkManager_ssh_t NetworkManager_var_run_t:dir { add_name create getattr remove_name search write };
+allow NetworkManager_ssh_t NetworkManager_var_run_t:file { create getattr open read rename unlink write };
